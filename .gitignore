@@ -1,0 +1,8 @@
+# Ignore all docking output files
+_*
+# IDE-specific and macOS system files
+.idea/
+.DS_Store
+._.DS_Store
+*.DS_Store*
+*pyc
