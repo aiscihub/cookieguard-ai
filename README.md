@@ -4,7 +4,7 @@
 
 An AI-powered web application that analyzes website cookies to detect security-related misuse that can lead to account takeover, unauthorized actions, and identity impersonation.
 
-## 🎯 Project Overview
+## Project Overview
 
 CookieGuard AI uses machine learning and rule-based analysis to:
 - Identify which cookies act as authentication tokens

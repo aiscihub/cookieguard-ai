@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import './App.css';
-
+import ModelInfoPanel from './ModelInfoPanel';
 // Demo data for testing
 const demoData = [
   {
@@ -486,28 +486,10 @@ const Icons = {
 
 // Category configuration - 3 Critical Attack Categories
 const categoryConfig = {
-  // Normal/Secure
   normal: { label: 'Secure', color: '#10b981', bgColor: '#d1fae5', icon: 'ShieldCheck' },
-  
-  // Session Hijacking (includes old xss_vulnerable)
   session_hijacking: { label: 'Session Hijacking', color: '#dc2626', bgColor: '#fee2e2', icon: 'Code' },
-  xss_vulnerable: { label: 'Session Hijacking', color: '#dc2626', bgColor: '#fee2e2', icon: 'Code' },
-  
-  // Unauthorized Actions (includes old cookie_injection)
   unauthorized_actions: { label: 'Unauthorized Actions', color: '#ea580c', bgColor: '#ffedd5', icon: 'Key' },
-  cookie_injection: { label: 'Unauthorized Actions', color: '#ea580c', bgColor: '#ffedd5', icon: 'Key' },
-  
-  // Subdomain Takeover
   subdomain_takeover: { label: 'Subdomain Takeover', color: '#7c3aed', bgColor: '#ede9fe', icon: 'Globe' },
-};
-
-// Normalize category names (map old names to new names)
-const normalizeCategory = (category) => {
-  const mapping = {
-    'xss_vulnerable': 'session_hijacking',
-    'cookie_injection': 'unauthorized_actions',
-  };
-  return mapping[category] || category;
 };
 
 const riskConfig = {
@@ -519,6 +501,7 @@ const riskConfig = {
 
 function App() {
   const [cookies, setCookies] = useState([]);
+  const [showModelInfo, setShowModelInfo] = useState(false);
   const [results, setResults] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -587,7 +570,7 @@ function App() {
     }
     setLoading(true);
     setError(null);
-    
+
     // Simulate analysis
     setTimeout(() => {
       setResults({
@@ -616,12 +599,12 @@ function App() {
     return groups;
   }, [cookies, results]);
 
-  // Group cookies by category (normalized)
+  // Group cookies by category
   const groupedByCategory = useMemo(() => {
     const data = results?.cookies || cookies;
     const groups = {};
     data.forEach(cookie => {
-      const category = normalizeCategory(cookie.category || 'normal');
+      const category = cookie.category || 'normal';
       if (!groups[category]) {
         groups[category] = { cookies: [], risks: { critical: 0, high: 0, medium: 0, low: 0 } };
       }
@@ -665,9 +648,9 @@ function App() {
     const highestRisk = getHighestRisk(group.risks);
     const config = type === 'category' ? categoryConfig[key] : null;
     const IconComponent = type === 'category' && config?.icon ? Icons[config.icon] : (type === 'domain' ? Icons.Globe : Icons.Tag);
-    
+
     return (
-      <div 
+      <div
         className={`group-header ${isExpanded ? 'expanded' : ''}`}
         onClick={() => toggleGroup(key)}
       >
@@ -706,12 +689,11 @@ function App() {
     const isExpanded = expandedCookies[cookieKey];
     const risk = cookie.risk || 'low';
     const riskStyle = riskConfig[risk];
-    const normalizedCategory = normalizeCategory(cookie.category || 'normal');
-    const catConfig = categoryConfig[normalizedCategory] || categoryConfig.normal;
+    const catConfig = categoryConfig[cookie.category] || categoryConfig.normal;
 
     return (
       <div key={cookieKey} className="cookie-card">
-        <div 
+        <div
           className="cookie-header"
           onClick={() => toggleCookie(cookieKey)}
         >
@@ -720,21 +702,21 @@ function App() {
               <Icons.ChevronRight />
             </span>
             <span className="cookie-name">{cookie.name}</span>
-            <span 
+            <span
               className="category-badge"
               style={{ backgroundColor: catConfig.bgColor, color: catConfig.color }}
             >
               {catConfig.label}
             </span>
           </div>
-          <span 
+          <span
             className="risk-badge"
             style={{ backgroundColor: riskStyle.bgColor, color: riskStyle.color }}
           >
             {riskStyle.label}
           </span>
         </div>
-        
+
         {isExpanded && (
           <div className="cookie-details">
             <div className="detail-grid">
@@ -757,7 +739,7 @@ function App() {
                 </span>
               </div>
             </div>
-            
+
             <div className="security-flags">
               <span className={`flag ${cookie.httpOnly ? 'secure' : 'insecure'}`}>
                 {cookie.httpOnly ? <Icons.Check /> : <Icons.X />}
@@ -787,9 +769,9 @@ function App() {
                   {!cookie.httpOnly && <li>Enable HttpOnly flag to prevent JavaScript access</li>}
                   {!cookie.secure && <li>Enable Secure flag for HTTPS-only transmission</li>}
                   {(cookie.sameSite === 'None' || !cookie.sameSite) && <li>Set SameSite to Lax or Strict for CSRF protection</li>}
-                  {(normalizedCategory === 'session_hijacking') && <li>Sanitize all user inputs and implement Content Security Policy</li>}
-                  {(normalizedCategory === 'unauthorized_actions') && <li>Implement server-side validation and never trust client-side data</li>}
-                  {(normalizedCategory === 'subdomain_takeover') && <li>Limit cookie scope to specific subdomains and audit DNS records</li>}
+                  {cookie.category === 'session_hijacking' && <li>Sanitize all user inputs and implement Content Security Policy</li>}
+                  {cookie.category === 'unauthorized_actions' && <li>Implement server-side validation and never trust client-side data</li>}
+                  {cookie.category === 'subdomain_takeover' && <li>Limit cookie scope to specific subdomains and audit DNS records</li>}
                 </ul>
               </div>
             )}
@@ -814,24 +796,24 @@ function App() {
               ) : (
                 <span className="logo-icon"><Icons.Cookie /></span>
               )}
-              <input 
-                type="file" 
-                accept="image/*" 
-                onChange={handleIconUpload} 
-                hidden 
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleIconUpload}
+                hidden
               />
             </label>
             <span className="logo-text">CookieGuard AI</span>
           </div>
           <nav className="nav-tabs">
-            <button 
+            <button
               className={`nav-tab ${activeTab === 'upload' ? 'active' : ''}`}
               onClick={() => setActiveTab('upload')}
             >
               <Icons.Upload />
               Upload
             </button>
-            <button 
+            <button
               className={`nav-tab ${activeTab === 'review' ? 'active' : ''}`}
               onClick={() => setActiveTab('review')}
               disabled={cookies.length === 0}
@@ -839,7 +821,7 @@ function App() {
               <Icons.Folder />
               Review ({cookies.length})
             </button>
-            <button 
+            <button
               className={`nav-tab ${activeTab === 'results' ? 'active' : ''}`}
               onClick={() => setActiveTab('results')}
               disabled={!results}
@@ -850,6 +832,11 @@ function App() {
           </nav>
         </div>
       </header>
+
+       <ModelInfoPanel
+              isVisible={showModelInfo}
+              onToggle={() => setShowModelInfo(!showModelInfo)}
+            />
 
       <main className="main">
         {error && (
@@ -868,7 +855,7 @@ function App() {
               <h1>Detect Cookie Security Issues</h1>
               <p>Upload your cookies or try the demo to analyze security vulnerabilities</p>
             </div>
-            
+
             <div className="upload-cards">
               <div className="upload-card">
                 <div className="card-icon"><Icons.Upload /></div>
@@ -877,7 +864,7 @@ function App() {
                 <input type="file" accept=".json" onChange={handleFileUpload} id="file-upload" hidden />
                 <label htmlFor="file-upload" className="btn btn-primary">Choose File</label>
               </div>
-              
+
               <div className="upload-card">
                 <div className="card-icon"><Icons.Play /></div>
                 <h3>Try Demo</h3>
@@ -905,7 +892,7 @@ function App() {
                 <h2>Review Cookies</h2>
                 <p>Loaded {cookies.length} cookie(s) from {summaryStats.domainCount} domain(s)</p>
               </div>
-              <button 
+              <button
                 className="btn btn-primary btn-lg"
                 onClick={analyzeCookies}
                 disabled={loading}
@@ -915,13 +902,13 @@ function App() {
             </div>
 
             <div className="view-toggle">
-              <button 
+              <button
                 className={`toggle-btn ${viewMode === 'domain' ? 'active' : ''}`}
                 onClick={() => setViewMode('domain')}
               >
                 <Icons.Globe /> By Domain
               </button>
-              <button 
+              <button
                 className={`toggle-btn ${viewMode === 'category' ? 'active' : ''}`}
                 onClick={() => setViewMode('category')}
               >
@@ -940,7 +927,7 @@ function App() {
                   )}
                 </div>
               ))}
-              
+
               {viewMode === 'category' && Object.entries(groupedByCategory).map(([category, group]) => (
                 <div key={category} className="group-card">
                   {renderGroupHeader(category, group, 'category')}
@@ -1004,7 +991,7 @@ function App() {
                         <span>{group.cookies.length}</span>
                       </div>
                       <div className="category-bar-bg">
-                        <div 
+                        <div
                           className="category-bar-fill"
                           style={{ width: `${percentage}%`, backgroundColor: config.color }}
                         />
@@ -1017,13 +1004,13 @@ function App() {
 
             {/* View Toggle */}
             <div className="view-toggle">
-              <button 
+              <button
                 className={`toggle-btn ${viewMode === 'domain' ? 'active' : ''}`}
                 onClick={() => setViewMode('domain')}
               >
                 <Icons.Globe /> By Domain
               </button>
-              <button 
+              <button
                 className={`toggle-btn ${viewMode === 'category' ? 'active' : ''}`}
                 onClick={() => setViewMode('category')}
               >
@@ -1043,7 +1030,7 @@ function App() {
                   )}
                 </div>
               ))}
-              
+
               {viewMode === 'category' && Object.entries(groupedByCategory).map(([category, group]) => (
                 <div key={category} className="group-card">
                   {renderGroupHeader(category, group, 'category')}

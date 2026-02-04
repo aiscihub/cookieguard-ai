@@ -1,144 +1,105 @@
 """
-Train the CookieGuard AI classifier model
+Enhanced Training Script with Domain Holdout and Calibration
+CookieGuard AI Backend Enhancement
 """
 
-import json
-import numpy as np
+import json, numpy as np, sys
 from pathlib import Path
-import sys
+from sklearn.model_selection import train_test_split, GroupKFold
+from sklearn.metrics import classification_report, accuracy_score
 
-# Add backend to path
 sys.path.insert(0, str(Path(__file__).parent))
-
 from feature_extractor import CookieFeatureExtractor
 from classifier import CookieClassifier
 from generate_training_data import TrainingDataGenerator
 
-
 def train_model():
-    """Main training pipeline"""
+    print("CookieGuard AI - Enhanced Model Training")
+    print("="*60)
     
-    print("CookieGuard AI - Model Training")
-    print("=" * 60)
-    
-    # Step 1: Generate or load training data
+    # Load/generate data
     data_path = Path(__file__).parent.parent / 'data' / 'training_cookies.json'
-    
     if not data_path.exists():
-        print("\n[1/4] Generating training data...")
+        print("\n[1/5] Generating training data...")
         data_path.parent.mkdir(parents=True, exist_ok=True)
         generator = TrainingDataGenerator()
         training_data = generator.generate_dataset(n_samples=800)
-        
-        with open(data_path, 'w') as f:
-            json.dump(training_data, f, indent=2)
+        with open(data_path,'w') as f: json.dump(training_data, f, indent=2)
         print(f"      Generated {len(training_data)} samples")
     else:
-        print("\n[1/4] Loading existing training data...")
-        with open(data_path, 'r') as f:
-            training_data = json.load(f)
+        print("\n[1/5] Loading training data...")
+        with open(data_path,'r') as f: training_data = json.load(f)
         print(f"      Loaded {len(training_data)} samples")
     
-    # Step 2: Extract features
-    print("\n[2/4] Extracting features...")
+    # Extract features (now 34 instead of 18!)
+    print("\n[2/5] Extracting features (34 features)...")
     extractor = CookieFeatureExtractor()
     feature_names = extractor.get_feature_names()
+    label_map = {'other':0, 'authentication':1, 'tracking':2, 'preference':3}
     
-    X = []
-    y = []
-    label_map = {
-        'other': 0,
-        'authentication': 1,
-        'tracking': 2,
-        'preference': 3
-    }
-    
+    X, y, domains = [], [], []
     for cookie in training_data:
         features = extractor.extract_features(cookie)
-        feature_vector = [features[name] for name in feature_names]
-        X.append(feature_vector)
+        X.append([features[n] for n in feature_names])
         y.append(label_map[cookie['label']])
+        domains.append(cookie['domain'])
     
-    X = np.array(X)
-    y = np.array(y)
+    X, y = np.array(X), np.array(y)
+    print(f"      Feature matrix: {X.shape} (was n×18, now n×34)")
+    print(f"      Distribution: {dict(zip(*np.unique(y,return_counts=True)))}")
     
-    print(f"      Feature matrix shape: {X.shape}")
-    print(f"      Class distribution: {dict(zip(*np.unique(y, return_counts=True)))}")
+    # Train/val split
+    print("\n[3/5] Splitting train/validation...")
+    X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)
+    print(f"      Train: {len(X_train)}, Val: {len(X_val)}")
     
-    # Step 3: Train classifier
-    print("\n[3/4] Training Random Forest classifier...")
+    # Train with calibration
+    print("\n[4/5] Training classifier WITH CALIBRATION...")
     classifier = CookieClassifier()
-    classifier.train(X, y, feature_names)
+    classifier.train(X_train, y_train, feature_names, X_val, y_val)
     
-    # Calculate training accuracy
-    predictions, _ = classifier.predict(X)
-    accuracy = np.mean(predictions == y)
-    print(f"      Training accuracy: {accuracy:.2%}")
+    # Evaluate
+    print("\n[5/5] Evaluation...")
+    pred_train, _ = classifier.predict(X_train)
+    pred_val, _ = classifier.predict(X_val)
     
-    # Show feature importance
-    print("\n      Top 5 important features:")
-    for feature, importance in classifier.get_top_features(5):
-        print(f"        {feature}: {importance:.4f}")
+    print(f"\n  Training accuracy: {accuracy_score(y_train, pred_train):.2%}")
+    print(f"  Validation accuracy: {accuracy_score(y_val, pred_val):.2%}")
     
-    # Step 4: Save model
-    print("\n[4/4] Saving model...")
+    print("\n  Classification Report (Validation):")
+    labels = ['other','authentication','tracking','preference']
+    print(classification_report(y_val, pred_val, target_names=labels, zero_division=0))
+    
+    print("\n  Top 5 important features:")
+    for feat, imp in classifier.get_top_features(5):
+        print(f"    {feat}: {imp:.4f}")
+    
+    # Save
     model_path = Path(__file__).parent.parent / 'models'
     model_path.mkdir(parents=True, exist_ok=True)
-    
     model_file = model_path / 'cookie_classifier.pkl'
     classifier.save_model(str(model_file))
-    print(f"      Model saved to: {model_file}")
+    print(f"\n✓ Model saved to: {model_file}")
     
-    # Test with example cookies
-    print("\n" + "=" * 60)
-    print("Testing with example cookies:\n")
-    
+    # Test examples
+    print("\n"+"="*60)
+    print("Testing with examples:\n")
     test_examples = [
-        {
-            "name": "session_token",
-            "domain": ".example.com",
-            "path": "/",
-            "secure": True,
-            "httpOnly": False,  # Vulnerable!
-            "sameSite": "Lax",
-            "expirationDate": None,
-            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.dozjgNryP4J3jVmNHl0w5N_XgL0n3I9PlFUP0THsR8U"
-        },
-        {
-            "name": "_ga",
-            "domain": ".example.com",
-            "path": "/",
-            "secure": False,
-            "httpOnly": False,
-            "sameSite": None,
-            "expirationDate": 1780272000,
-            "value": "GA1.2.123456789.1234567890"
-        },
-        {
-            "name": "theme",
-            "domain": "example.com",
-            "path": "/",
-            "secure": False,
-            "httpOnly": False,
-            "sameSite": "Lax",
-            "expirationDate": 1748736000,
-            "value": "dark"
-        }
+        {"name":"__Host-session_token","domain":"example.com","path":"/","secure":True,"httpOnly":True,"sameSite":"Strict","expirationDate":None,"value":"eyJ.abc.123"},
+        {"name":"_ga","domain":".example.com","path":"/","secure":False,"httpOnly":False,"sameSite":None,"expirationDate":1780272000,"value":"GA1.2.123.456"},
+        {"name":"theme","domain":"example.com","path":"/","secure":False,"httpOnly":False,"sameSite":"Lax","expirationDate":1748736000,"value":"dark"}
     ]
     
     for cookie in test_examples:
         features = extractor.extract_features(cookie)
-        cookie_type, confidence, all_probs = classifier.predict_from_dict(features)
-        
+        cookie_type, conf, probs = classifier.predict_from_dict(features, cookie)
         print(f"Cookie: {cookie['name']}")
-        print(f"  Predicted type: {cookie_type} (confidence: {confidence:.1%})")
-        print(f"  All probabilities: {all_probs}")
-        print()
+        print(f"  Type: {cookie_type} ({conf:.1%})")
+        print(f"  All: {probs}\n")
     
-    print("=" * 60)
-    print("Training complete! Model ready for use.")
+    print("="*60)
+    print("Training complete!")
     return classifier, extractor
-
 
 if __name__ == "__main__":
     train_model()
