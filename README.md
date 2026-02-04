@@ -244,6 +244,10 @@ CookieGuard AI uses machine learning and rule-based analysis to:
 git clone https://github.com/yourusername/cookieguard-ai.git
 cd cookieguard-ai
 
+#If using conda
+#conda create -n cookieguard python=3.10 -y
+#conda activate cookieguard
+
 # Install backend dependencies
 pip install -r requirements.txt
 
@@ -258,6 +262,8 @@ cd frontend
 npm install
 npm start
 ```
+
+
 
 Visit `http://localhost:3000` to use CookieGuard AI.
 
