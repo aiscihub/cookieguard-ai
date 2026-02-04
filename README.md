@@ -10,6 +10,9 @@ CookieGuard AI uses machine learning and rule-based analysis to:
 - Identify which cookies act as authentication tokens
 - Score their security risk
 - Explain in plain language how misconfigured cookies expose digital identity
+##
+![CookieGuardUI](./resource/Screenshot.png)
+
 
 ## Project Architecture
 
@@ -262,8 +265,6 @@ cd frontend
 npm install
 npm start
 ```
-
-
 
 Visit `http://localhost:3000` to use CookieGuard AI.
 
