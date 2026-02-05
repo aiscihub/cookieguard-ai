@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CookieGuard AI</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      width: 320px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #1a1a2e;
+      color: #fff;
+      padding: 16px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .header h1 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .domain {
+      font-size: 11px;
+      color: #666;
+    }
+
+    #backend-status {
+      font-size: 10px;
+      color: #4facfe;
+      margin-top: 4px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      margin-bottom: 8px;
+    }
+
+    .btn-primary {
+      background: #4facfe;
+      color: #1a1a2e;
+    }
+
+    .btn-secondary {
+      background: #2a2a4e;
+      color: #888;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+    }
+
+    /* Loading */
+    #loading-view {
+      display: none;
+      text-align: center;
+      padding: 40px 0;
+    }
+
+    .spinner {
+      width: 32px;
+      height: 32px;
+      border: 3px solid #333;
+      border-top-color: #4facfe;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 12px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Results */
+    #results-view {
+      display: none;
+    }
+
+    .summary {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 12px;
+      padding: 10px;
+      background: #2a2a4e;
+      border-radius: 6px;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-num {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .stat-label {
+      font-size: 9px;
+      color: #666;
+      text-transform: uppercase;
+    }
+
+    .critical .stat-num { color: #ff4757; }
+    .high .stat-num { color: #ffa502; }
+    .medium .stat-num { color: #ffdd59; }
+    .low .stat-num { color: #7bed9f; }
+
+    .cookie-list {
+      max-height: 250px;
+      overflow-y: auto;
+    }
+
+    .cookie-card {
+      background: #2a2a4e;
+      border-radius: 6px;
+      padding: 10px;
+      margin-bottom: 6px;
+      border-left: 3px solid #7bed9f;
+    }
+
+    .cookie-card.critical { border-left-color: #ff4757; }
+    .cookie-card.high { border-left-color: #ffa502; }
+    .cookie-card.medium { border-left-color: #ffdd59; }
+
+    .cookie-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cookie-name {
+      font-size: 12px;
+      font-weight: 600;
+      word-break: break-all;
+    }
+
+    .cookie-type {
+      font-size: 9px;
+      padding: 2px 6px;
+      border-radius: 8px;
+      background: #3a3a5e;
+      color: #888;
+    }
+
+    .cookie-type.auth {
+      background: rgba(255, 71, 87, 0.2);
+      color: #ff6b7a;
+    }
+
+    .issue {
+      font-size: 10px;
+      color: #ff6b7a;
+      margin-top: 4px;
+    }
+
+    .confidence {
+      font-size: 10px;
+      color: #666;
+      margin-top: 6px;
+    }
+
+    .conf-bar {
+      height: 3px;
+      background: #3a3a5e;
+      border-radius: 2px;
+      margin-top: 3px;
+    }
+
+    .conf-fill {
+      height: 100%;
+      background: #4facfe;
+      border-radius: 2px;
+    }
+
+    /* Login Flow */
+    #login-flow-view {
+      display: none;
+    }
+
+    .step {
+      padding: 10px;
+      background: #2a2a4e;
+      border-radius: 6px;
+      margin-bottom: 6px;
+      opacity: 0.5;
+    }
+
+    .step.active {
+      opacity: 1;
+      border: 1px solid #4facfe;
+    }
+
+    .step.completed {
+      opacity: 1;
+      border: 1px solid #7bed9f;
+    }
+
+    .step-title {
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .step-desc {
+      font-size: 10px;
+      color: #666;
+      margin-top: 2px;
+    }
+
+    #import-file-input {
+      display: none;
+    }
+
+    .divider {
+      height: 1px;
+      background: #2a2a4e;
+      margin: 12px 0;
+    }
+
+    .tools {
+      display: flex;
+      gap: 6px;
+    }
+
+    .tools .btn {
+      flex: 1;
+      font-size: 11px;
+      padding: 8px;
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+<body>
+<!-- Main View -->
+<div id="main-view">
+  <div class="header">
+    <h1>CookieGuard AI</h1>
+    <div class="domain" id="domain-name">-</div>
+    <div id="backend-status">Connecting...</div>
+  </div>
+
+  <button id="scan-btn" class="btn btn-primary">Scan Cookies</button>
+<!--  <button id="demo-btn" class="btn btn-secondary">Scan Cookies</button>-->
+
+  <div class="divider"></div>
+
+  <div class="tools">
+    <button id="export-cookies-btn" class="btn btn-secondary">Export</button>
+<!--    <button id="import-cookies-btn" class="btn btn-secondary">Import</button>-->
+    <button id="login-scan-btn" class="btn btn-secondary">Login Scan</button>
+  </div>
+  <input type="file" id="import-file-input" accept=".json">
+</div>
+
+<!-- Loading View -->
+<div id="loading-view">
+  <div class="spinner"></div>
+  <div style="font-size: 12px;">Analyzing...</div>
+</div>
+
+<!-- Results View -->
+<div id="results-view">
+  <div class="header">
+    <h1>Results</h1>
+  </div>
+
+  <div id="risk-summary" class="summary"></div>
+  <div id="cookie-list" class="cookie-list"></div>
+
+  <div style="margin-top: 10px;">
+    <button id="export-btn" class="btn btn-secondary">Copy Report</button>
+    <button id="back-btn" class="btn btn-secondary">← Back</button>
+  </div>
+</div>
+
+<!-- Login Flow View -->
+<div id="login-flow-view">
+  <div class="header">
+    <h1>Login-Aware Scan</h1>
+  </div>
+
+  <div id="step-1" class="step">
+    <div class="step-title">1. Before Login</div>
+    <div class="step-desc">Capture current cookies</div>
+    <button id="capture-before-btn" class="btn btn-primary" style="margin-top:8px;">Capture</button>
+  </div>
+
+  <div id="step-2" class="step">
+    <div class="step-title">2. Login Now</div>
+    <div class="step-desc">Log into the website</div>
+  </div>
+
+  <div id="step-3" class="step">
+    <div class="step-title">3. After Login</div>
+    <div class="step-desc">Capture & analyze new cookies</div>
+    <button id="capture-after-btn" class="btn btn-primary" style="margin-top:8px;" disabled>Analyze</button>
+  </div>
+
+  <button id="login-back-btn" class="btn btn-secondary" style="margin-top:10px;">← Cancel</button>
+</div>
+
+<script src="popup.js"></script>
+</body>
+</html>
