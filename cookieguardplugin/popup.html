@@ -12,7 +12,7 @@
     }
     
     body {
-      width: 320px;
+      width: 380px;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: #ffffff;
       color: #1a1a1a;
@@ -38,16 +38,28 @@
 
     #backend-status {
       font-size: 10px;
-      color: #6B5B4B;
       margin-top: 4px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    #backend-status.connected {
+      background: #c6f6d5;
+      color: #22543d;
+    }
+
+    #backend-status.local {
+      background: #fefcbf;
+      color: #744210;
     }
 
     .btn {
       width: 100%;
-      padding: 8px;
+      padding: 10px;
       border: none;
       border-radius: 6px;
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 500;
       cursor: pointer;
       margin-bottom: 8px;
@@ -55,7 +67,7 @@
     }
 
     .btn-primary {
-      background: #90816a;
+      background: #667eea;
       color: #ffffff;
     }
 
@@ -67,6 +79,7 @@
 
     .btn:hover {
       opacity: 0.9;
+      transform: translateY(-1px);
     }
 
     /* Loading */
@@ -80,7 +93,7 @@
       width: 32px;
       height: 32px;
       border: 3px solid #e0e0e0;
-      border-top-color: #6B5B4B;
+      border-top-color: #667eea;
       border-radius: 50%;
       animation: spin 1s linear infinite;
       margin: 0 auto 12px;
@@ -95,13 +108,29 @@
       display: none;
     }
 
+    .event-badge {
+      background: #e6fffa;
+      border-left: 3px solid #319795;
+      padding: 8px 12px;
+      border-radius: 4px;
+      margin-bottom: 12px;
+      font-size: 11px;
+      color: #234e52;
+    }
+
+    .event-badge strong {
+      display: block;
+      margin-bottom: 4px;
+      color: #1a1a1a;
+    }
+
     .summary {
       display: flex;
       justify-content: space-around;
       margin-bottom: 12px;
-      padding: 10px;
-      background: #e0e0e0;
-      border-radius: 6px;
+      padding: 12px;
+      background: #f7fafc;
+      border-radius: 8px;
       border: 1px solid #e0e0e0;
     }
 
@@ -118,15 +147,101 @@
       font-size: 9px;
       color: #666;
       text-transform: uppercase;
+      margin-top: 2px;
     }
 
-    .critical .stat-num { color: #ff4757; }
-    .high .stat-num { color: #ffa502; }
-    .medium .stat-num { color: #ffdd59; }
-    .low .stat-num { color: #7bed9f; }
+    .critical .stat-num { color: #c53030; }
+    .high .stat-num { color: #c05621; }
+    .medium .stat-num { color: #975a16; }
+    .low .stat-num { color: #22543d; }
+
+    /* Before/After Comparison */
+    .comparison {
+      background: #f7fafc;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 12px;
+      border: 2px solid #e0e0e0;
+    }
+
+    .comparison-header {
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #2d3748;
+    }
+
+    .comparison-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+
+    .comparison-label {
+      font-size: 11px;
+      color: #4a5568;
+    }
+
+    .comparison-values {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .comparison-value {
+      font-size: 16px;
+      font-weight: bold;
+      padding: 4px 12px;
+      border-radius: 6px;
+      background: white;
+    }
+
+    .comparison-arrow {
+      color: #4a5568;
+      font-size: 14px;
+    }
+
+    .comparison-value.improved {
+      color: #22543d;
+      background: #c6f6d5;
+    }
+
+    .comparison-value.worse {
+      color: #c53030;
+      background: #fed7d7;
+    }
+
+    .fixed-items {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    .fixed-items-title {
+      font-size: 11px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #22543d;
+    }
+
+    .fixed-item {
+      font-size: 10px;
+      color: #4a5568;
+      margin-bottom: 3px;
+      padding-left: 12px;
+      position: relative;
+    }
+
+    .fixed-item:before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #22543d;
+    }
 
     .cookie-list {
-      max-height: 250px;
+      max-height: 300px;
       overflow-y: auto;
     }
 
@@ -138,16 +253,24 @@
       border-left: 3px solid #7bed9f;
       border: 1px solid #e0e0e0;
       border-left: 3px solid #7bed9f;
+      cursor: pointer;
+      transition: all 0.2s;
     }
 
-    .cookie-card.critical { border-left-color: #ff4757; }
-    .cookie-card.high { border-left-color: #ffa502; }
-    .cookie-card.medium { border-left-color: #ffdd59; }
+    .cookie-card:hover {
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transform: translateY(-1px);
+    }
+
+    .cookie-card.critical { border-left-color: #c53030; }
+    .cookie-card.high { border-left-color: #c05621; }
+    .cookie-card.medium { border-left-color: #975a16; }
 
     .cookie-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 6px;
     }
 
     .cookie-name {
@@ -155,31 +278,47 @@
       font-weight: 600;
       word-break: break-all;
       color: #1a1a1a;
+      flex: 1;
     }
 
     .cookie-type {
       font-size: 9px;
-      padding: 2px 6px;
-      border-radius: 8px;
+      padding: 3px 8px;
+      border-radius: 10px;
       background: #f5f5f5;
       color: #666;
+      white-space: nowrap;
+      margin-left: 8px;
     }
 
     .cookie-type.auth {
-      background: rgba(255, 71, 87, 0.1);
-      color: #ff4757;
+      background: rgba(197, 48, 48, 0.1);
+      color: #c53030;
+      font-weight: 600;
+    }
+
+    .issue-list {
+      margin-top: 6px;
     }
 
     .issue {
       font-size: 10px;
-      color: #ff4757;
-      margin-top: 4px;
+      color: #c53030;
+      margin-bottom: 3px;
+      padding-left: 12px;
+      position: relative;
+    }
+
+    .issue:before {
+      content: "⚠";
+      position: absolute;
+      left: 0;
     }
 
     .confidence {
       font-size: 10px;
       color: #666;
-      margin-top: 6px;
+      margin-top: 8px;
     }
 
     .conf-bar {
@@ -191,8 +330,9 @@
 
     .conf-fill {
       height: 100%;
-      background: #6B5B4B;
+      background: #667eea;
       border-radius: 2px;
+      transition: width 0.3s;
     }
 
     /* Login Flow */
@@ -201,36 +341,44 @@
     }
 
     .step {
-      padding: 10px;
+      padding: 12px;
       background: #f5f5f5;
       border-radius: 6px;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
       opacity: 0.5;
       border: 1px solid #e0e0e0;
+      transition: all 0.3s;
     }
 
     .step.active {
       opacity: 1;
-      border: 1px solid #6B5B4B;
+      border: 2px solid #667eea;
       background: #ffffff;
     }
 
     .step.completed {
       opacity: 1;
-      border: 1px solid #7bed9f;
-      background: #ffffff;
+      border: 2px solid #22543d;
+      background: #f0fff4;
     }
 
     .step-title {
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 600;
       color: #1a1a1a;
+      margin-bottom: 4px;
     }
 
     .step-desc {
-      font-size: 10px;
+      font-size: 11px;
       color: #666;
-      margin-top: 2px;
+      margin-bottom: 8px;
+    }
+
+    .step-btn {
+      width: 100%;
+      padding: 8px;
+      margin-top: 6px;
     }
 
     #import-file-input {
@@ -254,46 +402,133 @@
       padding: 8px;
       margin-bottom: 0;
     }
+
+    .info-text {
+      font-size: 10px;
+      color: #718096;
+      text-align: center;
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    /* Modal for cookie details */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      max-width: 90%;
+      max-height: 80%;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #e0e0e0;
+    }
+
+    .modal-section {
+      margin-bottom: 12px;
+    }
+
+    .modal-section-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: #4a5568;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .modal-text {
+      font-size: 12px;
+      color: #2d3748;
+      line-height: 1.4;
+    }
   </style>
 </head>
 <body>
 <!-- Main View -->
 <div id="main-view">
   <div class="header">
-    <h1>CookieGuard AI</h1>
+    <h1>🍪 CookieGuard AI</h1>
     <div class="domain" id="domain-name">-</div>
-    <div id="backend-status">Connecting...</div>
+    <div id="backend-status" class="local">⚡ Local Mode</div>
   </div>
 
   <button id="scan-btn" class="btn btn-primary">Scan Cookies</button>
-  <!--  <button id="demo-btn" class="btn btn-secondary">Scan Cookies</button>-->
 
   <div class="divider"></div>
 
   <div class="tools">
     <button id="export-cookies-btn" class="btn btn-secondary">Export</button>
-    <!--    <button id="import-cookies-btn" class="btn btn-secondary">Import</button>-->
     <button id="login-scan-btn" class="btn btn-secondary">Login Scan</button>
   </div>
+
+  <p class="info-text">No raw cookie values stored or transmitted</p>
+
   <input type="file" id="import-file-input" accept=".json">
 </div>
 
 <!-- Loading View -->
 <div id="loading-view">
   <div class="spinner"></div>
-  <div style="font-size: 12px;">Analyzing...</div>
+  <div style="font-size: 12px; color: #4a5568;">Analyzing cookies...</div>
+  <div style="font-size: 10px; color: #718096; margin-top: 8px;">Running AI classification</div>
 </div>
 
 <!-- Results View -->
 <div id="results-view">
   <div class="header">
-    <h1>Results</h1>
+    <h1>Analysis Results</h1>
+    <div class="domain" id="results-domain">-</div>
+  </div>
+
+  <!-- Login event detection -->
+  <div id="login-event-badge" style="display: none;" class="event-badge">
+    <strong>🔐 Login Event Detected</strong>
+    <div id="event-details">Cookies changed during login window</div>
+  </div>
+
+  <!-- Before/After Comparison -->
+  <div id="comparison-view" style="display: none;" class="comparison">
+    <div class="comparison-header">Before/After Comparison</div>
+    <div class="comparison-row">
+      <span class="comparison-label">Risk Score:</span>
+      <div class="comparison-values">
+        <span class="comparison-value" id="before-score">--</span>
+        <span class="comparison-arrow">→</span>
+        <span class="comparison-value" id="after-score">--</span>
+      </div>
+    </div>
+    <div id="fixed-items-section" style="display: none;" class="fixed-items">
+      <div class="fixed-items-title">Fixed Issues:</div>
+      <div id="fixed-items-list"></div>
+    </div>
   </div>
 
   <div id="risk-summary" class="summary"></div>
   <div id="cookie-list" class="cookie-list"></div>
 
-  <div style="margin-top: 10px;">
+  <div style="margin-top: 12px;">
     <button id="export-btn" class="btn btn-secondary">Copy Report</button>
     <button id="back-btn" class="btn btn-secondary">← Back</button>
   </div>
@@ -303,26 +538,36 @@
 <div id="login-flow-view">
   <div class="header">
     <h1>Login-Aware Scan</h1>
+    <div class="domain" id="login-domain">-</div>
   </div>
 
-  <div id="step-1" class="step">
+  <div id="step-1" class="step active">
     <div class="step-title">1. Before Login</div>
-    <div class="step-desc">Capture current cookies</div>
-    <button id="capture-before-btn" class="btn btn-primary" style="margin-top:8px;">Capture</button>
+    <div class="step-desc">Capture baseline cookies</div>
+    <button id="capture-before-btn" class="btn btn-primary step-btn">Capture Now</button>
   </div>
 
   <div id="step-2" class="step">
-    <div class="step-title">2. Login Now</div>
-    <div class="step-desc">Log into the website</div>
+    <div class="step-title">2. Login</div>
+    <div class="step-desc">Complete login on the website</div>
   </div>
 
   <div id="step-3" class="step">
     <div class="step-title">3. After Login</div>
-    <div class="step-desc">Capture & analyze new cookies</div>
-    <button id="capture-after-btn" class="btn btn-primary" style="margin-top:8px;" disabled>Analyze</button>
+    <div class="step-desc">Analyze new cookies</div>
+    <button id="capture-after-btn" class="btn btn-primary step-btn" disabled>Analyze</button>
   </div>
 
-  <button id="login-back-btn" class="btn btn-secondary" style="margin-top:10px;">← Cancel</button>
+  <button id="login-back-btn" class="btn btn-secondary" style="margin-top:12px;">← Cancel</button>
+</div>
+
+<!-- Cookie Details Modal -->
+<div id="cookie-modal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header" id="modal-cookie-name">Cookie Details</div>
+    <div id="modal-body"></div>
+    <button class="btn btn-secondary" onclick="closeModal()" style="margin-top: 12px;">Close</button>
+  </div>
 </div>
 
 <script src="popup.js"></script>
