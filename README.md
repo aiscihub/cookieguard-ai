@@ -233,7 +233,7 @@ CookieGuard AI uses machine learning and rule-based analysis to:
 - Intentional vulnerabilities to train detection
 - Domain diversity (main domain, subdomains, wildcards)
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - Python 3.8+
@@ -293,7 +293,7 @@ cookieguard-ai/
     └── submission.pdf         # GWC Challenge submission
 ```
 
-## 🔬 How It Works
+## How It Works
 
 1. **Data Collection**: Import cookies from browser (JSON export)
 2. **Feature Extraction**: Analyze cookie attributes (flags, expiry, scope, name)
@@ -301,30 +301,30 @@ cookieguard-ai/
 4. **Risk Scoring**: Combine ML output with security rules
 5. **Explanation**: Generate plain-language security report
 
-## 🛡️ Threats Detected
+## Threats Detected
 
 - **Account Takeover** via session hijacking
 - **Unauthorized Actions** (CSRF-style abuse)
 - **Identity Exposure** across subdomains
 
-## 💡 Why AI?
+## Why an AI Approach?
 
 Without AI, users face 50+ cookies per site with no way to identify which ones are security-critical. CookieGuard AI's ML classifier:
 - Distinguishes authentication cookies from tracking cookies
 - Assigns confidence scores for prioritization
 - Reduces false alarms through pattern learning
 
-## 📊 Demo
+## Demo
 
 Try the demo with pre-loaded cookie examples:
 ```bash
 python backend/app.py --demo
 ```
 
-## 🤝 Contributing
+## Contributing
 
-This project was created for the Girls Who Code AI Challenge 2025.
+This project was created for the Girls Who Code Challenge on AI + Cybersecurity 2026.
 
-## 📄 License
+## License
 
 MIT License - see LICENSE file for details
