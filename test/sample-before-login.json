@@ -1,0 +1,57 @@
+{
+  "exported_at": "2025-02-08T10:00:00Z",
+  "domain": "example.com",
+  "total_cookies": 5,
+  "cookies": [
+    {
+      "name": "_ga",
+      "value": "GA1.2.1234567890.1234567890",
+      "domain": "example.com",
+      "path": "/",
+      "secure": true,
+      "httpOnly": false,
+      "sameSite": "lax",
+      "type": "tracking"
+    },
+    {
+      "name": "_gid",
+      "value": "GA1.2.9876543210.9876543210",
+      "domain": "example.com",
+      "path": "/",
+      "secure": true,
+      "httpOnly": false,
+      "sameSite": "lax",
+      "type": "tracking"
+    },
+    {
+      "name": "preferences",
+      "value": "theme=dark;lang=en",
+      "domain": "example.com",
+      "path": "/",
+      "secure": false,
+      "httpOnly": false,
+      "sameSite": "lax",
+      "type": "functional"
+    },
+    {
+      "name": "csrf_temp",
+      "value": "temp_token_abc123xyz",
+      "domain": "example.com",
+      "path": "/",
+      "secure": true,
+      "httpOnly": true,
+      "sameSite": "strict",
+      "type": "functional"
+    },
+    {
+      "name": "visitor_id",
+      "value": "visitor_12345",
+      "domain": "example.com",
+      "path": "/",
+      "secure": false,
+      "httpOnly": false,
+      "sameSite": "none",
+      "type": "tracking"
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "exported_at": "2025-02-08T10:00:00Z",
+  "domain": "secure-bank.com",
+  "total_cookies": 5,
+  "cookies": [
+    {
+      "name": "__Host-session_id",
+      "value": "secure_session_xyz789",
+      "domain": "secure-bank.com",
+      "path": "/",
+      "secure": true,
+      "httpOnly": true,
+      "sameSite": "strict",
+      "type": "authentication",
+      "expirationDate": 1707400000
+    },
+    {
+      "name": "__Secure-auth_token",
+      "value": "jwt_token_abc123",
+      "domain": "secure-bank.com",
+      "path": "/",
+      "secure": true,
+      "httpOnly": true,
+      "sameSite": "strict",
+      "type": "authentication",
+      "expirationDate": 1707400000
+    },
+    {
+      "name": "csrf_token",
+      "value": "csrf_protected",
+      "domain": "secure-bank.com",
+      "path": "/",
+      "secure": true,
+      "httpOnly": true,
+      "sameSite": "strict",
+      "type": "functional"
+    },
+    {
+      "name": "preferences",
+      "value": "theme=light",
+      "domain": "secure-bank.com",
+      "path": "/",
+      "secure": true,
+      "httpOnly": false,
+      "sameSite": "lax",
+      "type": "functional"
+    },
+    {
+      "name": "_analytics",
+      "value": "analytics_id",
+      "domain": "secure-bank.com",
+      "path": "/",
+      "secure": true,
+      "httpOnly": false,
+      "sameSite": "lax",
+      "type": "tracking"
+    }
+  ]
+}

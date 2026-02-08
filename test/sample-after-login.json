@@ -1,0 +1,91 @@
+{
+  "exported_at": "2025-02-08T10:05:00Z",
+  "domain": "example.com",
+  "total_cookies": 8,
+  "cookies": [
+    {
+      "name": "_ga",
+      "value": "GA1.2.1234567890.1234567890",
+      "domain": "example.com",
+      "path": "/",
+      "secure": true,
+      "httpOnly": false,
+      "sameSite": "lax",
+      "type": "tracking"
+    },
+    {
+      "name": "_gid",
+      "value": "GA1.2.9876543210.9876543210",
+      "domain": "example.com",
+      "path": "/",
+      "secure": true,
+      "httpOnly": false,
+      "sameSite": "lax",
+      "type": "tracking"
+    },
+    {
+      "name": "preferences",
+      "value": "theme=dark;lang=en",
+      "domain": "example.com",
+      "path": "/",
+      "secure": false,
+      "httpOnly": false,
+      "sameSite": "lax",
+      "type": "functional"
+    },
+    {
+      "name": "visitor_id",
+      "value": "visitor_12345",
+      "domain": "example.com",
+      "path": "/",
+      "secure": false,
+      "httpOnly": false,
+      "sameSite": "none",
+      "type": "tracking"
+    },
+    {
+      "name": "session_id",
+      "value": "sess_xyz789abc456def",
+      "domain": "example.com",
+      "path": "/",
+      "secure": true,
+      "httpOnly": true,
+      "sameSite": "strict",
+      "type": "authentication",
+      "expirationDate": 1707400000
+    },
+    {
+      "name": "auth_token",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+      "domain": "example.com",
+      "path": "/",
+      "secure": true,
+      "httpOnly": true,
+      "sameSite": "strict",
+      "type": "authentication",
+      "expirationDate": 1707400000
+    },
+    {
+      "name": "user_id",
+      "value": "12345",
+      "domain": "example.com",
+      "path": "/",
+      "secure": true,
+      "httpOnly": false,
+      "sameSite": "lax",
+      "type": "authentication",
+      "expirationDate": 1707400000
+    },
+    {
+      "name": "remember_me",
+      "value": "true",
+      "domain": "example.com",
+      "path": "/",
+      "secure": true,
+      "httpOnly": false,
+      "sameSite": "lax",
+      "type": "functional",
+      "expirationDate": 1739500000
+    }
+  ]
+}

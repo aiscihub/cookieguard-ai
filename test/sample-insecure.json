@@ -1,0 +1,69 @@
+{
+  "exported_at": "2025-02-08T10:00:00Z",
+  "domain": "insecure-bank.com",
+  "total_cookies": 6,
+  "cookies": [
+    {
+      "name": "session_id",
+      "value": "super_secret_session_12345",
+      "domain": "insecure-bank.com",
+      "path": "/",
+      "secure": false,
+      "httpOnly": false,
+      "sameSite": "none",
+      "type": "authentication"
+    },
+    {
+      "name": "auth_token",
+      "value": "bearer_token_xyz789",
+      "domain": ".insecure-bank.com",
+      "path": "/",
+      "secure": false,
+      "httpOnly": false,
+      "sameSite": "none",
+      "type": "authentication",
+      "expirationDate": 1739500000
+    },
+    {
+      "name": "account_number",
+      "value": "1234567890",
+      "domain": "insecure-bank.com",
+      "path": "/",
+      "secure": false,
+      "httpOnly": false,
+      "sameSite": "none",
+      "type": "functional"
+    },
+    {
+      "name": "_tracking_pixel",
+      "value": "track_abc123",
+      "domain": ".insecure-bank.com",
+      "path": "/",
+      "secure": false,
+      "httpOnly": false,
+      "sameSite": "none",
+      "type": "tracking"
+    },
+    {
+      "name": "csrf_token",
+      "value": "csrf_xyz",
+      "domain": "insecure-bank.com",
+      "path": "/",
+      "secure": true,
+      "httpOnly": true,
+      "sameSite": "strict",
+      "type": "functional"
+    },
+    {
+      "name": "remember_device",
+      "value": "device_fingerprint_123",
+      "domain": "insecure-bank.com",
+      "path": "/",
+      "secure": false,
+      "httpOnly": false,
+      "sameSite": "lax",
+      "type": "functional",
+      "expirationDate": 1770000000
+    }
+  ]
+}
