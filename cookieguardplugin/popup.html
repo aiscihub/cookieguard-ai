@@ -14,8 +14,8 @@
     body {
       width: 320px;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #1a1a2e;
-      color: #fff;
+      background: #ffffff;
+      color: #1a1a1a;
       padding: 16px;
     }
 
@@ -28,6 +28,7 @@
       font-size: 16px;
       font-weight: 600;
       margin-bottom: 4px;
+      color: #1a1a1a;
     }
 
     .domain {
@@ -37,29 +38,31 @@
 
     #backend-status {
       font-size: 10px;
-      color: #4facfe;
+      color: #6B5B4B;
       margin-top: 4px;
     }
 
     .btn {
       width: 100%;
-      padding: 10px;
+      padding: 8px;
       border: none;
       border-radius: 6px;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 500;
       cursor: pointer;
       margin-bottom: 8px;
+      transition: all 0.2s;
     }
 
     .btn-primary {
-      background: #4facfe;
-      color: #1a1a2e;
+      background: #90816a;
+      color: #ffffff;
     }
 
     .btn-secondary {
-      background: #2a2a4e;
-      color: #888;
+      background: #f5f5f5;
+      color: #666;
+      border: 1px solid #e0e0e0;
     }
 
     .btn:hover {
@@ -76,8 +79,8 @@
     .spinner {
       width: 32px;
       height: 32px;
-      border: 3px solid #333;
-      border-top-color: #4facfe;
+      border: 3px solid #e0e0e0;
+      border-top-color: #6B5B4B;
       border-radius: 50%;
       animation: spin 1s linear infinite;
       margin: 0 auto 12px;
@@ -97,8 +100,9 @@
       justify-content: space-around;
       margin-bottom: 12px;
       padding: 10px;
-      background: #2a2a4e;
+      background: #e0e0e0;
       border-radius: 6px;
+      border: 1px solid #e0e0e0;
     }
 
     .stat {
@@ -127,10 +131,12 @@
     }
 
     .cookie-card {
-      background: #2a2a4e;
+      background: #ffffff;
       border-radius: 6px;
       padding: 10px;
       margin-bottom: 6px;
+      border-left: 3px solid #7bed9f;
+      border: 1px solid #e0e0e0;
       border-left: 3px solid #7bed9f;
     }
 
@@ -148,24 +154,25 @@
       font-size: 12px;
       font-weight: 600;
       word-break: break-all;
+      color: #1a1a1a;
     }
 
     .cookie-type {
       font-size: 9px;
       padding: 2px 6px;
       border-radius: 8px;
-      background: #3a3a5e;
-      color: #888;
+      background: #f5f5f5;
+      color: #666;
     }
 
     .cookie-type.auth {
-      background: rgba(255, 71, 87, 0.2);
-      color: #ff6b7a;
+      background: rgba(255, 71, 87, 0.1);
+      color: #ff4757;
     }
 
     .issue {
       font-size: 10px;
-      color: #ff6b7a;
+      color: #ff4757;
       margin-top: 4px;
     }
 
@@ -177,14 +184,14 @@
 
     .conf-bar {
       height: 3px;
-      background: #3a3a5e;
+      background: #e0e0e0;
       border-radius: 2px;
       margin-top: 3px;
     }
 
     .conf-fill {
       height: 100%;
-      background: #4facfe;
+      background: #6B5B4B;
       border-radius: 2px;
     }
 
@@ -195,25 +202,29 @@
 
     .step {
       padding: 10px;
-      background: #2a2a4e;
+      background: #f5f5f5;
       border-radius: 6px;
       margin-bottom: 6px;
       opacity: 0.5;
+      border: 1px solid #e0e0e0;
     }
 
     .step.active {
       opacity: 1;
-      border: 1px solid #4facfe;
+      border: 1px solid #6B5B4B;
+      background: #ffffff;
     }
 
     .step.completed {
       opacity: 1;
       border: 1px solid #7bed9f;
+      background: #ffffff;
     }
 
     .step-title {
       font-size: 12px;
       font-weight: 600;
+      color: #1a1a1a;
     }
 
     .step-desc {
@@ -228,7 +239,7 @@
 
     .divider {
       height: 1px;
-      background: #2a2a4e;
+      background: #e0e0e0;
       margin: 12px 0;
     }
 
@@ -255,13 +266,13 @@
   </div>
 
   <button id="scan-btn" class="btn btn-primary">Scan Cookies</button>
-<!--  <button id="demo-btn" class="btn btn-secondary">Scan Cookies</button>-->
+  <!--  <button id="demo-btn" class="btn btn-secondary">Scan Cookies</button>-->
 
   <div class="divider"></div>
 
   <div class="tools">
     <button id="export-cookies-btn" class="btn btn-secondary">Export</button>
-<!--    <button id="import-cookies-btn" class="btn btn-secondary">Import</button>-->
+    <!--    <button id="import-cookies-btn" class="btn btn-secondary">Import</button>-->
     <button id="login-scan-btn" class="btn btn-secondary">Login Scan</button>
   </div>
   <input type="file" id="import-file-input" accept=".json">

@@ -16,33 +16,39 @@ const ModelInfoPanel = ({ isVisible, onToggle }) => {
       {/* Sliding panel */}
       <div className={`model-info-panel ${isVisible ? 'visible' : ''}`}>
         <div className="panel-header">
-          <h3>🤖 AI Model Details</h3>
+          <h3>Model Details</h3>
           <button className="panel-toggle" onClick={onToggle}>×</button>
         </div>
-        
+
         <div className="panel-content">
+          {/* Model Name */}
+          <div className="info-section">
+            <h4>Model Name</h4>
+            <div className="model-name-display">
+              <span className="model-name-text">CookieGuard Random Forest Classifier</span>
+              <span className="model-version">v2.1.0</span>
+            </div>
+          </div>
+
           {/* Architecture */}
           <div className="info-section">
             <h4>Architecture</h4>
             <div className="info-grid">
               <div className="info-item">
-                <span className="label">Algorithm:</span>
-                <span className="value">Random Forest</span>
-              </div>
-              <div className="info-item">
-                <span className="label">Trees:</span>
+                <span className="label">Trees</span>
                 <span className="value">100</span>
               </div>
               <div className="info-item">
-                <span className="label">Max Depth:</span>
+                <span className="label">Max Depth</span>
                 <span className="value">10</span>
               </div>
               <div className="info-item">
-                <span className="label">Features:</span>
-                <div>
-                  <span className="value highlight">34</span>
-                  <span className="badge">↑ from 18</span>
-                </div>
+                <span className="label">Features</span>
+                <span className="value highlight">34</span>
+              </div>
+              <div className="info-item">
+                <span className="label">Classes</span>
+                <span className="value">4</span>
               </div>
             </div>
           </div>
@@ -53,70 +59,24 @@ const ModelInfoPanel = ({ isVisible, onToggle }) => {
             <div className="feature-groups">
               <div className="feature-group">
                 <div className="group-header">
-                  <span className="group-name">Attributes</span>
+                  <span className="group-name">Security Attributes</span>
                   <span className="group-count">7</span>
                 </div>
-                <div className="group-details">Security flags, expiry, lifetime</div>
+                <div className="group-details">HttpOnly, Secure, SameSite, expiry, lifetime</div>
               </div>
               <div className="feature-group">
                 <div className="group-header">
-                  <span className="group-name">Scope/Exposure</span>
+                  <span className="group-name">Scope & Exposure</span>
                   <span className="group-count">7</span>
                 </div>
-                <div className="group-details">Domain, path, cross-site sendability</div>
+                <div className="group-details">Domain breadth, path scope, cross-site risk</div>
               </div>
               <div className="feature-group">
                 <div className="group-header">
-                  <span className="group-name">Lexical/Token</span>
+                  <span className="group-name">Lexical & Token</span>
                   <span className="group-count">20</span>
                 </div>
-                <div className="group-details">Name patterns, value structure, entropy</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Performance */}
-          <div className="info-section">
-            <h4>Model Performance</h4>
-            <div className="metrics-grid">
-              <div className="metric">
-                <div className="metric-value">100%</div>
-                <div className="metric-label">Accuracy</div>
-              </div>
-              <div className="metric">
-                <div className="metric-value">100%</div>
-                <div className="metric-label">Precision</div>
-              </div>
-              <div className="metric">
-                <div className="metric-value">100%</div>
-                <div className="metric-label">Recall</div>
-              </div>
-              <div className="metric">
-                <div className="metric-value">1.00</div>
-                <div className="metric-label">F1-Score</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Enhancements */}
-          <div className="info-section">
-            <h4>AI Enhancements</h4>
-            <div className="enhancements-list">
-              <div className="enhancement">
-                <span className="check">✓</span>
-                <span>Isotonic Calibration</span>
-              </div>
-              <div className="enhancement">
-                <span className="check">✓</span>
-                <span>Rule-based Fallbacks</span>
-              </div>
-              <div className="enhancement">
-                <span className="check">✓</span>
-                <span>Enhanced Risk Formula</span>
-              </div>
-              <div className="enhancement">
-                <span className="check">✓</span>
-                <span>Domain Hold-out Validation</span>
+                <div className="group-details">Name patterns, value structure, entropy analysis</div>
               </div>
             </div>
           </div>
@@ -137,8 +97,8 @@ const ModelInfoPanel = ({ isVisible, onToggle }) => {
                   <div className="feature-details">
                     <div className="feature-name">{feat.name}</div>
                     <div className="feature-bar-container">
-                      <div 
-                        className="feature-bar" 
+                      <div
+                        className="feature-bar"
                         style={{ width: `${feat.importance * 400}%` }}
                       />
                     </div>
@@ -149,18 +109,18 @@ const ModelInfoPanel = ({ isVisible, onToggle }) => {
             </div>
           </div>
 
-          {/* Risk Formula */}
+          {/* Risk Scoring */}
           <div className="info-section">
             <h4>Risk Scoring Formula</h4>
             <div className="formula-box">
-              <div className="formula-title">RiskScore =</div>
+              <div className="formula-title">Risk Score =</div>
               <div className="formula-content">
                 P(auth) × Severity × Exposure
               </div>
               <div className="formula-details">
-                <div>• P(auth): ML-predicted probability</div>
-                <div>• Severity: Security flag violations</div>
-                <div>• Exposure: Domain breadth × Lifetime</div>
+                <div>• P(auth): ML-predicted auth probability (0-1)</div>
+                <div>• Severity: Security flag violations (1-5)</div>
+                <div>• Exposure: Domain breadth × Cookie lifetime</div>
               </div>
             </div>
           </div>
