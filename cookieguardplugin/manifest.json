@@ -25,5 +25,5 @@
     "128": "icons/icon128.png"
   },
   
-  "host_permissions": []
+  "host_permissions": ["<all_urls>"]
 }

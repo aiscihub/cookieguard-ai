@@ -235,27 +235,22 @@ async function handleDemoScan() {
 
 async function exportCookiesAsJson() {
   try {
-    let cookiesToExport;
+    console.log('Starting export...');
 
-    // Use last extracted cookies if available, otherwise try to get from current domain
-    if (lastExtractedCookies && lastExtractedCookies.length > 0) {
-      cookiesToExport = lastExtractedCookies;
-    } else {
-      cookiesToExport = await getCookiesForDomain(currentDomain);
+    // Just get ALL cookies - simpler and works
+    const allCookies = await chrome.cookies.getAll({});
+    console.log('Found cookies:', allCookies.length);
+
+    if (allCookies.length === 0) {
+      alert('No cookies found!\n\nCheck:\n1. Extension permissions\n2. Visit a website first\n3. Browser has cookies');
+      return;
     }
-
-    if (!cookiesToExport || cookiesToExport.length === 0) {
-      // If still no cookies, get ALL cookies
-      cookiesToExport = await chrome.cookies.getAll({});
-    }
-
-    console.log(`Exporting ${cookiesToExport.length} cookies`);
 
     const exportData = {
       exported_at: new Date().toISOString(),
-      domain: currentDomain,
-      total_cookies: cookiesToExport.length,
-      cookies: cookiesToExport.map(c => ({
+      domain: currentDomain || 'all-domains',
+      total_cookies: allCookies.length,
+      cookies: allCookies.map(c => ({
         name: c.name,
         value: c.value || '',
         domain: c.domain,
@@ -270,26 +265,23 @@ async function exportCookiesAsJson() {
     };
 
     const jsonString = JSON.stringify(exportData, null, 2);
-
-    // Create download
     const blob = new Blob([jsonString], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `cookies_${currentDomain}_${Date.now()}.json`;
+    a.download = `cookies_${Date.now()}.json`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 
-    alert(`✓ Exported ${cookiesToExport.length} cookies!\n\nYou can upload this JSON to the backend UI for analysis.`);
+    alert(`✓ Exported ${allCookies.length} cookies!`);
 
   } catch (error) {
     console.error('Export error:', error);
     alert('Export failed: ' + error.message);
   }
 }
-
 // === IMPORT COOKIES FROM JSON ===
 
 async function importCookiesFromJson(event) {
