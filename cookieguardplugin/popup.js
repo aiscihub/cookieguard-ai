@@ -1,18 +1,19 @@
-// popup.js - CookieGuard AI Enhanced with Demo Support
+// popup.js - CookieGuard AI Enhanced with Better Loading States
 // Supports: Login detection, Before/After comparison, Demo scenarios
 
 let currentDomain = '';
 let beforeLoginCookies = null;
 let afterLoginCookies = null;
 let analysisResults = null;
-let previousAnalysis = null; // Store for before/after comparison
+let previousAnalysis = null;
 let loginEventDetected = false;
+let isScanning = false; // Prevent double-scanning
 
 // Configuration
 const CONFIG = {
   useBackend: true,
   backendURL: 'http://localhost:5000',
-  demoSiteURL: 'http://localhost:3000',
+  demoSiteURL: 'http://localhost:8000',
   analysisMode: 'backend'
 };
 
@@ -46,13 +47,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Check backend availability
   if (CONFIG.useBackend) {
-    checkBackendHealth();
+    await checkBackendHealth();
   }
 
   updateBackendStatus();
 
   // Check if we're on the demo site
-  if (currentDomain.includes('localhost:3000') || currentDomain.includes('127.0.0.1:3000')) {
+  if (currentDomain.includes('localhost:8000') || currentDomain.includes('127.0.0.1:8000')) {
     showDemoSiteIndicator();
   }
 });
@@ -64,6 +65,7 @@ function showMainView() {
   document.getElementById('loading-view').style.display = 'none';
   document.getElementById('results-view').style.display = 'none';
   document.getElementById('login-flow-view').style.display = 'none';
+  isScanning = false; // Reset scanning flag
 }
 
 function showLoadingView() {
@@ -79,6 +81,7 @@ function showResultsView() {
   document.getElementById('results-view').style.display = 'block';
   document.getElementById('login-flow-view').style.display = 'none';
   document.getElementById('results-domain').textContent = currentDomain;
+  isScanning = false; // Reset scanning flag
 }
 
 function showLoginFlow() {
@@ -122,14 +125,16 @@ async function checkBackendHealth() {
     if (response.ok) {
       CONFIG.analysisMode = 'backend';
       console.log('✓ Backend available');
+      return true;
     } else {
       CONFIG.analysisMode = 'local';
+      return false;
     }
   } catch (error) {
     CONFIG.analysisMode = 'local';
     console.log('⚠️ Backend not available, using local analysis');
+    return false;
   }
-  updateBackendStatus();
 }
 
 // === DEMO SITE INDICATOR ===
@@ -154,6 +159,13 @@ function showDemoSiteIndicator() {
 // === MAIN SCAN ===
 
 async function handleScan() {
+  // Prevent double-clicking
+  if (isScanning) {
+    console.log('Scan already in progress, ignoring...');
+    return;
+  }
+
+  isScanning = true;
   showLoadingView();
   console.log('🔍 Starting scan...');
 
@@ -162,12 +174,12 @@ async function handleScan() {
     const cookies = await chrome.cookies.getAll({ domain: currentDomain });
 
     if (cookies.length === 0) {
-      alert('No cookies found for this domain.');
+      alert('No cookies found for this domain.\n\nTry:\n1. Visit a website first\n2. Make sure the site sets cookies\n3. For demo: visit localhost:8000 and click Login');
       showMainView();
       return;
     }
 
-    console.log(`Found ${cookies.length} cookies`);
+    console.log(`Found ${cookies.length} cookies:`, cookies.map(c => c.name));
 
     // Store previous analysis for comparison
     if (analysisResults) {
@@ -177,13 +189,19 @@ async function handleScan() {
     // Analyze cookies
     const results = await analyzeCookies(cookies);
 
+    if (!results) {
+      throw new Error('Analysis returned no results');
+    }
+
+    console.log('Analysis complete:', results);
+
     // Display results
     displayResults(results);
     showResultsView();
 
   } catch (error) {
     console.error('Scan error:', error);
-    alert('Scan failed: ' + error.message);
+    alert('Scan failed: ' + error.message + '\n\nCheck:\n1. Backend is running (port 5000)\n2. Console for errors (F12)');
     showMainView();
   }
 }
@@ -267,6 +285,8 @@ function detectLoginChanges(before, after) {
 // === COOKIE ANALYSIS ===
 
 async function analyzeCookies(cookies, context = {}) {
+  console.log(`Analyzing ${cookies.length} cookies, mode: ${CONFIG.analysisMode}`);
+
   if (CONFIG.analysisMode === 'backend') {
     return await analyzeWithBackend(cookies, context);
   } else {
@@ -276,47 +296,96 @@ async function analyzeCookies(cookies, context = {}) {
 
 async function analyzeWithBackend(cookies, context) {
   try {
+    console.log('Sending to backend:', `${CONFIG.backendURL}/api/analyze`);
+
+    const requestBody = {
+      domain: currentDomain,
+      cookies: cookies.map(c => ({
+        name: c.name,
+        domain: c.domain,
+        path: c.path,
+        secure: c.secure,
+        httpOnly: c.httpOnly,
+        sameSite: c.sameSite,
+        expirationDate: c.expirationDate,
+        hostOnly: c.hostOnly,
+        value: c.value
+      })),
+      context: context
+    };
+
+    console.log('Request body:', requestBody);
+
     const response = await fetch(`${CONFIG.backendURL}/api/analyze`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        cookies: cookies.map(c => ({
-          name: c.name,
-          domain: c.domain,
-          path: c.path,
-          secure: c.secure,
-          httpOnly: c.httpOnly,
-          sameSite: c.sameSite,
-          expirationDate: c.expirationDate,
-          value: c.value
-        })),
-        context: context
-      })
+      body: JSON.stringify(requestBody)
     });
 
+    console.log('Backend response status:', response.status);
+
     if (!response.ok) {
-      throw new Error('Backend analysis failed');
+      const errorText = await response.text();
+      console.error('Backend error:', errorText);
+      throw new Error(`Backend returned ${response.status}: ${errorText}`);
     }
 
     const data = await response.json();
+    console.log('Backend response data:', data);
+
+    if (!data.results) {
+      throw new Error('Backend returned no results');
+    }
 
     // Store results
     analysisResults = {
-      cookies: data.results.map((r, i) => ({
-        cookie: cookies[i],
-        classification: r.ml_classification,
-        risk: {
-          score: r.risk_assessment.score,
-          severity: r.risk_assessment.severity,
-          issues: r.issues
-        },
-        summary: r.summary,
-        recommendations: r.recommendations
-      })),
+      cookies: (() => {
+        // Map raw cookies by (name,domain,path) for lookup
+        const cookieIndex = new Map();
+        cookies.forEach(c => {
+          const key = `${c.name}||${c.domain}||${c.path}`;
+          cookieIndex.set(key, c);
+        });
+
+        return (data.results || []).map((r) => {
+          // Prefer backend-normalized attributes for display (single source of truth)
+          const attrs = r.cookie_attributes || {};
+          const name = r.cookie_name || attrs.name || '(unknown)';
+          const domain = attrs.domain ?? r.cookie_domain;
+          const path = attrs.path ?? '/';
+
+          const key = `${name}||${domain}||${path}`;
+          const raw = cookieIndex.get(key);
+
+          const displayCookie = {
+            name,
+            domain,
+            path,
+            secure: attrs.secure ?? raw?.secure,
+            httpOnly: attrs.httpOnly ?? raw?.httpOnly,
+            sameSite: attrs.sameSite ?? raw?.sameSite,
+            expirationDate: attrs.expirationDate ?? raw?.expirationDate,
+            hostOnly: attrs.hostOnly ?? raw?.hostOnly
+          };
+
+          return {
+            cookie: displayCookie,
+            classification: r.ml_classification,
+            risk: {
+              score: r.risk_assessment?.score ?? 0,
+              severity: r.risk_assessment?.severity ?? 'info',
+              issues: r.issues || []
+            },
+            summary: r.summary,
+            recommendations: r.recommendations || []
+          };
+        });
+      })(),
       summary: data.summary_stats,
       context: context
     };
 
+    console.log('Analysis results:', analysisResults);
     return analysisResults;
 
   } catch (error) {
@@ -327,6 +396,8 @@ async function analyzeWithBackend(cookies, context) {
 }
 
 async function analyzeLocally(cookies, context) {
+  console.log('Using local analysis');
+
   // Simple local classification
   const results = cookies.map(cookie => {
     const classification = classifyLocally(cookie);
@@ -359,6 +430,7 @@ async function analyzeLocally(cookies, context) {
     context: context
   };
 
+  console.log('Local analysis results:', analysisResults);
   return analysisResults;
 }
 
@@ -478,6 +550,13 @@ function generateRecommendations(cookie, risk) {
 // === RESULTS DISPLAY ===
 
 function displayResults(results) {
+  if (!results || !results.summary) {
+    console.error('Invalid results:', results);
+    alert('Error: Invalid analysis results');
+    showMainView();
+    return;
+  }
+
   // Show login event badge if detected
   if (results.context?.loginEvent || loginEventDetected) {
     const badge = document.getElementById('login-event-badge');
@@ -524,10 +603,14 @@ function displayResults(results) {
   const listDiv = document.getElementById('cookie-list');
   listDiv.innerHTML = '';
 
-  results.cookies.forEach(item => {
-    const card = createCookieCard(item);
-    listDiv.appendChild(card);
-  });
+  if (results.cookies && results.cookies.length > 0) {
+    results.cookies.forEach(item => {
+      const card = createCookieCard(item);
+      listDiv.appendChild(card);
+    });
+  } else {
+    listDiv.innerHTML = '<div style="text-align:center;padding:20px;color:#666;">No cookies analyzed</div>';
+  }
 }
 
 function showComparison(before, after) {
@@ -593,11 +676,15 @@ function findFixedIssues(before, after) {
   const afterIssues = new Set();
 
   before.cookies.forEach(c => {
-    c.risk.issues.forEach(i => beforeIssues.add(i.title));
+    if (c.risk && c.risk.issues) {
+      c.risk.issues.forEach(i => beforeIssues.add(i.title));
+    }
   });
 
   after.cookies.forEach(c => {
-    c.risk.issues.forEach(i => afterIssues.add(i.title));
+    if (c.risk && c.risk.issues) {
+      c.risk.issues.forEach(i => afterIssues.add(i.title));
+    }
   });
 
   beforeIssues.forEach(issue => {
@@ -619,7 +706,7 @@ function createCookieCard(item) {
   if (item.risk.issues && item.risk.issues.length > 0) {
     issuesHTML = '<div class="issue-list">';
     item.risk.issues.slice(0, 2).forEach(issue => {
-      issuesHTML += `<div class="issue">${issue.title}</div>`;
+      issuesHTML += `<div class="issue">${escapeHtml(issue.title)}</div>`;
     });
     if (item.risk.issues.length > 2) {
       issuesHTML += `<div class="issue">+${item.risk.issues.length - 2} more</div>`;
@@ -673,11 +760,11 @@ function showCookieDetails(item) {
     <div class="modal-section">
       <div class="modal-section-title">Cookie Attributes</div>
       <div class="modal-text">
-        Domain: ${item.cookie.domain}<br>
+        Domain: ${item.cookie.domain || '(host-only)'}<br>
         Path: ${item.cookie.path}<br>
         Secure: ${item.cookie.secure ? '✓ Yes' : '✗ No'}<br>
         HttpOnly: ${item.cookie.httpOnly ? '✓ Yes' : '✗ No'}<br>
-        SameSite: ${item.cookie.sameSite || 'None'}
+        SameSite: ${formatSameSite(item.cookie.sameSite)}
       </div>
     </div>
   `;
@@ -690,8 +777,8 @@ function showCookieDetails(item) {
     `;
     item.risk.issues.forEach(issue => {
       detailsHTML += `
-        <strong>[${issue.severity.toUpperCase()}] ${issue.title}</strong><br>
-        ${issue.description}<br><br>
+        <strong>[${issue.severity.toUpperCase()}] ${escapeHtml(issue.title)}</strong><br>
+        ${escapeHtml(issue.description)}<br><br>
       `;
     });
     detailsHTML += '</div></div>';
@@ -704,7 +791,7 @@ function showCookieDetails(item) {
         <div class="modal-text">
     `;
     item.recommendations.forEach(rec => {
-      detailsHTML += `• ${rec}<br>`;
+      detailsHTML += `• ${escapeHtml(rec)}<br>`;
     });
     detailsHTML += '</div></div>';
   }
@@ -797,6 +884,17 @@ async function exportCookiesAsJson() {
     console.error('Export error:', error);
     alert('Export failed: ' + error.message);
   }
+}
+
+
+function formatSameSite(v) {
+  if (!v) return 'None';
+  const s = String(v).toLowerCase();
+  if (s === 'no_restriction') return 'None';
+  if (s === 'none') return 'None';
+  if (s === 'lax') return 'Lax';
+  if (s === 'strict') return 'Strict';
+  return v;
 }
 
 // === UTILITIES ===

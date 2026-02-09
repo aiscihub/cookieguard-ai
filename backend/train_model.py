@@ -31,8 +31,8 @@ def train_model():
         with open(data_path,'r') as f: training_data = json.load(f)
         print(f"      Loaded {len(training_data)} samples")
     
-    # Extract features (now 34 instead of 18!)
-    print("\n[2/5] Extracting features (34 features)...")
+    # Extract features (now 35 instead of 18!)
+    print("\n[2/5] Extracting features (35 features)...")
     extractor = CookieFeatureExtractor()
     feature_names = extractor.get_feature_names()
     label_map = {'other':0, 'authentication':1, 'tracking':2, 'preference':3}
@@ -45,7 +45,7 @@ def train_model():
         domains.append(cookie['domain'])
     
     X, y = np.array(X), np.array(y)
-    print(f"      Feature matrix: {X.shape} (was n×18, now n×34)")
+    print(f"      Feature matrix: {X.shape} (was n×18, now n×35)")
     print(f"      Distribution: {dict(zip(*np.unique(y,return_counts=True)))}")
     
     # Train/val split

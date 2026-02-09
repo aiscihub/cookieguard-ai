@@ -19,6 +19,65 @@ from risk_scorer import RiskScorer
 app = Flask(__name__)
 CORS(app)  # Enable CORS for frontend
 
+def _coerce_bool(v):
+    if v is None:
+        return None
+    if isinstance(v, bool):
+        return v
+    if isinstance(v, (int, float)):
+        return bool(v)
+    if isinstance(v, str):
+        s = v.strip().lower()
+        if s in ('true','1','yes','y','✓','✓ yes','on'):
+            return True
+        if s in ('false','0','no','n','✗','✗ no','off'):
+            return False
+    return bool(v)
+
+def normalize_cookie(raw: dict) -> dict:
+    """Normalize cookie keys/types so scoring + UI use the same truth."""
+    if raw is None:
+        return {}
+    c = dict(raw)
+    # Key normalization (common variants)
+    key_map = {
+        'HttpOnly': 'httpOnly',
+        'httponly': 'httpOnly',
+        'http_only': 'httpOnly',
+        'Secure': 'secure',
+        'SameSite': 'sameSite',
+        'expires': 'expirationDate',
+        'expiry': 'expirationDate',
+        'expiration': 'expirationDate',
+        'host_only': 'hostOnly',
+        'HostOnly': 'hostOnly',
+    }
+    for k, v in list(c.items()):
+        if k in key_map and key_map[k] not in c:
+            c[key_map[k]] = v
+
+    # Coerce boolean-ish flags
+    if 'httpOnly' in c:
+        c['httpOnly'] = bool(_coerce_bool(c.get('httpOnly')))
+    if 'secure' in c:
+        c['secure'] = bool(_coerce_bool(c.get('secure')))
+    if 'hostOnly' in c and c.get('hostOnly') is not None:
+        c['hostOnly'] = bool(_coerce_bool(c.get('hostOnly')))
+
+    # SameSite normalization (Chrome strings -> RFC-ish labels)
+    ss = c.get('sameSite')
+    if isinstance(ss, str):
+        s = ss.strip().lower()
+        if s in ('no_restriction', 'none'):
+            c['sameSite'] = 'None'
+        elif s == 'lax':
+            c['sameSite'] = 'Lax'
+        elif s == 'strict':
+            c['sameSite'] = 'Strict'
+
+    return c
+
+
 # Initialize components
 extractor = CookieFeatureExtractor()
 classifier = None
@@ -107,7 +166,18 @@ def analyze_cookies():
     
     try:
         data = request.get_json()
+        site_host = (data.get('domain') or data.get('host') or '').strip() or None
         cookies = data.get('cookies', [])
+        # Normalize + de-duplicate cookies (name, domain, path)
+        normalized = [normalize_cookie(c) for c in cookies]
+        seen = set()
+        cookies = []
+        for c in normalized:
+            key = (c.get('name'), c.get('domain'), c.get('path'))
+            if key in seen:
+                continue
+            seen.add(key)
+            cookies.append(c)
         
         if not cookies:
             return jsonify({'error': 'No cookies provided'}), 400
@@ -124,7 +194,7 @@ def analyze_cookies():
             # Risk analysis
             analysis = scorer.analyze_cookie(
                 cookie, ml_type, ml_confidence, ml_probs
-            )
+            , site_host=site_host)
             
             results.append(analysis)
         
