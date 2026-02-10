@@ -9,6 +9,16 @@ let previousAnalysis = null;
 let loginEventDetected = false;
 let isScanning = false; // Prevent double-scanning
 
+
+let userPrefs = { overrides: {}, ignored: {} };
+let currentModalItem = null;
+
+const UI_CONFIG = {
+  reviewConfidenceThreshold: 0.75,  // below this, downgrade critical/high to "Review"
+  maxEvidenceChips: 3
+};
+
+
 // Configuration
 const CONFIG = {
   useBackend: true,
@@ -41,6 +51,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('export-btn').addEventListener('click', exportReport);
   document.getElementById('export-cookies-btn')?.addEventListener('click', exportCookiesAsJson);
 
+  // Modal actions (reduce false positives)
+  document.getElementById('btn-mark-not-auth')?.addEventListener('click', markCurrentCookieNotAuth);
+  document.getElementById('btn-ignore-cookie')?.addEventListener('click', ignoreCurrentCookie);
+
   // Login flow buttons
   document.getElementById('capture-before-btn')?.addEventListener('click', captureBeforeLogin);
   document.getElementById('capture-after-btn')?.addEventListener('click', captureAfterLogin);
@@ -50,6 +64,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     await checkBackendHealth();
   }
 
+  await loadUserPrefs();
   updateBackendStatus();
 
   // Check if we're on the demo site
@@ -578,23 +593,39 @@ function displayResults(results) {
     document.getElementById('comparison-view').style.display = 'none';
   }
 
+
+  // Apply user overrides / ignore list
+  const visibleCookies = (results.cookies || [])
+    .map(c => applyUserOverrides(c))
+    .filter(c => !isIgnored(c));
+
+  // Recompute summary using "effective severity" to reduce noisy false positives in UI
+  const derivedSummary = {
+    total_cookies: visibleCookies.length,
+    critical: 0, high: 0, medium: 0, low: 0, info: 0
+  };
+
+  visibleCookies.forEach(item => {
+    const s = getEffectiveSeverity(item);
+    if (derivedSummary[s] !== undefined) derivedSummary[s] += 1;
+  });
+
   // Display summary
-  const summary = results.summary;
   document.getElementById('risk-summary').innerHTML = `
     <div class="stat critical">
-      <div class="stat-num">${summary.critical || 0}</div>
+      <div class="stat-num">${derivedSummary.critical}</div>
       <div class="stat-label">Critical</div>
     </div>
     <div class="stat high">
-      <div class="stat-num">${summary.high || 0}</div>
+      <div class="stat-num">${derivedSummary.high}</div>
       <div class="stat-label">High</div>
     </div>
     <div class="stat medium">
-      <div class="stat-num">${summary.medium || 0}</div>
+      <div class="stat-num">${derivedSummary.medium}</div>
       <div class="stat-label">Medium</div>
     </div>
     <div class="stat low">
-      <div class="stat-num">${summary.low || 0}</div>
+      <div class="stat-num">${derivedSummary.low}</div>
       <div class="stat-label">Low</div>
     </div>
   `;
@@ -603,14 +634,17 @@ function displayResults(results) {
   const listDiv = document.getElementById('cookie-list');
   listDiv.innerHTML = '';
 
-  if (results.cookies && results.cookies.length > 0) {
-    results.cookies.forEach(item => {
+  if (visibleCookies.length > 0) {
+    visibleCookies.sort((a, b) => (b.risk?.score || 0) - (a.risk?.score || 0));
+    visibleCookies.forEach(item => {
       const card = createCookieCard(item);
       listDiv.appendChild(card);
     });
   } else {
-    listDiv.innerHTML = '<div style="text-align:center;padding:20px;color:#666;">No cookies analyzed</div>';
+    listDiv.innerHTML = '<div style="text-align:center;padding:20px;color:#666;">No cookies to display (ignored or none found)</div>';
   }
+
+
 }
 
 function showComparison(before, after) {
@@ -696,17 +730,22 @@ function findFixedIssues(before, after) {
   return fixed;
 }
 
+
 function createCookieCard(item) {
   const div = document.createElement('div');
-  div.className = `cookie-card ${item.risk.severity}`;
+
+  const effectiveSeverity = getEffectiveSeverity(item);
+  div.className = `cookie-card ${effectiveSeverity}`;
 
   const typeClass = item.classification.type === 'authentication' ? 'auth' : '';
+  const reviewPill = item._needsReview ? '<span class="pill review">Review</span>' : '';
 
+  // Top issues (formatted)
   let issuesHTML = '';
   if (item.risk.issues && item.risk.issues.length > 0) {
     issuesHTML = '<div class="issue-list">';
     item.risk.issues.slice(0, 2).forEach(issue => {
-      issuesHTML += `<div class="issue">${escapeHtml(issue.title)}</div>`;
+      issuesHTML += `<div class="issue">${escapeHtml(formatIssueTitle(issue.title))}</div>`;
     });
     if (item.risk.issues.length > 2) {
       issuesHTML += `<div class="issue">+${item.risk.issues.length - 2} more</div>`;
@@ -714,26 +753,44 @@ function createCookieCard(item) {
     issuesHTML += '</div>';
   }
 
+  // Evidence chips
+  const evidence = buildEvidence(item);
+  const chipsHTML = evidence.length
+    ? `<div class="chip-row">${evidence.map(c => `<span class="chip ${c.kind}">${escapeHtml(c.text)}</span>`).join('')}</div>`
+    : '';
+
+  const authConfPct = ((item.classification.confidence ?? 0) * 100).toFixed(0);
+  const riskScore = item.risk?.score ?? 0;
+  const riskLabel = (effectiveSeverity || 'info').toUpperCase();
+
   div.innerHTML = `
     <div class="cookie-header">
-      <div class="cookie-name">${escapeHtml(item.cookie.name)}</div>
-      <div class="cookie-type ${typeClass}">${item.classification.type}</div>
+      <div class="cookie-name">${escapeHtml(item.cookie.name)}${reviewPill}</div>
+      <div class="cookie-type ${typeClass}">${escapeHtml(item.classification.type)}</div>
     </div>
+
+    <div class="mini-metrics">
+      <div>Auth confidence: <strong>${authConfPct}%</strong></div>
+      <div>Risk: <strong>${riskLabel}</strong> (${riskScore}/100)</div>
+    </div>
+
     ${issuesHTML}
+    ${chipsHTML}
+
     <div class="confidence">
-      Confidence: ${(item.classification.confidence * 100).toFixed(0)}%
+      Auth confidence
       <div class="conf-bar">
-        <div class="conf-fill" style="width: ${item.classification.confidence * 100}%"></div>
+        <div class="conf-fill" style="width: ${authConfPct}%"></div>
       </div>
     </div>
   `;
 
   div.addEventListener('click', () => showCookieDetails(item));
-
   return div;
 }
 
 function showCookieDetails(item) {
+  currentModalItem = item;
   const modal = document.getElementById('cookie-modal');
   const nameEl = document.getElementById('modal-cookie-name');
   const bodyEl = document.getElementById('modal-body');
@@ -767,6 +824,14 @@ function showCookieDetails(item) {
         SameSite: ${formatSameSite(item.cookie.sameSite)}
       </div>
     </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">Evidence</div>
+      <div class="modal-text">
+        ${buildEvidence(item).map(c => `• ${escapeHtml(c.text)}`).join('<br>') || '• (No additional evidence)'}
+        ${item._overrideNote ? `<br><br><em>${escapeHtml(item._overrideNote)}</em>` : ''}
+      </div>
+    </div>
   `;
 
   if (item.risk.issues && item.risk.issues.length > 0) {
@@ -777,7 +842,7 @@ function showCookieDetails(item) {
     `;
     item.risk.issues.forEach(issue => {
       detailsHTML += `
-        <strong>[${issue.severity.toUpperCase()}] ${escapeHtml(issue.title)}</strong><br>
+        <strong>[${issue.severity.toUpperCase()}] ${escapeHtml(formatIssueTitle(issue.title))}</strong><br>
         ${escapeHtml(issue.description)}<br><br>
       `;
     });
@@ -803,6 +868,35 @@ function showCookieDetails(item) {
 function closeModal() {
   document.getElementById('cookie-modal').classList.remove('active');
 }
+
+
+function markCurrentCookieNotAuth() {
+  if (!currentModalItem) return;
+  const key = prefKeyForCookie(currentModalItem);
+  userPrefs.overrides = userPrefs.overrides || {};
+  userPrefs.overrides[key] = 'not_auth';
+  saveUserPrefs();
+  // Refresh view
+  closeModal();
+  if (analysisResults) {
+    displayResults(analysisResults);
+    showResultsView();
+  }
+}
+
+function ignoreCurrentCookie() {
+  if (!currentModalItem) return;
+  const key = prefKeyForCookie(currentModalItem);
+  userPrefs.ignored = userPrefs.ignored || {};
+  userPrefs.ignored[key] = true;
+  saveUserPrefs();
+  closeModal();
+  if (analysisResults) {
+    displayResults(analysisResults);
+    showResultsView();
+  }
+}
+
 
 // === EXPORT ===
 
@@ -896,6 +990,118 @@ function formatSameSite(v) {
   if (s === 'strict') return 'Strict';
   return v;
 }
+
+
+// === USER PREFS (Overrides / Ignore) ===
+
+async function loadUserPrefs() {
+  try {
+    const data = await chrome.storage.local.get(['cookieguard_prefs_v1']);
+    if (data && data.cookieguard_prefs_v1) {
+      userPrefs = data.cookieguard_prefs_v1;
+    }
+  } catch (e) {
+    console.warn('Failed to load user prefs', e);
+  }
+}
+
+async function saveUserPrefs() {
+  try {
+    await chrome.storage.local.set({ cookieguard_prefs_v1: userPrefs });
+  } catch (e) {
+    console.warn('Failed to save user prefs', e);
+  }
+}
+
+function prefKeyForCookie(item) {
+  const name = item?.cookie?.name || item?.cookie_name || '(unknown)';
+  return `${currentDomain}||${name}`;
+}
+
+function applyUserOverrides(item) {
+  const key = prefKeyForCookie(item);
+  const override = userPrefs.overrides?.[key];
+  if (override === 'not_auth') {
+    // Override classification to reduce false positives
+    item.classification = item.classification || {};
+    item.classification.type = 'other';
+    item.classification.confidence = Math.min(item.classification.confidence ?? 0.6, 0.55);
+    item._overrideNote = 'User marked as not auth';
+  }
+  return item;
+}
+
+function isIgnored(item) {
+  const key = prefKeyForCookie(item);
+  return Boolean(userPrefs.ignored?.[key]);
+}
+
+function getEffectiveSeverity(item) {
+  const sev = item?.risk?.severity || 'info';
+  const conf = item?.classification?.confidence ?? 0.0;
+
+  // Downgrade noisy alerts when auth confidence is low
+  if ((sev === 'critical' || sev === 'high') && conf < UI_CONFIG.reviewConfidenceThreshold) {
+    item._needsReview = true;
+    return 'medium';
+  }
+  item._needsReview = false;
+  return sev;
+}
+
+function formatIssueTitle(title) {
+  if (!title) return '';
+  return title
+    .replace(/^Missing\s+/i, 'Risk: ')
+    .replace(/\s+Flag$/i, ' not set')
+    .replace(/\s+Protection$/i, ' protection weak');
+}
+
+function isFirstParty(cookie) {
+  const d = (cookie?.domain || '').replace(/^\./, '');
+  return d === currentDomain || d.endsWith('.' + currentDomain);
+}
+
+function buildEvidence(item) {
+  const chips = [];
+
+  // Context chips (first/third party + scope)
+  const fp = isFirstParty(item.cookie) ? 'First-party' : 'Third-party';
+  chips.push({ text: fp, kind: 'primary' });
+
+  if (item.cookie?.hostOnly) {
+    chips.push({ text: 'Host-only scope', kind: 'primary' });
+  } else if (item.cookie?.domain && String(item.cookie.domain).startsWith('.')) {
+    chips.push({ text: 'Shared across subdomains', kind: 'warn' });
+  }
+
+  // Name patterns
+  const n = (item.cookie?.name || '').toLowerCase();
+  if (/(session|sid|auth|token|login)/.test(n)) {
+    chips.push({ text: 'Identity keyword in name', kind: 'primary' });
+  }
+
+  // Login-aware signal (if available)
+  const changed = analysisResults?.context?.changedCookies || [];
+  if (changed.includes(item.cookie?.name)) {
+    chips.push({ text: 'Changed during login', kind: 'primary' });
+  }
+
+  // Misconfig signals
+  if (item.risk?.issues?.some(i => (i.title || '').toLowerCase().includes('httponly'))) {
+    chips.push({ text: 'XSS exposure risk', kind: 'bad' });
+  }
+  if (item.risk?.issues?.some(i => (i.title || '').toLowerCase().includes('samesite'))) {
+    chips.push({ text: 'Cross-site abuse risk', kind: 'warn' });
+  }
+  if (item.risk?.issues?.some(i => (i.title || '').toLowerCase().includes('secure'))) {
+    chips.push({ text: 'Network interception risk', kind: 'warn' });
+  }
+
+  // Cap
+  return chips.slice(0, UI_CONFIG.maxEvidenceChips);
+}
+
 
 // === UTILITIES ===
 

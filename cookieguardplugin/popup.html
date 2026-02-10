@@ -334,6 +334,91 @@
       transition: width 0.3s;
     }
 
+
+    /* Evidence chips */
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .chip {
+      font-size: 9px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: #edf2f7;
+      color: #2d3748;
+      border: 1px solid #e2e8f0;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+
+    .chip.primary {
+      background: #ebf4ff;
+      border-color: #c3dafe;
+      color: #2b6cb0;
+    }
+
+    .chip.warn {
+      background: #fffaf0;
+      border-color: #fbd38d;
+      color: #975a16;
+    }
+
+    .chip.bad {
+      background: #fff5f5;
+      border-color: #feb2b2;
+      color: #c53030;
+    }
+
+    .mini-metrics {
+      display: flex;
+      gap: 10px;
+      margin-top: 8px;
+      font-size: 10px;
+      color: #4a5568;
+    }
+
+    .mini-metrics strong { color: #1a1a1a; }
+
+    .pill {
+      display: inline-block;
+      font-size: 9px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #f7fafc;
+      border: 1px solid #e2e8f0;
+      color: #4a5568;
+      margin-left: 8px;
+    }
+
+    .pill.review {
+      background: #fffaf0;
+      border-color: #fbd38d;
+      color: #975a16;
+      font-weight: 600;
+    }
+
+    /* Modal actions */
+    .modal-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .btn-danger {
+      background: #fed7d7;
+      color: #c53030;
+      border: 1px solid #feb2b2;
+    }
+
+    .btn-ghost {
+      background: #ffffff;
+      color: #4a5568;
+      border: 1px solid #e2e8f0;
+    }
+
     /* Login Flow */
     #login-flow-view {
       display: none;
@@ -479,7 +564,7 @@
 
   <div class="tools">
     <button id="export-cookies-btn" class="btn btn-secondary">Export</button>
-<!--    <button id="login-scan-btn" class="btn btn-secondary">Login Scan</button>-->
+    <!--    <button id="login-scan-btn" class="btn btn-secondary">Login Scan</button>-->
   </div>
 
   <p class="info-text">No raw cookie values stored or transmitted</p>
@@ -565,7 +650,11 @@
   <div class="modal-content">
     <div class="modal-header" id="modal-cookie-name">Cookie Details</div>
     <div id="modal-body"></div>
-    <button class="btn btn-secondary" onclick="closeModal()" style="margin-top: 12px;">Close</button>
+    <div class="modal-actions">
+      <button id="btn-mark-not-auth" class="btn btn-ghost">Mark Not Auth</button>
+      <button id="btn-ignore-cookie" class="btn btn-danger">Ignore on this site</button>
+      <button class="btn btn-secondary" onclick="closeModal()" style="margin-left:auto;">Close</button>
+    </div>
   </div>
 </div>
 
