@@ -853,7 +853,7 @@ function App() {
             <div className="upload-hero">
               <div className="hero-icon"><Icons.Shield /></div>
               <h1>Detect Cookie Security Issues</h1>
-              <p>Upload your cookies or try the demo to analyze security vulnerabilities</p>
+              <p>Upload your cookies to analyze security vulnerabilities</p>
             </div>
 
             <div className="upload-cards">
@@ -865,19 +865,13 @@ function App() {
                 <label htmlFor="file-upload" className="btn btn-primary">Choose File</label>
               </div>
 
-              <div className="upload-card">
-                <div className="card-icon"><Icons.Play /></div>
-                <h3>Try Demo</h3>
-                <p>Load 20 example cookies with various security issues</p>
-                <button className="btn btn-secondary" onClick={loadDemoData}>Load Demo</button>
-              </div>
             </div>
 
             <div className="info-card">
               <h4><Icons.Info /> How it works</h4>
               <div className="steps">
                 <div className="step"><span>1</span>Export cookies using a browser extension</div>
-                <div className="step"><span>2</span>Upload the JSON file or try the demo</div>
+                <div className="step"><span>2</span>Upload the JSON file</div>
                 <div className="step"><span>3</span>Get instant security analysis</div>
               </div>
             </div>
@@ -1047,7 +1041,7 @@ function App() {
       </main>
 
       <footer className="footer">
-        <p>CookieGuard AI • Girls Who Code AI Challenge 2025</p>
+        <p>CookieGuard AI • Girls Who Code AI Challenge 2026</p>
       </footer>
     </div>
   );

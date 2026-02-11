@@ -30,10 +30,14 @@ const CONFIG = {
 // Initialize
 document.addEventListener('DOMContentLoaded', async () => {
   try {
-    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-    if (tab && tab.url && !tab.url.startsWith('chrome://')) {
-      const url = new URL(tab.url);
-      currentDomain = url.hostname;
+    if (typeof chrome !== 'undefined' && chrome.tabs) {
+      const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+      if (tab && tab.url && !tab.url.startsWith('chrome://')) {
+        const url = new URL(tab.url);
+        currentDomain = url.hostname;
+      } else {
+        currentDomain = 'demo-mode';
+      }
     } else {
       currentDomain = 'demo-mode';
     }
@@ -45,19 +49,30 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Event listeners
   document.getElementById('scan-btn').addEventListener('click', handleScan);
-  document.getElementById('login-scan-btn').addEventListener('click', showLoginFlow);
-  document.getElementById('back-btn').addEventListener('click', showMainView);
-  document.getElementById('login-back-btn').addEventListener('click', showMainView);
-  document.getElementById('export-btn').addEventListener('click', exportReport);
-  document.getElementById('export-cookies-btn')?.addEventListener('click', exportCookiesAsJson);
+
+  // Model info button
+  document.getElementById('results-model-btn')
+    ?.addEventListener('click', openModelModal);
+
+  // Back button
+  document.getElementById('back-btn')
+    ?.addEventListener('click', showMainView);
+
+  // Login back button
+  document.getElementById('login-back-btn')
+    ?.addEventListener('click', showMainView);
 
   // Modal actions (reduce false positives)
   document.getElementById('btn-mark-not-auth')?.addEventListener('click', markCurrentCookieNotAuth);
   document.getElementById('btn-ignore-cookie')?.addEventListener('click', ignoreCurrentCookie);
+  document.getElementById('cookie-modal-close-btn')?.addEventListener('click', closeModal);
 
   // Login flow buttons
   document.getElementById('capture-before-btn')?.addEventListener('click', captureBeforeLogin);
   document.getElementById('capture-after-btn')?.addEventListener('click', captureAfterLogin);
+
+  // Model modal close button
+  document.getElementById('model-modal-close-btn')?.addEventListener('click', closeModelModal);
 
   // Check backend availability
   if (CONFIG.useBackend) {
@@ -83,6 +98,21 @@ function showMainView() {
   isScanning = false; // Reset scanning flag
 }
 
+function toggleView(view) {
+  document.getElementById('main-view').style.display =
+    view === 'main' ? 'block' : 'none';
+
+  document.getElementById('loading-view').style.display =
+    view === 'loading' ? 'block' : 'none';
+
+  document.getElementById('results-view').style.display =
+    view === 'results' ? 'block' : 'none';
+
+  document.getElementById('login-flow-view').style.display =
+    view === 'login' ? 'block' : 'none';
+}
+
+
 function showLoadingView() {
   document.getElementById('main-view').style.display = 'none';
   document.getElementById('loading-view').style.display = 'block';
@@ -99,20 +129,20 @@ function showResultsView() {
   isScanning = false; // Reset scanning flag
 }
 
-function showLoginFlow() {
-  document.getElementById('main-view').style.display = 'none';
-  document.getElementById('loading-view').style.display = 'none';
-  document.getElementById('results-view').style.display = 'none';
-  document.getElementById('login-flow-view').style.display = 'block';
-  document.getElementById('login-domain').textContent = currentDomain;
+// === MODEL INFO MODAL ===
 
-  beforeLoginCookies = null;
-  afterLoginCookies = null;
-  document.getElementById('step-1').classList.add('active');
-  document.getElementById('step-2').classList.remove('active', 'completed');
-  document.getElementById('step-3').classList.remove('active', 'completed');
-  document.getElementById('capture-before-btn').disabled = false;
-  document.getElementById('capture-after-btn').disabled = true;
+function openModelModal() {
+  const modal = document.getElementById('model-modal');
+  if (modal) {
+    modal.classList.add('active');
+  }
+}
+
+function closeModelModal() {
+  const modal = document.getElementById('model-modal');
+  if (modal) {
+    modal.classList.remove('active');
+  }
 }
 
 // === BACKEND STATUS ===
@@ -121,10 +151,10 @@ function updateBackendStatus() {
   const statusEl = document.getElementById('backend-status');
   if (statusEl) {
     if (CONFIG.analysisMode === 'backend') {
-      statusEl.textContent = '✓ Backend Connected';
+      statusEl.textContent = 'Backend Connected';
       statusEl.className = 'connected';
     } else {
-      statusEl.textContent = '⚡ Local Mode';
+      statusEl.textContent = 'Local Mode';
       statusEl.className = 'local';
     }
   }
@@ -155,20 +185,20 @@ async function checkBackendHealth() {
 // === DEMO SITE INDICATOR ===
 
 function showDemoSiteIndicator() {
-  const header = document.querySelector('.header');
+  const content = document.querySelector('#main-view .content');
+  if (!content) return;
+
   const indicator = document.createElement('div');
-  indicator.style.cssText = `
-    background: #e6fffa;
-    border: 1px solid #319795;
-    border-radius: 6px;
-    padding: 8px;
-    margin-top: 8px;
-    font-size: 10px;
-    color: #234e52;
-    text-align: center;
-  `;
-  indicator.innerHTML = '<strong>🎯 Demo Site Detected</strong><br>Ready to test scenarios A/B/C/D';
-  header.appendChild(indicator);
+  indicator.className = 'demo-indicator';
+  indicator.innerHTML = '<strong>🎯 Demo Site Detected</strong><span>Ready to test scenarios A/B/C/D</span>';
+
+  // Insert before the info text
+  const infoText = content.querySelector('.info-text');
+  if (infoText) {
+    content.insertBefore(indicator, infoText);
+  } else {
+    content.appendChild(indicator);
+  }
 }
 
 // === MAIN SCAN ===
@@ -185,6 +215,21 @@ async function handleScan() {
   console.log('🔍 Starting scan...');
 
   try {
+    // Check if chrome.cookies is available
+    if (typeof chrome === 'undefined' || !chrome.cookies) {
+      // Demo mode - create fake cookies for testing
+      const cookies = [
+        { name: 'session_id', domain: currentDomain, path: '/', secure: false, httpOnly: false, sameSite: 'none', value: 'abc123' },
+        { name: 'auth_token', domain: currentDomain, path: '/', secure: true, httpOnly: true, sameSite: 'strict', value: 'xyz789' },
+        { name: '_ga', domain: currentDomain, path: '/', secure: false, httpOnly: false, sameSite: 'lax', value: 'GA1.2.123' }
+      ];
+      console.log('Demo mode: using fake cookies');
+      const results = await analyzeCookies(cookies);
+      displayResults(results);
+      showResultsView();
+      return;
+    }
+
     // Get cookies for current domain
     const cookies = await chrome.cookies.getAll({ domain: currentDomain });
 
@@ -226,7 +271,15 @@ async function handleScan() {
 async function captureBeforeLogin() {
   try {
     console.log('Capturing before-login cookies...');
-    beforeLoginCookies = await chrome.cookies.getAll({ domain: currentDomain });
+
+    if (typeof chrome !== 'undefined' && chrome.cookies) {
+      beforeLoginCookies = await chrome.cookies.getAll({ domain: currentDomain });
+    } else {
+      // Demo mode
+      beforeLoginCookies = [
+        { name: 'visitor_id', domain: currentDomain, path: '/', secure: false, httpOnly: false, value: 'v123' }
+      ];
+    }
 
     document.getElementById('step-1').classList.remove('active');
     document.getElementById('step-1').classList.add('completed');
@@ -252,7 +305,17 @@ async function captureAfterLogin() {
 
   try {
     console.log('Capturing after-login cookies...');
-    afterLoginCookies = await chrome.cookies.getAll({ domain: currentDomain });
+
+    if (typeof chrome !== 'undefined' && chrome.cookies) {
+      afterLoginCookies = await chrome.cookies.getAll({ domain: currentDomain });
+    } else {
+      // Demo mode - simulate new cookies after login
+      afterLoginCookies = [
+        { name: 'visitor_id', domain: currentDomain, path: '/', secure: false, httpOnly: false, value: 'v123' },
+        { name: 'session_id', domain: currentDomain, path: '/', secure: false, httpOnly: false, sameSite: 'none', value: 'sess_abc' },
+        { name: 'auth_token', domain: currentDomain, path: '/', secure: true, httpOnly: true, sameSite: 'strict', value: 'auth_xyz' }
+      ];
+    }
 
     // Detect which cookies changed
     const changedCookies = detectLoginChanges(beforeLoginCookies, afterLoginCookies);
@@ -641,7 +704,7 @@ function displayResults(results) {
       listDiv.appendChild(card);
     });
   } else {
-    listDiv.innerHTML = '<div style="text-align:center;padding:20px;color:#666;">No cookies to display (ignored or none found)</div>';
+    listDiv.innerHTML = '<div style="text-align:center;padding:20px;color:#64748b;">No cookies to display</div>';
   }
 
 
@@ -738,7 +801,7 @@ function createCookieCard(item) {
   div.className = `cookie-card ${effectiveSeverity}`;
 
   const typeClass = item.classification.type === 'authentication' ? 'auth' : '';
-  const reviewPill = item._needsReview ? '<span class="pill review">Review</span>' : '';
+  const reviewPill = item._needsReview ? '<span class="pill">Review</span>' : '';
 
   // Top issues (formatted)
   let issuesHTML = '';
@@ -952,7 +1015,16 @@ Privacy-first cookie security scanner
 
 async function exportCookiesAsJson() {
   try {
-    const allCookies = await chrome.cookies.getAll({});
+    let allCookies;
+
+    if (typeof chrome !== 'undefined' && chrome.cookies) {
+      allCookies = await chrome.cookies.getAll({});
+    } else {
+      // Demo mode
+      allCookies = [
+        { name: 'demo_cookie', domain: 'demo-mode', path: '/', value: 'demo' }
+      ];
+    }
 
     if (allCookies.length === 0) {
       alert('No cookies found!');
@@ -995,21 +1067,27 @@ function formatSameSite(v) {
 // === USER PREFS (Overrides / Ignore) ===
 
 async function loadUserPrefs() {
+  if (typeof chrome === 'undefined' || !chrome.storage || !chrome.storage.local) {
+    return; // Silently skip when not in extension context
+  }
   try {
     const data = await chrome.storage.local.get(['cookieguard_prefs_v1']);
     if (data && data.cookieguard_prefs_v1) {
       userPrefs = data.cookieguard_prefs_v1;
     }
   } catch (e) {
-    console.warn('Failed to load user prefs', e);
+    // Silently ignore storage errors
   }
 }
 
 async function saveUserPrefs() {
+  if (typeof chrome === 'undefined' || !chrome.storage || !chrome.storage.local) {
+    return; // Silently skip when not in extension context
+  }
   try {
     await chrome.storage.local.set({ cookieguard_prefs_v1: userPrefs });
   } catch (e) {
-    console.warn('Failed to save user prefs', e);
+    // Silently ignore storage errors
   }
 }
 
@@ -1113,8 +1191,13 @@ function escapeHtml(text) {
 
 // Close modal when clicking outside
 document.addEventListener('click', (e) => {
-  const modal = document.getElementById('cookie-modal');
-  if (e.target === modal) {
+  const cookieModal = document.getElementById('cookie-modal');
+  const modelModal = document.getElementById('model-modal');
+
+  if (e.target === cookieModal) {
     closeModal();
+  }
+  if (e.target === modelModal) {
+    closeModelModal();
   }
 });
