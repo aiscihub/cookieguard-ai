@@ -30,16 +30,16 @@ CookieGuard AI uses machine learning and rule-based analysis to:
          │
          ▼
   ┌──────────────────────────────────────────────────────────────┐
-  │                   Frontend (React)                           │
-  │  • Upload Interface  • Results Visualization                 │
-  │  • Risk Dashboard   • Report Export                          │
+  │                   React                                      │
+  │  • Results Visualization                                     │
+  │  • Risk Dashboard                                            │
   └──────────────────────────────────────────────────────────────┘
          │ HTTP POST
          ▼
   ┌──────────────────────────────────────────────────────────────┐
   │                   Backend (Flask API)                        │
-  │  • /api/analyze     • /api/demo                              │
-  │  • /api/export      • /health                                │
+  │  • /api/analyze                                              │
+  │  • /health                                                   │
   └──────────────────────────────────────────────────────────────┘
          │
          ▼
@@ -71,7 +71,6 @@ CookieGuard AI uses machine learning and rule-based analysis to:
   │  • Ranked security findings                                  │
   │  • Detailed issue explanations                               │
   │  • Actionable recommendations                                │
-  │  • Downloadable security report                              │
   └──────────────────────────────────────────────────────────────┘
 ```
 
@@ -266,8 +265,6 @@ npm install
 npm start
 ```
 
-Visit `http://localhost:3000` to use CookieGuard AI.
-
 ## 📁 Project Structure
 
 ```
@@ -313,13 +310,6 @@ Without AI, users face 50+ cookies per site with no way to identify which ones a
 - Distinguishes authentication cookies from tracking cookies
 - Assigns confidence scores for prioritization
 - Reduces false alarms through pattern learning
-
-## Demo
-
-Try the demo with pre-loaded cookie examples:
-```bash
-python backend/app.py --demo
-```
 
 ## Contributing
 
