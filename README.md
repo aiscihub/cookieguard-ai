@@ -13,6 +13,79 @@ CookieGuard AI uses machine learning and rule-based analysis to:
 ##
 ![CookieGuardUI](./resource/Screenshot.png)
 
+## Quick Start
+
+### Prerequisites
+- Python 3.8+
+- Node.js 16+ (for frontend)
+- pip and npm
+
+## 🔧 Install Chrome Extension (Developer Mode)
+
+CookieGuard AI is currently distributed via GitHub and can be loaded manually using Chrome’s Developer Mode.
+
+---
+
+### Step1: Download the Repository
+**Option A — Clone via Git**
+```bash
+# Clone the repository
+git clone git@github.com:aiscihub/cookieguard-ai.git
+cd cookieguard-ai
+```
+
+**Option B — Download ZIP**
+Go to the GitHub repository.
+Click Code → Download ZIP.
+Extract the ZIP file on your computer.
+
+### Step 2: Locate the Extension Folder
+Navigate to the folder that directly contains:
+```bash
+manifest.json
+#in repo it is
+cookieguard-ai/cookieguardplugin/
+```
+![CookieGuardExtention](./resource/screenshot_plugin.png)
+### Step3: Load the Extension
+Open Chrome, and go to: **chrome://extensions/**
+
+Toggle Developer mode (top-right corner).
+
+Click **Load unpacked**.
+
+Select the extension folder (cookieguard-ai/cookieguardplugin/).
+
+Click Open.
+
+### Step 4: Start the Backend
+CookieGuard AI uses a local Python backend for AI-based risk analysis.
+```bash
+cd cookieguard-ai/backend
+#If using conda
+#conda create -n cookieguard python=3.10 -y
+#conda activate cookieguard
+
+# Install backend dependencies
+pip install -r requirements.txt
+
+# Train the ML model (first time only)
+python backend/train_model.py
+
+# Start the backend server
+python backend/app.py
+```
+By default, the backend runs at:
+```bash
+http://localhost:5000
+```
+
+
+### Step 5:Run a Test Scan
+Visit a website with login functionality.
+Click the CookieGuard AI extension icon.
+Click Scan Cookies.
+Review classification and risk analysis results.
 
 ## Project Architecture
 
@@ -232,75 +305,7 @@ CookieGuard AI uses machine learning and rule-based analysis to:
 - Intentional vulnerabilities to train detection
 - Domain diversity (main domain, subdomains, wildcards)
 
-## Quick Start
 
-### Prerequisites
-- Python 3.8+
-- Node.js 16+ (for frontend)
-- pip and npm
-
-## 🔧 Install Chrome Extension (Developer Mode)
-
-CookieGuard AI is currently distributed via GitHub and can be loaded manually using Chrome’s Developer Mode.
-
----
-
-### Step1: Download the Repository
-**Option A — Clone via Git**
-```bash
-# Clone the repository
-git clone git@github.com:aiscihub/cookieguard-ai.git
-cd cookieguard-ai
-```
-
-**Option B — Download ZIP**
-Go to the GitHub repository.
-Click Code → Download ZIP.
-Extract the ZIP file on your computer.
-
-### Step 2: Locate the Extension Folder
-Navigate to the folder that directly contains:
-```bash
-manifest.json
-#in repo it is
-cookieguard-ai/cookieguardplugin/
-```
-![CookieGuardExtention](./resource/screenshot_plugin.png)
-### Step3: Load the Extension
-Open Chrome, and go to: **chrome://extensions/**
-Toggle Developer mode (top-right corner).
-Click **Load unpacked**.
-Select the extension folder (cookieguard-ai/cookieguardplugin/).
-Click Open.
-
-### Step 4: Start the Backend 
-CookieGuard AI uses a local Python backend for AI-based risk analysis.
-```bash
-cd cookieguard-ai/backend
-#If using conda
-#conda create -n cookieguard python=3.10 -y
-#conda activate cookieguard
-
-# Install backend dependencies
-pip install -r requirements.txt
-
-# Train the ML model (first time only)
-python backend/train_model.py
-
-# Start the backend server
-python backend/app.py
-```
-By default, the backend runs at:
-```bash
-http://localhost:5000
-```
-
-
-### Step 5:Run a Test Scan
-Visit a website with login functionality.
-Click the CookieGuard AI extension icon.
-Click Scan Cookies.
-Review classification and risk analysis results.
 
 ## 📁 Project Structure
 
