@@ -317,7 +317,7 @@ cookieguard-ai/
 │   ├── risk_scorer.py         # Security risk analysis
 │   ├── train_model.py         # Model training script
 │   └── feature_extractor.py   # Cookie feature engineering
-├── frontend/
+├── cookieguardplugin/
 │   ├── src/
 │   │   ├── App.js            # Main React app
 │   │   ├── CookieUpload.js   # Cookie import component

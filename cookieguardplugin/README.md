@@ -1,8 +1,8 @@
-# 🔌 CookieGuard AI - Backend-Integrated Version
+# 🔌 CookieGuard AI extension
 
 ## 🚀 Quick Start (Local Mode)
 
-**No setup needed** - just install and use!
+**No setup needed** 
 
 ```
 1. Load extension in Chrome (chrome://extensions/)
