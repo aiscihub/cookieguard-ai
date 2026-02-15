@@ -389,7 +389,15 @@ async function analyzeWithBackend(cookies, context) {
         hostOnly: c.hostOnly,
         value: c.value
       })),
-      context: context
+      context: {
+        ...context,
+        // CookieGuard 2.0: enhanced context
+        scanType: context.loginEvent ? 'login_aware' : 'single',
+        timestamp: new Date().toISOString(),
+        beforeCookieIndex: context.loginEvent && beforeLoginCookies
+          ? Object.fromEntries(beforeLoginCookies.map(c => [c.name, { present: true }]))
+          : {},
+      }
     };
 
     console.log('Request body:', requestBody);
@@ -455,7 +463,11 @@ async function analyzeWithBackend(cookies, context) {
               issues: r.issues || []
             },
             summary: r.summary,
-            recommendations: r.recommendations || []
+            recommendations: r.recommendations || [],
+            // CookieGuard 2.0: new fields
+            explanations: r.explanations || null,
+            attack_simulation: r.attack_simulation || null,
+            behavior_signals: r.behavior_signals || null,
           };
         });
       })(),
@@ -612,13 +624,13 @@ function generateRecommendations(cookie, risk) {
 
   for (const issue of risk.issues) {
     if (issue.title.includes('HttpOnly')) {
-      recommendations.push('Set HttpOnly flag to prevent JavaScript access');
+      recommendations.push('This site left your login cookie exposed to JavaScript. Consider using a script-blocking extension like uBlock Origin.');
     } else if (issue.title.includes('Secure')) {
-      recommendations.push('Set Secure flag to require HTTPS');
+      recommendations.push('Your session cookie can be sent over unencrypted HTTP. Avoid this site on public WiFi, or use a VPN.');
     } else if (issue.title.includes('SameSite')) {
-      recommendations.push('Set SameSite=Lax or Strict to prevent CSRF');
+      recommendations.push('Be cautious clicking links from untrusted sources while logged in to this site.');
     } else if (issue.title.includes('Long-Lived')) {
-      recommendations.push('Reduce expiration time for session cookies');
+      recommendations.push('This login cookie has a long lifetime. Log out manually when done and clear cookies periodically.');
     }
   }
 
@@ -924,6 +936,130 @@ function showCookieDetails(item) {
     detailsHTML += '</div></div>';
   }
 
+  // ══════════════════════════════════════════════════════════
+  // CookieGuard 2.0: "Why the AI flagged this cookie"
+  // ══════════════════════════════════════════════════════════
+  if (item.explanations) {
+    const expl = item.explanations;
+    const allSignals = [
+      ...(expl.auth_signals || []),
+      ...(expl.tracking_signals || []),
+    ];
+
+    if (allSignals.length > 0 || (expl.risk_signals && expl.risk_signals.length > 0)) {
+      detailsHTML += `
+        <div class="modal-section explanation-section">
+          <div class="modal-section-title">🧠 Why the AI flagged this cookie</div>
+          <div class="modal-text">
+      `;
+
+      // Classification signals
+      if (allSignals.length > 0) {
+        detailsHTML += '<div class="explanation-group"><strong>Classification signals:</strong></div>';
+        allSignals.slice(0, 5).forEach(sig => {
+          const icon = sig.direction === 'positive' ? '🔵' : '⚪';
+          detailsHTML += `<div class="explanation-item">${icon} <strong>${escapeHtml(sig.signal)}</strong></div>`;
+          if (sig.detail) {
+            detailsHTML += `<div class="explanation-detail">${escapeHtml(sig.detail)}</div>`;
+          }
+        });
+      }
+
+      // Risk exposure signals
+      if (expl.risk_signals && expl.risk_signals.length > 0) {
+        detailsHTML += '<br><div class="explanation-group"><strong>Risk exposure signals:</strong></div>';
+        expl.risk_signals.slice(0, 3).forEach(sig => {
+          detailsHTML += `<div class="explanation-item">🔴 <strong>${escapeHtml(sig.signal)}</strong></div>`;
+          if (sig.detail) {
+            detailsHTML += `<div class="explanation-detail">${escapeHtml(sig.detail)}</div>`;
+          }
+        });
+      }
+
+      // Risk formula
+      if (expl.risk_formula) {
+        const rf = expl.risk_formula;
+        const c = rf.components || {};
+        detailsHTML += `
+          <br><div class="explanation-group"><strong>Risk formula:</strong></div>
+          <div class="risk-formula-box">
+            <code>${escapeHtml(rf.formula)}</code><br>
+            <span class="formula-values">
+              Auth gate: P(auth)=${c.auth_gate?.toFixed(2) || '?'} ${(c.auth_gate || 0) > 0.3 ? '✓ active' : '✗ inactive'}<br>
+              Severity: ${c.severity_points || 0} pts ×
+              Breadth: ${c.breadth_factor?.toFixed(1) || '1.0'}× ×
+              Lifetime: ${c.lifetime_factor?.toFixed(1) || '1.0'}×
+              = <strong>${c.estimated_score || 0}/100</strong>
+            </span><br>
+            <em>${escapeHtml(rf.interpretation || '')}</em>
+          </div>
+        `;
+      }
+
+      detailsHTML += '</div></div>';
+    }
+  }
+
+  // ══════════════════════════════════════════════════════════
+  // CookieGuard 2.0: "Attack Simulation"
+  // ══════════════════════════════════════════════════════════
+  if (item.attack_simulation && item.attack_simulation.paths && item.attack_simulation.paths.length > 0) {
+    const sim = item.attack_simulation;
+
+    detailsHTML += `
+      <div class="modal-section attack-sim-section">
+        <div class="modal-section-title">⚔️ Attack Simulation</div>
+        <div class="modal-text">
+          <div class="attack-badges">
+    `;
+
+    // Attack path badges
+    sim.paths.forEach(path => {
+      const badgeClass = path.severity === 'critical' ? 'badge-critical' :
+                         path.severity === 'high' ? 'badge-high' :
+                         path.severity === 'medium' ? 'badge-medium' : 'badge-low';
+      detailsHTML += `<span class="attack-badge ${badgeClass}">${escapeHtml(path.type)}</span>`;
+    });
+
+    detailsHTML += `</div>`;
+
+    // Impact summary
+    if (sim.impact) {
+      detailsHTML += `<div class="attack-impact"><strong>Impact:</strong> ${escapeHtml(sim.impact)}</div>`;
+    }
+
+    // Individual paths
+    sim.paths.forEach(path => {
+      detailsHTML += `
+        <div class="attack-path">
+          <div class="attack-path-title">${escapeHtml(path.name)} <span class="severity-tag ${path.severity}">[${path.severity.toUpperCase()}]</span></div>
+          <div class="attack-path-desc">${escapeHtml(path.description)}</div>
+          <div class="attack-path-technique"><strong>Technique:</strong> <code>${escapeHtml(path.technique)}</code></div>
+        </div>
+      `;
+    });
+
+    // Fixes
+    if (sim.fixes && sim.fixes.length > 0) {
+      detailsHTML += `<br><div class="explanation-group"><strong>🛡️ What you can do:</strong></div>`;
+      sim.fixes.forEach(fix => {
+        detailsHTML += `
+          <div class="fix-item">
+            <strong>${escapeHtml(fix.fix)}</strong><br>
+            <span class="fix-impact">${escapeHtml(fix.impact)}</span><br>
+            <code class="fix-code">${escapeHtml(fix.code)}</code>
+            ${fix.site_should_fix ? `<div class="site-fix-note">Site should fix: <code>${escapeHtml(fix.site_should_fix)}</code></div>` : ''}
+          </div>
+        `;
+      });
+    }
+
+    // Overall risk
+    detailsHTML += `<div class="attack-overall"><strong>Overall:</strong> ${escapeHtml(sim.overall_risk)}</div>`;
+
+    detailsHTML += '</div></div>';
+  }
+
   bodyEl.innerHTML = detailsHTML;
   modal.classList.add('active');
 }
@@ -1159,10 +1295,26 @@ function buildEvidence(item) {
     chips.push({ text: 'Identity keyword in name', kind: 'primary' });
   }
 
-  // Login-aware signal (if available)
-  const changed = analysisResults?.context?.changedCookies || [];
-  if (changed.includes(item.cookie?.name)) {
-    chips.push({ text: 'Changed during login', kind: 'primary' });
+  // Behavior signals from backend (CookieGuard 2.0)
+  if (item.behavior_signals) {
+    if (item.behavior_signals.changed_during_login) {
+      chips.push({ text: 'Changed during login', kind: 'primary' });
+    }
+    if (item.behavior_signals.new_after_login) {
+      chips.push({ text: 'New after login', kind: 'primary' });
+    }
+    if (item.behavior_signals.rotated_after_login) {
+      chips.push({ text: 'Rotated at login', kind: 'primary' });
+    }
+    if (item.behavior_signals.third_party) {
+      chips.push({ text: 'Third-party context', kind: 'warn' });
+    }
+  } else {
+    // Fallback: check from analysisResults context
+    const changed = analysisResults?.context?.changedCookies || [];
+    if (changed.includes(item.cookie?.name)) {
+      chips.push({ text: 'Changed during login', kind: 'primary' });
+    }
   }
 
   // Misconfig signals
@@ -1176,8 +1328,13 @@ function buildEvidence(item) {
     chips.push({ text: 'Network interception risk', kind: 'warn' });
   }
 
+  // Attack simulation badge count (2.0)
+  if (item.attack_simulation && item.attack_simulation.path_count > 0) {
+    chips.push({ text: `${item.attack_simulation.path_count} attack path(s)`, kind: 'bad' });
+  }
+
   // Cap
-  return chips.slice(0, UI_CONFIG.maxEvidenceChips);
+  return chips.slice(0, UI_CONFIG.maxEvidenceChips + 2); // Allow a couple more for 2.0
 }
 
 

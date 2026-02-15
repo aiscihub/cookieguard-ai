@@ -45,14 +45,14 @@ class RiskScorer:
                                'description':'Cookie accessible via JavaScript - vulnerable to XSS attacks that can steal session tokens',
                                'impact':'Account takeover via cross-site scripting (XSS)'})
                 risk_score += 40
-                recommendations.append('Set HttpOnly flag to prevent JavaScript access')
+                recommendations.append('This site left your login cookie exposed to JavaScript. Consider using a browser extension that blocks inline scripts, and avoid entering credentials on this site over untrusted networks.')
 
             if not _get_flag(cookie, 'secure', 'Secure', default=False):
                 issues.append({'severity':self.HIGH, 'title':'Missing Secure Flag',
                                'description':'Cookie sent over HTTP - vulnerable to network interception',
                                'impact':'Session token exposure on unsecured connections'})
                 risk_score += 25
-                recommendations.append('Set Secure flag to require HTTPS')
+                recommendations.append('Your session cookie can be sent over unencrypted HTTP. Avoid using this site on public WiFi. Consider a VPN, or use HTTPS Everywhere / browser HTTPS-only mode.')
 
             samesite = (cookie.get('sameSite','') or '').lower()
             if not samesite or samesite in ('none','no_restriction'):
@@ -60,7 +60,7 @@ class RiskScorer:
                                'description':'Cookie sent with cross-site requests - vulnerable to CSRF attacks',
                                'impact':'Unauthorized actions via cross-site request forgery'})
                 risk_score += 20
-                recommendations.append('Set SameSite=Lax or Strict to prevent CSRF')
+                recommendations.append('This cookie is sent on cross-site requests, making CSRF attacks possible. Be cautious clicking links from untrusted sources while logged in to this site.')
             elif samesite=='lax':
                 # Only flag if other issues present
                 pass
@@ -87,7 +87,7 @@ class RiskScorer:
                                'description':f'Cookie accessible to all subdomains of {domain[1:]}. If attacker controls ANY subdomain, they can steal this cookie.',
                                'impact':'Session hijacking via compromised subdomain'})
                 risk_score += 15
-                recommendations.append('Limit domain scope to a specific host (avoid leading dot)')
+                recommendations.append('This cookie is shared across all subdomains — if any subdomain is compromised, your session could be stolen. Log out after each session and clear cookies regularly.')
                 has_scope_issue = True
                 breadth_factor = 1.5
 
@@ -98,7 +98,7 @@ class RiskScorer:
                                    'description':'__Host- cookies must NOT set Domain (hostOnly must be true).',
                                    'impact':'Prefix contract violated; increases cookie scope'})
                     risk_score += 20
-                    recommendations.append('Remove Domain attribute (ensure hostOnly=true) for __Host- cookies')
+                    recommendations.append('This cookie uses the __Host- prefix but has an incorrect configuration. The site may have a security misconfiguration — consider reporting it to their security team.')
                     has_scope_issue = True
                     breadth_factor = 1.3
                 elif host_only is None:
@@ -120,7 +120,7 @@ class RiskScorer:
                                    'description':f'Cookie appears to be set with a Domain attribute ({domain}). This can be intentional, but is broader than host-only.',
                                    'impact':'Potential cross-subdomain cookie access'})
                     risk_score += 6
-                    recommendations.append('Use host-only cookies when cross-subdomain sharing isn’t required')
+                    recommendations.append('This cookie has broader domain scope than necessary. Be aware it may be readable from other subdomains of this site.')
                     has_scope_issue = True
                     breadth_factor = 1.15
 
@@ -141,7 +141,7 @@ class RiskScorer:
                                'description':'Cookie accessible to all paths on domain. Consider limiting to specific paths like /api or /app.',
                                'impact':'Increased exposure surface'})
                 risk_score += 5
-                recommendations.append('Limit path scope if possible (e.g., /api instead of /)')
+                recommendations.append('This cookie is accessible on all paths of the site, increasing its exposure. Clear cookies after sensitive sessions.')
 
             # Lifetime factor
             if expiry:
@@ -152,13 +152,13 @@ class RiskScorer:
                                    'description':f'Cookie expires in {days} days. Extended lifetime increases window for session replay attacks.',
                                    'impact':'Extended exposure window for stolen tokens'})
                     risk_score += 10
-                    recommendations.append('Use shorter expiration time for session cookies')
+                    recommendations.append('This login cookie has a long lifetime, increasing risk if stolen. Log out manually when done and consider clearing cookies periodically.')
                 elif days > 7:
                     issues.append({'severity':self.LOW, 'title':'Moderate Session Lifetime',
                                    'description':f'Cookie expires in {days} days. Consider shorter lifetime for sensitive sessions.',
                                    'impact':'Moderate exposure window'})
                     risk_score += 5
-                    recommendations.append('Consider shorter session lifetime')
+                    recommendations.append('This session cookie lasts several days. Log out after use on shared devices.')
                 elif days >= 3:
                     issues.append({'severity':self.LOW, 'title':'Multi-Day Session',
                                    'description':f'Cookie expires in {days} days',
