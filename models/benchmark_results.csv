@@ -1,0 +1,4 @@
+model,accuracy,f1_macro,pr_auc_auth,recall_at_alpha
+RandomForest,0.9947,0.9941,1.0000,1.0000
+LogisticRegression,0.9947,0.9941,1.0000,1.0000
+HistGradientBoosting,1.0000,1.0000,1.0000,1.0000

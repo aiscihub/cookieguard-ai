@@ -1,0 +1,104 @@
+========================================================================
+  CookieGuard AI 2.0 — Evaluation Report
+========================================================================
+
+1. CLASSIFICATION METRICS
+----------------------------------------
+  Overall Accuracy:     95.71%
+  Macro Precision:      95.73%
+  Macro Recall:         96.14%
+  Macro F1:             95.81%
+
+  Per-Class Breakdown:
+  Class               Precision     Recall         F1    Support
+  ----------------------------------------------------------
+  other                 100.00%     88.89%     94.12%         81
+  authentication         90.41%     95.65%     92.96%         69
+  tracking               95.31%    100.00%     97.60%         61
+  preference             97.18%    100.00%     98.57%         69
+
+  Auth (Binary) Metrics:
+    Precision:            90.41%
+    Recall (Sensitivity): 95.65%
+    Specificity:          96.68%
+    False Positive Rate:  3.32%
+    PR-AUC:               0.9772
+    ROC-AUC:              0.9914
+    Recall @ FPR≤1%:      68.12%
+    Recall @ FPR≤5%:      97.10%
+    Recall @ FPR≤10%:     97.10%
+
+  Confusion Matrix:
+                              other  authentication        tracking      preference
+               other             72               7               1               1
+      authentication              0              66               2               1
+            tracking              0               0              61               0
+          preference              0               0               0              69
+
+
+2. TOP-K RANKING ACCURACY PER DOMAIN
+----------------------------------------
+  (Does the model rank real auth cookies in the top K?)
+
+  TOP-1: 100.00%  (5/5 sites)
+  TOP-2: 100.00%  (5/5 sites)
+  TOP-3: 100.00%  (5/5 sites)
+
+  Per-Site Detail (Top-3):
+    ✓ bank_chase: 16 auth cookie(s) among 61 total — top-3 P(auth): [1.0, 1.0, 1.0]
+    ✓ saas_github: 19 auth cookie(s) among 65 total — top-3 P(auth): [1.0, 1.0, 1.0]
+    ✓ news_bbc: 9 auth cookie(s) among 48 total — top-3 P(auth): [1.0, 1.0, 1.0]
+    ✓ bank_bofa: 13 auth cookie(s) among 53 total — top-3 P(auth): [1.0, 1.0, 1.0]
+    ✓ gov_portal: 12 auth cookie(s) among 53 total — top-3 P(auth): [1.0, 1.0, 1.0]
+
+
+3. GENERALIZATION — LEAVE-ONE-SITE-OUT CROSS-VALIDATION
+----------------------------------------
+  (Train on N-1 sites, test on held-out site)
+
+  Folds:                22
+  Mean Accuracy:        95.71% ± 2.10%
+  Mean F1 (macro):      95.54% ± 2.39%
+  Mean Auth Precision:  94.05%
+  Mean Auth Recall:     91.85%
+  Mean Auth FPR:        1.93%
+  Accuracy Range:       [93.48%, 100.00%]
+
+  Per-Fold Detail:
+  Held-Out Site              N      Acc       F1   AuthPrec    AuthRec    AuthFPR
+  -------------------------------------------------------------------------
+  bank_bofa                 53   94.34%   94.61%    100.00%     92.31%      0.00%
+  bank_chase                61   95.08%   95.10%    100.00%     93.75%      0.00%
+  ecom_amazon               52   96.15%   95.51%     91.67%     91.67%      2.50%
+  ecom_shopify              48   93.75%   93.20%    100.00%     81.82%      0.00%
+  edu_canvas                53   96.23%   96.44%     88.24%    100.00%      5.26%
+  edu_coursera              52   94.23%   95.20%    100.00%     80.00%      0.00%
+  gaming_epic               47   95.74%   96.00%    100.00%     87.50%      0.00%
+  gaming_steam              68   94.12%   92.90%    100.00%     86.36%      0.00%
+  gov_portal                53   94.34%   94.05%     84.62%     91.67%      4.88%
+  health_epic               50   94.00%   93.39%     87.50%     87.50%      2.38%
+  health_portal             52   98.08%   98.00%     93.75%    100.00%      2.70%
+  media_netflix             62   93.55%   92.49%     90.00%     90.00%      1.92%
+  media_spotify             57   98.25%   98.48%     94.12%    100.00%      2.44%
+  news_bbc                  48   93.75%   92.80%     80.00%     88.89%      5.13%
+  news_nyt                  65   93.85%   93.26%     85.71%     85.71%      3.92%
+  saas_github               65   93.85%   94.74%     86.36%    100.00%      6.52%
+  saas_notion               53   98.11%   98.39%     93.75%    100.00%      2.63%
+  saas_slack                64  100.00%  100.00%    100.00%    100.00%      0.00%
+  social_facebook           46   93.48%   92.30%    100.00%     77.78%      0.00%
+  social_reddit             41  100.00%  100.00%    100.00%    100.00%      0.00%
+  social_twitter            48   97.92%   98.07%    100.00%     92.31%      0.00%
+  travel_airline            62   96.77%   96.86%     93.33%     93.33%      2.13%
+
+
+4. BOOTSTRAP CONFIDENCE INTERVALS (95%, n=1000)
+----------------------------------------
+  accuracy             95.72%  [93.21%, 97.86%]
+  macro_f1             95.79%  [93.33%, 98.02%]
+  auth_recall          95.73%  [90.00%, 100.00%]
+  auth_fpr             3.33%  [1.01%, 6.02%]
+  auth_pr_auc          97.72%  [95.32%, 99.38%]
+
+========================================================================
+  Report generated by CookieGuard AI 2.0 Evaluation Suite
+========================================================================

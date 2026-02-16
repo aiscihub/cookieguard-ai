@@ -1,0 +1,23 @@
+{
+  "model_name": "RandomForest",
+  "version": "2.0",
+  "train_date": "2026-02-15T08:58:08.019030",
+  "feature_count": 38,
+  "feature_groups": [
+    "attributes",
+    "scope",
+    "lexical",
+    "behavior"
+  ],
+  "calibrated": true,
+  "has_lr_explainability": false,
+  "metrics": {
+    "accuracy": 1.0,
+    "f1_macro": 0.994114388588838,
+    "pr_auc_auth": 1.0000000000000002,
+    "recall_at_alpha": 1.0,
+    "alpha": 0.1,
+    "train_size": 612,
+    "val_size": 188
+  }
+}

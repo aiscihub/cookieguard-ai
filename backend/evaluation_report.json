@@ -1,0 +1,488 @@
+{
+  "classification": {
+    "per_class": {
+      "other": {
+        "precision": 1.0,
+        "recall": 0.8889,
+        "f1": 0.9412,
+        "support": 81
+      },
+      "authentication": {
+        "precision": 0.9041,
+        "recall": 0.9565,
+        "f1": 0.9296,
+        "support": 69
+      },
+      "tracking": {
+        "precision": 0.9531,
+        "recall": 1.0,
+        "f1": 0.976,
+        "support": 61
+      },
+      "preference": {
+        "precision": 0.9718,
+        "recall": 1.0,
+        "f1": 0.9857,
+        "support": 69
+      }
+    },
+    "accuracy": 0.9571,
+    "macro_precision": 0.9573,
+    "macro_recall": 0.9614,
+    "macro_f1": 0.9581,
+    "auth_binary": {
+      "true_positives": 66,
+      "false_positives": 7,
+      "true_negatives": 204,
+      "false_negatives": 3,
+      "precision": 0.9041,
+      "recall": 0.9565,
+      "false_positive_rate": 0.0332,
+      "specificity": 0.9668,
+      "pr_auc": 0.9772,
+      "roc_auc": 0.9914,
+      "recall_at_fpr_0.01": 0.6812,
+      "recall_at_fpr_0.05": 0.971,
+      "recall_at_fpr_0.1": 0.971
+    },
+    "confusion_matrix": [
+      [
+        72,
+        7,
+        1,
+        1
+      ],
+      [
+        0,
+        66,
+        2,
+        1
+      ],
+      [
+        0,
+        0,
+        61,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        69
+      ]
+    ]
+  },
+  "ranking": {
+    "top_1": {
+      "accuracy": 1.0,
+      "hits": 5,
+      "total_sites_with_auth": 5,
+      "per_site": {
+        "bank_chase": {
+          "total_cookies": 61,
+          "auth_cookies": 16,
+          "hit": true,
+          "top_k_predicted_auth_prob": [
+            1.0
+          ]
+        },
+        "saas_github": {
+          "total_cookies": 65,
+          "auth_cookies": 19,
+          "hit": true,
+          "top_k_predicted_auth_prob": [
+            1.0
+          ]
+        },
+        "news_bbc": {
+          "total_cookies": 48,
+          "auth_cookies": 9,
+          "hit": true,
+          "top_k_predicted_auth_prob": [
+            1.0
+          ]
+        },
+        "bank_bofa": {
+          "total_cookies": 53,
+          "auth_cookies": 13,
+          "hit": true,
+          "top_k_predicted_auth_prob": [
+            1.0
+          ]
+        },
+        "gov_portal": {
+          "total_cookies": 53,
+          "auth_cookies": 12,
+          "hit": true,
+          "top_k_predicted_auth_prob": [
+            1.0
+          ]
+        }
+      }
+    },
+    "top_2": {
+      "accuracy": 1.0,
+      "hits": 5,
+      "total_sites_with_auth": 5,
+      "per_site": {
+        "bank_chase": {
+          "total_cookies": 61,
+          "auth_cookies": 16,
+          "hit": true,
+          "top_k_predicted_auth_prob": [
+            1.0,
+            1.0
+          ]
+        },
+        "saas_github": {
+          "total_cookies": 65,
+          "auth_cookies": 19,
+          "hit": true,
+          "top_k_predicted_auth_prob": [
+            1.0,
+            1.0
+          ]
+        },
+        "news_bbc": {
+          "total_cookies": 48,
+          "auth_cookies": 9,
+          "hit": true,
+          "top_k_predicted_auth_prob": [
+            1.0,
+            1.0
+          ]
+        },
+        "bank_bofa": {
+          "total_cookies": 53,
+          "auth_cookies": 13,
+          "hit": true,
+          "top_k_predicted_auth_prob": [
+            1.0,
+            1.0
+          ]
+        },
+        "gov_portal": {
+          "total_cookies": 53,
+          "auth_cookies": 12,
+          "hit": true,
+          "top_k_predicted_auth_prob": [
+            1.0,
+            1.0
+          ]
+        }
+      }
+    },
+    "top_3": {
+      "accuracy": 1.0,
+      "hits": 5,
+      "total_sites_with_auth": 5,
+      "per_site": {
+        "bank_chase": {
+          "total_cookies": 61,
+          "auth_cookies": 16,
+          "hit": true,
+          "top_k_predicted_auth_prob": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "saas_github": {
+          "total_cookies": 65,
+          "auth_cookies": 19,
+          "hit": true,
+          "top_k_predicted_auth_prob": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "news_bbc": {
+          "total_cookies": 48,
+          "auth_cookies": 9,
+          "hit": true,
+          "top_k_predicted_auth_prob": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "bank_bofa": {
+          "total_cookies": 53,
+          "auth_cookies": 13,
+          "hit": true,
+          "top_k_predicted_auth_prob": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "gov_portal": {
+          "total_cookies": 53,
+          "auth_cookies": 12,
+          "hit": true,
+          "top_k_predicted_auth_prob": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      }
+    }
+  },
+  "generalization": {
+    "folds": [
+      {
+        "held_out_site": "bank_bofa",
+        "test_size": 53,
+        "accuracy": 0.9434,
+        "f1_macro": 0.9461,
+        "auth_precision": 1.0,
+        "auth_recall": 0.9231,
+        "auth_fpr": 0.0
+      },
+      {
+        "held_out_site": "bank_chase",
+        "test_size": 61,
+        "accuracy": 0.9508,
+        "f1_macro": 0.951,
+        "auth_precision": 1.0,
+        "auth_recall": 0.9375,
+        "auth_fpr": 0.0
+      },
+      {
+        "held_out_site": "ecom_amazon",
+        "test_size": 52,
+        "accuracy": 0.9615,
+        "f1_macro": 0.9551,
+        "auth_precision": 0.9167,
+        "auth_recall": 0.9167,
+        "auth_fpr": 0.025
+      },
+      {
+        "held_out_site": "ecom_shopify",
+        "test_size": 48,
+        "accuracy": 0.9375,
+        "f1_macro": 0.932,
+        "auth_precision": 1.0,
+        "auth_recall": 0.8182,
+        "auth_fpr": 0.0
+      },
+      {
+        "held_out_site": "edu_canvas",
+        "test_size": 53,
+        "accuracy": 0.9623,
+        "f1_macro": 0.9644,
+        "auth_precision": 0.8824,
+        "auth_recall": 1.0,
+        "auth_fpr": 0.0526
+      },
+      {
+        "held_out_site": "edu_coursera",
+        "test_size": 52,
+        "accuracy": 0.9423,
+        "f1_macro": 0.952,
+        "auth_precision": 1.0,
+        "auth_recall": 0.8,
+        "auth_fpr": 0.0
+      },
+      {
+        "held_out_site": "gaming_epic",
+        "test_size": 47,
+        "accuracy": 0.9574,
+        "f1_macro": 0.96,
+        "auth_precision": 1.0,
+        "auth_recall": 0.875,
+        "auth_fpr": 0.0
+      },
+      {
+        "held_out_site": "gaming_steam",
+        "test_size": 68,
+        "accuracy": 0.9412,
+        "f1_macro": 0.929,
+        "auth_precision": 1.0,
+        "auth_recall": 0.8636,
+        "auth_fpr": 0.0
+      },
+      {
+        "held_out_site": "gov_portal",
+        "test_size": 53,
+        "accuracy": 0.9434,
+        "f1_macro": 0.9405,
+        "auth_precision": 0.8462,
+        "auth_recall": 0.9167,
+        "auth_fpr": 0.0488
+      },
+      {
+        "held_out_site": "health_epic",
+        "test_size": 50,
+        "accuracy": 0.94,
+        "f1_macro": 0.9339,
+        "auth_precision": 0.875,
+        "auth_recall": 0.875,
+        "auth_fpr": 0.0238
+      },
+      {
+        "held_out_site": "health_portal",
+        "test_size": 52,
+        "accuracy": 0.9808,
+        "f1_macro": 0.98,
+        "auth_precision": 0.9375,
+        "auth_recall": 1.0,
+        "auth_fpr": 0.027
+      },
+      {
+        "held_out_site": "media_netflix",
+        "test_size": 62,
+        "accuracy": 0.9355,
+        "f1_macro": 0.9249,
+        "auth_precision": 0.9,
+        "auth_recall": 0.9,
+        "auth_fpr": 0.0192
+      },
+      {
+        "held_out_site": "media_spotify",
+        "test_size": 57,
+        "accuracy": 0.9825,
+        "f1_macro": 0.9848,
+        "auth_precision": 0.9412,
+        "auth_recall": 1.0,
+        "auth_fpr": 0.0244
+      },
+      {
+        "held_out_site": "news_bbc",
+        "test_size": 48,
+        "accuracy": 0.9375,
+        "f1_macro": 0.928,
+        "auth_precision": 0.8,
+        "auth_recall": 0.8889,
+        "auth_fpr": 0.0513
+      },
+      {
+        "held_out_site": "news_nyt",
+        "test_size": 65,
+        "accuracy": 0.9385,
+        "f1_macro": 0.9326,
+        "auth_precision": 0.8571,
+        "auth_recall": 0.8571,
+        "auth_fpr": 0.0392
+      },
+      {
+        "held_out_site": "saas_github",
+        "test_size": 65,
+        "accuracy": 0.9385,
+        "f1_macro": 0.9474,
+        "auth_precision": 0.8636,
+        "auth_recall": 1.0,
+        "auth_fpr": 0.0652
+      },
+      {
+        "held_out_site": "saas_notion",
+        "test_size": 53,
+        "accuracy": 0.9811,
+        "f1_macro": 0.9839,
+        "auth_precision": 0.9375,
+        "auth_recall": 1.0,
+        "auth_fpr": 0.0263
+      },
+      {
+        "held_out_site": "saas_slack",
+        "test_size": 64,
+        "accuracy": 1.0,
+        "f1_macro": 1.0,
+        "auth_precision": 1.0,
+        "auth_recall": 1.0,
+        "auth_fpr": 0.0
+      },
+      {
+        "held_out_site": "social_facebook",
+        "test_size": 46,
+        "accuracy": 0.9348,
+        "f1_macro": 0.923,
+        "auth_precision": 1.0,
+        "auth_recall": 0.7778,
+        "auth_fpr": 0.0
+      },
+      {
+        "held_out_site": "social_reddit",
+        "test_size": 41,
+        "accuracy": 1.0,
+        "f1_macro": 1.0,
+        "auth_precision": 1.0,
+        "auth_recall": 1.0,
+        "auth_fpr": 0.0
+      },
+      {
+        "held_out_site": "social_twitter",
+        "test_size": 48,
+        "accuracy": 0.9792,
+        "f1_macro": 0.9807,
+        "auth_precision": 1.0,
+        "auth_recall": 0.9231,
+        "auth_fpr": 0.0
+      },
+      {
+        "held_out_site": "travel_airline",
+        "test_size": 62,
+        "accuracy": 0.9677,
+        "f1_macro": 0.9686,
+        "auth_precision": 0.9333,
+        "auth_recall": 0.9333,
+        "auth_fpr": 0.0213
+      }
+    ],
+    "aggregate": {
+      "n_folds": 22,
+      "mean_accuracy": 0.9571,
+      "std_accuracy": 0.021,
+      "mean_f1_macro": 0.9554,
+      "std_f1_macro": 0.0239,
+      "mean_auth_precision": 0.9405,
+      "mean_auth_recall": 0.9185,
+      "mean_auth_fpr": 0.0193,
+      "min_accuracy": 0.9348,
+      "max_accuracy": 1.0
+    }
+  },
+  "bootstrap_ci": {
+    "accuracy": {
+      "mean": 0.9572,
+      "ci_95_lower": 0.9321,
+      "ci_95_upper": 0.9786
+    },
+    "macro_f1": {
+      "mean": 0.9579,
+      "ci_95_lower": 0.9333,
+      "ci_95_upper": 0.9802
+    },
+    "auth_recall": {
+      "mean": 0.9573,
+      "ci_95_lower": 0.9,
+      "ci_95_upper": 1.0
+    },
+    "auth_fpr": {
+      "mean": 0.0333,
+      "ci_95_lower": 0.0101,
+      "ci_95_upper": 0.0602
+    },
+    "auth_pr_auc": {
+      "mean": 0.9772,
+      "ci_95_lower": 0.9532,
+      "ci_95_upper": 0.9938
+    }
+  },
+  "metadata": {
+    "dataset_size": 1200,
+    "train_size": 920,
+    "val_size": 280,
+    "n_features": 38,
+    "n_sites": 22,
+    "holdout_sites": [
+      "bank_bofa",
+      "news_bbc",
+      "gov_portal",
+      "bank_chase",
+      "saas_github"
+    ]
+  }
+}
