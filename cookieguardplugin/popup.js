@@ -22,7 +22,7 @@ const UI_CONFIG = {
 // Configuration
 const CONFIG = {
   useBackend: true,
-  backendURL: 'http://localhost:5000',
+  backendURL: 'http://localhost:5001',
   demoSiteURL: 'http://localhost:8000',
   analysisMode: 'backend'
 };
