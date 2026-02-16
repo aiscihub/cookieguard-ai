@@ -673,7 +673,7 @@
       z-index: 1000;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 10px;
     }
 
     .modal.active {
@@ -684,11 +684,14 @@
       background: var(--card);
       border-radius: var(--radius);
       padding: 0;
+      width: 100%;
       max-width: 100%;
-      max-height: 90%;
+      max-height: 95%;
       overflow: hidden;
       box-shadow: var(--shadow-lg);
       animation: modalIn 0.2s ease;
+      display: flex;
+      flex-direction: column;
     }
 
     @keyframes modalIn {
@@ -709,12 +712,14 @@
       background: var(--bg);
       border-bottom: 1px solid var(--border);
       font-family: 'JetBrains Mono', monospace;
+      flex-shrink: 0;
     }
 
     .modal-body {
       padding: 16px;
-      max-height: 300px;
       overflow-y: auto;
+      flex: 1;
+      min-height: 0;
     }
 
     .modal-section {
@@ -750,6 +755,7 @@
       padding: 14px 16px;
       background: var(--bg);
       border-top: 1px solid var(--border);
+      flex-shrink: 0;
     }
 
     .modal-actions .btn {
@@ -1443,11 +1449,11 @@
       <div class="model-section">
         <h4>2.0 Capabilities</h4>
         <div class="capabilities-list">
-          <div class="capability-item">🧠 Per-cookie explainability — top signals that drive classification</div>
-          <div class="capability-item">⚔️ Attack simulation — XSS, CSRF, subdomain, network paths per cookie</div>
-          <div class="capability-item">🔄 Dynamic behavior modeling — login-diff and rotation detection</div>
-          <div class="capability-item">📊 Multi-model benchmarking — RF, LR, HistGBT compared on same split</div>
-          <div class="capability-item">🎯 Group holdout validation — site-based split prevents data leakage</div>
+          <div class="capability-item">Per-cookie explainability — top signals that drive classification</div>
+          <div class="capability-item">Attack simulation — XSS, CSRF, subdomain, network paths per cookie</div>
+          <div class="capability-item">Dynamic behavior modeling — login-diff and rotation detection</div>
+          <div class="capability-item">Multi-model benchmarking — RF, LR, HistGBT compared on same split</div>
+          <div class="capability-item">Group holdout validation — site-based split prevents data leakage</div>
         </div>
       </div>
     </div>

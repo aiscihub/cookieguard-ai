@@ -1061,11 +1061,13 @@ function showCookieDetails(item) {
   }
 
   bodyEl.innerHTML = detailsHTML;
+  document.body.style.width = '560px';
   modal.classList.add('active');
 }
 
 function closeModal() {
   document.getElementById('cookie-modal').classList.remove('active');
+  document.body.style.width = '320px';
 }
 
 
