@@ -1,0 +1,278 @@
+{
+  "classification": {
+    "per_class": {
+      "other": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 84
+      },
+      "authentication": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 75
+      },
+      "tracking": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 61
+      },
+      "preference": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 62
+      }
+    },
+    "accuracy": 1.0,
+    "macro_precision": 1.0,
+    "macro_recall": 1.0,
+    "macro_f1": 1.0,
+    "auth_binary": {
+      "true_positives": 75,
+      "false_positives": 0,
+      "true_negatives": 207,
+      "false_negatives": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "false_positive_rate": 0.0,
+      "specificity": 1.0,
+      "pr_auc": 1.0,
+      "roc_auc": 1.0,
+      "recall_at_fpr_0.01": 1.0,
+      "recall_at_fpr_0.05": 1.0,
+      "recall_at_fpr_0.1": 1.0
+    },
+    "confusion_matrix": [
+      [
+        84,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        75,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        61,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        62
+      ]
+    ]
+  },
+  "ranking": {
+    "top_1": {
+      "accuracy": 1.0,
+      "hits": 2,
+      "total_sites_with_auth": 2,
+      "per_site": {
+        "site_ecommerce": {
+          "total_cookies": 147,
+          "auth_cookies": 43,
+          "hit": true,
+          "top_k_predicted_auth_prob": [
+            1.0
+          ]
+        },
+        "site_news": {
+          "total_cookies": 135,
+          "auth_cookies": 32,
+          "hit": true,
+          "top_k_predicted_auth_prob": [
+            1.0
+          ]
+        }
+      }
+    },
+    "top_2": {
+      "accuracy": 1.0,
+      "hits": 2,
+      "total_sites_with_auth": 2,
+      "per_site": {
+        "site_ecommerce": {
+          "total_cookies": 147,
+          "auth_cookies": 43,
+          "hit": true,
+          "top_k_predicted_auth_prob": [
+            1.0,
+            1.0
+          ]
+        },
+        "site_news": {
+          "total_cookies": 135,
+          "auth_cookies": 32,
+          "hit": true,
+          "top_k_predicted_auth_prob": [
+            1.0,
+            1.0
+          ]
+        }
+      }
+    },
+    "top_3": {
+      "accuracy": 1.0,
+      "hits": 2,
+      "total_sites_with_auth": 2,
+      "per_site": {
+        "site_ecommerce": {
+          "total_cookies": 147,
+          "auth_cookies": 43,
+          "hit": true,
+          "top_k_predicted_auth_prob": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "site_news": {
+          "total_cookies": 135,
+          "auth_cookies": 32,
+          "hit": true,
+          "top_k_predicted_auth_prob": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      }
+    }
+  },
+  "generalization": {
+    "folds": [
+      {
+        "held_out_site": "site_banking",
+        "test_size": 172,
+        "accuracy": 0.9942,
+        "f1_macro": 0.994,
+        "auth_precision": 1.0,
+        "auth_recall": 1.0,
+        "auth_fpr": 0.0
+      },
+      {
+        "held_out_site": "site_ecommerce",
+        "test_size": 147,
+        "accuracy": 1.0,
+        "f1_macro": 1.0,
+        "auth_precision": 1.0,
+        "auth_recall": 1.0,
+        "auth_fpr": 0.0
+      },
+      {
+        "held_out_site": "site_edu",
+        "test_size": 152,
+        "accuracy": 0.9934,
+        "f1_macro": 0.9932,
+        "auth_precision": 1.0,
+        "auth_recall": 1.0,
+        "auth_fpr": 0.0
+      },
+      {
+        "held_out_site": "site_gaming",
+        "test_size": 127,
+        "accuracy": 1.0,
+        "f1_macro": 1.0,
+        "auth_precision": 1.0,
+        "auth_recall": 1.0,
+        "auth_fpr": 0.0
+      },
+      {
+        "held_out_site": "site_healthcare",
+        "test_size": 158,
+        "accuracy": 0.9937,
+        "f1_macro": 0.9937,
+        "auth_precision": 1.0,
+        "auth_recall": 1.0,
+        "auth_fpr": 0.0
+      },
+      {
+        "held_out_site": "site_news",
+        "test_size": 135,
+        "accuracy": 0.9926,
+        "f1_macro": 0.9919,
+        "auth_precision": 1.0,
+        "auth_recall": 1.0,
+        "auth_fpr": 0.0
+      },
+      {
+        "held_out_site": "site_saas",
+        "test_size": 153,
+        "accuracy": 1.0,
+        "f1_macro": 1.0,
+        "auth_precision": 1.0,
+        "auth_recall": 1.0,
+        "auth_fpr": 0.0
+      },
+      {
+        "held_out_site": "site_social",
+        "test_size": 156,
+        "accuracy": 0.9936,
+        "f1_macro": 0.9931,
+        "auth_precision": 1.0,
+        "auth_recall": 1.0,
+        "auth_fpr": 0.0
+      }
+    ],
+    "aggregate": {
+      "n_folds": 8,
+      "mean_accuracy": 0.9959,
+      "std_accuracy": 0.0032,
+      "mean_f1_macro": 0.9957,
+      "std_f1_macro": 0.0034,
+      "mean_auth_precision": 1.0,
+      "mean_auth_recall": 1.0,
+      "mean_auth_fpr": 0.0,
+      "min_accuracy": 0.9926,
+      "max_accuracy": 1.0
+    }
+  },
+  "bootstrap_ci": {
+    "accuracy": {
+      "mean": 1.0,
+      "ci_95_lower": 1.0,
+      "ci_95_upper": 1.0
+    },
+    "macro_f1": {
+      "mean": 1.0,
+      "ci_95_lower": 1.0,
+      "ci_95_upper": 1.0
+    },
+    "auth_recall": {
+      "mean": 1.0,
+      "ci_95_lower": 1.0,
+      "ci_95_upper": 1.0
+    },
+    "auth_fpr": {
+      "mean": 0.0,
+      "ci_95_lower": 0.0,
+      "ci_95_upper": 0.0
+    },
+    "auth_pr_auc": {
+      "mean": 1.0,
+      "ci_95_lower": 1.0,
+      "ci_95_upper": 1.0
+    }
+  },
+  "metadata": {
+    "dataset_size": 1200,
+    "train_size": 918,
+    "val_size": 282,
+    "n_features": 38,
+    "n_sites": 8,
+    "holdout_sites": [
+      "site_ecommerce",
+      "site_news"
+    ]
+  }
+}
