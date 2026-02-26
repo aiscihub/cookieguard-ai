@@ -2,353 +2,279 @@
 
 **Detecting Security-Critical Cookie Misuse That Puts Digital Identity at Risk**
 
-An AI-powered web application that analyzes website cookies to detect security-related misuse that can lead to account takeover, unauthorized actions, and identity impersonation.
+An AI-powered Chrome extension that analyzes website cookies to detect security-related misuse that can lead to account takeover, unauthorized actions, and identity impersonation.
+
+**Runs entirely in your browser — no backend, no servers, no data leaves your machine.**
 
 ## Project Overview
 
-CookieGuard AI uses machine learning and rule-based analysis to:
-- Identify which cookies act as authentication tokens
-- Score their security risk
-- Explain in plain language how misconfigured cookies expose digital identity
-##
-![CookieGuardUI](./resource/screenshot_2.0.png)
+CookieGuard AI uses a RandomForest classifier (ONNX), rule-based risk scoring, and explainability to:
+- Identify which cookies act as authentication tokens — including login-aware detection
+- Score their security risk with a transparent, explainable formula
+- Explain in plain language *why* the AI flagged each cookie and *what you can do about it*
+- Simulate real attack paths (XSS, CSRF, subdomain takeover, network sniffing) per cookie
 
-## What's New in 2.0
+![CookieGuardUI](./resource/screenshot_3.0.png)
 
-| Feature | v1.0 | v2.0 |
+## What's New in 3.0
+
+| Feature | v2.0 | v3.0 |
 |---------|------|------|
-| Features | 18 | **38** (added behavior group) |
-| Models | Random Forest only | **3 models benchmarked** (RF, LR, HistGBT) |
-| Validation | Random split | **Site-based group holdout** |
-| Explainability | Evidence chips | **Per-cookie "Why AI flagged this"** with risk formula breakdown |
-| Attack simulation | — | **Per-cookie attack paths** with user-actionable fixes |
-| Login detection | Basic before/after | **Behavior features**: changed, new, rotated at login |
-| Recommendations | Server-side ("Set HttpOnly") | **User-actionable** ("Use a VPN", "Log out after sessions") |
-| Model card | — | **model_card.json** with metrics, version, feature groups |
-
-
-## Quick Start
-
-### Prerequisites
-- Python 3.8+
-- Node.js 16+ (for frontend)
-- pip and npm
-
-## 🔧 Install Chrome Extension (Developer Mode)
-
-CookieGuard AI is currently distributed via GitHub and can be loaded manually using Chrome’s Developer Mode.
+| Architecture | Python backend required | **Self-contained Chrome extension** (ONNX Runtime Web) |
+| Features | 38 | **38** (all ported to JS) |
+| Models | 3 benchmarked (Python sklearn) | **ONNX Runtime Web** (in-browser inference) |
+| Validation | Site-based group holdout | **Same** (model exported from v2.0 pipeline) |
+| Explainability | Backend-computed | **Client-side** (engine.js) |
+| Attack simulation | Backend-computed | **Client-side** (engine.js) |
+| Privacy | Cookies sent to localhost | **Zero data leaves the browser** |
+| Install | Python + pip + Flask | **Load unpacked in Chrome — done** |
 
 ---
 
-### Step1: Download the Repository
+## Quick Start (Self-Contained Extension)
+
+The recommended way to run CookieGuard AI. No Python, no backend, no dependencies.
+
+### Step 1: Download
+
 **Option A — Clone via Git**
 ```bash
-# Clone the repository
 git clone git@github.com:aiscihub/cookieguard-ai.git
 cd cookieguard-ai
 ```
 
 **Option B — Download ZIP**
-Go to the GitHub repository.
-Click Code → Download ZIP.
-Extract the ZIP file on your computer.
+Go to the GitHub repository → Code → Download ZIP → Extract.
 
-### Step 2: Locate the Extension Folder
-Navigate to the folder that directly contains:
-```bash
-manifest.json
-#in repo it is
-cookieguard-ai/cookieguardplugin/
+### Step 2: Load the Extension
+
+1. Open Chrome and go to: `chrome://extensions/`
+2. Toggle **Developer mode** (top-right corner)
+3. Click **Load unpacked**
+4. Select the `extension-standalone/` folder
+5. Click Open
+
+The extension icon appears in your toolbar.
+
+### Step 3: Scan Cookies
+
+1. Visit any website
+2. Click the CookieGuard AI extension icon
+3. Click **Scan Cookies**
+4. Review classification, risk analysis, explainability, and attack simulation results
+
+The status bar shows **"AI Engine Ready"** when the ONNX model is loaded, or **"Rule-Based Mode"** as a fallback.
+
+### Extension Directory Structure
+
 ```
-![CookieGuardExtention](./resource/screenshot_plugin.png)
-### Step3: Load the Extension
-Open Chrome, and go to: **chrome://extensions/**
+extension-standalone/
+├── manifest.json              # Chrome MV3 manifest
+├── popup.html                 # Extension UI
+├── popup.js                   # UI logic (calls engine.js)
+├── engine.js                  # Full analysis pipeline (JS port)
+├── lib/
+│   ├── ort.min.js             # ONNX Runtime Web
+│   └── ort-wasm-simd.wasm     # WASM binary for inference
+├── model/
+│   ├── cookieguard_model.onnx # RandomForest (50 trees, 97.5% accuracy)
+│   └── model_meta.json        # Class order + feature names
+└── icons/
+    ├── icon16.png
+    ├── icon48.png
+    └── icon128.png
+```
 
-Toggle Developer mode (top-right corner).
+---
 
-Click **Load unpacked**.
+## Backend Mode (For Debugging / Development)
 
-Select the extension folder (cookieguard-ai/cookieguardplugin/).
+The original Python backend is preserved for development, model retraining, and evaluation. It is **not required** for normal use.
 
-Click Open.
+<details>
+<summary>Click to expand backend setup instructions</summary>
 
-### Step 4: Start the Backend
-CookieGuard AI uses a local Python backend for AI-based risk analysis.
+### Prerequisites
+- Python 3.8+
+- pip
+
+### Setup
+
 ```bash
 cd cookieguard-ai/backend
-#If using conda
-#conda create -n cookieguard python=3.10 -y
-#conda activate cookieguard
 
-# Install backend dependencies
+# Install dependencies
 pip install -r requirements.txt
 
-# Train the ML model (first time only)
-python backend/train_model.py
+# Train the ML model (benchmarks 3 models)
+python train_model.py
 
 # Start the backend server
-python backend/app.py
-```
-By default, the backend runs at:
-```bash
-http://localhost:5000
+python app.py
 ```
 
+The backend runs at `http://localhost:5000`.
 
-### Step 5:Run a Test Scan
-Visit a website with login functionality.
-Click the CookieGuard AI extension icon.
-Click Scan Cookies.
-Review classification and risk analysis results.
+### Using the Backend Extension
 
-## Project Architecture
+Load `cookieguardplugin/` (not `extension-standalone/`) in Chrome Developer Mode. This version connects to the Python backend for analysis.
 
-### System Overview
+### Backend Directory
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                        CookieGuard AI                           │
-│                    End-to-End Architecture                      │
-└─────────────────────────────────────────────────────────────────┘
-
-  ┌──────────────┐
-  │   Browser    │ ──→ Cookie Export (JSON)
-  └──────────────┘
-         │
-         ▼
-  ┌──────────────────────────────────────────────────────────────┐
-  │                   React                                      │
-  │  • Results Visualization                                     │
-  │  • Risk Dashboard                                            │
-  └──────────────────────────────────────────────────────────────┘
-         │ HTTP POST
-         ▼
-  ┌──────────────────────────────────────────────────────────────┐
-  │                   Backend (Flask API)                        │
-  │  • /api/analyze                                              │
-  │  • /health                                                   │
-  └──────────────────────────────────────────────────────────────┘
-         │
-         ▼
-  ┌──────────────────────────────────────────────────────────────┐
-  │              Analysis Pipeline (Python)                      │
-  │                                                              │
-  │  1. Feature Extraction                                       │
-  │     ├─ Security flags (Secure, HttpOnly, SameSite)          │
-  │     ├─ Expiry analysis                                       │
-  │     ├─ Domain scope                                          │
-  │     ├─ Name pattern matching                                 │
-  │     └─ Entropy calculations                                  │
-  │                                                              │
-  │  2. ML Classification (Random Forest)                        │
-  │     ├─ Input: 18 features                                    │
-  │     ├─ Output: authentication/tracking/preference/other      │
-  │     └─ Confidence scores                                     │
-  │                                                              │
-  │  3. Risk Scoring                                             │
-  │     ├─ Security rule evaluation                              │
-  │     ├─ Severity assignment (critical/high/medium/low/info)   │
-  │     └─ Plain-language explanation generation                 │
-  │                                                              │
-  └──────────────────────────────────────────────────────────────┘
-         │
-         ▼
-  ┌──────────────────────────────────────────────────────────────┐
-  │                   Results & Reports                          │
-  │  • Ranked security findings                                  │
-  │  • Detailed issue explanations                               │
-  │  • Actionable recommendations                                │
-  └──────────────────────────────────────────────────────────────┘
+backend/
+├── app.py                    # Flask API server
+├── classifier.py             # Multi-model classifier with benchmarking
+├── risk_scorer.py            # Additive severity + exposure scoring
+├── feature_extractor.py      # 38-feature extraction (4 groups)
+├── explainability.py         # Per-cookie explanation engine
+├── attack_simulator.py       # Attack path simulation
+├── train_model.py            # Training pipeline with group holdout
+├── evaluate_model.py         # Full evaluation suite (LOSO CV, bootstrap CI)
+└── generate_training_data.py # Synthetic data generator
 ```
+
+</details>
+
+---
+
+## Architecture
+
+### Self-Contained Extension (Default)
+
+```
+┌──────────────┐       ┌────────────────────────────────────────────┐
+│   Browser    │──────▶│          Chrome Extension (popup.js)       │
+│              │       │                                            │
+│ chrome.cookies API   │  engine.js — Full Analysis Pipeline        │
+│              │       │  ┌──────────────────────────────────────┐  │
+│              │       │  │ 1. Feature Extraction (38 features)  │  │
+│              │       │  │ 2. ONNX Inference (RandomForest)     │  │
+│              │       │  │    ↳ Rule-based fallback if WASM     │  │
+│              │       │  │      unavailable                     │  │
+│              │       │  │ 3. Risk Scoring (severity × exposure)│  │
+│              │       │  │ 4. Explainability (signal extraction)│  │
+│              │       │  │ 5. Attack Simulation (5 vectors)     │  │
+│              │       │  └──────────────────────────────────────┘  │
+│              │       │                                            │
+│              │◀──────│  Results: classification, risk, signals,   │
+│              │       │  attack paths, recommendations             │
+└──────────────┘       └────────────────────────────────────────────┘
+```
+
+All computation happens in-browser. No network requests, no data exfiltration.
 
 ---
 
 ## Core Components
 
-## 1. Feature Extractor (`feature_extractor.py`)
-**Purpose:** Convert raw cookie metadata into a 38-dimensional feature vector across 4 groups.
-**Input:** Cookie dictionary + optional login context (changedCookies, beforeCookieIndex, currentDomain).
+### 1. Feature Extractor — 38 features across 4 groups
 
-**Feature Groups:**
 | Group | Count | Features |
 |-------|-------|----------|
 | **Attributes** | 7 | has_secure, has_httponly, has_samesite, samesite_level, is_session_cookie, expiry_days, lifetime_category |
 | **Scope** | 7 | domain_is_wildcard, domain_depth, etld_match, path_is_root, path_depth, cross_site_sendable, exposure_score |
 | **Lexical** | 16 | name_matches_auth/tracking/preference, host/secure prefix, name_entropy, name_length, value_length, value_entropy_bucket, value_looks_like_jwt/hex/base64, value_has_padding, value_is_numeric, value_length_bucket |
-| **Behavior** *(new)* | 8 | f_changed_during_login, f_new_after_login, f_rotated_after_login, f_persistent_days_bucket, f_subdomain_shared, f_third_party_context, f_login_behavior_score, f_security_posture_score |
+| **Behavior** | 8 | f_changed_during_login, f_new_after_login, f_rotated_after_login, f_persistent_days_bucket, f_subdomain_shared, f_third_party_context, f_login_behavior_score, f_security_posture_score |
 
-The behavior features are derived from login-diff context at runtime (which cookies appeared, changed, or rotated during login) or from training data with realistic correlations (auth cookies: ~85% changed at login; tracking: ~10%).
+All 38 features are computed from `chrome.cookies` API output + basic string/math operations. No header inspection, no content scripts, no network monitoring required.
 
+### 2. ML Classifier — ONNX Runtime Web
 
+- **Model:** RandomForest (50 trees, depth 10) exported to ONNX with `zipmap=False`
+- **Accuracy:** 97.5% on site-based holdout
+- **Classes:** authentication, tracking, preference, other
+- **Fallback:** Rule-based classifier when ONNX/WASM unavailable
+- **Inference:** ~5ms per cookie on modern hardware
 
-### 2. Multi-Model Classifier (`classifier.py`)
+### 3. Risk Scorer
 
-**Purpose:** Predict cookie type using benchmarked ML models with calibrated probabilities.
-
-**Models Benchmarked:**
-| Model | Role |
-|-------|------|
-| RandomForest (150 trees, depth 12) | Strong baseline, feature importance |
-| LogisticRegression (balanced, L2) | Interpretable, coefficient-based explainability |
-| HistGradientBoosting (200 iter, depth 8) | Strong tabular learner |
-
-**Selection Criteria:**
-1. Primary: Recall for auth class at FPR ≤ 0.10
-2. Secondary: PR-AUC for auth class
-3. Calibration: Isotonic regression per class on validation set
-
-**Classes:**
-- 0: other (functional cookies)
-- 1: authentication (session/login tokens)
-- 2: tracking (analytics cookies)
-- 3: preference (user settings)
-
-**Training Process:**
-1. Generate 1000 labeled examples with behavior features
-2. Site-based group holdout split (prevents data leakage across domains)
-3. Train 3 models on same split, benchmark on validation set
-4. Select best model, calibrate probabilities
-5. Save model.pkl, model_card.json, feature_schema.json, benchmark_results.csv
-
-**Artifacts Produced:**
-
-| File | Content |
-|------|---------|
-| `cookie_classifier.pkl` | Trained model + scaler + calibrators |
-| `model_card.json` | Model name, version, date, metrics, feature groups |
-| `feature_schema.json` | Feature names, groups, version |
-| `benchmark_results.csv` | Per-model accuracy, F1, PR-AUC, Recall@FPR |
-
-
-### 3. Risk Scorer (`risk_scorer.py`)
-
-**Purpose:** Evaluate security risk using additive severity scoring with exposure multipliers.
-
-**Risk Formula:**
 ```
 RiskScore = Σ(Severity Points) × Breadth × Lifetime
-            [only computed when P(auth) > 0.3]
+            [gated on P(auth) > 0.3]
 ```
 
-**Risk Levels:**
-- **CRITICAL** (50+ points): Immediate account takeover risk
-- **HIGH** (30–49 points): Significant security exposure
-- **MEDIUM** (15–29 points): Some security concerns
-- **LOW** (1–14 points): Minor improvements possible
-- **INFO** (0 points): No security concerns
+| Vulnerability | Points | Impact |
+|--------------|--------|--------|
+| Missing HttpOnly | +40 | XSS session hijacking |
+| Missing Secure | +25 | Network interception |
+| Missing SameSite | +20 | CSRF attacks |
+| Wildcard domain | +15 | Subdomain theft |
+| Long-lived (>30d) | +10 | Extended exposure |
 
-**Severity Points (additive):**
+### 4. Explainability Engine
 
-| Vulnerability | Severity | Points | Impact |
-|--------------|----------|--------|---------|
-| Missing HttpOnly | CRITICAL | +40 | XSS-based session hijacking |
-| Missing Secure | HIGH | +25 | Man-in-the-middle interception |
-| Missing SameSite | HIGH | +20 | Cross-site request forgery |
-| Wildcard domain (`.example.com`) | MEDIUM | +15 | Subdomain-based theft |
-| Long-lived (>30 days) | MEDIUM | +10 | Extended exposure window |
-| Non-host-only domain | LOW | +6 | Cross-subdomain access |
-| Broad path scope (`/`) | LOW | +5 | Increased exposure surface |
-| Shared cookie naming | LOW | +4 | Slightly increased attack surface |
+Per-cookie breakdown: classification signals (name pattern, entropy, login behavior), risk formula decomposition (severity points × breadth × lifetime), and plain-language interpretation.
 
-**Exposure Multipliers:**
-- **Breadth factor:** 1.0 (host-only) → 1.5 (wildcard domain)
-- **Lifetime factor:** 1.0 (session) → 2.0 (365-day expiry)
+### 5. Attack Simulator
 
-**Recommendations** are user-actionable (e.g., "Avoid this site on public WiFi", "Log out after sessions") rather than server-side configuration instructions.
+Generates per-cookie attack paths based on actual security configuration:
+- **XSS** — when HttpOnly is missing
+- **CSRF** — when SameSite is unset
+- **Network sniffing** — when Secure flag is missing
+- **Subdomain takeover** — when domain is wildcarded
+- **Session replay** — when cookie lifetime exceeds 30 days
+
+Each path includes a user-actionable fix and a site-should-fix note.
+
 ---
 
-### 4. Training Data Generator (`generate_training_data.py`)
+## Evaluation (5,000 synthetic cookies · 22 sites · 40% hard samples)
 
-**Purpose:** Create realistic synthetic training data.
+| Metric | Value | 95% CI |
+|--------|-------|--------|
+| Accuracy | 95.7% | [93.2, 97.9] |
+| Auth Recall | 95.7% | [90.0, 100.0] |
+| Auth Precision | 90.4% | — |
+| Auth FPR | 3.3% | [1.0, 6.0] |
+| PR-AUC | 0.977 | [0.953, 0.994] |
+| Top-3 Ranking | 100% | 5/5 sites |
+| LOSO Generalization | 95.7% ± 2.10% | 22 folds |
 
-**Cookie Categories:**
+Training data is synthetic — metrics represent performance on controlled data. Real-world results may vary.
 
-**Authentication Cookies:**
-- Names: session_id, JSESSIONID, auth_token, jwt_token
-- Security: 90% Secure, 70% HttpOnly, often Lax/Strict
-- Expiry: Session or short-lived (7-30 days)
-- Values: JWT-like or hex tokens
+---
 
-**Tracking Cookies:**
-- Names: _ga, _gid, fbp, DoubleClickId
-- Security: 40% Secure, 10% HttpOnly, often missing SameSite
-- Expiry: Long-lived (90-730 days)
-- Values: Tracking IDs, timestamps
-
-**Preference Cookies:**
-- Names: language, theme, timezone, currency
-- Security: 50% Secure, rarely HttpOnly
-- Expiry: Medium to long-lived (90-365 days)
-- Values: Simple strings (en-US, dark, UTC)
-
-**Generation Strategy:**
-- Balanced dataset: 200 samples per class
-- Realistic variation in security configurations
-- Intentional vulnerabilities to train detection
-- Domain diversity (main domain, subdomains, wildcards)
-
-
-### 4. Explainability Engine (`explainability.py`) *(new in 2.0)*
-
-**Purpose:** Generate per-cookie human-readable explanations for why the AI flagged each cookie.
-
-**Output per cookie:**
-- **Auth signals** (top 5): e.g., "Identity keyword in name", "Changed during login", "JWT token pattern"
-- **Risk signals** (top 3): e.g., "Sent cross-site (SameSite=None)", "Shared across subdomains"
-- **Risk formula breakdown**: Shows the actual components (severity points, breadth, lifetime) and interpretation
-
-Uses a dual path: rule-based feature-to-explanation mapping for deterministic signals, plus LR coefficient contributions when Logistic Regression is available.
-
-
-## 📁 Project Structure
+## Project Structure
 
 ```
 cookieguard-ai/
-├── backend/
-│   ├── app.py                    # Flask API server (3 endpoints)
-│   ├── classifier.py             # Multi-model classifier with benchmarking
-│   ├── risk_scorer.py            # Additive severity + exposure scoring
-│   ├── train_model.py            # Training pipeline with group holdout
-│   ├── feature_extractor.py      # 38-feature extraction (4 groups)
-│   ├── explainability.py         # Per-cookie "why AI flagged this" [NEW]
-│   ├── attack_simulator.py       # Per-cookie attack path simulation [NEW]
-│   └── generate_training_data.py # Synthetic data with behavior features
-├── cookieguardplugin/
-│   ├── manifest.json             # Chrome extension manifest v3
-│   ├── popup.html                # Extension UI with 2.0 modal sections
-│   └── popup.js                  # Frontend logic + explainability/attack display
-├── data/
-│   └── training_cookies.json     # Training dataset (generated)
-├── models/
-│   ├── cookie_classifier.pkl     # Trained ML model
-│   ├── model_card.json           # Model metadata + metrics [NEW]
-│   ├── feature_schema.json       # Feature names + groups [NEW]
-│   └── benchmark_results.csv     # Multi-model comparison [NEW]
+├── extension-standalone/          # ★ Self-contained extension (recommended)
+│   ├── manifest.json
+│   ├── popup.html / popup.js
+│   ├── engine.js                  # Full pipeline (JS port)
+│   ├── lib/                       # ONNX Runtime Web + WASM
+│   └── model/                     # cookieguard_model.onnx
+├── backend/                       # Python backend (debugging/development)
+│   ├── app.py
+│   ├── classifier.py
+│   ├── risk_scorer.py
+│   ├── feature_extractor.py
+│   ├── explainability.py
+│   ├── attack_simulator.py
+│   ├── evaluate_model.py
+│   ├── train_model.py
+│   └── generate_training_data.py
+├── cookieguardplugin/             # Backend-dependent extension (legacy)
+│   ├── manifest.json
+│   ├── popup.html
+│   └── popup.js
+├── models/                        # Trained model artifacts
+│   ├── cookie_classifier.pkl
+│   ├── model_card.json
+│   ├── feature_schema.json
+│   └── benchmark_results.csv
 └── resource/
-    └── *.png                     # Screenshots
+    └── *.png
 ```
 
-## How It Works
+## Known Limitations
 
-1. **Data Collection**: Import cookies from browser (JSON export)
-2. **Feature Extraction**: Analyze cookie attributes (flags, expiry, scope, name)
-3. **ML Classification**: Predict cookie type (auth/tracking/preference) with confidence
-4. **Risk Scoring**: Combine ML output with security rules
-5. **Explanation**: Generate plain-language security report
-
-## Threats Detected
-
-- **Account Takeover** via session hijacking
-- **Unauthorized Actions** (CSRF-style abuse)
-- **Identity Exposure** across subdomains
-
-## Why an AI Approach?
-
-Without AI, users face 50+ cookies per site with no way to identify which ones are security-critical. CookieGuard AI's ML classifier:
-- Distinguishes authentication cookies from tracking cookies
-- Assigns confidence scores for prioritization
-- Reduces false alarms through pattern learning
+- Training data is synthetic — metrics represent an upper bound on controlled data
+- Behavior features require Login Flow capture mode; default to zero otherwise
+- Attack simulation is rule-based (potential paths, not confirmed vulnerabilities)
+- ONNX model is ~1MB, WASM runtime is ~11MB (total extension ~12MB)
 
 ## License
 
-MIT License - see LICENSE file for details
+MIT License — see LICENSE file for details
