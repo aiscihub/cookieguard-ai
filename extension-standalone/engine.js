@@ -12,6 +12,74 @@ const AUTH_PATTERNS = [/session/i, /auth/i, /token/i, /login/i, /jwt/i, /bearer/
 const TRACKING_PATTERNS = [/^_ga/i, /^_gid/i, /analytics/i, /tracking/i, /^utm/i, /^fbp/i, /amplitude/i, /mixpanel/i, /^_cl/i];
 const PREFERENCE_PATTERNS = [/lang/i, /theme/i, /consent/i, /preferences/i, /settings/i, /locale/i, /timezone/i, /currency/i];
 
+// ── TRACKER DOMAIN MAP ──
+const TRACKER_MAP = {
+  // Google
+  'google-analytics.com':'Google','analytics.google.com':'Google',
+  'googletagmanager.com':'Google','googletagservices.com':'Google',
+  'doubleclick.net':'Google','googlesyndication.com':'Google',
+  'googleadservices.com':'Google','google.com':'Google',
+  'googleapis.com':'Google','gstatic.com':'Google',
+  // Meta
+  'facebook.com':'Meta','facebook.net':'Meta',
+  'connect.facebook.net':'Meta','instagram.com':'Meta',
+  'fbcdn.net':'Meta','atdmt.com':'Meta',
+  // Amazon
+  'amazon-adsystem.com':'Amazon','amazon.com':'Amazon',
+  'amazonwebservices.com':'Amazon','aws.amazon.com':'Amazon',
+  'images-amazon.com':'Amazon','media-amazon.com':'Amazon',
+  // Microsoft
+  'bing.com':'Microsoft','bat.bing.com':'Microsoft',
+  'clarity.ms':'Microsoft','microsoft.com':'Microsoft',
+  'msecnd.net':'Microsoft','live.com':'Microsoft',
+  // TikTok
+  'tiktok.com':'TikTok','ads.tiktok.com':'TikTok','bytedance.com':'TikTok',
+  // Twitter/X
+  'twitter.com':'X/Twitter','t.co':'X/Twitter','ads-twitter.com':'X/Twitter','twimg.com':'X/Twitter',
+  // LinkedIn
+  'linkedin.com':'LinkedIn','licdn.com':'LinkedIn',
+  // Snap
+  'snapchat.com':'Snap','sc-static.net':'Snap','snap.com':'Snap',
+  // Analytics & session recording
+  'hotjar.com':'Hotjar','mixpanel.com':'Mixpanel','amplitude.com':'Amplitude',
+  'segment.com':'Segment','segment.io':'Segment',
+  'fullstory.com':'FullStory','heap.io':'Heap',
+  'mouseflow.com':'Mouseflow','logrocket.com':'LogRocket',
+  'intercom.io':'Intercom','intercom.com':'Intercom',
+  // Ad networks
+  'criteo.com':'Criteo','outbrain.com':'Outbrain','taboola.com':'Taboola',
+  'quantserve.com':'Quantcast','scorecardresearch.com':'Comscore',
+  'chartbeat.com':'Chartbeat','optimizely.com':'Optimizely',
+  'pubmatic.com':'PubMatic','rubiconproject.com':'Rubicon',
+  'openx.com':'OpenX','adnxs.com':'Xandr','appnexus.com':'Xandr',
+  'casalemedia.com':'Casale Media','indexww.com':'Index Exchange',
+  'advertising.com':'AOL/Oath','oath.com':'Oath',
+  'tremorhub.com':'Tremor','sharethrough.com':'Sharethrough',
+  // CDN-hosted trackers
+  'cloudflare.com':'Cloudflare','cloudflareinsights.com':'Cloudflare',
+};
+
+function detectTrackerCompany(domain) {
+  if (!domain) return null;
+  const d = domain.replace(/^\./, '').toLowerCase();
+  for (const [td, company] of Object.entries(TRACKER_MAP)) {
+    if (d === td || d.endsWith('.' + td)) return company;
+  }
+  return null;
+}
+
+function computeIdentityExposure(authCount, riskCount) {
+  if (riskCount > 0) return 'High';
+  if (authCount > 0) return 'Medium';
+  return 'Low';
+}
+
+function computeTrackingExposure(trackerCount, thirdPartyDomainCount) {
+  if (trackerCount >= 5 || thirdPartyDomainCount >= 8) return 'High';
+  if (trackerCount >= 2) return 'Medium';
+  return 'Low';
+}
+
 const FEATURE_NAMES = [
   // Attributes (7)
   'has_secure','has_httponly','has_samesite','samesite_level',
@@ -718,5 +786,9 @@ if (typeof window !== 'undefined') {
     loadModel,
     _isModelLoaded: isModelLoaded,
     FEATURE_NAMES,
+    detectTrackerCompany,
+    computeIdentityExposure,
+    computeTrackingExposure,
+    TRACKER_MAP,
   };
 }
