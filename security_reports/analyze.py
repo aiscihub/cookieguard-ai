@@ -428,174 +428,177 @@ def generate_report(stats):
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 body{{
-    font-family: "Inter", system-ui, sans-serif;
-    background:#f8fafc;
-    color:#111827;
-    margin:0;
-    line-height:1.6;
+    font-family: Inter, system-ui, sans-serif;
+    background: #f9fafb;
+    color: #111827;
+    margin: 0;
+    line-height: 1.6;
 }}
 .container{{
-    max-width:820px;
-    margin:auto;
-    padding:40px 28px;
+    max-width: 1000px;
+    margin: auto;
+    padding: 0 40px 60px;
 }}
-h1{{
-    font-size:28px;
-    font-weight:700;
-    margin-bottom:4px;
+.report-header{{
+    text-align: center;
+    padding: 60px 20px 40px;
 }}
-h2{{
-    margin-top:40px;
-    font-size:18px;
-    font-weight:600;
+.report-header h1{{
+    font-size: 42px;
+    font-weight: 700;
+    margin: 0 0 8px;
 }}
-.subtitle{{
-    color:#6b7280;
-    font-size:14px;
+.report-subtitle{{
+    font-size: 18px;
+    color: #4b5563;
+    margin: 0;
 }}
-.metrics{{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:12px;
-    margin:28px 0;
-}}
-.metric{{
-    background:white;
-    border-radius:6px;
-    padding:14px 16px;
-    border:1px solid #e5e7eb;
-}}
-.metric-value{{
-    font-size:20px;
-    font-weight:700;
-    color:#2563eb;
-}}
-.metric-label{{
-    color:#6b7280;
-    font-size:11px;
-    margin-top:2px;
+.report-meta{{
+    color: #6b7280;
+    margin-top: 8px;
+    font-size: 14px;
 }}
 .section{{
-    margin-top:36px;
+    margin: 50px 0;
+}}
+.section h2{{
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 12px;
 }}
 .section p{{
-    font-size:13px;
-    color:#4b5563;
-    margin:6px 0 0;
+    font-size: 14px;
+    color: #4b5563;
+    margin: 0 0 16px;
+}}
+.metrics{{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin: 40px 0;
+}}
+.metric{{
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 24px;
+    text-align: center;
+}}
+.metric-value{{
+    font-size: 32px;
+    font-weight: 700;
+    color: #2563eb;
+}}
+.metric-label{{
+    color: #6b7280;
+    font-size: 13px;
+    margin-top: 4px;
 }}
 .executive-summary{{
-    margin-top:28px;
-    background:white;
-    border:1px solid #e5e7eb;
-    border-left:3px solid #2563eb;
-    border-radius:6px;
-    padding:16px 20px;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-left: 4px solid #2563eb;
+    border-radius: 8px;
+    padding: 24px 28px;
+    margin: 40px 0;
 }}
 .executive-summary h2{{
-    margin:0 0 10px;
-    font-size:14px;
-    font-weight:600;
-    color:#1e40af;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e40af;
+    margin: 0 0 12px;
 }}
 .executive-summary p{{
-    font-size:13px;
-    color:#374151;
-    margin:0 0 10px;
-    line-height:1.6;
+    font-size: 14px;
+    color: #374151;
+    margin: 0 0 12px;
+    line-height: 1.7;
 }}
 .executive-summary p:last-child{{
-    margin-bottom:0;
-}}
-.chart{{
-    margin-top:14px;
-    background:white;
-    padding:12px;
-    border-radius:6px;
-    border:1px solid #e5e7eb;
-}}
-.chart img{{
-    width:100%;
-    max-width:420px;
-    display:block;
-    margin:0 auto;
-}}
-.insight{{
-    background:#eef2ff;
-    border-left:3px solid #6366f1;
-    padding:12px 14px;
-    margin-top:14px;
-    font-size:13px;
-}}
-table{{
-    width:100%;
-    border-collapse:collapse;
-    margin-top:16px;
-    background:white;
-    border-radius:6px;
-    overflow:hidden;
-    border:1px solid #e5e7eb;
-    font-size:13px;
-}}
-th,td{{
-    padding:8px 12px;
-    border-bottom:1px solid #e5e7eb;
-    text-align:left;
-}}
-th{{
-    color:#374151;
-    background:#f9fafb;
-    font-size:11px;
-    font-weight:600;
-}}
-tbody tr:last-child td{{
-    border-bottom:none;
-}}
-footer{{
-    margin-top:50px;
-    color:#6b7280;
-    font-size:12px;
+    margin-bottom: 0;
 }}
 .chart-grid{{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
-    margin-top:14px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
 }}
 .chart-card{{
-    background:white;
-    border:1px solid #e5e7eb;
-    border-radius:6px;
-    overflow:hidden;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    overflow: hidden;
 }}
 .chart-card .chart-label{{
-    font-size:11px;
-    font-weight:600;
-    color:#374151;
-    padding:8px 12px;
-    border-bottom:1px solid #e5e7eb;
-    background:#f9fafb;
+    font-size: 12px;
+    font-weight: 600;
+    color: #374151;
+    padding: 12px 16px;
+    border-bottom: 1px solid #e5e7eb;
+    background: #f9fafb;
 }}
 .chart-card img{{
-    width:100%;
-    display:block;
+    width: 100%;
+    display: block;
 }}
-@media(max-width:600px){{
-    .metrics{{grid-template-columns:repeat(2,1fr);}}
-    .chart-grid{{grid-template-columns:1fr;}}
+.insight{{
+    background: #eef2ff;
+    border-left: 4px solid #6366f1;
+    padding: 16px 20px;
+    margin-top: 20px;
+    font-size: 14px;
+    border-radius: 0 8px 8px 0;
 }}
-@media(max-width:400px){{
-    .metrics{{grid-template-columns:1fr;}}
-    .container{{padding:24px 16px;}}
-    h1{{font-size:24px;}}
+table{{
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    overflow: hidden;
+    font-size: 14px;
 }}
+th, td{{
+    padding: 12px 16px;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: left;
+}}
+th{{
+    color: #374151;
+    background: #f9fafb;
+    font-size: 12px;
+    font-weight: 600;
+}}
+tbody tr:last-child td{{
+    border-bottom: none;
+}}
+footer{{
+    margin-top: 60px;
+    text-align: center;
+    color: #6b7280;
+    font-size: 13px;
+    padding-bottom: 40px;
+}}
+@media(max-width: 800px){{
+    .metrics{{ grid-template-columns: repeat(2, 1fr); }}
+    .chart-grid{{ grid-template-columns: 1fr; }}
+    .container{{ padding: 0 24px 40px; }}
+}}
+@media(max-width: 500px){{
+    .metrics{{ grid-template-columns: 1fr; }}
+    .report-header h1{{ font-size: 32px; }}
+    .report-header{{ padding: 40px 16px 30px; }}
 }}
 </style>
 </head>
 <body>
-<div class="container">
 
+<header class="report-header">
 <h1>CookieGuard AI</h1>
-<div class="subtitle">Web Cookie Security Report · {today}</div>
+<p class="report-subtitle">Web Cookie Security Report</p>
+<p class="report-meta">Analysis of {s['total_sites']:,} websites and {s['total_cookies']:,} cookies · {today}</p>
+</header>
+
+<div class="container">
 
 <div class="metrics">
 <div class="metric">
@@ -608,7 +611,7 @@ footer{{
 </div>
 <div class="metric">
 <div class="metric-value">{s['avg_cookies_per_site']}</div>
-<div class="metric-label">Average cookies per site</div>
+<div class="metric-label">Avg cookies per site</div>
 </div>
 <div class="metric">
 <div class="metric-value">{s['sites_with_tracking_pct']}%</div>
@@ -638,6 +641,7 @@ Users browsing without protection are profiled across nearly every website they 
 
 <div class="section">
 <h2>Analysis</h2>
+<p>Visual breakdown of cookie security practices across all analyzed websites.</p>
 <div class="chart-grid">
 <div class="chart-card">
 <div class="chart-label">Security Flag Adoption</div>
@@ -656,11 +660,16 @@ Users browsing without protection are profiled across nearly every website they 
 <img src="{fig4}" alt="Trackers">
 </div>
 </div>
+<div class="insight">
+Only <strong>{s['auth_secure_pct']}%</strong> of authentication cookies use the Secure flag, 
+leaving <strong>{sec_miss}%</strong> vulnerable to interception on public networks.
+<strong>{s['sites_with_risk_pct']}%</strong> of sites have at least one high-risk cookie.
+</div>
 </div>
 
 <div class="section">
 <h2>Worst Offenders</h2>
-<p>Sites with the highest number of high-risk cookies.</p>
+<p>Sites with the highest concentration of high-risk authentication cookies.</p>
 <table>
 <thead>
 <tr>
