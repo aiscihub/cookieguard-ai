@@ -196,23 +196,23 @@ def chart_cookie_type_dist(stats):
     colors = [TYPE_COLORS[k] for k in keys]
     total  = sum(vals)
 
-    fig, ax = plt.subplots(figsize=(6,5))
+    fig, ax = plt.subplots(figsize=(4, 3))
     wedges, texts, autotexts = ax.pie(
         vals, labels=None, autopct=lambda p: f'{p:.1f}%\n({int(p*total/100):,})',
         colors=colors, startangle=140, pctdistance=0.72,
-        wedgeprops={'linewidth':2,'edgecolor':'white'},
+        wedgeprops={'linewidth':1.5,'edgecolor':'white'},
     )
     for at in autotexts:
-        at.set_fontsize(9); at.set_color('white'); at.set_fontweight('bold')
+        at.set_fontsize(8); at.set_color('white'); at.set_fontweight('bold')
 
     legend_labels = [f'{l}  ({v:,})' for l,v in zip(labels,vals)]
     ax.legend(wedges, legend_labels, loc='lower center',
-              bbox_to_anchor=(0.5,-0.08), ncol=2, fontsize=9, frameon=False)
+              bbox_to_anchor=(0.5,-0.05), ncol=2, fontsize=8, frameon=False)
 
-    ax.set_title('Cookie Type Distribution\nAcross All Scanned Sites', pad=16)
+    ax.set_title('Cookie Type Distribution', fontsize=11, pad=10)
     fig.tight_layout()
     path = CHARTS / 'fig1_cookie_types.png'
-    fig.savefig(path, dpi=150, bbox_inches='tight')
+    fig.savefig(path, dpi=120, bbox_inches='tight')
     plt.close(fig)
     print(f"  ✓ {path.name}")
     return path
@@ -221,29 +221,29 @@ def chart_security_flags(stats):
     categories = ['Secure Flag', 'HttpOnly Flag']
     pcts       = [stats['auth_secure_pct'], stats['auth_httponly_pct']]
 
-    fig, ax = plt.subplots(figsize=(6.5, 4))
+    fig, ax = plt.subplots(figsize=(5, 3))
     bars = ax.barh(categories, pcts,
                    color=[C['safe'] if p>=70 else C['warn'] if p>=40 else C['risk'] for p in pcts],
                    height=0.4, zorder=3)
 
     for bar, pct in zip(bars, pcts):
         ax.text(min(pct+1.5, 97), bar.get_y()+bar.get_height()/2,
-                f'{pct:.1f}%', va='center', fontsize=12, fontweight='bold')
+                f'{pct:.1f}%', va='center', fontsize=10, fontweight='bold')
 
     # show the gap
     for bar, pct in zip(bars, pcts):
         ax.text(99, bar.get_y()+bar.get_height()/2,
                 f'{100-pct:.1f}% missing',
-                va='center', ha='right', fontsize=9, color=C['risk'])
+                va='center', ha='right', fontsize=8, color=C['risk'])
 
     ax.set_xlim(0, 100)
-    ax.set_xlabel('% of Authentication Cookies')
-    ax.set_title('Security Flag Adoption\non Authentication Cookies', pad=12)
+    ax.set_xlabel('% of Authentication Cookies', fontsize=9)
+    ax.set_title('Security Flag Adoption', fontsize=11, pad=8)
     ax.axvline(x=70, color=C['ink2'], linestyle='--', alpha=0.4, linewidth=1)
-    ax.text(70.5, -0.55, '70% threshold', fontsize=8, color=C['ink2'])
+    ax.tick_params(labelsize=9)
     fig.tight_layout()
     path = CHARTS / 'fig2_security_flags.png'
-    fig.savefig(path, dpi=150, bbox_inches='tight')
+    fig.savefig(path, dpi=120, bbox_inches='tight')
     plt.close(fig)
     print(f"  ✓ {path.name}")
     return path
@@ -255,20 +255,21 @@ def chart_risk_distribution(stats):
     vals   = [sd.get(k,0) for k in order]
     colors = [SEVERITY_COLORS[k] for k in order]
 
-    fig, ax = plt.subplots(figsize=(7,4))
+    fig, ax = plt.subplots(figsize=(5, 3.5))
     bars = ax.bar(labels, vals, color=colors, width=0.55, zorder=3,
-                  edgecolor='white', linewidth=1.5)
+                  edgecolor='white', linewidth=1)
 
     for bar, val in zip(bars, vals):
         if val:
             ax.text(bar.get_x()+bar.get_width()/2, bar.get_height()+max(vals)*0.01,
-                    f'{val:,}', ha='center', va='bottom', fontsize=10, fontweight='bold')
+                    f'{val:,}', ha='center', va='bottom', fontsize=8, fontweight='bold')
 
-    ax.set_ylabel('Number of Cookies')
-    ax.set_title('Cookie Risk Level Distribution\n(All Sites)', pad=12)
+    ax.set_ylabel('Number of Cookies', fontsize=9)
+    ax.set_title('Risk Level Distribution', fontsize=11, pad=8)
+    ax.tick_params(labelsize=8)
     fig.tight_layout()
     path = CHARTS / 'fig3_risk_distribution.png'
-    fig.savefig(path, dpi=150, bbox_inches='tight')
+    fig.savefig(path, dpi=120, bbox_inches='tight')
     plt.close(fig)
     print(f"  ✓ {path.name}")
     return path
@@ -277,13 +278,13 @@ def chart_top_trackers(stats):
     tt = stats['top_trackers']
     if not tt:
         return None
-    companies = list(tt.keys())[:12]
+    companies = list(tt.keys())[:10]
     counts    = [tt[c] for c in companies]
 
     # short names
-    short = [c.replace(' Analytics','').replace('/','/')[:20] for c in companies]
+    short = [c.replace(' Analytics','').replace('/','/')[:18] for c in companies]
 
-    fig, ax = plt.subplots(figsize=(7,5.5))
+    fig, ax = plt.subplots(figsize=(5, 4))
     y = range(len(companies))
     bars = ax.barh(list(y), counts,
                    color=['#dc2626' if i<3 else '#ca8a04' if i<6 else '#64748b'
@@ -291,27 +292,28 @@ def chart_top_trackers(stats):
                    height=0.6, zorder=3)
 
     ax.set_yticks(list(y))
-    ax.set_yticklabels(short, fontsize=10)
+    ax.set_yticklabels(short, fontsize=8)
     ax.invert_yaxis()
 
     for bar, cnt in zip(bars, counts):
         ax.text(bar.get_width()+max(counts)*0.01, bar.get_y()+bar.get_height()/2,
-                f'{cnt:,}', va='center', fontsize=9, fontweight='bold')
+                f'{cnt:,}', va='center', fontsize=8, fontweight='bold')
 
-    ax.set_xlabel('Number of Cookies Detected')
-    ax.set_title('Top Tracking Companies Detected\nAcross Scanned Sites', pad=12)
+    ax.set_xlabel('Cookies Detected', fontsize=9)
+    ax.set_title('Top Tracking Companies', fontsize=11, pad=8)
+    ax.tick_params(labelsize=8)
     fig.tight_layout()
     path = CHARTS / 'fig4_top_trackers.png'
-    fig.savefig(path, dpi=150, bbox_inches='tight')
+    fig.savefig(path, dpi=120, bbox_inches='tight')
     plt.close(fig)
     print(f"  ✓ {path.name}")
     return path
 
 def chart_cookies_per_site_histogram(stats):
     data = stats['cookies_per_site_list']
-    fig, ax = plt.subplots(figsize=(7,4))
-    n, bins, patches = ax.hist(data, bins=30, color=C['info'],
-                               edgecolor='white', linewidth=0.8, zorder=3)
+    fig, ax = plt.subplots(figsize=(5, 3.5))
+    n, bins, patches = ax.hist(data, bins=25, color=C['info'],
+                               edgecolor='white', linewidth=0.6, zorder=3)
     # colour bars by count
     for patch, left in zip(patches, bins[:-1]):
         if left < 10:
@@ -321,23 +323,24 @@ def chart_cookies_per_site_histogram(stats):
         else:
             patch.set_facecolor(C['risk'])
 
-    ax.axvline(np.mean(data), color=C['ink'], linestyle='--', linewidth=1.5, zorder=4)
+    ax.axvline(np.mean(data), color=C['ink'], linestyle='--', linewidth=1, zorder=4)
     ax.text(np.mean(data)+0.5, ax.get_ylim()[1]*0.92,
-            f'Mean: {np.mean(data):.1f}', fontsize=9, color=C['ink'])
+            f'Mean: {np.mean(data):.1f}', fontsize=8, color=C['ink'])
 
-    ax.set_xlabel('Cookies per Site')
-    ax.set_ylabel('Number of Sites')
-    ax.set_title('Distribution of Cookie Count per Site', pad=12)
+    ax.set_xlabel('Cookies per Site', fontsize=9)
+    ax.set_ylabel('Number of Sites', fontsize=9)
+    ax.set_title('Cookie Count Distribution', fontsize=11, pad=8)
+    ax.tick_params(labelsize=8)
 
     legend = [
-        mpatches.Patch(color=C['safe'],  label='< 10 cookies'),
-        mpatches.Patch(color=C['warn'],  label='10–29 cookies'),
-        mpatches.Patch(color=C['risk'],  label='≥ 30 cookies'),
+        mpatches.Patch(color=C['safe'],  label='< 10'),
+        mpatches.Patch(color=C['warn'],  label='10–29'),
+        mpatches.Patch(color=C['risk'],  label='≥ 30'),
     ]
-    ax.legend(handles=legend, fontsize=9, frameon=False)
+    ax.legend(handles=legend, fontsize=7, frameon=False)
     fig.tight_layout()
     path = CHARTS / 'fig5_cookies_histogram.png'
-    fig.savefig(path, dpi=150, bbox_inches='tight')
+    fig.savefig(path, dpi=120, bbox_inches='tight')
     plt.close(fig)
     print(f"  ✓ {path.name}")
     return path
@@ -345,11 +348,11 @@ def chart_cookies_per_site_histogram(stats):
 def chart_samesite(stats):
     ss = stats['samesite_dist']
     label_map = {
-        'strict': 'Strict\n(most secure)',
-        'lax': 'Lax\n(moderate)',
-        'none': 'None\n(risky)',
-        'unset': 'Not Set\n(risky)',
-        'no_restriction': 'No Restriction\n(risky)',
+        'strict': 'Strict',
+        'lax': 'Lax',
+        'none': 'None',
+        'unset': 'Not Set',
+        'no_restriction': 'No Restrict',
     }
     order  = ['strict','lax','none','no_restriction','unset']
     colors = [C['safe'], '#0891b2', C['risk'], C['risk'], C['warn']]
@@ -364,21 +367,22 @@ def chart_samesite(stats):
             vals.append(v)
             cols.append(col)
 
-    fig, ax = plt.subplots(figsize=(6.5,4.5))
+    fig, ax = plt.subplots(figsize=(5, 3.5))
     bars = ax.bar(labels, vals, color=cols, width=0.5,
-                  edgecolor='white', linewidth=1.5, zorder=3)
+                  edgecolor='white', linewidth=1, zorder=3)
 
     total = sum(vals) or 1
     for bar, val in zip(bars, vals):
         ax.text(bar.get_x()+bar.get_width()/2, bar.get_height()+total*0.005,
-                f'{val:,}\n({val/total*100:.1f}%)',
-                ha='center', va='bottom', fontsize=9, fontweight='bold')
+                f'{val:,}',
+                ha='center', va='bottom', fontsize=8, fontweight='bold')
 
-    ax.set_ylabel('Number of Authentication Cookies')
-    ax.set_title('SameSite Attribute Distribution\non Authentication Cookies', pad=12)
+    ax.set_ylabel('Auth Cookies', fontsize=9)
+    ax.set_title('SameSite Distribution', fontsize=11, pad=8)
+    ax.tick_params(labelsize=8)
     fig.tight_layout()
     path = CHARTS / 'fig6_samesite.png'
-    fig.savefig(path, dpi=150, bbox_inches='tight')
+    fig.savefig(path, dpi=120, bbox_inches='tight')
     plt.close(fig)
     print(f"  ✓ {path.name}")
     return path
