@@ -1,5 +1,5 @@
 # CookieGuard AI — Web Cookie Security Study
-**Date:** March 16, 2026  **Sites:** 3,000  **Cookies:** 46,805
+**Date:** March 2026  **Sites:** 3,000  **Cookies:** 46,805
 
 ## Summary
 | Metric | Value |
