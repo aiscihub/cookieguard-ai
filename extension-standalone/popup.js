@@ -72,6 +72,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('protect-panel')
     ?.addEventListener('click', e => { if (e.target === document.getElementById('protect-panel')) closePanel('protect-panel'); });
 
+  // Handle review button clicks in explain panel (event delegation)
+  document.getElementById('explain-panel')?.addEventListener('click', handleExplainPanelButtonClick);
+
   // Login back button
   document.getElementById('login-back-btn')
     ?.addEventListener('click', showMainView);
@@ -636,6 +639,8 @@ function renderIdentityDashboard() {}
 
 // ── EXPLAIN PANEL ──
 
+let explainPanelCookies = []; // Store cookies for review button handlers
+
 function buildExplainPanel(cookies, trackerCompanyMap) {
   const risksEl  = document.getElementById('expl-risks-list');
   const otherEl  = document.getElementById('expl-other-list');
@@ -644,6 +649,9 @@ function buildExplainPanel(cookies, trackerCompanyMap) {
   const trackerSec = document.getElementById('expl-tracker-sec');
   const trackerListEl = document.getElementById('expl-tracker-list');
   if (!risksEl || !otherEl) return;
+
+  // Store cookies globally for button handlers
+  explainPanelCookies = cookies;
 
   const important = cookies.filter(c => {
     const s = getEffectiveSeverity(c);
@@ -667,11 +675,14 @@ function buildExplainPanel(cookies, trackerCompanyMap) {
     }
   }
 
-  // Most important risks
+  // Most important risks - pass global index
   if (important.length === 0) {
     risksEl.innerHTML = `<div class="expl-empty">✅ No high-risk cookies found.<br>Your login cookies appear well-configured.</div>`;
   } else {
-    risksEl.innerHTML = important.slice(0, 5).map(item => explainCard(item)).join('');
+    risksEl.innerHTML = important.slice(0, 5).map((item, i) => {
+      const globalIndex = cookies.indexOf(item);
+      return explainCard(item, globalIndex);
+    }).join('');
   }
 
   // Other observations
@@ -679,7 +690,10 @@ function buildExplainPanel(cookies, trackerCompanyMap) {
     otherSec.style.display = 'none';
   } else {
     otherSec.style.display = 'block';
-    otherEl.innerHTML = other.slice(0, 4).map(item => explainCard(item)).join('');
+    otherEl.innerHTML = other.slice(0, 4).map((item, i) => {
+      const globalIndex = cookies.indexOf(item);
+      return explainCard(item, globalIndex);
+    }).join('');
   }
 
   // Tracker company breakdown
@@ -721,19 +735,38 @@ function trackerIcon(company) {
   return map[company] || '🕵️';
 }
 
-function explainCard(item) {
+function explainCard(item, index) {
   const sev  = getEffectiveSeverity(item);
   const name = escapeHtml(item.cookie?.name || '(unknown)');
   const type = item.classification?.type || 'other';
   const text = buildHumanExplanation(item);
+  const needsReview = item._needsReview || sev === 'critical' || sev === 'high' || sev === 'medium';
+
+  // Only show review actions for auth/tracking cookies with issues
+  const showActions = (type === 'authentication' || type === 'tracking') && needsReview;
+
+  const actionsHtml = showActions ? `
+    <div class="expl-actions">
+      <button class="expl-review-btn not-auth" data-index="${index}" data-action="not-auth">
+        ✗ Not Auth
+      </button>
+      <button class="expl-review-btn ignore" data-index="${index}" data-action="ignore">
+        🚫 Ignore
+      </button>
+      <button class="expl-review-btn" data-index="${index}" data-action="details">
+        🔍 Details
+      </button>
+    </div>` : '';
+
   return `
-    <div class="expl-card">
+    <div class="expl-card" data-cookie-index="${index}">
       <div class="expl-top">
         <div class="expl-dot ${sev}"></div>
         <div class="expl-name">${name}</div>
         <div class="expl-type">${escapeHtml(type)}</div>
       </div>
       <div class="expl-body">${text || 'This cookie has security configuration issues.'}</div>
+      ${actionsHtml}
     </div>`;
 }
 
@@ -826,6 +859,58 @@ function buildProtectPanel(cookies, authCookies, trackingCookies, thirdPartyDoma
 // ── PANEL OPEN / CLOSE ──
 function openPanel(id)  { document.getElementById(id)?.classList.add('open'); }
 function closePanel(id) { document.getElementById(id)?.classList.remove('open'); }
+
+// ── EXPLAIN PANEL BUTTON HANDLER ──
+function handleExplainPanelButtonClick(e) {
+  const btn = e.target.closest('.expl-review-btn');
+  if (!btn) return;
+
+  const index = parseInt(btn.dataset.index, 10);
+  const action = btn.dataset.action;
+  const item = explainPanelCookies[index];
+
+  if (!item) return;
+
+  if (action === 'not-auth') {
+    // Mark as not authentication cookie
+    currentModalItem = item;
+    markCurrentCookieNotAuth();
+    // Update UI to show feedback
+    const card = btn.closest('.expl-card');
+    if (card) {
+      card.style.opacity = '0.5';
+      card.innerHTML = `
+        <div class="expl-top">
+          <div class="expl-dot info"></div>
+          <div class="expl-name">${escapeHtml(item.cookie?.name || '(unknown)')}</div>
+          <div class="expl-type" style="background:#dcfce7;color:#166534;">marked not-auth</div>
+        </div>
+        <div class="expl-body" style="color:#64748b;">This cookie will be excluded from future alerts.</div>
+      `;
+    }
+  } else if (action === 'ignore') {
+    // Ignore this cookie
+    currentModalItem = item;
+    ignoreCurrentCookie();
+    // Update UI to show feedback
+    const card = btn.closest('.expl-card');
+    if (card) {
+      card.style.opacity = '0.4';
+      card.innerHTML = `
+        <div class="expl-top">
+          <div class="expl-dot info"></div>
+          <div class="expl-name" style="text-decoration:line-through;">${escapeHtml(item.cookie?.name || '(unknown)')}</div>
+          <div class="expl-type" style="background:#fef2f2;color:#991b1b;">ignored</div>
+        </div>
+        <div class="expl-body" style="color:#64748b;">This cookie will be hidden from future scans.</div>
+      `;
+    }
+  } else if (action === 'details') {
+    // Open the cookie details modal
+    closePanel('explain-panel');
+    showCookieDetails(item);
+  }
+}
 
 // ═══════════════════════════════════════════════════════════════
 //  SESSION PRIVACY DASHBOARD

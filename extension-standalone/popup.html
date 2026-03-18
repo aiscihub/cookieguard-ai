@@ -254,6 +254,26 @@
     .expl-body  { font-size: 11px; color: var(--ink); line-height: 1.55; }
     .expl-empty { text-align: center; padding: 28px 0; font-size: 12px; color: var(--ink2); }
 
+    /* Review button in explain cards */
+    .expl-actions {
+      display: flex; gap: 6px; margin-top: 10px; padding-top: 10px;
+      border-top: 1px solid var(--ink3);
+    }
+    .expl-review-btn {
+      flex: 1; padding: 7px 10px; border: 1.5px solid var(--ink3);
+      border-radius: 6px; background: var(--surf); cursor: pointer;
+      font: 600 10px var(--font); color: var(--ink2);
+      display: flex; align-items: center; justify-content: center; gap: 4px;
+      transition: all .15s;
+    }
+    .expl-review-btn:hover {
+      border-color: var(--ink); color: var(--ink); background: var(--bg);
+    }
+    .expl-review-btn.ignore { border-color: var(--risk-bd); color: var(--risk); }
+    .expl-review-btn.ignore:hover { background: var(--risk-bg); }
+    .expl-review-btn.not-auth { border-color: var(--warn-bd); color: var(--warn); }
+    .expl-review-btn.not-auth:hover { background: var(--warn-bg); }
+
     /* protect tip */
     .tip {
       display: flex; gap: 11px; align-items: flex-start;
