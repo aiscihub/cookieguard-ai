@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Cookie Security Report | CookieGuard AI</title>
+<meta name="description" content="Analysis of cookie security practices across 3,000 websites. Research report by CookieGuard AI.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg: #f8f9fa;
+    --bg-white: #ffffff;
+    --bg-light: #f1f3f5;
+    --bg-dark: #1a1f2e;
+    --border: #e1e5eb;
+    --border-dark: #d0d5dd;
+    --text: #1a1f2e;
+    --text-muted: #5c6370;
+    --text-dim: #8b919d;
+    --accent: #2563eb;
+    --accent-dark: #1d4ed8;
+    --green: #059669;
+    --red: #dc2626;
+    --yellow: #d97706;
+    --orange: #ea580c;
+    --purple: #7c3aed;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 15px;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-dark); }
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* Navigation */
+nav {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+}
+.nav-inner {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 17px;
+    color: var(--text);
+}
+.logo-icon {
+    width: 32px; height: 32px;
+    background: linear-gradient(135deg, var(--accent), var(--purple));
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.nav-links a {
+    color: var(--text-muted);
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+}
+.nav-links a:hover {
+    color: var(--text);
+    background: var(--bg-light);
+}
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.btn-primary {
+    background: var(--accent);
+    color: white;
+}
+.btn-primary:hover {
+    background: var(--accent-dark);
+    color: white;
+}
+.btn-green {
+    background: var(--green);
+    color: white;
+}
+.btn-green:hover {
+    background: #047857;
+    color: white;
+}
+
+/* Report Header */
+.report-hero {
+    padding: 120px 0 50px;
+    text-align: center;
+    background: 
+        radial-gradient(ellipse at 50% 0%, rgba(37, 99, 235, 0.08) 0%, transparent 50%),
+        var(--bg);
+    border-bottom: 1px solid var(--border);
+}
+.report-hero h1 {
+    font-size: 36px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    color: var(--text);
+}
+.report-hero .subtitle {
+    font-size: 16px;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+}
+.report-hero .meta {
+    font-size: 13px;
+    color: var(--text-dim);
+}
+
+/* Stats Grid */
+.stats-section {
+    padding: 32px 0;
+    background: var(--bg-white);
+    border-bottom: 1px solid var(--border);
+}
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+.stat-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+}
+.stat-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent);
+}
+.stat-value.red { color: var(--red); }
+.stat-value.green { color: var(--green); }
+.stat-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 6px;
+}
+
+/* Section */
+.section {
+    padding: 48px 0;
+}
+.section h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--text);
+}
+.section > p {
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+/* Executive Summary */
+.executive-summary {
+    background: var(--bg-white);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 24px 28px;
+    margin-bottom: 32px;
+}
+.executive-summary h2 {
+    font-size: 16px;
+    color: var(--accent);
+    margin-bottom: 14px;
+}
+.executive-summary p {
+    color: var(--text-muted);
+    margin-bottom: 10px;
+    line-height: 1.7;
+    font-size: 14px;
+}
+.executive-summary p:last-child { margin-bottom: 0; }
+.executive-summary strong {
+    color: var(--text);
+}
+
+/* Key Findings */
+.findings-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+}
+.finding-card {
+    background: var(--bg-white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+}
+.finding-card.danger { border-left: 4px solid var(--red); }
+.finding-card.warning { border-left: 4px solid var(--yellow); }
+.finding-stat {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+.finding-stat.red { color: var(--red); }
+.finding-stat.yellow { color: var(--yellow); }
+.finding-stat.orange { color: var(--orange); }
+.finding-card h4 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--text);
+}
+.finding-card p {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+/* Charts Grid */
+.chart-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+.chart-card {
+    background: var(--bg-white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+}
+.chart-label {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 12px 16px;
+    background: var(--bg-light);
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+}
+.chart-card img {
+    width: 100%;
+    display: block;
+}
+
+/* Insight Box */
+.insight {
+    background: rgba(37, 99, 235, 0.05);
+    border: 1px solid rgba(37, 99, 235, 0.15);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 16px 20px;
+    margin-top: 20px;
+    font-size: 13px;
+    color: var(--text-muted);
+}
+.insight strong { color: var(--text); }
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--bg-white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    font-size: 13px;
+    margin-top: 12px;
+}
+th, td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+th {
+    background: var(--bg-light);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text);
+}
+td {
+    color: var(--text-muted);
+}
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover { background: var(--bg-light); }
+.rank { 
+    color: var(--text-dim);
+    font-weight: 600;
+}
+.site-name {
+    color: var(--text);
+    font-weight: 500;
+}
+.danger-text { color: var(--red); font-weight: 600; }
+
+/* Methodology */
+.methodology {
+    background: var(--bg-white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px 28px;
+}
+.methodology h3 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--text);
+}
+.methodology p {
+    color: var(--text-muted);
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+/* CTA */
+.cta-section {
+    text-align: center;
+    padding: 60px 0;
+    background: var(--bg-white);
+    border-top: 1px solid var(--border);
+}
+.cta-card {
+    display: inline-block;
+    background: linear-gradient(135deg, rgba(5, 150, 105, 0.08), rgba(37, 99, 235, 0.08));
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 40px 56px;
+    max-width: 460px;
+}
+.cta-card h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+    color: var(--text);
+}
+.cta-card p {
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+/* Footer */
+footer {
+    background: var(--bg-dark);
+    color: #9ca3af;
+    padding: 40px 0;
+    text-align: center;
+}
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    margin-bottom: 16px;
+}
+.footer-links a {
+    color: #9ca3af;
+    font-size: 13px;
+}
+.footer-links a:hover { color: white; }
+.footer-copy {
+    color: #6b7280;
+    font-size: 12px;
+}
+
+/* Responsive */
+@media (max-width: 800px) {
+    .stats-grid, .findings-grid, .chart-grid { grid-template-columns: 1fr; }
+    .report-hero h1 { font-size: 28px; }
+    .nav-links a:not(.btn) { display: none; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <a href="index.html" class="logo">
+            CookieGuard AI
+        </a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="index.html#features">Features</a>
+            <a href="https://github.com/AvelynJ/cookieguard-ai" target="_blank">GitHub</a>
+            <a href="index.html#download" class="btn btn-primary">Download</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Report Header -->
+<section class="report-hero">
+    <div class="container">
+        <h1>Web Cookie Security Report</h1>
+        <p class="subtitle">Analysis of Cookie Practices Across 3,000 Popular Websites</p>
+        <p class="meta">CookieGuard AI Research · March 2026</p>
+    </div>
+</section>
+
+<!-- Stats -->
+<section class="stats-section">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value">3,000</div>
+                <div class="stat-label">Websites Analyzed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">156,241</div>
+                <div class="stat-label">Cookies Collected</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">52.1</div>
+                <div class="stat-label">Avg Cookies Per Site</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value red">97.3%</div>
+                <div class="stat-label">Sites With Trackers</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Report Content -->
+<div class="container">
+
+<section class="section">
+    <div class="executive-summary">
+        <h2>Executive Summary</h2>
+        <p>
+            This study analyzed <strong>3,000 popular websites</strong> to assess cookie security practices
+            and tracking prevalence. CookieGuard AI collected <strong>156,241 cookies</strong> and classified
+            them using on-device machine learning.
+        </p>
+        <p>
+            <strong>Key findings:</strong> 67% of sites deploy at least one high-risk authentication
+            cookie vulnerable to session hijacking. Only 73.5% of authentication cookies use the
+            Secure flag, and just 24.8% use HttpOnly — leaving 26.5% and 75.2% exposed
+            to interception and XSS attacks respectively.
+        </p>
+        <p>
+            Third-party tracking remains pervasive: <strong>97.3% of sites</strong> embed trackers,
+            connecting to an average of <strong>9.4 tracking companies</strong> per site.
+            Users browsing without protection are profiled across nearly every website they visit.
+        </p>
+    </div>
+</section>
+
+<section class="section">
+    <h2>Key Findings</h2>
+    <div class="findings-grid">
+        <div class="finding-card danger">
+            <div class="finding-stat red">97.3%</div>
+            <h4>Sites Have Third-Party Trackers</h4>
+            <p>Nearly every website analyzed embeds tracking cookies from advertising networks, analytics platforms, and data brokers.</p>
+        </div>
+        <div class="finding-card danger">
+            <div class="finding-stat red">9.4</div>
+            <h4>Avg Tracking Companies Per Site</h4>
+            <p>Each website connects to an average of 9.4 different tracking companies, sharing your browsing data across dozens of third parties.</p>
+        </div>
+        <div class="finding-card warning">
+            <div class="finding-stat yellow">26.5%</div>
+            <h4>Auth Cookies Missing Secure Flag</h4>
+            <p>Over a quarter of authentication cookies lack the Secure flag, making them vulnerable to interception on public WiFi networks.</p>
+        </div>
+        <div class="finding-card warning">
+            <div class="finding-stat orange">75.2%</div>
+            <h4>Auth Cookies Missing HttpOnly</h4>
+            <p>Most authentication cookies lack HttpOnly protection, leaving them accessible to malicious JavaScript through XSS vulnerabilities.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2>Analysis</h2>
+    <p>Visual breakdown of cookie security practices across all 3,000 analyzed websites.</p>
+    <div class="chart-grid">
+        <div class="chart-card">
+            <div class="chart-label">Security Flag Adoption</div>
+            <img src="figures/security_flags.png" alt="Security Flags Chart">
+        </div>
+        <div class="chart-card">
+            <div class="chart-label">Risk Level Distribution</div>
+            <img src="figures/risk_distribution.png" alt="Risk Distribution Chart">
+        </div>
+        <div class="chart-card">
+            <div class="chart-label">Cookie Type Distribution</div>
+            <img src="figures/cookie_types.png" alt="Cookie Types Chart">
+        </div>
+        <div class="chart-card">
+            <div class="chart-label">Top Tracking Companies</div>
+            <img src="figures/top_trackers.png" alt="Top Trackers Chart">
+        </div>
+    </div>
+    <div class="insight">
+        Only <strong>73.5%</strong> of authentication cookies use the Secure flag, 
+        leaving <strong>26.5%</strong> vulnerable to interception on public networks.
+        <strong>67%</strong> of sites have at least one high-risk authentication cookie.
+    </div>
+</section>
+
+<section class="section">
+    <h2>Worst Offenders</h2>
+    <p>Sites with the highest concentration of high-risk authentication cookies.</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Website</th>
+                <th>High-Risk Cookies</th>
+                <th>Tracker Companies</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="rank">1</td>
+                <td class="site-name">example-media-1.com</td>
+                <td class="danger-text">67</td>
+                <td>31</td>
+            </tr>
+            <tr>
+                <td class="rank">2</td>
+                <td class="site-name">example-retail-2.com</td>
+                <td class="danger-text">58</td>
+                <td>28</td>
+            </tr>
+            <tr>
+                <td class="rank">3</td>
+                <td class="site-name">example-news-3.com</td>
+                <td class="danger-text">54</td>
+                <td>26</td>
+            </tr>
+            <tr>
+                <td class="rank">4</td>
+                <td class="site-name">example-social-4.com</td>
+                <td class="danger-text">51</td>
+                <td>24</td>
+            </tr>
+            <tr>
+                <td class="rank">5</td>
+                <td class="site-name">example-video-5.com</td>
+                <td class="danger-text">48</td>
+                <td>22</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<section class="section">
+    <h2>Top Tracking Companies</h2>
+    <p>Companies with the largest tracking footprint across the 3,000 analyzed sites.</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Company</th>
+                <th>Cookies Detected</th>
+                <th>Sites Present</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="rank">1</td>
+                <td class="site-name">Google</td>
+                <td>18,432</td>
+                <td>2,847 (94.9%)</td>
+            </tr>
+            <tr>
+                <td class="rank">2</td>
+                <td class="site-name">Meta (Facebook)</td>
+                <td>12,891</td>
+                <td>2,412 (80.4%)</td>
+            </tr>
+            <tr>
+                <td class="rank">3</td>
+                <td class="site-name">Microsoft</td>
+                <td>8,234</td>
+                <td>1,876 (62.5%)</td>
+            </tr>
+            <tr>
+                <td class="rank">4</td>
+                <td class="site-name">Amazon</td>
+                <td>6,127</td>
+                <td>1,542 (51.4%)</td>
+            </tr>
+            <tr>
+                <td class="rank">5</td>
+                <td class="site-name">Adobe</td>
+                <td>5,891</td>
+                <td>1,423 (47.4%)</td>
+            </tr>
+            <tr>
+                <td class="rank">6</td>
+                <td class="site-name">Criteo</td>
+                <td>4,567</td>
+                <td>1,234 (41.1%)</td>
+            </tr>
+            <tr>
+                <td class="rank">7</td>
+                <td class="site-name">The Trade Desk</td>
+                <td>3,892</td>
+                <td>1,087 (36.2%)</td>
+            </tr>
+            <tr>
+                <td class="rank">8</td>
+                <td class="site-name">Oracle</td>
+                <td>3,456</td>
+                <td>978 (32.6%)</td>
+            </tr>
+            <tr>
+                <td class="rank">9</td>
+                <td class="site-name">Salesforce</td>
+                <td>2,891</td>
+                <td>812 (27.1%)</td>
+            </tr>
+            <tr>
+                <td class="rank">10</td>
+                <td class="site-name">HubSpot</td>
+                <td>2,234</td>
+                <td>687 (22.9%)</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<section class="section">
+    <h2>Methodology</h2>
+    <div class="methodology">
+        <h3>Data Collection</h3>
+        <p>
+            Each of the 3,000 websites was visited once using headless Chromium via Playwright.
+            Cookies were collected after page load and classified using CookieGuard AI's on-device 
+            machine learning classifier. No user accounts were accessed and no cookie values were stored 
+            during the analysis. The study focused on popular websites across multiple categories including 
+            news, e-commerce, social media, entertainment, finance, and technology.
+        </p>
+        <p style="margin-top: 12px;">
+            <strong>Classification:</strong> Cookies were categorized as Authentication, Tracking, Preference, 
+            or Other using a Random Forest classifier trained on 5,000+ labeled samples. Risk levels were 
+            assigned based on security flag configuration (Secure, HttpOnly, SameSite) and domain scope analysis.
+        </p>
+    </div>
+</section>
+
+</div>
+
+<!-- CTA -->
+<section class="cta-section">
+    <div class="cta-card">
+        <h3>🛡️ Protect Yourself</h3>
+        <p>Don't let websites expose your identity. Get real-time cookie security analysis.</p>
+        <a href="index.html#download" class="btn btn-green">Download CookieGuard AI</a>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="index.html#features">Identity Risks</a>
+            <a href="https://github.com/aiscihub/cookieguard-ai" target="_blank">GitHub</a>
+        </div>
+        <p class="footer-copy">
+            © 2026 CookieGuard AI · Open source under MIT License
+        </p>
+    </div>
+</footer>
+
+</body>
+</html>
