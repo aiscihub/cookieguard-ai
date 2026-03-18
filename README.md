@@ -16,22 +16,8 @@ CookieGuard AI uses a RandomForest classifier (ONNX), rule-based risk scoring, a
 
 ![CookieGuardUI](./resource/screenshot_3.0.png)
 
-## What's New in 3.0
 
-| Feature | v2.0 | v3.0 |
-|---------|------|------|
-| Architecture | Python backend required | **Self-contained Chrome extension** (ONNX Runtime Web) |
-| Features | 38 | **38** (all ported to JS) |
-| Models | 3 benchmarked (Python sklearn) | **ONNX Runtime Web** (in-browser inference) |
-| Validation | Site-based group holdout | **Same** (model exported from v2.0 pipeline) |
-| Explainability | Backend-computed | **Client-side** (engine.js) |
-| Attack simulation | Backend-computed | **Client-side** (engine.js) |
-| Privacy | Cookies sent to localhost | **Zero data leaves the browser** |
-| Install | Python + pip + Flask | **Load unpacked in Chrome — done** |
-
----
-
-## Quick Start (Self-Contained Extension)
+## Installation & Usage (Self-Contained Extension)
 
 The recommended way to run CookieGuard AI. No Python, no backend, no dependencies.
 
@@ -84,6 +70,21 @@ extension-standalone/
     ├── icon48.png
     └── icon128.png
 ```
+
+## What's New in 3.0
+
+| Feature | v2.0 | v3.0 |
+|---------|------|------|
+| Architecture | Python backend required | **Self-contained Chrome extension** (ONNX Runtime Web) |
+| Features | 38 | **38** (all ported to JS) |
+| Models | 3 benchmarked (Python sklearn) | **ONNX Runtime Web** (in-browser inference) |
+| Validation | Site-based group holdout | **Same** (model exported from v2.0 pipeline) |
+| Explainability | Backend-computed | **Client-side** (engine.js) |
+| Attack simulation | Backend-computed | **Client-side** (engine.js) |
+| Privacy | Cookies sent to localhost | **Zero data leaves the browser** |
+| Install | Python + pip + Flask | **Load unpacked in Chrome — done** |
+
+---
 
 ---
 
