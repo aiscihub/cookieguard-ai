@@ -1,4 +1,4 @@
-# CookieGuard AI
+# [CookieGuard AI](https://aiscihub.github.io/cookieguard-ai/)
 
 **Detecting Security-Critical Cookie Misuse That Puts Digital Identity at Risk**
 
@@ -14,12 +14,12 @@ CookieGuard AI uses a RandomForest classifier (ONNX), rule-based risk scoring, a
 - Explain in plain language *why* the AI flagged each cookie and *what you can do about it*
 - Simulate real attack paths (XSS, CSRF, subdomain takeover, network sniffing) per cookie
 
-![CookieGuardUI](./resource/screenshot_3.0.png)
-
 
 ## Installation & Usage (Self-Contained Extension)
-
 The recommended way to run CookieGuard AI. No Python, no backend, no dependencies.
+
+![CookieGuardUI](./resource/screenshot_3.0.png)
+
 
 ### Step 1: Download
 
@@ -51,93 +51,9 @@ The extension icon appears in your toolbar.
 
 The status bar shows **"AI Engine Ready"** when the ONNX model is loaded, or **"Rule-Based Mode"** as a fallback.
 
-### Extension Directory Structure
-
-```
-extension-standalone/
-├── manifest.json              # Chrome MV3 manifest
-├── popup.html                 # Extension UI
-├── popup.js                   # UI logic (calls engine.js)
-├── engine.js                  # Full analysis pipeline (JS port)
-├── lib/
-│   ├── ort.min.js             # ONNX Runtime Web
-│   └── ort-wasm-simd.wasm     # WASM binary for inference
-├── model/
-│   ├── cookieguard_model.onnx # RandomForest (50 trees, 97.5% accuracy)
-│   └── model_meta.json        # Class order + feature names
-└── icons/
-    ├── icon16.png
-    ├── icon48.png
-    └── icon128.png
-```
-
-## What's New in 3.0
-
-| Feature | v2.0 | v3.0 |
-|---------|------|------|
-| Architecture | Python backend required | **Self-contained Chrome extension** (ONNX Runtime Web) |
-| Features | 38 | **38** (all ported to JS) |
-| Models | 3 benchmarked (Python sklearn) | **ONNX Runtime Web** (in-browser inference) |
-| Validation | Site-based group holdout | **Same** (model exported from v2.0 pipeline) |
-| Explainability | Backend-computed | **Client-side** (engine.js) |
-| Attack simulation | Backend-computed | **Client-side** (engine.js) |
-| Privacy | Cookies sent to localhost | **Zero data leaves the browser** |
-| Install | Python + pip + Flask | **Load unpacked in Chrome — done** |
-
----
-
----
-
-## Backend Mode (For Debugging / Development)
-
-The original Python backend is preserved for development, model retraining, and evaluation. It is **not required** for normal use.
-
-<details>
-<summary>Click to expand backend setup instructions</summary>
-
-### Prerequisites
-- Python 3.8+
-- pip
-
-### Setup
-
-```bash
-cd cookieguard-ai/backend
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Train the ML model (benchmarks 3 models)
-python train_model.py
-
-# Start the backend server
-python app.py
-```
-
-The backend runs at `http://localhost:5000`.
-
-### Using the Backend Extension
-
-Load `cookieguardplugin/` (not `extension-standalone/`) in Chrome Developer Mode. This version connects to the Python backend for analysis.
-
-### Backend Directory
-
-```
-backend/
-├── app.py                    # Flask API server
-├── classifier.py             # Multi-model classifier with benchmarking
-├── risk_scorer.py            # Additive severity + exposure scoring
-├── feature_extractor.py      # 38-feature extraction (4 groups)
-├── explainability.py         # Per-cookie explanation engine
-├── attack_simulator.py       # Attack path simulation
-├── train_model.py            # Training pipeline with group holdout
-├── evaluate_model.py         # Full evaluation suite (LOSO CV, bootstrap CI)
-└── generate_training_data.py # Synthetic data generator
-```
-
-</details>
-
----
+## [Security Report](https://aiscihub.github.io/cookieguard-ai/report.html) 
+Over 3,000 websites have been scanned and analyzed using CookieGuard. A detailed security report is available [here]( 
+https://aiscihub.github.io/cookieguard-ai/report.html)
 
 ## Architecture
 
