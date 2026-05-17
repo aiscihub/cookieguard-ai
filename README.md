@@ -1,10 +1,14 @@
 # [CookieGuard AI](https://aiscihub.github.io/cookieguard-ai/)
+🏆 Winner — Girls Who Code Challenge 2026  
+Featured by Girls Who Code for innovation in AI-powered digital identity and browser security.
+
+- Winners Announcement: https://girlswhocode.com/news/gwc-challenge-2026-winners
+- Demo Video: https://www.youtube.com/watch?v=_PhzLN31C04 
 
 **Detecting Security-Critical Cookie Misuse That Puts Digital Identity at Risk**
-
-An AI-powered Chrome extension that analyzes website cookies to detect security-related misuse that can lead to account takeover, unauthorized actions, and identity impersonation.
-
+Award-winning AI-powered browser security extension for detecting authentication-cookie misuse and digital identity risk.
 **Runs entirely in your browser — no backend, no servers, no data leaves your machine.**
+
 
 ## Project Overview
 
@@ -191,6 +195,16 @@ cookieguard-ai/
 - Behavior features require Login Flow capture mode; default to zero otherwise
 - Attack simulation is rule-based (potential paths, not confirmed vulnerabilities)
 - ONNX model is ~1MB, WASM runtime is ~11MB (total extension ~12MB)
+
+
+## Awards & Recognition
+
+🏆 **Winner — Girls Who Code Challenge 2026**
+
+CookieGuard AI was selected as a winning project in the 2026 Girls Who Code Challenge for its work in AI-powered browser security and digital identity protection.
+
+- Official Announcement: https://girlswhocode.com/news/gwc-challenge-2026-winners
+- Project Demo Video: https://www.youtube.com/watch?v=_PhzLN31C04
 
 ## License
 
