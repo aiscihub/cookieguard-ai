@@ -129,6 +129,12 @@ Evidence is written to `artifacts/published/`. Compare the registry's package
 integrities with the tested manifest before creating the coordinated GitHub
 prerelease and attaching the three tested tarballs.
 
+Also run the [independent consumer workflow](https://github.com/aiscihub/cookieguard-ci-consumer/blob/main/.github/workflows/consumer.yml)
+against the published version and pinned Action commit. It verifies ordinary npm
+installs, authenticated Chromium flows, remote Action enforcement/uploads, and
+production-only source build/packaging followed by an offline tarball install.
+Record its source commit and passing hosted run in the validation report.
+
 ## Highest-value follow-ups
 
 1. Validate on consenting applications with independently labeled session roles.
