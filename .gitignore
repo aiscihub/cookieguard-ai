@@ -6,3 +6,10 @@ _*
 ._.DS_Store
 *.DS_Store*
 *pyc
+node_modules/
+packages/*/vendor/
+packages/*/LICENSE
+artifacts/
+test-results/
+playwright-report/
+*.tgz

@@ -1,0 +1,27 @@
+{
+  "name": "cookieguard-ai-workspace",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "engines": { "node": ">=24" },
+  "workspaces": ["packages/*"],
+  "scripts": {
+    "prepare": "npm run build",
+    "build": "node scripts/build.js",
+    "lint": "eslint packages scripts tests examples action eslint.config.js",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "node --test --test-timeout=30000 tests/*.test.js",
+    "test:playwright": "playwright test --config examples/playwright/playwright.config.js",
+    "benchmark": "node scripts/benchmark.js",
+    "check": "npm run build && npm run lint && npm run typecheck && npm test && npm run test:playwright",
+    "release:check": "node scripts/release-gate.js",
+    "demo": "node examples/demo/server.js"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1",
+    "eslint": "10.13.0",
+    "onnxruntime-node": "1.30.0",
+    "typescript": "7.0.2"
+  }
+}

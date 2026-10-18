@@ -773,6 +773,11 @@ async function analyzeAllCookies(cookies, context = {}) {
 }
 
 // Export for popup.js
+// Node consumers reuse the pure functions; browser initialization is unchanged.
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { extractFeatures, featuresToArray, classifyRuleBased, FEATURE_NAMES };
+}
+
 if (typeof window !== 'undefined') {
   window.CookieGuardEngine = {
     analyzeAllCookies,

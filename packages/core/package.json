@@ -1,0 +1,16 @@
+{
+  "name": "@cookieguard/core",
+  "version": "0.1.0",
+  "description": "Local, evidence-aware authentication cookie policy checks",
+  "type": "module",
+  "license": "MIT",
+  "engines": { "node": ">=24" },
+  "exports": {
+    ".": { "types": "./src/index.d.ts", "import": "./src/index.js" },
+    "./onnx": { "types": "./src/onnx.d.ts", "import": "./src/onnx.js" }
+  },
+  "files": ["src", "vendor", "LICENSE", "README.md"],
+  "peerDependencies": { "onnxruntime-node": "1.30.0" },
+  "peerDependenciesMeta": { "onnxruntime-node": { "optional": true } },
+  "repository": { "type": "git", "url": "https://github.com/aiscihub/cookieguard-ai.git", "directory": "packages/core" }
+}

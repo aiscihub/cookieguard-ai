@@ -1,0 +1,82 @@
+{
+  "suite": "controlled-local-fixtures",
+  "realWorldValidation": false,
+  "node": "v24.22.0",
+  "platform": "darwin",
+  "architecture": "arm64",
+  "cases": [
+    {
+      "case": "A-secure",
+      "expectedExitCode": 0,
+      "observedExitCode": 0,
+      "confirmedViolations": 0,
+      "reviewItems": 0,
+      "confirmedAuth": 1,
+      "candidateAuth": 0,
+      "unknownDeclaration": false
+    },
+    {
+      "case": "B-missing-httponly",
+      "expectedExitCode": 1,
+      "observedExitCode": 1,
+      "confirmedViolations": 1,
+      "reviewItems": 0,
+      "confirmedAuth": 1,
+      "candidateAuth": 0,
+      "unknownDeclaration": false
+    },
+    {
+      "case": "C-missing-secure",
+      "expectedExitCode": 1,
+      "observedExitCode": 1,
+      "confirmedViolations": 1,
+      "reviewItems": 0,
+      "confirmedAuth": 1,
+      "candidateAuth": 0,
+      "unknownDeclaration": false
+    },
+    {
+      "case": "D-preference",
+      "expectedExitCode": 0,
+      "observedExitCode": 0,
+      "confirmedViolations": 0,
+      "reviewItems": 0,
+      "confirmedAuth": 0,
+      "candidateAuth": 0,
+      "unknownDeclaration": true
+    },
+    {
+      "case": "E-unconfirmed",
+      "expectedExitCode": 0,
+      "observedExitCode": 0,
+      "confirmedViolations": 0,
+      "reviewItems": 4,
+      "confirmedAuth": 0,
+      "candidateAuth": 1,
+      "unknownDeclaration": true
+    },
+    {
+      "case": "F-store-only",
+      "expectedExitCode": 0,
+      "observedExitCode": 0,
+      "confirmedViolations": 0,
+      "reviewItems": 1,
+      "confirmedAuth": 1,
+      "candidateAuth": 0,
+      "unknownDeclaration": true
+    }
+  ],
+  "caseExpectationsMet": 6,
+  "confirmedFlagViolations": 2,
+  "nonAuthConfirmedFalsePositives": 0,
+  "stableOutputs": true,
+  "sentinelLeaks": 0,
+  "httpScans": 20,
+  "runtimeMs": {
+    "min": 0.46358299999999986,
+    "median": 0.6370000000000005,
+    "p95": 1.2094999999999914,
+    "max": 7.252583999999999
+  },
+  "timingScope": "In-process HTTP scan plus policy evaluation; excludes Node startup, browser startup, and login."
+}
