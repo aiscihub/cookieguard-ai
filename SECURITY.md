@@ -2,6 +2,24 @@
 
 CookieGuard AI is a research and educational tool focused on authentication cookie risk analysis.
 
+CookieGuard CI adds developer policy checks. The proposed `0.1.0` packages have
+not been published. A clean report is limited to the observed cookies and
+configured policy; it is not a security certification. Strict failures require
+developer-identified authentication names or scoped server-session validation.
+Classifier scores, Domain sharing, and SameSite=None do not prove attacks.
+
+CI accepts only loopback targets by default. Nonlocal scans require explicit
+exact-origin authorization for an application the developer controls. Redirects
+stay on the initial origin; credentials, URL queries, private remote destinations,
+and unbounded crawling are unsupported. The Playwright adapter does not navigate
+or impose a network sandbox on the caller's browser.
+
+Never attach real tokens, headers, storage exports, or traces to a vulnerability
+report. Use synthetic reproduction values. CI errors deliberately omit original
+exception text. See [the architecture](docs/CI_ARCHITECTURE.md) and
+[validation limits](docs/CI_VALIDATION.md). The legacy extension's manual JSON
+export includes values; handle it as sensitive data, as explained in PRIVACY.md.
+
 ## Supported Versions
 
 The latest tagged release is actively maintained.  

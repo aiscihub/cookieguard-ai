@@ -1,0 +1,91 @@
+name: CookieGuard CI public beta release gate
+on:
+  push:
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  toolkit:
+    name: Linux / Node 24 / Chromium / packaged consumers
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      ONNXRUNTIME_NODE_INSTALL: skip
+      ORT_DISABLE_TELEMETRY: '1'
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - run: npm ci
+      - run: npx --no-install playwright install --with-deps chromium
+      - name: Tests, external tarballs, dependencies, licenses, and secret leakage
+        id: release
+        run: npm run release:check
+      - name: Start local fixture
+        run: |
+          node examples/demo/server.js > "$RUNNER_TEMP/cookieguard-demo.log" 2>&1 &
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:3000/ > /dev/null; then exit 0; fi
+            sleep 1
+          done
+          exit 1
+      - name: Passing audit through the local composite action
+        id: secure
+        uses: ./action
+        with:
+          target: http://127.0.0.1:3000/secure
+          auth-cookies: session_id
+          artifact-name: cookieguard-secure
+      - name: Deliberate failure through the local composite action
+        id: insecure
+        continue-on-error: true
+        uses: ./action
+        with:
+          target: http://127.0.0.1:3000/missing-httponly
+          auth-cookies: session_id
+          artifact-name: cookieguard-insecure
+      - name: Expected authentication cookie is absent
+        id: missing
+        continue-on-error: true
+        uses: ./action
+        with:
+          target: http://127.0.0.1:3000/preference
+          auth-cookies: session_id
+          artifact-name: cookieguard-missing-auth
+      - name: Verify all three Action outcomes
+        env:
+          CG_SECURE_CODE: ${{ steps.secure.outputs.exit-code }}
+          CG_OUTCOME: ${{ steps.insecure.outcome }}
+          CG_EXIT_CODE: ${{ steps.insecure.outputs.exit-code }}
+          CG_MISSING_OUTCOME: ${{ steps.missing.outcome }}
+          CG_MISSING_CODE: ${{ steps.missing.outputs.exit-code }}
+        run: |
+          test "$CG_SECURE_CODE" = 0
+          test "$CG_OUTCOME" = failure
+          test "$CG_EXIT_CODE" = 1
+          test "$CG_MISSING_OUTCOME" = failure
+          test "$CG_MISSING_CODE" = 2
+      - name: Check hosted reports and fixture logs for sentinel leakage
+        id: outputs
+        if: ${{ always() && steps.secure.outputs.report-path != '' && steps.insecure.outputs.report-path != '' && steps.missing.outputs.report-path != '' }}
+        env:
+          CG_SECURE_REPORT: ${{ steps.secure.outputs.report-path }}
+          CG_INSECURE_REPORT: ${{ steps.insecure.outputs.report-path }}
+          CG_MISSING_REPORT: ${{ steps.missing.outputs.report-path }}
+        run: node scripts/check-artifacts.js "$CG_SECURE_REPORT" "$CG_INSECURE_REPORT" "$CG_MISSING_REPORT" "$RUNNER_TEMP/cookieguard-demo.log"
+      - name: Upload reviewed release evidence and local tarballs
+        if: ${{ success() && steps.release.outcome == 'success' && steps.outputs.outcome == 'success' }}
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: cookieguard-public-beta-validation
+          path: artifacts/
+          if-no-files-found: error
+          retention-days: 7

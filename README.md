@@ -1,211 +1,284 @@
-# [CookieGuard AI](https://aiscihub.github.io/cookieguard-ai/)
-🏆 Winner — Girls Who Code Challenge 2026  
-Featured by Girls Who Code for innovation in AI-powered digital identity and browser security.
+# CookieGuard AI + CookieGuard CI
 
-- Winners Announcement: https://girlswhocode.com/news/gwc-challenge-2026-winners
-- Demo Video: https://www.youtube.com/watch?v=_PhzLN31C04 
+**Find insecure authentication cookies automatically — in your browser, your Playwright tests, and your CI pipeline.**
 
-**Detecting Security-Critical Cookie Misuse That Puts Digital Identity at Risk**
-Award-winning AI-powered browser security extension for detecting authentication-cookie misuse and digital identity risk.
-**Runs entirely in your browser — no backend, no servers, no data leaves your machine.**
+Catch insecure authentication-cookie configurations before they reach production.
+CookieGuard CI checks server declarations and browser observations, explains the
+evidence, and fails CI only for confirmed policy violations. Everything runs
+locally. No account, API key, cloud classifier, or telemetry is required.
 
+CookieGuard CI extends the original CookieGuard AI project and its MIT-licensed
+work. 🏆 **Winner — Girls Who Code Challenge 2026**:
+[award announcement](https://girlswhocode.com/news/gwc-challenge-2026-winners),
+[original demo](https://www.youtube.com/watch?v=_PhzLN31C04).
+The Chrome extension, research artifacts, and original project history remain.
 
-## Project Overview
+**Release target: CookieGuard CI v0.1.0 — public beta.** The npm CLI, Playwright
+adapter, and GitHub Action will ship together from this repository, using the
+same security engine. npm packages and a CI release tag have **not** been
+published. The commands below use this checkout. Package names must be checked
+for ownership and availability before publication.
 
-CookieGuard AI uses a RandomForest classifier (ONNX), rule-based risk scoring, and explainability to:
-- Identify which cookies act as authentication tokens — including login-aware detection
-- Score their security risk with a transparent, explainable formula
-- Explain in plain language *why* the AI flagged each cookie and *what you can do about it*
-- Simulate real attack paths (XSS, CSRF, subdomain takeover, network sniffing) per cookie
+## One cookie, one actionable failure
 
+A developer identifies `session_id` as the application's authentication cookie.
+The server omits HttpOnly. CookieGuard reports:
 
-## Installation & Usage (Self-Contained Extension)
-The recommended way to run CookieGuard AI. No Python, no backend, no dependencies.
+```text
+HIGH CG001 — "session_id": Missing HttpOnly
+  Fix: Set HttpOnly on the authentication cookie at the server.
+Result: FAILED — 1 confirmed violations at or above high
+```
 
-![CookieGuardUI](./resource/screenshot_3.0.png)
+This confirms a configuration violation. It does not demonstrate an XSS attack.
+Classifier suggestions without developer evidence stay review items.
 
+## Quick start: CLI
 
-### Step 1: Download
+Requirements: **Node 24 LTS**, npm, and Git. The CLI itself needs no browser,
+Python, or native model runtime. A full contributor installation also installs
+test tooling and the optional ONNX adapter's development dependency.
 
-**Option A — Clone via Git**
 ```bash
-git clone git@github.com:aiscihub/cookieguard-ai.git
+git clone https://github.com/aiscihub/cookieguard-ai.git
 cd cookieguard-ai
+# Check out the CookieGuard CI implementation branch/tag when available.
+npm ci
+npm run demo
 ```
 
-**Option B — Download ZIP**
-Go to the GitHub repository → Code → Download ZIP → Extract.
+In another terminal in this checkout:
 
-### Step 2: Load the Extension
+```bash
+# Pass: exit 0
+npx --no-install cookieguard-ci scan http://127.0.0.1:3000/secure --auth-cookie session_id
 
-1. Open Chrome and go to: `chrome://extensions/`
-2. Toggle **Developer mode** (top-right corner)
-3. Click **Load unpacked**
-4. Select the `extension-standalone/` folder
-5. Click Open
+# Deliberately fail: exit 1
+npx --no-install cookieguard-ci scan http://127.0.0.1:3000/missing-httponly --auth-cookie session_id
 
-The extension icon appears in your toolbar.
+# JSON to stdout and an owner-readable file; deliberately exits 1
+npx --no-install cookieguard-ci scan http://127.0.0.1:3000/missing-secure --auth-cookie session_id --format json --output report.json
 
-### Step 3: Scan Cookies
-
-1. Visit any website
-2. Click the CookieGuard AI extension icon
-3. Click **Scan Cookies**
-4. Review classification, risk analysis, explainability, and attack simulation results
-
-The status bar shows **"AI Engine Ready"** when the ONNX model is loaded, or **"Rule-Based Mode"** as a fallback.
-
-## [Security Report](https://aiscihub.github.io/cookieguard-ai/report.html) 
-Over 3,000 websites have been scanned and analyzed using CookieGuard. A detailed security report is available [here]( 
-https://aiscihub.github.io/cookieguard-ai/report.html)
-
-## Architecture
-
-### Self-Contained Extension (Default)
-
-```
-┌──────────────┐       ┌────────────────────────────────────────────┐
-│   Browser    │──────▶│          Chrome Extension (popup.js)       │
-│              │       │                                            │
-│ chrome.cookies API   │  engine.js — Full Analysis Pipeline        │
-│              │       │  ┌──────────────────────────────────────┐  │
-│              │       │  │ 1. Feature Extraction (38 features)  │  │
-│              │       │  │ 2. ONNX Inference (RandomForest)     │  │
-│              │       │  │    ↳ Rule-based fallback if WASM     │  │
-│              │       │  │      unavailable                     │  │
-│              │       │  │ 3. Risk Scoring (severity × exposure)│  │
-│              │       │  │ 4. Explainability (signal extraction)│  │
-│              │       │  │ 5. Attack Simulation (5 vectors)     │  │
-│              │       │  └──────────────────────────────────────┘  │
-│              │       │                                            │
-│              │◀──────│  Results: classification, risk, signals,   │
-│              │       │  attack paths, recommendations             │
-└──────────────┘       └────────────────────────────────────────────┘
+npx --no-install cookieguard-ci --help
 ```
 
-All computation happens in-browser. No network requests, no data exfiltration.
+Stop the demo with Ctrl+C. For a CLI-only checkout installation:
 
----
-
-## Core Components
-
-### 1. Feature Extractor — 38 features across 4 groups
-
-| Group | Count | Features |
-|-------|-------|----------|
-| **Attributes** | 7 | has_secure, has_httponly, has_samesite, samesite_level, is_session_cookie, expiry_days, lifetime_category |
-| **Scope** | 7 | domain_is_wildcard, domain_depth, etld_match, path_is_root, path_depth, cross_site_sendable, exposure_score |
-| **Lexical** | 16 | name_matches_auth/tracking/preference, host/secure prefix, name_entropy, name_length, value_length, value_entropy_bucket, value_looks_like_jwt/hex/base64, value_has_padding, value_is_numeric, value_length_bucket |
-| **Behavior** | 8 | f_changed_during_login, f_new_after_login, f_rotated_after_login, f_persistent_days_bucket, f_subdomain_shared, f_third_party_context, f_login_behavior_score, f_security_posture_score |
-
-All 38 features are computed from `chrome.cookies` API output + basic string/math operations. No header inspection, no content scripts, no network monitoring required.
-
-### 2. ML Classifier — ONNX Runtime Web
-
-- **Model:** RandomForest (50 trees, depth 10) exported to ONNX with `zipmap=False`
-- **Accuracy:** 97.5% on site-based holdout
-- **Classes:** authentication, tracking, preference, other
-- **Fallback:** Rule-based classifier when ONNX/WASM unavailable
-- **Inference:** ~5ms per cookie on modern hardware
-
-### 3. Risk Scorer
-
-```
-RiskScore = Σ(Severity Points) × Breadth × Lifetime
-            [gated on P(auth) > 0.3]
+```bash
+npm ci --omit=dev --omit=optional --ignore-scripts
+npm run build
 ```
 
-| Vulnerability | Points | Impact |
-|--------------|--------|--------|
-| Missing HttpOnly | +40 | XSS session hijacking |
-| Missing Secure | +25 | Network interception |
-| Missing SameSite | +20 | CSRF attacks |
-| Wildcard domain | +15 | Subdomain theft |
-| Long-lived (>30d) | +10 | Extended exposure |
+The future published-package experience is `npx cookieguard-ci scan URL`; do not
+use that command to fetch an unverified package under the proposed name today.
 
-### 4. Explainability Engine
+The CLI performs a bounded GET and observes Set-Cookie headers, including up to
+five same-origin redirects. It does **not** execute JavaScript or log in. Use
+Playwright for authenticated browser workflows. No outgoing Cookie or
+Authorization headers are generated by the CLI.
 
-Per-cookie breakdown: classification signals (name pattern, entropy, login behavior), risk formula decomposition (severity points × breadth × lifetime), and plain-language interpretation.
+| Option | Behavior |
+| --- | --- |
+| `--auth-cookie NAME` | Exact authentication-cookie name; repeat for multiple names. A missing expected name makes the audit incomplete. |
+| `--fail-on high` | Minimum confirmed severity; choices: info, low, medium, high, critical. |
+| `--format text\|json`, `--output FILE` | Value-free findings and metadata; JSON supports baselines. |
+| `--input FILE` | Read a local cookie metadata array or legacy `{ "cookies": [...] }` export. Values are discarded after transient feature extraction; arbitrary fields are not copied. |
+| `--allowed-samesite lax,strict` | Allowed explicitly declared values; add `none` for a reviewed cross-site flow. |
+| `--require-explicit-samesite` | Treat observed absence as a medium policy violation. Store-only evidence remains unknown. |
+| `--require-host-only` | Treat observed Domain sharing as a medium policy violation. |
+| `--max-lifetime-days 30` | Maximum remaining client-cookie lifetime; violation severity is medium. |
+| `--baseline FILE` | Compare compatible JSON reports for protection regressions. |
+| `--timeout-ms 10000` | Total HTTP deadline; range 100–60000 ms. |
+| `--allow-origin https://your-test-app.example` | Explicit authorization for that developer-controlled origin. Never authorize third-party services you do not control. |
 
-### 5. Attack Simulator
+Exit codes are **0** completed/pass, **1** completed/confirmed policy failure,
+and **2** incomplete scan or invalid configuration. A pass means the observed
+cookies passed the configured checks, not that the application is secure.
 
-Generates per-cookie attack paths based on actual security configuration:
-- **XSS** — when HttpOnly is missing
-- **CSRF** — when SameSite is unset
-- **Network sniffing** — when Secure flag is missing
-- **Subdomain takeover** — when domain is wildcarded
-- **Session replay** — when cookie lifetime exceeds 30 days
+Only loopback addresses and exactly `localhost` are allowed by default. The
+scanner rejects URL credentials, queries/fragments, cross-origin redirects,
+remote private/special IPv4 addresses, and remote IPv6 targets. Nonlocal DNS is
+pinned to a validated public IPv4 address for the scan. Request paths are never
+printed. No public website is visited by the demo or tests.
 
-Each path includes a user-actionable fix and a site-should-fix note.
+## Quick start: Playwright
 
----
+From a full development installation:
 
-## Evaluation (5,000 synthetic cookies · 22 sites · 40% hard samples)
-
-| Metric | Value | 95% CI |
-|--------|-------|--------|
-| Accuracy | 95.7% | [93.2, 97.9] |
-| Auth Recall | 95.7% | [90.0, 100.0] |
-| Auth Precision | 90.4% | — |
-| Auth FPR | 3.3% | [1.0, 6.0] |
-| PR-AUC | 0.977 | [0.953, 0.994] |
-| Top-3 Ranking | 100% | 5/5 sites |
-| LOSO Generalization | 95.7% ± 2.10% | 22 folds |
-
-Training data is synthetic — metrics represent performance on controlled data. Real-world results may vary.
-
----
-
-## Project Structure
-
-```
-cookieguard-ai/
-├── extension-standalone/          # ★ Self-contained extension (recommended)
-│   ├── manifest.json
-│   ├── popup.html / popup.js
-│   ├── engine.js                  # Full pipeline (JS port)
-│   ├── lib/                       # ONNX Runtime Web + WASM
-│   └── model/                     # cookieguard_model.onnx
-├── backend/                       # Python backend (debugging/development)
-│   ├── app.py
-│   ├── classifier.py
-│   ├── risk_scorer.py
-│   ├── feature_extractor.py
-│   ├── explainability.py
-│   ├── attack_simulator.py
-│   ├── evaluate_model.py
-│   ├── train_model.py
-│   └── generate_training_data.py
-├── cookieguardplugin/             # Backend-dependent extension (legacy)
-│   ├── manifest.json
-│   ├── popup.html
-│   └── popup.js
-├── models/                        # Trained model artifacts
-│   ├── cookie_classifier.pkl
-│   ├── model_card.json
-│   ├── feature_schema.json
-│   └── benchmark_results.csv
-└── resource/
-    └── *.png
+```bash
+npx --no-install playwright install chromium
+npm run test:playwright
 ```
 
-## Known Limitations
+The example starts and stops its own loopback application. Stop any manually
+running demo on port 3000 first. On Linux CI, use
+`npx --no-install playwright install --with-deps chromium`.
 
-- Training data is synthetic — metrics represent an upper bound on controlled data
-- Behavior features require Login Flow capture mode; default to zero otherwise
-- Attack simulation is rule-based (potential paths, not confirmed vulnerabilities)
-- ONNX model is ~1MB, WASM runtime is ~11MB (total extension ~12MB)
+Inside an ordinary Playwright test:
 
+```js
+import { test, expect } from '@playwright/test';
+import { startCookieAudit, assertCookiePolicy } from '@cookieguard/playwright';
 
-## Awards & Recognition
+test('session-cookie policy', async ({ context, page }) => {
+  const audit = startCookieAudit(context, {
+    origins: ['http://127.0.0.1:3000'],
+    policy: { authCookies: ['session_id'], failOn: 'high' },
+  });
+  try {
+    await page.goto('http://127.0.0.1:3000/login');
+    await page.getByRole('link', { name: 'Create secure demo session' }).click();
+    await expect(page).toHaveURL(/\/secure$/);
+    assertCookiePolicy(await audit.evaluate());
+  } finally {
+    audit.dispose();
+  }
+});
+```
 
-🏆 **Winner — Girls Who Code Challenge 2026**
+Replace the demo link with your existing sign-in steps and session assertions.
+CookieGuard does not manage credentials. `evaluate()` stops collection; call it
+after the awaited workflow. For already-authenticated pages use
+`auditPage(page, { policy: { authCookies: ['session_id'] } })`. SameSite
+declaration then remains unknown. See [the complete example](examples/playwright/)
+and [API details](packages/playwright/README.md).
 
-CookieGuard AI was selected as a winning project in the 2026 Girls Who Code Challenge for its work in AI-powered browser security and digital identity protection.
+The collector observes only configured origins but does not restrict the test's
+network access. Use a controlled browser test with service workers blocked where
+possible. It does not enable tracing, HAR, screenshots, or storage-state exports.
 
-- Official Announcement: https://girlswhocode.com/news/gwc-challenge-2026-winners
-- Project Demo Video: https://www.youtube.com/watch?v=_PhzLN31C04
+## Quick start: GitHub Actions
 
-## License
+This repository includes a [complete workflow](.github/workflows/cookieguard-ci.yml)
+that installs Node 24 and Chromium, tests the toolkit and packed npm consumers,
+then exercises passing, deliberately failing, and incomplete Action audits.
+After checking out this implementation
+and starting your application, its minimal audit step is:
 
-MIT License — see LICENSE file for details
+```yaml
+# Workflow permissions: contents: read
+# In jobs.<job>.steps, after checkout and application startup:
+- uses: ./action
+  with:
+    target: http://127.0.0.1:3000/secure
+    auth-cookies: session_id
+    fail-on: high
+```
+
+The action creates a Step Summary and sanitized JSON artifact before enforcing
+the exit status. Do not put credentials or tokens into inputs. The action
+installs only production dependencies in its own checkout, so run contributor
+tests before invoking `./action` locally. See [Action usage](action/README.md).
+After maintainers release a reviewed `ci-v0.1.0` tag, consumers can reference
+`aiscihub/cookieguard-ai/action@ci-v0.1.0` or its immutable commit SHA. That tag
+does not exist as part of this task. Hosted workflow/artifact service execution
+has not been verified; the action runner and its outputs are tested locally.
+
+## Supported checks
+
+| Rule | Check | Default decision |
+| --- | --- | --- |
+| CG001 | Missing HttpOnly | High if authentication identity is confirmed |
+| CG002 | Missing Secure | High if authentication identity is confirmed |
+| CG003 | Explicit SameSite outside policy | Medium; does not prove CSRF |
+| CG004 | Domain sharing | Review; medium with `requireHostOnly` |
+| CG005 | Lifetime greater than configured maximum | Medium |
+| CG006 | Invalid __Host-/__Secure- declaration | High with confirmed identity and unambiguous header evidence; browser rejection is kept separate |
+| CG007 | Comparable protection regression | High; baseline is opt-in |
+| CG008 | Candidate/unknown authentication role | Review only |
+| CG009 | Missing/ambiguous evidence | Review only |
+
+Use `--fail-on medium` to enforce medium policies. Missing flags on unconfirmed
+cookies are review, never confirmed failures. Domain scope alone does not prove
+subdomain takeover. A browser's effective SameSite does not establish that the
+server explicitly declared it. Deletion headers are excluded from active checks.
+
+## Architecture and original Chrome extension
+
+The small npm workspace contains `packages/core`, `packages/cli`, and
+`packages/playwright`. Build copies the existing engine from
+`extension-standalone/engine.js`; feature extraction and rule classification
+retain one source of truth. Its only source modification is a guarded Node
+export. The popup, model, research results, and legacy Python backend stay intact.
+CI uses its own conservative policy explanations, not the extension's attack
+simulations or probability-based vulnerability gate.
+
+Default classification is explicitly labeled `rule`. Optional local ONNX
+classification preserves the existing model and feature order; it is always
+triage, never identity proof, and errors never silently fall back. See
+[core API and ONNX usage](packages/core/README.md),
+[architecture/audit](docs/CI_ARCHITECTURE.md), and
+[the original README](docs/ORIGINAL_README.md).
+
+To install the original standalone Chrome extension:
+
+1. Download/clone this repository.
+2. Open `chrome://extensions/` and enable **Developer mode**.
+3. Select **Load unpacked**, then the `extension-standalone/` folder.
+4. Visit a site you are authorized to inspect, open CookieGuard AI, and select
+   **Scan Cookies**. The popup shows **AI Engine Ready** or **Rule-Based Mode**.
+
+![Original CookieGuard extension](resource/screenshot_3.0.png)
+
+The [historical website report](https://aiscihub.github.io/cookieguard-ai/report.html),
+[project summary](PROJECT_SUMMARY.md), original evaluation files in `models/`,
+and [legacy test instructions](test/README.md) are preserved.
+
+## Evaluation and limitations
+
+[CI validation](docs/CI_VALIDATION.md) records measured local results and exact
+commands. The controlled benchmark is reproducible with `npm run benchmark`.
+It verifies known configurations, not real-world authentication detection.
+There is no independently labeled real-world validation dataset for this release.
+
+The original research reported 95.7% accuracy and 90.4% authentication precision
+on synthetic evaluation data; its detailed historical metrics remain in the
+original README and model artifacts. Different stored model/evaluation versions
+have different numbers. None are CI's real-world detection accuracy.
+
+Main limits: explicit cookie identification is still needed for strict CI;
+browser evidence cannot recover missed response headers; header scans cannot
+prove browser acceptance; partitioned/ambiguous cookies receive conservative
+review; no public-suffix analysis, exploit testing, CSRF-defense validation, or
+server-side session-expiry measurement is performed. Chromium is the tested
+browser for this initial release.
+
+## Security and privacy
+
+CI never serializes cookie values, raw Set-Cookie headers, request credentials,
+legacy analysis contexts, or arbitrary exception messages. Values are used only
+in memory for model features. Reports contain selected metadata and fixed
+explanations. No telemetry or cloud inference; the optional Node ONNX adapter
+disables runtime telemetry before loading it. If your application initializes
+ONNX first, set `ORT_DISABLE_TELEMETRY=1` before starting the process.
+
+Cookie names, domains, and paths may themselves be sensitive; review reports
+before sharing. The original extension's legacy JSON export includes cookie
+values and is not a sanitized CI artifact. See [PRIVACY.md](PRIVACY.md) and
+[SECURITY.md](SECURITY.md). Do not supply real storage-state exports as fixtures.
+
+## Contributing and troubleshooting
+
+```bash
+npm ci
+npx --no-install playwright install chromium
+npm run release:check
+```
+
+- **Exit 2 / expected cookie missing:** the HTTP endpoint may not set the cookie
+  until login or JavaScript runs. Use the Playwright collector around login.
+- **SameSite unknown:** begin collection before the server response; do not
+  replace unknown evidence with the browser's default.
+- **Browser missing:** run the Playwright installation command above. On Linux,
+  install its OS dependencies with `--with-deps`.
+- **Port 3000 in use:** stop the manual demo before running Playwright tests.
+- **TLS error:** use a trusted local certificate. There is no insecure-TLS bypass.
+- **Nonlocal target refused:** use an exact authorized origin; private/special
+  remote addresses and remote IPv6 remain unsupported in this version.
+- **Sandbox blocks loopback/browser:** run tests in a development environment
+  permitted to bind loopback ports and launch Chromium.
+- **Module missing after production-only install:** run `npm run build`; restore
+  dev dependencies with `npm ci` before running tests.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md), [release notes](CHANGELOG.md), and
+[release procedure](docs/CI_RELEASE.md). License: [MIT](LICENSE).

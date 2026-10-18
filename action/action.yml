@@ -1,0 +1,71 @@
+name: CookieGuard CI
+description: Audit developer-controlled application cookie headers without exposing cookie values
+inputs:
+  target:
+    description: HTTP(S) URL of the developer-controlled test application (no credentials or query)
+    required: true
+  auth-cookies:
+    description: Comma-separated exact authentication-cookie names
+    default: ''
+  fail-on:
+    description: Minimum confirmed failure severity (info, low, medium, high, critical)
+    default: high
+  allow-origins:
+    description: Comma-separated authorized nonlocal origins; empty restricts scans to loopback
+    default: ''
+  upload-report:
+    description: Upload sanitized JSON as a workflow artifact
+    default: 'true'
+  artifact-name:
+    description: Unique artifact name for this action invocation
+    default: cookieguard-report
+outputs:
+  exit-code:
+    description: 0 passed, 1 confirmed policy failed, 2 incomplete
+    value: ${{ steps.audit.outputs.exit-code }}
+  report-path:
+    description: Path to the sanitized JSON report
+    value: ${{ steps.audit.outputs.report-path }}
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+      with:
+        node-version: '24'
+        package-manager-cache: false
+    - name: Install and build CookieGuard
+      shell: bash
+      env:
+        CG_ACTION_PATH: ${{ github.action_path }}
+      run: |
+        cd "$CG_ACTION_PATH/.."
+        npm ci --omit=dev --omit=optional --ignore-scripts --no-audit --no-fund
+        node scripts/build.js
+    - name: Audit cookie configuration
+      id: audit
+      shell: bash
+      env:
+        CG_ACTION_PATH: ${{ github.action_path }}
+        CG_TARGET: ${{ inputs.target }}
+        CG_AUTH_COOKIES: ${{ inputs.auth-cookies }}
+        CG_FAIL_ON: ${{ inputs.fail-on }}
+        CG_ALLOW_ORIGINS: ${{ inputs.allow-origins }}
+      run: node "$CG_ACTION_PATH/run.js"
+    - name: Upload sanitized report
+      if: ${{ always() && inputs.upload-report == 'true' && steps.audit.outputs.report-path != '' }}
+      uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+      with:
+        name: ${{ inputs.artifact-name }}
+        path: ${{ steps.audit.outputs.report-path }}
+        if-no-files-found: error
+        retention-days: 7
+    - name: Enforce cookie policy
+      if: ${{ always() }}
+      shell: bash
+      env:
+        CG_EXIT_CODE: ${{ steps.audit.outputs.exit-code }}
+      run: |
+        case "$CG_EXIT_CODE" in
+          0|1|2) exit "$CG_EXIT_CODE" ;;
+          *) exit 2 ;;
+        esac

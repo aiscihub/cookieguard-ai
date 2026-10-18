@@ -1,0 +1,13 @@
+{
+  "name": "cookieguard-ci",
+  "version": "0.1.0",
+  "description": "Catch insecure authentication-cookie configurations before production",
+  "type": "module",
+  "license": "MIT",
+  "engines": { "node": ">=24" },
+  "bin": { "cookieguard-ci": "bin/cookieguard-ci.js" },
+  "exports": { ".": { "types": "./src/index.d.ts", "import": "./src/index.js" } },
+  "files": ["bin", "src", "LICENSE", "README.md"],
+  "dependencies": { "@cookieguard/core": "0.1.0" },
+  "repository": { "type": "git", "url": "https://github.com/aiscihub/cookieguard-ai.git", "directory": "packages/cli" }
+}
