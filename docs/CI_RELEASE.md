@@ -1,10 +1,18 @@
 # CookieGuard CI release procedure
 
-Release target: **CookieGuard CI v0.1.0 — public beta**. The npm CLI,
-Playwright adapter, and GitHub Action ship from `aiscihub/cookieguard-ai` as one
+Published on **2026-10-17**:
+[CookieGuard CI v0.1.0 — public beta](https://github.com/aiscihub/cookieguard-ai/releases/tag/ci-v0.1.0).
+The npm CLI, Playwright adapter, and GitHub Action ship from `aiscihub/cookieguard-ai` as one
 coordinated release of the same security engine. Keep code, issues, contributors,
-and documentation in this repository. Package publication and the release tag
-remain pending until the gates below are complete.
+and documentation in this repository.
+
+The published packages are `cookieguard-ci`, `@aiscihub/cookieguard-core`, and
+`@aiscihub/cookieguard-playwright`, each at `0.1.0` with the `beta` dist-tag.
+Tag `ci-v0.1.0` identifies source commit
+`12a09fe322b135ac2a5aec45cae1f880b717575f`. The GitHub prerelease includes the
+three tested tarballs, `SHA256SUMS`, and a release manifest. Registry integrities
+match the tested packages, and fresh registry installs passed the CLI and
+Playwright scenarios below. See [the validation record](CI_VALIDATION.md).
 
 ## Merge and release gates
 
@@ -87,14 +95,15 @@ repository artifact, not a newly trained or bundled dependency.
 1. Review the source and privacy boundaries. Publishing uses npm account
    `aiscihub`, with `@aiscihub/cookieguard-core`, `cookieguard-ci`, and
    `@aiscihub/cookieguard-playwright`. Verify ownership and name/version
-   availability again immediately before publication. The account's email is
-   verified; complete its required two-factor authentication setup before publishing.
+   availability again immediately before publication. Require a verified email
+   and two-factor authentication; both were enabled for this release.
 2. Run the checked-in workflow on the feature branch and pull request. Inspect
    summaries and artifacts, verify all required outcomes, and merge only after
    the current commit passes. Test any other claimed platforms separately.
 3. Verify clean source installation, package tarballs, Node 24 support, original
-   extension UI loading, and the validation report. Re-run dependency security and
-   license review for the locked versions. Resolve audit findings before release.
+   extension compatibility tests, and the validation report. Re-run dependency
+   security and license review for the locked versions. Resolve audit findings
+   before release.
 4. Confirm npm publishing access. In one release window, publish core first, then
    CLI and Playwright at `0.1.0`, using the `beta` npm dist-tag and provenance
    where supported. Create an immutable reviewed `ci-v0.1.0` tag for the Action

@@ -1,6 +1,6 @@
 # CookieGuard CI validation
 
-Date: **2026-10-17**. Release target: **0.1.0 public beta**. Local platform: macOS arm64.
+Date: **2026-10-17**. Published release: **0.1.0 public beta**. Local platform: macOS arm64.
 Primary runtime: **Node v24.22.0** (LTS); development smoke runs also used
 v26.10.0. Playwright **1.64.1**, Chromium **156.0.8078.4** (revision 1248),
 ONNX Runtime Node **1.30.0**. All audit targets were local fixtures.
@@ -52,6 +52,40 @@ review. The complete 150,406-byte hosted log and downloaded artifacts contained
 no sentinel values. Artifact retention is seven days; the linked run and source
 identify the reproducible validation even after artifacts expire.
 
+## Published release verification
+
+[PR #6](https://github.com/aiscihub/cookieguard-ai/pull/6) finalized the npm names
+and release procedure. Its
+[hosted release gate](https://github.com/aiscihub/cookieguard-ai/actions/runs/39097092319)
+passed for source commit `32f39f489517031d9895801b435d391f740cc335`; the merged
+commit `12a09fe322b135ac2a5aec45cae1f880b717575f` has the same source tree and
+[passed on main](https://github.com/aiscihub/cookieguard-ai/actions/runs/39097181292).
+Both runs passed 29 Node tests, 8 Chromium tests, the nine packaged-consumer
+outcomes, and the composite Action's 0/1/2 checks. Dependency advisories remained
+at zero, the 121-entry license inventory passed review, and credential and
+sentinel checks passed. Downloaded Action reports confirmed the expected
+`passed`, `failed`, and `incomplete` statuses.
+
+The exact tested tarballs were published as `@aiscihub/cookieguard-core@0.1.0`,
+`cookieguard-ci@0.1.0`, and `@aiscihub/cookieguard-playwright@0.1.0`, with the
+`beta` dist-tag. Registry integrity values match the local and hosted tarballs.
+The [GitHub public beta](https://github.com/aiscihub/cookieguard-ai/releases/tag/ci-v0.1.0)
+tags the merged source commit above and includes those tarballs, SHA-256 checksums,
+and a release manifest. The extension's existing stable release is preserved.
+
+After publication, `node scripts/verify-packages.js --registry` installed all
+three packages in a fresh project/cache outside the monorepo. It passed all nine
+outcomes: CLI text and JSON exits 0/1/2, plus Chromium adapter exits 0/1/2. The
+initial CLI install contained no native model or browser runtime. Reports,
+stdout, and stderr contained no sentinel values. Evidence is recorded in
+`artifacts/published/results.json` and its companion reports.
+
+A separate empty project, empty npm user configuration, and fresh cache verified
+unauthenticated `npx cookieguard-ci@beta --version` as `0.1.0`. Scanning the local
+secure, missing-HttpOnly, and absent-authentication-cookie fixtures with that
+installed executable returned 0, 1, and 2. Its JSON reports also passed sentinel
+checks. All targets were controlled local fixtures.
+
 ## Controlled benchmark
 
 `scripts/benchmark.js` independently specifies six expected cases. It does not
@@ -91,6 +125,7 @@ npm run check
 npm run release:check
 npm run benchmark
 node scripts/verify-packages.js
+node scripts/verify-packages.js --registry
 node scripts/check-artifacts.js
 npm audit --json
 git diff --check
@@ -172,7 +207,6 @@ that the runtime directories are absent. Final checks passed after these fixes.
 ## Limits and release gates
 
 No real-world labeled auth dataset was available. No public site was scanned.
-No npm publication, release tag, or repository setting has been changed.
 The original extension UI was not manually inspected in Chrome during this task;
 its unchanged UI sources and automated engine regressions provide compatibility
 evidence, not a full UI certification. Firefox, WebKit, and Windows remain
@@ -183,5 +217,5 @@ not establish exploitability, CSRF defenses, server revocation, or original
 session lifetime. Prefix transport checks recognize the tested loopback exception.
 There is no public-suffix validation; malformed, partitioned, or uncertain scopes
 are conservative. The collector does not sandbox caller navigation or capture
-APIRequestContext headers. Comparisons exclude ambiguous/changed scopes. Before
-publication, complete the gates in [CI_RELEASE.md](CI_RELEASE.md).
+APIRequestContext headers. Comparisons exclude ambiguous/changed scopes. Future
+releases must repeat the gates in [CI_RELEASE.md](CI_RELEASE.md).

@@ -13,12 +13,13 @@ work. 🏆 **Winner — Girls Who Code Challenge 2026**:
 [original demo](https://www.youtube.com/watch?v=_PhzLN31C04).
 The Chrome extension, research artifacts, and original project history remain.
 
-**Release target: CookieGuard CI v0.1.0 — public beta.** The npm CLI, Playwright
-adapter, and GitHub Action will ship together from this repository, using the
-same security engine. npm packages and a CI release tag have **not** been
-published. The commands below use this checkout. Publication will use
-`cookieguard-ci`, `@aiscihub/cookieguard-core`, and
-`@aiscihub/cookieguard-playwright` under the verified `aiscihub` npm account.
+**[CookieGuard CI v0.1.0 — public beta](https://github.com/aiscihub/cookieguard-ai/releases/tag/ci-v0.1.0)
+is available.** The npm CLI, Playwright adapter, and GitHub Action ship together
+from this repository, using the same security engine. Published npm packages:
+[`cookieguard-ci`](https://www.npmjs.com/package/cookieguard-ci),
+[`@aiscihub/cookieguard-core`](https://www.npmjs.com/package/@aiscihub/cookieguard-core),
+and [`@aiscihub/cookieguard-playwright`](https://www.npmjs.com/package/@aiscihub/cookieguard-playwright).
+All three are version `0.1.0`, available through the `beta` dist-tag.
 
 ## One cookie, one actionable failure
 
@@ -36,9 +37,20 @@ Classifier suggestions without developer evidence stay review items.
 
 ## Quick start: CLI
 
-Requirements: **Node 24 LTS**, npm, and Git. The CLI itself needs no browser,
-Python, or native model runtime. A full contributor installation also installs
-test tooling and the optional ONNX adapter's development dependency.
+Requirements: **Node 24 or newer** and npm. Against your running local test
+application, using its authentication-cookie name:
+
+```bash
+npx cookieguard-ci@beta scan http://localhost:3000 --auth-cookie session_id
+```
+
+Use `cookieguard-ci@0.1.0` to pin this release. The CLI itself needs no browser,
+Python, or native model runtime. If the endpoint sets the cookie only after login,
+use the Playwright integration below.
+
+To try the included demo, clone this repository with Git. A full contributor
+installation also installs test tooling and the optional ONNX adapter's
+development dependency. Node 24 LTS is the tested runtime.
 
 ```bash
 git clone https://github.com/aiscihub/cookieguard-ai.git
@@ -68,9 +80,6 @@ Stop the demo with Ctrl+C. For a CLI-only checkout installation:
 npm ci --omit=dev --omit=optional --ignore-scripts
 npm run build
 ```
-
-After publication, the beta entry point will be
-`npx cookieguard-ci@beta scan URL`. Until then, use the checkout commands above.
 
 The CLI performs a bounded GET and observes Set-Cookie headers, including up to
 five same-origin redirects. It does **not** execute JavaScript or log in. Use
@@ -103,7 +112,13 @@ printed. No public website is visited by the demo or tests.
 
 ## Quick start: Playwright
 
-From a full development installation:
+In an existing Playwright project using Node 24 or newer:
+
+```bash
+npm install --save-dev @aiscihub/cookieguard-playwright@0.1.0
+```
+
+To run this repository's demo tests from a full contributor installation:
 
 ```bash
 npx --no-install playwright install chromium
@@ -152,13 +167,13 @@ possible. It does not enable tracing, HAR, screenshots, or storage-state exports
 This repository includes a [complete workflow](.github/workflows/cookieguard-ci.yml)
 that installs Node 24 and Chromium, tests the toolkit and packed npm consumers,
 then exercises passing, deliberately failing, and incomplete Action audits.
-After checking out this implementation
-and starting your application, its minimal audit step is:
+After checking out your application and starting it on the runner, add this
+audit step pinned to the released source commit:
 
 ```yaml
 # Workflow permissions: contents: read
 # In jobs.<job>.steps, after checkout and application startup:
-- uses: ./action
+- uses: aiscihub/cookieguard-ai/action@12a09fe322b135ac2a5aec45cae1f880b717575f # ci-v0.1.0
   with:
     target: http://127.0.0.1:3000/secure
     auth-cookies: session_id
@@ -169,11 +184,9 @@ The action creates a Step Summary and sanitized JSON artifact before enforcing
 the exit status. Do not put credentials or tokens into inputs. The action
 installs only production dependencies in its own checkout, so run contributor
 tests before invoking `./action` locally. See [Action usage](action/README.md).
-After maintainers release a reviewed `ci-v0.1.0` tag, consumers can reference
-`aiscihub/cookieguard-ai/action@ci-v0.1.0` or its immutable commit SHA. The release
-tag is pending coordinated publication. Hosted Linux/Chromium tests and the
-Action's 0/1/2 outcomes and artifact uploads have passed; see the
-[validation evidence](docs/CI_VALIDATION.md).
+The same release is available as `aiscihub/cookieguard-ai/action@ci-v0.1.0`.
+Hosted Linux/Chromium tests and the Action's 0/1/2 outcomes and artifact uploads
+have passed; see the [validation evidence](docs/CI_VALIDATION.md).
 
 ## Supported checks
 

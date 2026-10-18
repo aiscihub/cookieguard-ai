@@ -3,7 +3,7 @@
 CookieGuard AI is designed with a privacy-first architecture.  
 All analysis is performed locally on the user's device.
 
-## CookieGuard CI (proposed 0.1.0)
+## CookieGuard CI (0.1.0 public beta)
 
 CI reads cookie values only transiently to compute the original engine's numeric
 features. Values, raw Set-Cookie headers, credentials, arbitrary error messages,
