@@ -24,11 +24,11 @@ garbage collection does not provide cryptographic memory erasure.
 
 ## Small package structure
 
-- `@cookieguard/core`: normalization, existing-engine triage, policy, comparable
+- `@aiscihub/cookieguard-core`: normalization, existing-engine triage, policy, comparable
   baseline checks, sanitized text/JSON reporting; no runtime dependencies.
 - `cookieguard-ci`: bounded HTTP response-header scanner and fixture CLI; no
   browser or model download needed. It does not execute JavaScript or log in.
-- `@cookieguard/playwright`: passive collector on a caller-owned browser context.
+- `@aiscihub/cookieguard-playwright`: passive collector on a caller-owned browser context.
   Login, credentials, browser installation, and network authorization belong to
   the existing test. The collector does not navigate or export storage state.
 - `action/`: composite action using the local CLI, JSON artifact, and escaped

@@ -1,8 +1,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { EventEmitter } from 'node:events';
-import { startCookieAudit } from '@cookieguard/playwright';
-import { exitCode, formatJson } from '@cookieguard/core';
+import { startCookieAudit } from '@aiscihub/cookieguard-playwright';
+import { exitCode, formatJson } from '@aiscihub/cookieguard-core';
 
 const TOKEN = 'SENTINEL_SESSION_NEVER_SERIALIZE_84af20';
 class Context extends EventEmitter {

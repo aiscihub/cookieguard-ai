@@ -2,7 +2,7 @@ import http from 'node:http';
 import https from 'node:https';
 import { lookup } from 'node:dns/promises';
 import { isIP } from 'node:net';
-import { AuditError, parseSetCookie } from '@cookieguard/core';
+import { AuditError, parseSetCookie } from '@aiscihub/cookieguard-core';
 
 function parseTarget(value) {
   try {

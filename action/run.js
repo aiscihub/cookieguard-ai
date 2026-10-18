@@ -1,7 +1,7 @@
 import { appendFile, mkdtemp } from 'node:fs/promises';
 import { join } from 'node:path';
 import { scanUrl } from 'cookieguard-ci';
-import { AuditError, evaluateCookiePolicy, validatePolicy, exitCode, formatJson, formatMarkdown, formatText, safeError } from '@cookieguard/core';
+import { AuditError, evaluateCookiePolicy, validatePolicy, exitCode, formatJson, formatMarkdown, formatText, safeError } from '@aiscihub/cookieguard-core';
 import { writeReport } from '../packages/cli/src/main.js';
 
 const list = value => (value ?? '').split(',').map(item => item.trim()).filter(Boolean);

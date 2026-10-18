@@ -6,7 +6,10 @@ One coordinated release in `aiscihub/cookieguard-ai`: npm CLI for the first try,
 Playwright for existing tests, and a GitHub Action for CI adoption. All three
 integrations use the same core and remain in this repository.
 
-- Add `@cookieguard/core`, `cookieguard-ci`, and `@cookieguard/playwright` workspaces
+Publishing names: `cookieguard-ci`, `@aiscihub/cookieguard-core`, and
+`@aiscihub/cookieguard-playwright`, using the maintainer's existing npm scope.
+
+- Add `@aiscihub/cookieguard-core`, `cookieguard-ci`, and `@aiscihub/cookieguard-playwright` workspaces
   with ESM exports, TypeScript declarations, lockfile, linting, and automated tests.
 - Reuse the original JavaScript feature extractor and rule classifier through a
   guarded Node export and generated package copy. Preserve the extension popup,

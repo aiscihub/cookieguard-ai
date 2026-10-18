@@ -3,7 +3,7 @@ import { constants } from 'node:fs';
 import { open, rename, unlink } from 'node:fs/promises';
 import { randomUUID } from 'node:crypto';
 import { AuditError, safeError, normalizeCookies, normalizeLegacyResults, evaluateCookiePolicy,
-  validatePolicy, formatText, formatJson, exitCode } from '@cookieguard/core';
+  validatePolicy, formatText, formatJson, exitCode } from '@aiscihub/cookieguard-core';
 import { scanUrl } from './scan.js';
 
 const HELP = `CookieGuard CI — Authentication Cookie Audit (0.1.0)

@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
-import { startCookieAudit, auditPage, assertCookiePolicy } from '@cookieguard/playwright';
-import { formatJson, exitCode } from '@cookieguard/core';
+import { startCookieAudit, auditPage, assertCookiePolicy } from '@aiscihub/cookieguard-playwright';
+import { formatJson, exitCode } from '@aiscihub/cookieguard-core';
 
 const origins = ['http://127.0.0.1:3000'];
 const policy = { authCookies: ['session_id'] };
