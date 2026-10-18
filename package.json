@@ -16,7 +16,11 @@
     "benchmark": "node scripts/benchmark.js",
     "check": "npm run build && npm run lint && npm run typecheck && npm test && npm run test:playwright",
     "release:check": "node scripts/release-gate.js",
-    "demo": "node examples/demo/server.js"
+    "demo": "node examples/demo/server.js",
+    "demo:ci:fail": "playwright test --config examples/ci-demo/playwright.config.js --project=insecure-login",
+    "demo:ci:pass": "playwright test --config examples/ci-demo/playwright.config.js --project=secure-login",
+    "demo:browser:fail": "node examples/browser-demo/run.js insecure-login",
+    "demo:browser:pass": "node examples/browser-demo/run.js secure-login"
   },
   "devDependencies": {
     "@playwright/test": "1.64.1",

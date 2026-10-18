@@ -12,6 +12,39 @@ and GitHub Action inspect HTTP response headers; they do **not** log in, execute
 JavaScript, or reuse a browser session. When the cookie is created during login,
 start the Playwright collector before your sign-in steps and session assertions.
 
+## Watch the Playwright Demo
+
+**A successful login can still fail CI.** In both real Chromium recordings, the
+server accepts the session cookie and the browser reaches the authenticated
+page. CookieGuard then checks that cookie's security attributes. Missing
+`HttpOnly` causes **CG001 — Missing HttpOnly**, a real `CookiePolicyError`, and
+Playwright's **1 failed** result. Adding `HttpOnly` makes the same policy
+assertion succeed: **1 passed**.
+
+**[Watch the 25-second Playwright demo (MP4)](https://aiscihub.github.io/cookieguard-ai/examples/browser-demo/cookieguard-ci-demo-25s.mp4).**
+The combined recording shows the insecure and secure browser workflows beside
+their actual captured Playwright output. The
+[recording guide](examples/browser-demo/README.md) explains how to recreate it;
+the [video file](examples/browser-demo/cookieguard-ci-demo-25s.mp4) is also included
+in this repository.
+
+Try the opt-in headless examples after the
+[fresh-checkout setup](examples/ci-demo/README.md#setup):
+
+| Command | Expected Playwright result | Process exit |
+| --- | --- | --- |
+| `npm run demo:ci:fail` | Login succeeds; CookieGuard reports `CG001`; **1 failed** | **1**, intentional policy failure |
+| `npm run demo:ci:pass` | Login succeeds; cookie policy passes; **1 passed** | **0**, success |
+
+Run the commands separately; `&&` would stop after the intentional failure. Each
+starts and stops its own test server. For a visible browser, use
+`npm run demo:browser:fail` and `npm run demo:browser:pass`.
+These demos are excluded from `npm run test:playwright`, which runs the original
+eight integration tests. They demonstrate cookie-policy validation, not model
+research accuracy or proof of an exploitable vulnerability.
+
+## Project and public beta
+
 CookieGuard CI extends the original CookieGuard AI project and its MIT-licensed
 work. 🏆 **Winner — Girls Who Code Challenge 2026**:
 [award announcement](https://girlswhocode.com/news/gwc-challenge-2026-winners),
@@ -182,6 +215,9 @@ and [API details](packages/playwright/README.md).
 The collector observes only configured origins but does not restrict the test's
 network access. Use a controlled browser test with service workers blocked where
 possible. It does not enable tracing, HAR, screenshots, or storage-state exports.
+
+Try the [opt-in fail/pass demonstrations](#watch-the-playwright-demo) to see the
+real policy assertion fail after a successful login, then pass with HttpOnly.
 
 ## Quick start: GitHub Actions
 
