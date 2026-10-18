@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { normalizeCookie, normalizeCookies, normalizeLegacyResults, parseSetCookie,
-  evaluateCookiePolicy, exitCode, formatJson, formatText, formatMarkdown, assertCookiePolicy } from '@cookieguard/core';
+  evaluateCookiePolicy, exitCode, formatJson, formatText, formatMarkdown, assertCookiePolicy } from '@aiscihub/cookieguard-core';
 
 const TOKEN = 'SENTINEL_SESSION_NEVER_SERIALIZE_84af20';
 const now = 1800000000000;

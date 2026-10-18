@@ -1,4 +1,4 @@
-import { AuditError, normalizeCookie, parseSetCookie, evaluateCookiePolicy, validatePolicy } from '@cookieguard/core';
+import { AuditError, normalizeCookie, parseSetCookie, evaluateCookiePolicy, validatePolicy } from '@aiscihub/cookieguard-core';
 
 function allowedOrigins(values) {
   if (!Array.isArray(values) || !values.length || values.length > 20) throw new AuditError('CONFIG');
@@ -142,4 +142,4 @@ export async function auditPage(page, options = {}) {
   return collector.evaluate();
 }
 
-export { evaluateCookiePolicy, assertCookiePolicy } from '@cookieguard/core';
+export { evaluateCookiePolicy, assertCookiePolicy } from '@aiscihub/cookieguard-core';

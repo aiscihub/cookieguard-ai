@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { runInNewContext } from 'node:vm';
-import { classifyCookie, extractCookieFeatures, FEATURE_NAMES } from '@cookieguard/core';
+import { classifyCookie, extractCookieFeatures, FEATURE_NAMES } from '@aiscihub/cookieguard-core';
 
 test('extension browser-global behavior and canonical Node feature order match original fixtures', async () => {
   const code = await readFile(new URL('../extension-standalone/engine.js', import.meta.url), 'utf8');

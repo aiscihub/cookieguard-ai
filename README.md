@@ -16,8 +16,9 @@ The Chrome extension, research artifacts, and original project history remain.
 **Release target: CookieGuard CI v0.1.0 — public beta.** The npm CLI, Playwright
 adapter, and GitHub Action will ship together from this repository, using the
 same security engine. npm packages and a CI release tag have **not** been
-published. The commands below use this checkout. Package names must be checked
-for ownership and availability before publication.
+published. The commands below use this checkout. Publication will use
+`cookieguard-ci`, `@aiscihub/cookieguard-core`, and
+`@aiscihub/cookieguard-playwright` under the verified `aiscihub` npm account.
 
 ## One cookie, one actionable failure
 
@@ -42,7 +43,6 @@ test tooling and the optional ONNX adapter's development dependency.
 ```bash
 git clone https://github.com/aiscihub/cookieguard-ai.git
 cd cookieguard-ai
-# Check out the CookieGuard CI implementation branch/tag when available.
 npm ci
 npm run demo
 ```
@@ -69,8 +69,8 @@ npm ci --omit=dev --omit=optional --ignore-scripts
 npm run build
 ```
 
-The future published-package experience is `npx cookieguard-ci scan URL`; do not
-use that command to fetch an unverified package under the proposed name today.
+After publication, the beta entry point will be
+`npx cookieguard-ci@beta scan URL`. Until then, use the checkout commands above.
 
 The CLI performs a bounded GET and observes Set-Cookie headers, including up to
 five same-origin redirects. It does **not** execute JavaScript or log in. Use
@@ -118,7 +118,7 @@ Inside an ordinary Playwright test:
 
 ```js
 import { test, expect } from '@playwright/test';
-import { startCookieAudit, assertCookiePolicy } from '@cookieguard/playwright';
+import { startCookieAudit, assertCookiePolicy } from '@aiscihub/cookieguard-playwright';
 
 test('session-cookie policy', async ({ context, page }) => {
   const audit = startCookieAudit(context, {

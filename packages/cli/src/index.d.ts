@@ -1,4 +1,4 @@
-import type { Observation } from '@cookieguard/core';
+import type { Observation } from '@aiscihub/cookieguard-core';
 export interface ScanOptions { allowOrigins?: string[]; timeoutMs?: number }
 export function validateTarget(target: string, allowOrigins?: string[]): URL;
 export function scanUrl(target: string, options?: ScanOptions): Promise<{

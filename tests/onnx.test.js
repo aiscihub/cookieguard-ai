@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { createOnnxClassifier } from '@cookieguard/core/onnx';
-import { normalizeCookie, evaluateCookiePolicy, exitCode, formatJson } from '@cookieguard/core';
+import { createOnnxClassifier } from '@aiscihub/cookieguard-core/onnx';
+import { normalizeCookie, evaluateCookiePolicy, exitCode, formatJson } from '@aiscihub/cookieguard-core';
 
 test('real ONNX inference is explicitly labeled, never confirms identity, disables runtime telemetry', async () => {
   const classifier = await createOnnxClassifier({ modelPath: 'extension-standalone/model/cookieguard_model.onnx', metadataPath: 'extension-standalone/model/model_meta.json' });

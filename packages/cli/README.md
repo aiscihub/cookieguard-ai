@@ -1,7 +1,15 @@
-# cookieguard-ci (proposed 0.1.0)
+# cookieguard-ci
 
-Bounded local HTTP cookie-policy scanner. Node 24+, ESM. Not yet published.
-Build and install this repository with `npm ci`, then:
+Bounded local HTTP cookie-policy scanner. Node 24+, ESM. Version 0.1.0 is a
+public beta. Against your running local test application:
+
+```bash
+npx cookieguard-ci@0.1.0 scan http://localhost:3000 --auth-cookie session_id
+npx cookieguard-ci@0.1.0 --help
+```
+
+To try the controlled demo, clone
+[the repository](https://github.com/aiscihub/cookieguard-ai), run `npm ci`, then:
 
 ```bash
 npm run demo

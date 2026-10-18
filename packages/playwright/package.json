@@ -1,13 +1,14 @@
 {
-  "name": "@cookieguard/playwright",
+  "name": "@aiscihub/cookieguard-playwright",
   "version": "0.1.0",
   "description": "Passive cookie audit collection for existing Playwright login tests",
   "type": "module",
   "license": "MIT",
+  "publishConfig": { "access": "public", "tag": "beta", "registry": "https://registry.npmjs.org" },
   "engines": { "node": ">=24" },
   "exports": { ".": { "types": "./src/index.d.ts", "import": "./src/index.js" } },
   "files": ["src", "LICENSE", "README.md"],
-  "dependencies": { "@cookieguard/core": "0.1.0" },
+  "dependencies": { "@aiscihub/cookieguard-core": "0.1.0" },
   "peerDependencies": { "playwright-core": ">=1.51.0 <2" },
   "peerDependenciesMeta": { "playwright-core": { "optional": true } },
   "repository": { "type": "git", "url": "https://github.com/aiscihub/cookieguard-ai.git", "directory": "packages/playwright" }

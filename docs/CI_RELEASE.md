@@ -49,9 +49,9 @@ Create local distribution tarballs after the build:
 
 ```bash
 mkdir -p artifacts/packages
-npm pack --workspace @cookieguard/core --pack-destination artifacts/packages
+npm pack --workspace @aiscihub/cookieguard-core --pack-destination artifacts/packages
 npm pack --workspace cookieguard-ci --pack-destination artifacts/packages
-npm pack --workspace @cookieguard/playwright --pack-destination artifacts/packages
+npm pack --workspace @aiscihub/cookieguard-playwright --pack-destination artifacts/packages
 ```
 
 Install all three tarballs together in an empty temporary project (paths relative
@@ -84,8 +84,11 @@ repository artifact, not a newly trained or bundled dependency.
 
 ## Before a public release
 
-1. Review the source and privacy boundaries. Confirm package/scope ownership and
-   naming availability (`@cookieguard/*`, `cookieguard-ci` are proposed names).
+1. Review the source and privacy boundaries. Publishing uses npm account
+   `aiscihub`, with `@aiscihub/cookieguard-core`, `cookieguard-ci`, and
+   `@aiscihub/cookieguard-playwright`. Verify ownership and name/version
+   availability again immediately before publication. The account's email is
+   verified; complete its required two-factor authentication setup before publishing.
 2. Run the checked-in workflow on the feature branch and pull request. Inspect
    summaries and artifacts, verify all required outcomes, and merge only after
    the current commit passes. Test any other claimed platforms separately.
@@ -99,6 +102,23 @@ repository artifact, not a newly trained or bundled dependency.
    after all three integrations are available and their installed use is checked.
 5. Update installation examples to the actually published names/tag and announce
    the measured scope and limitations. Do not claim real-world detection accuracy.
+
+Publish the exact tarballs that passed external-consumer checks, with explicit
+`--access public --tag beta --registry=https://registry.npmjs.org`. Scoped
+packages also declare those defaults in `publishConfig`. The root workspace is
+private and must not be published. `artifacts/packages/manifest.json` records
+the tested tarballs and their integrity digests. Keep browser-based npm 2FA
+approval in the maintainer's browser; never put passwords or OTPs into scripts.
+
+This beta uses an npm `beta` dist-tag and a GitHub prerelease, preserving the
+existing extension releases. Local publication does not generate npm provenance;
+do not claim provenance unless the registry reports a verified statement.
+
+After all packages are published, run `node scripts/verify-packages.js --registry`
+to repeat the CLI and Chromium outcomes from a fresh npm registry installation.
+Evidence is written to `artifacts/published/`. Compare the registry's package
+integrities with the tested manifest before creating the coordinated GitHub
+prerelease and attaching the three tested tarballs.
 
 ## Highest-value follow-ups
 

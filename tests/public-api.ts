@@ -1,7 +1,7 @@
-import { normalizeCookie, parseSetCookie, evaluateCookiePolicy, formatJson, type Policy } from '@cookieguard/core';
-import { createOnnxClassifier } from '@cookieguard/core/onnx';
+import { normalizeCookie, parseSetCookie, evaluateCookiePolicy, formatJson, type Policy } from '@aiscihub/cookieguard-core';
+import { createOnnxClassifier } from '@aiscihub/cookieguard-core/onnx';
 import { scanUrl, runCli } from 'cookieguard-ci';
-import { startCookieAudit, auditPage } from '@cookieguard/playwright';
+import { startCookieAudit, auditPage } from '@aiscihub/cookieguard-playwright';
 import type { BrowserContext, Page } from 'playwright-core';
 
 const policy: Policy = { authCookies: ['session_id'], failOn: 'high', allowedSameSite: ['strict', 'lax'] };

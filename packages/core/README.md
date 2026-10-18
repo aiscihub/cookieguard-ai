@@ -1,12 +1,18 @@
-# @cookieguard/core (proposed 0.1.0)
+# @aiscihub/cookieguard-core
 
 Local normalization, existing-engine triage, evidence-aware policy, and value-free
-reports. ESM, Node 24+, maintained TypeScript declarations. Not yet published.
-Build/install from the repository README or local tarballs. No runtime
-dependencies for rule mode.
+reports. ESM, Node 24+, maintained TypeScript declarations. Version 0.1.0 is a
+public beta. No runtime dependencies for rule mode.
+
+```bash
+npm install @aiscihub/cookieguard-core@0.1.0
+```
+
+Part of [CookieGuard CI](https://github.com/aiscihub/cookieguard-ai), alongside the
+`cookieguard-ci` CLI, `@aiscihub/cookieguard-playwright`, and GitHub Action.
 
 ```js
-import { parseSetCookie, evaluateCookiePolicy, formatText, exitCode } from '@cookieguard/core';
+import { parseSetCookie, evaluateCookiePolicy, formatText, exitCode } from '@aiscihub/cookieguard-core';
 const cookie = parseSetCookie(
   'session_id=synthetic; Path=/; Secure; SameSite=Lax',
   'https://your-controlled-app.example/login',
@@ -63,8 +69,8 @@ dependency. A consuming app can install this optional peer separately. Core/CLI
 tarballs contain neither native binaries nor the model. Use the existing model:
 
 ```js
-import { createOnnxClassifier } from '@cookieguard/core/onnx';
-import { normalizeCookie, evaluateCookiePolicy } from '@cookieguard/core';
+import { createOnnxClassifier } from '@aiscihub/cookieguard-core/onnx';
+import { normalizeCookie, evaluateCookiePolicy } from '@aiscihub/cookieguard-core';
 const classifier = await createOnnxClassifier({
   modelPath: 'extension-standalone/model/cookieguard_model.onnx',
   metadataPath: 'extension-standalone/model/model_meta.json',

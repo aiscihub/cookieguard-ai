@@ -1,9 +1,10 @@
 {
-  "name": "@cookieguard/core",
+  "name": "@aiscihub/cookieguard-core",
   "version": "0.1.0",
   "description": "Local, evidence-aware authentication cookie policy checks",
   "type": "module",
   "license": "MIT",
+  "publishConfig": { "access": "public", "tag": "beta", "registry": "https://registry.npmjs.org" },
   "engines": { "node": ">=24" },
   "exports": {
     ".": { "types": "./src/index.d.ts", "import": "./src/index.js" },

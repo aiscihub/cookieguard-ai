@@ -1,6 +1,6 @@
 import type { BrowserContext, Page } from 'playwright-core';
-import type { Policy, Report, Observation, EvaluateOptions } from '@cookieguard/core';
-import type { OnnxClassifier } from '@cookieguard/core/onnx';
+import type { Policy, Report, Observation, EvaluateOptions } from '@aiscihub/cookieguard-core';
+import type { OnnxClassifier } from '@aiscihub/cookieguard-core/onnx';
 export interface AuditOptions {
   origins: string[]; policy?: Policy; timeoutMs?: number; maxObservations?: number;
   classifier?: OnnxClassifier;
@@ -16,4 +16,4 @@ export interface CookieAuditCollector {
 export function startCookieAudit(context: BrowserContext, options: AuditOptions): CookieAuditCollector;
 /** Store-only audit of an already authenticated page; declaration evidence remains unknown. */
 export function auditPage(page: Page, options?: Partial<AuditOptions>): Promise<Report>;
-export { evaluateCookiePolicy, assertCookiePolicy } from '@cookieguard/core';
+export { evaluateCookiePolicy, assertCookiePolicy } from '@aiscihub/cookieguard-core';

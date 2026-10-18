@@ -1,11 +1,20 @@
-# @cookieguard/playwright (proposed 0.1.0)
+# @aiscihub/cookieguard-playwright
 
-Passive cookie auditing for an existing Playwright BrowserContext. Not published.
-See the runnable `examples/playwright` example. The adapter does not import or
+Passive cookie auditing for an existing Playwright BrowserContext. Version 0.1.0
+is a public beta. In an existing Playwright project, install:
+
+```bash
+npm install --save-dev @aiscihub/cookieguard-playwright@0.1.0
+```
+
+See the runnable [Playwright example](https://github.com/aiscihub/cookieguard-ai/tree/main/examples/playwright).
+The adapter does not import or
 launch Playwright. Tested with Playwright 1.64.1 / Chromium; the structural API
 supports 1.51+ but older versions and other browsers are not certified.
 
 ```js
+import { startCookieAudit, assertCookiePolicy } from '@aiscihub/cookieguard-playwright';
+
 const audit = startCookieAudit(context, {
   origins: ['https://your-controlled-app.example'],
   policy: { authCookies: ['session_id'] },

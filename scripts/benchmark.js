@@ -1,7 +1,7 @@
 import { performance } from 'node:perf_hooks';
 import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
-import { normalizeCookie, parseSetCookie, evaluateCookiePolicy, formatJson, formatText, exitCode } from '@cookieguard/core';
+import { normalizeCookie, parseSetCookie, evaluateCookiePolicy, formatJson, formatText, exitCode } from '@aiscihub/cookieguard-core';
 import { scanUrl } from 'cookieguard-ci';
 import { createDemoServer, DEMO_VALUE } from '../examples/demo/server.js';
 
