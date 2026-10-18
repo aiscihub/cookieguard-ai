@@ -86,6 +86,42 @@ secure, missing-HttpOnly, and absent-authentication-cookie fixtures with that
 installed executable returned 0, 1, and 2. Its JSON reports also passed sentinel
 checks. All targets were controlled local fixtures.
 
+## Independent consumer repository
+
+[aiscihub/cookieguard-ci-consumer](https://github.com/aiscihub/cookieguard-ci-consumer)
+is a separate Git repository containing fixtures, an independent npm lockfile,
+and consumer checks. Its
+[GitHub-hosted Linux run](https://github.com/aiscihub/cookieguard-ci-consumer/actions/runs/39099078667)
+passed all three jobs at commit `7ef51b1386f1bc44d28cac8e51734bedbf877439`.
+The npm packages and Action remain in the original toolkit repository.
+
+| Consumer check | Observed result |
+| --- | --- |
+| Public npm installation | Exact `0.1.0` packages install with `--omit=dev --omit=optional --ignore-scripts`. No browser, ONNX, TypeScript, or ESLint runtime is installed. CLI text/JSON return 0/1/2 for secure, missing-HttpOnly, and absent-authentication cases. |
+| Login-page limitation | Fetching a page whose JavaScript creates the session returns exit 2 in both CLI formats; the CLI does not execute that login flow. |
+| Production source build and packaging | A clean checkout of `ci-v0.1.0` installs with the same omission flags and builds successfully. All three packed tarballs exactly match published integrities, install offline into another empty project/cache, and repeat the CLI outcomes. |
+| Published Playwright adapter | Ordinary npm Playwright and Chromium complete the fixture's JavaScript login and session assertions. Separate browser processes return 0/1/2 with the published adapter. |
+| Remote released Action | The workflow uses `aiscihub/cookieguard-ai/action@12a09fe322b135ac2a5aec45cae1f880b717575f`, verifies actual failure enforcement for exits 1/2, and uploads all three reports. |
+
+There are **30 checked outcomes**: eight CLI text/JSON cases for each of the
+registry, production source, and offline tarball installs, three Chromium
+processes, and three remote Action invocations. All matched their expected
+results. The complete hosted log and all **39 downloaded artifact files** were
+checked for both the consumer sentinel and the toolkit's original sentinels;
+none were found. Downloaded tarballs match the release's SHA-256 checksums.
+Hosted artifacts have seven-day retention.
+
+The consumer's locked dependencies comprise three MIT and two Apache-2.0 entries;
+the local advisory query returned zero known vulnerabilities. Its source
+credential check passed. These consumer checks also passed locally on Node 24
+before the repository was published.
+
+During this README review, public npm metadata confirmed all three package names,
+version `0.1.0`, the `beta` tag, and maintainer `aiscihub`. The current README's
+relative file links resolve, and the tracked source contains no editor-specific
+resource URIs. Historical research data remains unchanged. Consumer outcomes
+measure controlled cookie-policy behavior, independently of model research metrics.
+
 ## Controlled benchmark
 
 `scripts/benchmark.js` independently specifies six expected cases. It does not

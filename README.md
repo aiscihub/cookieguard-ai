@@ -7,6 +7,11 @@ CookieGuard CI checks server declarations and browser observations, explains the
 evidence, and fails CI only for confirmed policy violations. Everything runs
 locally. No account, API key, cloud classifier, or telemetry is required.
 
+**Authenticated workflows need [Playwright](#quick-start-playwright).** The CLI
+and GitHub Action inspect HTTP response headers; they do **not** log in, execute
+JavaScript, or reuse a browser session. When the cookie is created during login,
+start the Playwright collector before your sign-in steps and session assertions.
+
 CookieGuard CI extends the original CookieGuard AI project and its MIT-licensed
 work. 🏆 **Winner — Girls Who Code Challenge 2026**:
 [award announcement](https://girlswhocode.com/news/gwc-challenge-2026-winners),
@@ -19,7 +24,15 @@ from this repository, using the same security engine. Published npm packages:
 [`cookieguard-ci`](https://www.npmjs.com/package/cookieguard-ci),
 [`@aiscihub/cookieguard-core`](https://www.npmjs.com/package/@aiscihub/cookieguard-core),
 and [`@aiscihub/cookieguard-playwright`](https://www.npmjs.com/package/@aiscihub/cookieguard-playwright).
-All three are version `0.1.0`, available through the `beta` dist-tag.
+All three are version `0.1.0`, available through the `beta` dist-tag, and published
+by [`aiscihub`](https://www.npmjs.com/~aiscihub). Package names, versions, and
+maintainer ownership have been checked against the public npm registry.
+
+Verified on GitHub-hosted Linux with Chromium in the
+[toolkit workflow](https://github.com/aiscihub/cookieguard-ai/actions/runs/39098406137)
+and a [separate consumer repository](https://github.com/aiscihub/cookieguard-ci-consumer).
+Its [passing workflow](https://github.com/aiscihub/cookieguard-ci-consumer/actions/runs/39099078667)
+installs the public npm releases and uses the released remote Action.
 
 ## One cookie, one actionable failure
 
@@ -80,6 +93,14 @@ Stop the demo with Ctrl+C. For a CLI-only checkout installation:
 npm ci --omit=dev --omit=optional --ignore-scripts
 npm run build
 ```
+
+This path is verified from a clean source checkout without development or
+optional dependencies. The build uses Node's built-in modules to copy the engine
+and licenses and verify exports; it needs no compiler or browser runtime.
+Published npm packages already contain the built engine and need no build step.
+The [consumer verification](docs/CI_VALIDATION.md#independent-consumer-repository)
+also packs this production build, checks that its tarballs match the published
+release, and tests an offline installation outside the source checkout.
 
 The CLI performs a bounded GET and observes Set-Cookie headers, including up to
 five same-origin redirects. It does **not** execute JavaScript or log in. Use
@@ -240,15 +261,18 @@ and [legacy test instructions](test/README.md) are preserved.
 
 ## Evaluation and limitations
 
-[CI validation](docs/CI_VALIDATION.md) records measured local and hosted results and exact
-commands. The controlled benchmark is reproducible with `npm run benchmark`.
+**CI policy validation:** [the validation record](docs/CI_VALIDATION.md) records
+local and hosted results and exact commands. The controlled benchmark is
+reproducible with `npm run benchmark`.
 It verifies known configurations, not real-world authentication detection.
 There is no independently labeled real-world validation dataset for this release.
 
-The original research reported 95.7% accuracy and 90.4% authentication precision
-on synthetic evaluation data; its detailed historical metrics remain in the
-original README and model artifacts. Different stored model/evaluation versions
-have different numbers. None are CI's real-world detection accuracy.
+**Historical model research:** the original model was evaluated on synthetic
+data. Its accuracy and precision figures remain in the
+[archived research README](docs/ORIGINAL_README.md)
+and [model artifacts](models/). Those figures describe the research dataset;
+they are separate from CI's policy-validation results and do not establish
+real-world detection accuracy.
 
 Main limits: explicit cookie identification is still needed for strict CI;
 browser evidence cannot recover missed response headers; header scans cannot
