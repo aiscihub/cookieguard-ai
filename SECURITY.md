@@ -2,9 +2,9 @@
 
 CookieGuard AI is a research and educational tool focused on authentication cookie risk analysis.
 
-CookieGuard CI adds developer policy checks. The proposed `0.1.0` packages have
-not been published. A clean report is limited to the observed cookies and
-configured policy; it is not a security certification. Strict failures require
+CookieGuard CI `0.1.0` is available as a public beta for developer policy checks.
+A clean report is limited to the observed cookies and configured policy; it is
+not a security certification. Strict failures require
 developer-identified authentication names or scoped server-session validation.
 Classifier scores, Domain sharing, and SameSite=None do not prove attacks.
 

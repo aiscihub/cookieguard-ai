@@ -1,13 +1,15 @@
 # Changelog
 
-## CookieGuard CI 0.1.0 — public beta, unreleased
+## CookieGuard CI 0.1.0 — public beta — 2026-10-17
 
 One coordinated release in `aiscihub/cookieguard-ai`: npm CLI for the first try,
 Playwright for existing tests, and a GitHub Action for CI adoption. All three
 integrations use the same core and remain in this repository.
 
-Publishing names: `cookieguard-ci`, `@aiscihub/cookieguard-core`, and
-`@aiscihub/cookieguard-playwright`, using the maintainer's existing npm scope.
+Published npm packages: `cookieguard-ci`, `@aiscihub/cookieguard-core`, and
+`@aiscihub/cookieguard-playwright`, all at `0.1.0` with the `beta` dist-tag.
+The Action and tested tarballs are available in the
+[`ci-v0.1.0` release](https://github.com/aiscihub/cookieguard-ai/releases/tag/ci-v0.1.0).
 
 - Add `@aiscihub/cookieguard-core`, `cookieguard-ci`, and `@aiscihub/cookieguard-playwright` workspaces
   with ESM exports, TypeScript declarations, lockfile, linting, and automated tests.
@@ -25,7 +27,7 @@ Publishing names: `cookieguard-ci`, `@aiscihub/cookieguard-core`, and
 - Add optional local ONNX Node inference with the existing model and feature order,
   disabled runtime telemetry, labeled triage, and no silent fallback.
 - Add local demo, controlled benchmark, sentinel leakage checks, extension
-  regressions, contributor docs, and a proposed release procedure.
+  regressions, contributor docs, and a release procedure.
 - Gate the beta on packaged CLI/Playwright consumers outside the workspace,
   exit 0/1/2 scenarios, withheld leaking output, dependency advisories, reviewed
   license expressions, source credential checks, and hosted Chromium/Action tests.
@@ -33,5 +35,6 @@ Publishing names: `cookieguard-ci`, `@aiscihub/cookieguard-core`, and
 Known limits: no real-world labeled validation; Chromium-only browser verification;
 header scans cannot log in or prove cookie acceptance; ambiguous/partitioned scopes
 are conservative; no public-suffix inference or server session-expiry checks.
-Package publication and the immutable release tag remain pending the coordinated
-release procedure. See `docs/CI_VALIDATION.md` for observed verification results.
+Fresh npm registry installs passed the CLI and Playwright exit 0/1/2 scenarios;
+registry integrities match the tested tarballs. See
+[validation evidence](docs/CI_VALIDATION.md) for observed results and limitations.
