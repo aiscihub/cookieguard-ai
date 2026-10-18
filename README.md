@@ -170,9 +170,10 @@ the exit status. Do not put credentials or tokens into inputs. The action
 installs only production dependencies in its own checkout, so run contributor
 tests before invoking `./action` locally. See [Action usage](action/README.md).
 After maintainers release a reviewed `ci-v0.1.0` tag, consumers can reference
-`aiscihub/cookieguard-ai/action@ci-v0.1.0` or its immutable commit SHA. That tag
-does not exist as part of this task. Hosted workflow/artifact service execution
-has not been verified; the action runner and its outputs are tested locally.
+`aiscihub/cookieguard-ai/action@ci-v0.1.0` or its immutable commit SHA. The release
+tag is pending coordinated publication. Hosted Linux/Chromium tests and the
+Action's 0/1/2 outcomes and artifact uploads have passed; see the
+[validation evidence](docs/CI_VALIDATION.md).
 
 ## Supported checks
 
@@ -226,7 +227,7 @@ and [legacy test instructions](test/README.md) are preserved.
 
 ## Evaluation and limitations
 
-[CI validation](docs/CI_VALIDATION.md) records measured local results and exact
+[CI validation](docs/CI_VALIDATION.md) records measured local and hosted results and exact
 commands. The controlled benchmark is reproducible with `npm run benchmark`.
 It verifies known configurations, not real-world authentication detection.
 There is no independently labeled real-world validation dataset for this release.

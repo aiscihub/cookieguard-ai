@@ -4,6 +4,8 @@ Date: **2026-10-17**. Release target: **0.1.0 public beta**. Local platform: mac
 Primary runtime: **Node v24.22.0** (LTS); development smoke runs also used
 v26.10.0. Playwright **1.64.1**, Chromium **156.0.8078.4** (revision 1248),
 ONNX Runtime Node **1.30.0**. All audit targets were local fixtures.
+Hosted verification also passed on **Ubuntu 24.04.5 x64, Node v24.21.0**, with
+the same Playwright and Chromium versions.
 
 ## Observed results
 
@@ -22,11 +24,33 @@ ONNX Runtime Node **1.30.0**. All audit targets were local fixtures.
 | Dependency licenses | **121** locked package entries use reviewed expressions: MIT 70, Apache-2.0 36, BSD-2-Clause 6, ISC 5, BSD-3-Clause 2, BlueOak-1.0.0 1, MIT/CC0-1.0 1 |
 | Source credential check | **155** source files checked; no supported high-confidence credential patterns found |
 | Sentinel disclosure | No sentinel found in checked reports/stdout/stderr/action outputs/summaries or final generated artifacts |
-| Hosted GitHub workflow | Pending feature-branch and PR runs; merge is gated on passing Linux, Chromium, packaged-consumer, and composite Action checks |
+| Hosted GitHub workflow | **Passed** on the feature branch and PR: clean Linux install, Chromium, packaged consumers, all three composite Action outcomes, summaries, artifact upload, and leakage checks |
 
 The full source tree and lockfile are needed; generated engine/license files are
 reconstructed during build. Package smoke verification also tests outside the
 workspace dependency layout.
+
+## Hosted evidence
+
+[PR #4](https://github.com/aiscihub/cookieguard-ai/pull/4) initially passed its
+[hosted release gate](https://github.com/aiscihub/cookieguard-ai/actions/runs/39087460202)
+for source commit `3a7e3ae044c0a164007ac09ff30680b7b366d8f2` on October 17, 2026
+Pacific time (October 18 UTC). Both push and pull-request runs passed. Any later
+PR commit must pass again before merge.
+
+The hosted suite passed 29 Node tests and 8 Chromium tests. Installed tarballs
+passed all nine CLI text/JSON and Playwright scenario checks. The composite Action
+uploaded reports with statuses `passed`, `failed`, and `incomplete`; its policy
+steps returned 0, 1, and 2 respectively. The workflow explicitly asserted the two
+expected failures rather than treating an incomplete audit as success.
+
+The downloaded reports and release evidence were inspected. Missing HttpOnly
+produced confirmed rule CG001, and the incomplete report contained
+`expected-auth-cookie-not-observed`. The hosted advisory query reported zero
+known vulnerabilities, and its 121-entry license inventory matched the local
+review. The complete 150,406-byte hosted log and downloaded artifacts contained
+no sentinel values. Artifact retention is seven days; the linked run and source
+identify the reproducible validation even after artifacts expire.
 
 ## Controlled benchmark
 
@@ -75,8 +99,8 @@ git diff --check
 `npm run check` runs build, ESLint, public API type checking, `npm test`, and
 `npm run test:playwright`. The workstation's browser cache contained the exact
 pinned Chromium revision; the documented installation command completed without
-requiring a new browser download. Linux `--with-deps` installation is specified
-in the workflow but was not executed on this macOS host.
+requiring a new browser download. The hosted Linux workflow downloaded the pinned
+Chromium revision and successfully installed its OS dependencies with `--with-deps`.
 
 The actual verification used a temporary Node 24 binary because the workstation
 default is Node 26. No system Node installation was modified. A separate clean
@@ -100,7 +124,8 @@ was also run with production-only dependencies against the missing-HttpOnly app:
 it emitted `exit-code=1` after writing its report and summary. Unit tests execute
 all three Action outcomes, including an absent expected authentication cookie.
 The composite YAML and example workflow parsed
-successfully. This does not verify GitHub's hosted upload service or runner UI.
+successfully. The hosted run separately verified setup, all three policy outcomes,
+report uploads, and summary generation.
 
 ## Regression and privacy coverage
 
@@ -150,8 +175,8 @@ No real-world labeled auth dataset was available. No public site was scanned.
 No npm publication, release tag, or repository setting has been changed.
 The original extension UI was not manually inspected in Chrome during this task;
 its unchanged UI sources and automated engine regressions provide compatibility
-evidence, not a full UI certification. Firefox, WebKit, Windows, and hosted Linux
-workflow execution remain unverified until the hosted gate completes.
+evidence, not a full UI certification. Firefox, WebKit, and Windows remain
+unverified. Hosted Linux and Chromium are verified as described above.
 
 HTTP mode cannot authenticate or prove browser acceptance. Cookie metadata does
 not establish exploitability, CSRF defenses, server revocation, or original

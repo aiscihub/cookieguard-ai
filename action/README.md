@@ -1,6 +1,7 @@
 # CookieGuard composite Action
 
-Unpublished source action for a developer-controlled app. No GitHub token is used
+Source action for a developer-controlled app; the public-beta tag is pending
+coordinated publication. No GitHub token is used
 by CookieGuard. Checkout needs only `permissions: { contents: read }`. Intended
 for GitHub-hosted Linux; Enterprise artifact compatibility is unverified.
 
@@ -35,7 +36,7 @@ The complete source tree is required.
 
 After maintainers create a reviewed release tag, use
 `aiscihub/cookieguard-ai/action@ci-v0.1.0`, preferably pinned to its commit SHA.
-No tag is created here. See `../.github/workflows/cookieguard-ci.yml` for a complete
-example including an expected failure. Local tests execute `run.js` and verify
-reports, summaries, outputs, and sentinel non-disclosure. Hosted setup/upload/
-enforcement still require an authorized GitHub run before release.
+See [the workflow](../.github/workflows/cookieguard-ci.yml) for a complete example
+including all three expected exit outcomes. Local tests verify reports, summaries,
+outputs, and sentinel non-disclosure. Hosted Linux setup, upload, and enforcement
+have passed; see [validation evidence](../docs/CI_VALIDATION.md).
