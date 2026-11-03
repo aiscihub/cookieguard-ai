@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased — CookieGuard for Browser Use 0.1.0b1 (pre-release, not published)
+## CookieGuard for Browser Use 0.1.0b1 — pre-release — 2026-11-03
 
 - Add `integrations/browser-use`: the `cookieguard-browser-use` Python package for
   Browser Use 0.13.14 agents.
