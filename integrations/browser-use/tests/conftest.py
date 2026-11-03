@@ -45,9 +45,24 @@ def exception_text(error: BaseException) -> str:
 
 
 def run(coroutine, timeout: float = 150):
-	async def bounded():
-		return await asyncio.wait_for(coroutine, timeout)
-	return asyncio.run(bounded())
+	"""Run a coroutine with a deadline. Unlike asyncio.run, cleanup is bounded too:
+	tasks that ignore cancellation cannot hang the suite (they did when Chrome failed to launch)."""
+	loop = asyncio.new_event_loop()
+	asyncio.set_event_loop(loop)
+	try:
+		return loop.run_until_complete(asyncio.wait_for(coroutine, timeout))
+	finally:
+		pending = [task for task in asyncio.all_tasks(loop) if not task.done()]
+		for task in pending:
+			task.cancel()
+		if pending:
+			loop.run_until_complete(asyncio.wait(pending, timeout=10))
+		try:
+			loop.run_until_complete(asyncio.wait_for(loop.shutdown_asyncgens(), 5))
+		except Exception:
+			pass
+		asyncio.set_event_loop(None)
+		loop.close()
 
 
 @asynccontextmanager
@@ -57,8 +72,8 @@ async def browser_session(**profile):
 	options = {'headless': True, 'keep_alive': True, 'enable_default_extensions': False, 'user_data_dir': None}
 	options.update(profile)
 	session = BrowserSession(browser_profile=BrowserProfile(**options))
-	await session.start()
 	try:
+		await session.start()  # Inside try: a failed launch must still be killed.
 		yield session
 	finally:
 		await session.kill()

@@ -123,11 +123,14 @@ jobs:
         working-directory: integrations/browser-use
         timeout-minutes: 5
         run: .venv/bin/python -m pytest -v -p no:cacheprovider tests/test_config.py tests/test_engine.py tests/test_collector.py
+      - name: Allow Chromium's sandbox on Ubuntu 24.04
+        # Ubuntu 23.10+ restricts unprivileged user namespaces with AppArmor. Playwright's
+        # Chromium, which Browser Use prefers, needs them for its sandbox; keep the sandbox on.
+        run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
       - name: Browser smoke diagnostics
         working-directory: integrations/browser-use
         timeout-minutes: 4
         env:
-          BROWSER_USE_LOGGING_LEVEL: debug
           PYTHONUNBUFFERED: '1'
         run: |
           ls -l /usr/bin/google-chrome-stable || true
