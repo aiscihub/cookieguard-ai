@@ -9,14 +9,17 @@ explanations, and fixes. Your local policy decides the result.
 
 ## Browser Use agents
 
-### Your policy decides what fails
+### How it works
 
 <picture>
-  <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="integrations/browser-use/docs/policy-dark-mobile.svg">
-  <source media="(max-width: 600px)" srcset="integrations/browser-use/docs/policy-light-mobile.svg">
-  <source media="(prefers-color-scheme: dark)" srcset="integrations/browser-use/docs/policy-dark.svg">
-  <img alt="CookieGuardAudit options decide which findings fail. High-severity rules CG001 Missing HttpOnly, CG002 Missing Secure, CG006 invalid prefix, and CG007 regression fail by default. With fail_on set to medium, CG003 SameSite and CG005 lifetime fail too. CG004 Domain sharing fails only with require_host_only. CG008 and CG009 are review only. The result is FAIL (exit 1), INCOMPLETE (exit 2, which overrides FAIL), or PASS (exit 0)." src="integrations/browser-use/docs/policy-light.svg" width="100%">
+  <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="integrations/browser-use/docs/how-it-works-dark-mobile.svg">
+  <source media="(max-width: 600px)" srcset="integrations/browser-use/docs/how-it-works-light-mobile.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="integrations/browser-use/docs/how-it-works-dark.svg">
+  <img alt="Your test starts CookieGuard and the Browser Use agent. The agent, guided by any AI model, logs in through Chromium. The app responds with Set-Cookie. A separate CookieGuard observer reads the same browser over its own CDP connection. It sends the evidence to a local CookieGuard engine, which returns PASS, FAIL, or INCOMPLETE to your test. The agent's optional cookieguard_audit tool is read-only, and cookie values never reach the model." src="integrations/browser-use/docs/how-it-works-light.svg" width="100%">
 </picture>
+
+CookieGuard observes the agent's browser, checks the evidence with the local policy
+engine, and returns a result for your code to enforce.
 
 `fail_on` sets the line: a confirmed finding at or above it fails the run; anything
 below it is reported. Identify your session cookies with `auth_cookies`.
