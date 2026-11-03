@@ -113,13 +113,34 @@ jobs:
       - run: npx --no-install playwright install --with-deps chromium
       - name: Vendor the published CookieGuard engine into the Python package
         run: node integrations/browser-use/scripts/vendor_engine.mjs --registry
-      - name: Install and test the Browser Use integration
+      - name: Install the Browser Use integration
         working-directory: integrations/browser-use
         run: |
           python -m venv .venv
           .venv/bin/python -m pip install --upgrade pip build
           .venv/bin/python -m pip install -e ".[test]"
-          .venv/bin/python -m pytest -q -p no:cacheprovider
+      - name: Engine, policy, and attribution tests (no browser)
+        working-directory: integrations/browser-use
+        timeout-minutes: 5
+        run: .venv/bin/python -m pytest -v -p no:cacheprovider tests/test_config.py tests/test_engine.py tests/test_collector.py
+      - name: Browser smoke diagnostics
+        working-directory: integrations/browser-use
+        timeout-minutes: 4
+        env:
+          BROWSER_USE_LOGGING_LEVEL: debug
+          PYTHONUNBUFFERED: '1'
+        run: |
+          ls -l /usr/bin/google-chrome-stable || true
+          /usr/bin/google-chrome-stable --version || true
+          sysctl kernel.apparmor_restrict_unprivileged_userns || true
+          timeout 180 .venv/bin/python -u scripts/browser_smoke.py
+      - name: Real-browser and agent tests
+        working-directory: integrations/browser-use
+        timeout-minutes: 15
+        env:
+          PYTHONUNBUFFERED: '1'
+        # faulthandler dumps every thread's stack if one test runs longer than 90s.
+        run: .venv/bin/python -m pytest -v -p no:cacheprovider -o faulthandler_timeout=90 --maxfail=3 tests/test_browser.py tests/test_agent.py
       - name: Verify the wheel from a clean external consumer
         working-directory: integrations/browser-use
         run: .venv/bin/python scripts/verify_external.py
