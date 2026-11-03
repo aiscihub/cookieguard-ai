@@ -90,6 +90,10 @@ failed runs as INCOMPLETE (exit 2), never PASS: one failed on billing, one on re
 
 ## Hosted CI (GitHub Actions, ubuntu-latest)
 
+The merged [PR #13](https://github.com/aiscihub/cookieguard-ai/pull/13) passed the toolkit
+job and Browser Use jobs on Python 3.11, 3.12, and 3.13 on 2026-11-03 (head `720235d`).
+These are the existing hosted results; they were inspected without requesting a rerun.
+
 The `browser-use` job passed in run 41702699563 (commit `01b1fef`) on Python 3.12, Node 24.22.1,
 and Playwright Chromium 156.0.8078.4 with its sandbox enabled. Results:
 - **No-browser tests:** 67 passed.
@@ -107,9 +111,86 @@ Two problems found on the way, both fixed:
   whose launch failed, and `asyncio.run` then waited forever to cancel Browser Use's tasks.
   Reproduced locally with a browser that exits immediately, then fixed.
 
+
+## PyPI release preparation — 2026-11-03
+
+Packaging checks for the release-preparation branch used Python 3.12.12, build 1.6.1,
+Twine 7.0.0, hatch-fancy-pypi-readme 25.1.0, and actionlint 1.7.12. The commands below
+ran from `integrations/browser-use`, except actionlint and the Git checks, which ran
+from the repository root. `python` and `actionlint` came from the temporary tooling
+environment `/tmp/cookieguard-release-tools-ncx5f_t7`. Application tests and
+`verify_external.py` were not rerun locally: the maintainer requested reuse of the
+completed test results. CI still runs its normal checks when the branch is pushed.
+
+`python -m build` (exit 0):
+
+```text
+* Creating isolated environment: venv+pip...
+* Installing packages in isolated environment:
+  - hatch-fancy-pypi-readme==25.1.0
+  - hatchling>=1.27
+* Getting build dependencies for sdist...
+* Installed build dependency versions:
+  - hatch-fancy-pypi-readme==25.1.0
+  - hatchling==1.33.0
+* Building sdist...
+* Building wheel from sdist
+* Creating isolated environment: venv+pip...
+* Installing packages in isolated environment:
+  - hatch-fancy-pypi-readme==25.1.0
+  - hatchling>=1.27
+* Getting build dependencies for wheel...
+* Installed build dependency versions:
+  - hatch-fancy-pypi-readme==25.1.0
+  - hatchling==1.33.0
+* Building wheel...
+Successfully built cookieguard_browser_use-0.1.0b1.tar.gz and cookieguard_browser_use-0.1.0b1-py3-none-any.whl
+```
+
+`python -m twine check --strict dist/*` (exit 0):
+
+```text
+Checking dist/cookieguard_browser_use-0.1.0b1-py3-none-any.whl: PASSED
+Checking dist/cookieguard_browser_use-0.1.0b1.tar.gz: PASSED
+```
+
+`python scripts/verify_metadata.py` (exit 0):
+
+```text
+cookieguard_browser_use-0.1.0b1-py3-none-any.whl: 16 absolute links/images; 15 pinned to browser-use-v0.1.0b1; no relative links.
+cookieguard_browser_use-0.1.0b1.tar.gz: 16 absolute links/images; 15 pinned to browser-use-v0.1.0b1; no relative links.
+```
+
+`actionlint .github/workflows/publish-browser-use.yml` and `git diff --check` both
+exited 0 with no output. The actionlint download was checked against its published
+SHA-256 (`aba9ced2dee8d27fecca3dc7feb1a7f9a52caefa1eb46f3271ea66b6e0e6953f`).
+`git diff --name-only origin/main -- packages integrations/browser-use/src/cookieguard_browser_use/_node package.json package-lock.json`
+exited 0 with no output: the engine and npm packages are unchanged.
+
+The runbook's link-checking logic, with a count and a nonzero exit for broken paths,
+plus a read of the exported SVG section labels, produced (exit 0):
+
+```text
+Checked 67 relative links/images in 7 Markdown files: no broken paths.
+policy-dark-mobile.svg: section labels 1, 2, 3; no leading zeros.
+policy-dark.svg: section labels 1, 2, 3; no leading zeros.
+policy-light-mobile.svg: section labels 1, 2, 3; no leading zeros.
+policy-light.svg: section labels 1, 2, 3; no leading zeros.
+```
+
+The first temporary tooling environment failed during `ensurepip` with `SIGABRT`
+when `venv.create(..., with_pip=True)` copied the macOS interpreter. Creating a new
+environment with `symlinks=True` succeeded; the packaging commands above all ran
+there. No package verification failure was suppressed.
+
+The `testpypi` and `pypi` GitHub environments were absent when inspected. The
+maintainer must complete step 1 of [RELEASING.md](RELEASING.md) before any upload.
+The release tag has not been created, so tagged links cannot yet be checked live.
+No merge, tag, workflow dispatch, or upload was performed during these checks.
+
 ## Not verified
 
 - The OpenAI and Browser Use Cloud branches of `examples/agent_login.py`, and models other than `claude-opus-5-5`.
-- Python 3.11 and 3.13, Windows, Browser Use cloud browsers, and other browser-use versions.
+- Windows, Browser Use cloud browsers, and other browser-use versions.
 - Network denial inside the engine sandbox applies only on Node 25+. The tests assert
   it only there; on Node 24 the permission model does not restrict network access.

@@ -6,8 +6,9 @@ accounts. An agent must stop and ask at each of them.
 
 ## State on 2026-11-03
 
-- Code is on the branch `feat/browser-use-integration`, which is not yet merged to `main`.
-  CI is green there: the toolkit job, plus the Browser Use job on Python 3.11, 3.12, and 3.13.
+- The integration was merged to `main` in [PR #13](https://github.com/aiscihub/cookieguard-ai/pull/13)
+  on 2026-11-03 (`1ed1b82`). Its CI passed: the toolkit job, plus the Browser Use job on
+  Python 3.11, 3.12, and 3.13. Step 0 is complete.
 - Version is `0.1.0b1`, set in `pyproject.toml` and `src/cookieguard_browser_use/__init__.py`.
   The name `cookieguard-browser-use` was unregistered on both PyPI and TestPyPI on 2026-11-03.
 - `scripts/verify_external.py` builds the wheel and sdist, installs the wheel into a fresh venv
@@ -62,7 +63,8 @@ PyPI also strips `<picture>` and `<source>`, so only the fallback `<img>` (light
   Keep the from-source steps, and state that Node.js 24+ and Chrome/Chromium are still required.
 - Verify:
   1. `python -m build`, then `twine check --strict dist/*`, using twine 7.0.0.
-  2. Extract `METADATA` from the wheel and confirm it contains no relative `docs/` or `../` links.
+  2. `python scripts/verify_metadata.py` extracts the wheel's `METADATA` and the sdist's
+     `PKG-INFO`; confirm there are no relative links and all repository links use the release tag.
   3. Run the link checker below on the repo copy.
 
 ```bash
