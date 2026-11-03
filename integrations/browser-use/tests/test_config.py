@@ -123,3 +123,13 @@ def test_tool_before_start_returns_fixed_text():
 	action = tools.registry.registry.actions['cookieguard_audit']
 	result = run(action.function(params=action.param_model(), browser_session=session))
 	assert result.extracted_content.startswith('CookieGuard audit is not active')
+
+
+def test_demo_command_line_defaults_and_validation(capsys):
+	from cookieguard_browser_use.demo.__main__ import parse_args
+
+	assert parse_args([]).modes == ['insecure', 'secure']  # Regression: Python 3.11 rejected [] with choices.
+	assert parse_args(['secure', '--headed']).modes == ['secure']
+	with pytest.raises(SystemExit) as error:
+		parse_args(['bogus'])
+	assert error.value.code == 2 and 'unknown mode' in capsys.readouterr().err

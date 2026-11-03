@@ -37,13 +37,21 @@ async def _main(args: argparse.Namespace) -> int:
 	return 0 if ok else 1
 
 
-def main(argv: list[str] | None = None) -> int:
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 	parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-	parser.add_argument('modes', nargs='*', choices=list(EXPECTED), help='default: insecure secure')
+	# No argparse `choices` here: Python 3.11 rejects an empty nargs='*' list against them.
+	parser.add_argument('modes', nargs='*', metavar='MODE', help='insecure and/or secure (default: both)')
 	parser.add_argument('--headed', action='store_true', help='show the browser window')
 	args = parser.parse_args(argv)
+	unknown = [mode for mode in args.modes if mode not in EXPECTED]
+	if unknown:
+		parser.error(f"unknown mode {unknown[0]!r}; choose from {', '.join(EXPECTED)}")
 	args.modes = args.modes or list(EXPECTED)
-	return asyncio.run(_main(args))
+	return args
+
+
+def main(argv: list[str] | None = None) -> int:
+	return asyncio.run(_main(parse_args(argv)))
 
 
 if __name__ == '__main__':
