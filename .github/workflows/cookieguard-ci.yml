@@ -89,3 +89,39 @@ jobs:
           path: artifacts/
           if-no-files-found: error
           retention-days: 7
+  browser-use:
+    name: Linux / Python 3.12 / Browser Use / Chromium
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      ONNXRUNTIME_NODE_INSTALL: skip
+      ANONYMIZED_TELEMETRY: 'false'
+      BROWSER_USE_CLOUD_SYNC: 'false'
+      BROWSER_USE_DISABLE_EXTENSIONS: '1'
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: '3.12'
+      - run: npm ci
+      - run: npx --no-install playwright install --with-deps chromium
+      - name: Vendor the published CookieGuard engine into the Python package
+        run: node integrations/browser-use/scripts/vendor_engine.mjs --registry
+      - name: Install and test the Browser Use integration
+        working-directory: integrations/browser-use
+        run: |
+          python -m venv .venv
+          .venv/bin/python -m pip install --upgrade pip build
+          .venv/bin/python -m pip install -e ".[test]"
+          .venv/bin/python -m pytest -q -p no:cacheprovider
+      - name: Verify the wheel from a clean external consumer
+        working-directory: integrations/browser-use
+        run: .venv/bin/python scripts/verify_external.py
+      - name: Check Browser Use evidence for synthetic-secret leakage
+        run: node scripts/check-artifacts.js artifacts/browser-use

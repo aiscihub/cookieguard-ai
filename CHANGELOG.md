@@ -1,5 +1,27 @@
 # Changelog
 
+## Unreleased — CookieGuard for Browser Use 0.1.0b1 (pre-release, not published)
+
+- Add `integrations/browser-use`: the `cookieguard-browser-use` Python package for
+  Browser Use 0.13.14 agents.
+  - **Collection:** a dedicated CDP observer captures redirect-attributed `Set-Cookie`
+    declarations and cookie-store metadata from the agent's browser.
+  - **Evaluation:** a sandboxed local Node subprocess runs the unchanged published
+    `@aiscihub/cookieguard-core` and `@aiscihub/cookieguard-playwright` 0.1.0 engine,
+    vendored with per-file hashes.
+  - **Agent tool:** an optional read-only `cookieguard_audit` action returns sanitized,
+    provisional, store-only findings.
+  - **Enforcement:** `audit.finish()` + `assert_policy()` with PASS/FAIL/INCOMPLETE
+    and exit codes 0/1/2, independent of the agent.
+- Add a loopback demo app with a real login form, a scripted deterministic agent
+  demo (`python -m cookieguard_browser_use.demo`), an opt-in LLM example, 85 tests
+  (real Chromium, Agent loop, attribution, privacy canaries), and external wheel
+  verification.
+- Lint `.mjs` files and the integration; scan Browser Use evidence for its canary prefix;
+  add a Browser Use CI job (not yet run on GitHub-hosted runners).
+- Pin eslint's `minimatch` to 11.0.4 through an npm override, to clear GHSA-g3hv-75wg-m249 in the
+  release gate's dependency audit. This is dev tooling only; published packages are unchanged.
+
 ## CookieGuard CI 0.1.0 — public beta — 2026-10-17
 
 One coordinated release in `aiscihub/cookieguard-ai`: npm CLI for the first try,

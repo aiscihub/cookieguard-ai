@@ -219,6 +219,27 @@ possible. It does not enable tracing, HAR, screenshots, or storage-state exports
 Try the [opt-in fail/pass demonstrations](#watch-the-playwright-demo) to see the
 real policy assertion fail after a successful login, then pass with HttpOnly.
 
+## Quick start: Browser Use agents (pre-release)
+
+[`integrations/browser-use`](integrations/browser-use/README.md) is a Python
+package (`cookieguard-browser-use` 0.1.0b1, not yet on PyPI) for
+[Browser Use](https://github.com/browser-use/browser-use) agents.
+- **Collection:** it observes the agent's browser over its own CDP connection.
+- **Evaluation:** a local subprocess runs the same published core and collector packages.
+- **Enforcement:** your code enforces the result, independently of the model.
+
+```python
+audit = CookieGuardAudit(allowed_origins=['http://127.0.0.1:3000'], auth_cookies=['session_id'])
+audit.register_tools(tools)          # optional read-only agent tool
+await audit.start(browser_session)   # BrowserProfile(keep_alive=True)
+await agent.run()
+(await audit.finish()).assert_policy()
+```
+
+`python -m cookieguard_browser_use.demo` runs a real Browser Use agent loop with
+a scripted stand-in model, so no API key is needed. In both scenarios the login succeeds.
+The insecure scenario then fails with CG001 (exit 1) and the secure one passes (exit 0).
+
 ## Quick start: GitHub Actions
 
 This repository includes a [complete workflow](.github/workflows/cookieguard-ci.yml)

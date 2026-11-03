@@ -4,6 +4,8 @@ export const SENTINELS = Object.freeze([
   'SENTINEL_MODEL_TOKEN_8ef910ab',
   'SENTINEL_MODEL_PATH',
   'BENCHMARK_SENTINEL_NOT_A_REAL_SESSION_13ac98',
+  // Prefix of the random synthetic tokens used by integrations/browser-use tests.
+  'CGBU_CANARY_',
 ]);
 
 export function assertNoSentinels(contents) {

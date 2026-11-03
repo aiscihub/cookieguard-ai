@@ -1,7 +1,7 @@
 export default [{
-  ignores: ['**/vendor/**', '**/node_modules/**', '**/test-results/**'],
+  ignores: ['**/vendor/**', '**/node_modules/**', '**/test-results/**', '**/.venv/**', '**/dist/**'],
 }, {
-  files: ['**/*.js'],
+  files: ['**/*.js', '**/*.mjs'],
   languageOptions: { ecmaVersion: 'latest', sourceType: 'module', globals: {
     process: 'readonly', Buffer: 'readonly', console: 'readonly', URL: 'readonly',
     setTimeout: 'readonly', clearTimeout: 'readonly', AbortController: 'readonly',
