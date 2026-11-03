@@ -43,4 +43,4 @@ audit = CookieGuardAudit(
 | `timeout_seconds` | 600 | Collection window (max 600); expiry makes the audit INCOMPLETE. |
 
 Rule severities are fixed. Custom rules, per-rule switches, per-cookie policies, and policy
-files are not supported. Details of every rule: [main README](../../../README.md#supported-checks).
+files are not supported. Details of every rule: [rule reference](../../../docs/CI_GUIDE.md#supported-checks).

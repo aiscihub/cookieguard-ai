@@ -30,6 +30,8 @@
   plus tab-style pages under `docs/`. Add `RELEASING.md`, a PyPI release runbook using Trusted Publishing.
 - Prepare the Browser Use package description with release-tagged PyPI links and add a
   Trusted Publishing workflow for separately approved TestPyPI and PyPI uploads.
+- Lead the main README with Browser Use, followed by the Chrome extension and CI tools;
+  keep the detailed CLI, Playwright, and Action instructions in `docs/CI_GUIDE.md`.
 - Pin eslint's `minimatch` to 11.0.4 through an npm override, to clear GHSA-g3hv-75wg-m249 in the
   release gate's dependency audit. This is dev tooling only; published packages are unchanged.
 
