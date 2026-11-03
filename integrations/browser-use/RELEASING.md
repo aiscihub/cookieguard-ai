@@ -10,7 +10,13 @@ accounts. An agent must stop and ask at each of them.
   on 2026-11-03 (`1ed1b82`). Its CI passed: the toolkit job, plus the Browser Use job on
   Python 3.11, 3.12, and 3.13. Step 0 is complete.
 - Version is `0.1.0b1`, set in `pyproject.toml` and `src/cookieguard_browser_use/__init__.py`.
-  The name `cookieguard-browser-use` was unregistered on both PyPI and TestPyPI on 2026-11-03.
+  It was [published to PyPI](https://pypi.org/project/cookieguard-browser-use/0.1.0b1/) on
+  2026-11-03 from tag `browser-use-v0.1.0b1` at commit `ff3e27b`.
+- The maintainer approved direct PyPI publication without the TestPyPI rehearsal because
+  TestPyPI setup was unavailable. [Release run 41725841083](https://github.com/aiscihub/cookieguard-ai/actions/runs/41725841083)
+  passed its build and package checks, then published through the approved `pypi` environment.
+- The [GitHub pre-release](https://github.com/aiscihub/cookieguard-ai/releases/tag/browser-use-v0.1.0b1)
+  includes the verified wheel, source archive, and `SHA256SUMS`.
 - `scripts/verify_external.py` builds the wheel and sdist, installs the wheel into a fresh venv
   outside the repo, and runs the copied suite and the demo. Results are in [VALIDATION.md](VALIDATION.md).
 

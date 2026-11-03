@@ -66,5 +66,11 @@ collection without a result. One instance audits one workflow.
 
 Needs Python 3.11+, Node.js 24+, and Chrome or Chromium: **[Install](docs/install.md)**.
 
-Status: `0.1.0b1` pre-release, tested with browser-use 0.13.14, not yet on PyPI.
+Install the [PyPI pre-release](https://pypi.org/project/cookieguard-browser-use/0.1.0b1/):
+
+```bash
+pip install --pre cookieguard-browser-use
+```
+
+Status: `0.1.0b1` pre-release, tested with browser-use 0.13.14.
 This is a community integration, not an official Browser Use package.

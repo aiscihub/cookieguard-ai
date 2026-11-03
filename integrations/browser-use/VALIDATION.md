@@ -188,6 +188,65 @@ maintainer must complete step 1 of [RELEASING.md](RELEASING.md) before any uploa
 The release tag has not been created, so tagged links cannot yet be checked live.
 No merge, tag, workflow dispatch, or upload was performed during these checks.
 
+## PyPI publication — 2026-11-03
+
+Published [cookieguard-browser-use 0.1.0b1](https://pypi.org/project/cookieguard-browser-use/0.1.0b1/)
+from tag `browser-use-v0.1.0b1` (`ff3e27b`) through Trusted Publishing in
+[run 41725841083](https://github.com/aiscihub/cookieguard-ai/actions/runs/41725841083).
+Both `build` and `publish-pypi` succeeded. The maintainer approved omitting TestPyPI.
+
+The release build ran `node integrations/browser-use/scripts/vendor_engine.mjs --registry`,
+`python -m build`, `python -m twine check --strict dist/*`,
+`python scripts/verify_metadata.py`, and `python scripts/verify_external.py`.
+Selected actual output from the completed build log:
+
+```text
+Vendored @aiscihub/cookieguard-core, @aiscihub/cookieguard-playwright (workspace-verified-against-npm-registry).
+Checking dist/cookieguard_browser_use-0.1.0b1-py3-none-any.whl: PASSED
+Checking dist/cookieguard_browser_use-0.1.0b1.tar.gz: PASSED
+cookieguard_browser_use-0.1.0b1-py3-none-any.whl: 16 absolute links/images; 15 pinned to browser-use-v0.1.0b1; no relative links.
+cookieguard_browser_use-0.1.0b1.tar.gz: 16 absolute links/images; 15 pinned to browser-use-v0.1.0b1; no relative links.
+Built cookieguard_browser_use-0.1.0b1-py3-none-any.whl (35 files) and cookieguard_browser_use-0.1.0b1.tar.gz; engine, manifest, and licenses present.
+Installed 0.1.0b1 into a clean Python 3.12.16 venv outside the repository (browser-use 0.13.14, cdp-use 1.4.5).
+Consumer test suite: 89 passed in 65.86s (0:01:05)
+```
+
+After publication, the PyPI JSON API's SHA-256 values matched the downloaded workflow
+artifacts byte for byte:
+
+```text
+7661a88e0c36fa64d28772ea415cc379e0b15c5f10ba1dc2ce53ccb6aa952b84  cookieguard_browser_use-0.1.0b1-py3-none-any.whl
+d5973e3cea04b73b2cf8f57618716f38893ad6152aba98d505da8ec1b3661ae0  cookieguard_browser_use-0.1.0b1.tar.gz
+```
+
+The [GitHub pre-release](https://github.com/aiscihub/cookieguard-ai/releases/tag/browser-use-v0.1.0b1)
+includes both files and `SHA256SUMS`.
+
+The wheel's manifest records `workspace-verified-against-npm-registry` and bundles
+`@aiscihub/cookieguard-core@0.1.0` and `@aiscihub/cookieguard-playwright@0.1.0`.
+`git diff ci-v0.1.0 browser-use-v0.1.0b1 -- packages/core packages/cli packages/playwright`
+exited 0 with no output. No npm package changed or needs a coordinated release.
+
+For a new Python 3.12.12 venv outside the repository,
+`python -m pip --isolated install --disable-pip-version-check --index-url https://pypi.org/simple cookieguard-browser-use==0.1.0b1`
+exited 0. Import verification and `python -m cookieguard_browser_use.demo` produced:
+
+```text
+Imported cookieguard-browser-use 0.1.0b1 from /tmp/cookieguard-pypi-release-206lrek1/consumer/lib/python3.12/site-packages/cookieguard_browser_use/__init__.py
+Python 3.12.12; browser-use 0.13.14; cdp-use 1.4.5
+CookieGuard for Browser Use: FAIL (exit code 1); evidence: server-declarations-and-browser-store
+CookieGuard for Browser Use: PASS (exit code 0); evidence: server-declarations-and-browser-store
+Demo exit code: 0
+```
+
+The demo used its scripted provider and local loopback apps, with telemetry and cloud
+sync disabled. The full suite was not rerun locally after publication; the published
+files match the artifacts that passed all 89 tests in the release workflow.
+Fresh installs from PyPI on Python 3.11 and 3.13 remain unverified; those versions
+passed the earlier integration CI. The automated project-page fetch returned a
+`Client Challenge` page, so visual rendering still needs a browser check. The PyPI
+JSON API and package downloads were available and verified successfully.
+
 ## Not verified
 
 - The OpenAI and Browser Use Cloud branches of `examples/agent_login.py`, and models other than `claude-opus-5-5`.

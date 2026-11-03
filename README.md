@@ -69,8 +69,12 @@ result.assert_policy()                          # raises CookiePolicyError on FA
 audit tool, or reported success. CookieGuard enforces the result outside the model.
 
 Needs **Python 3.11+, Node.js 24+, and Chrome or Chromium**.
-`cookieguard-browser-use` **0.1.0b1 is a pre-release, not yet on PyPI**; use the
-[from-source installation](integrations/browser-use/docs/install.md#from-source).
+Install **0.1.0b1**, available as a [PyPI pre-release](https://pypi.org/project/cookieguard-browser-use/0.1.0b1/):
+
+```bash
+pip install --pre cookieguard-browser-use
+```
+
 This is a community integration, not an official Browser Use package.
 
 [Install](integrations/browser-use/docs/install.md) · [Policy](integrations/browser-use/docs/policy.md) · [How it works](integrations/browser-use/docs/how-it-works.md) · [Results](integrations/browser-use/docs/results.md) · [Limits & privacy](integrations/browser-use/docs/limits-and-privacy.md) · [Demo & tests](integrations/browser-use/docs/demo-and-tests.md)

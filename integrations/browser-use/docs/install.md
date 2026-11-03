@@ -14,7 +14,7 @@
 
 ## From PyPI
 
-Once `0.1.0b1` is published, install the pre-release with:
+Install the [0.1.0b1 pre-release](https://pypi.org/project/cookieguard-browser-use/0.1.0b1/) with:
 
 ```bash
 pip install --pre cookieguard-browser-use
@@ -27,7 +27,7 @@ Node.js 24+ and Chrome or Chromium are still required; pip does not install them
 
 ## From source
 
-Until the PyPI release is available, or to work from a checkout:
+To work from a checkout:
 
 ```bash
 git clone https://github.com/aiscihub/cookieguard-ai && cd cookieguard-ai
