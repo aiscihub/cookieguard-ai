@@ -242,10 +242,65 @@ Demo exit code: 0
 The demo used its scripted provider and local loopback apps, with telemetry and cloud
 sync disabled. The full suite was not rerun locally after publication; the published
 files match the artifacts that passed all 89 tests in the release workflow.
-Fresh installs from PyPI on Python 3.11 and 3.13 remain unverified; those versions
-passed the earlier integration CI. The automated project-page fetch returned a
-`Client Challenge` page, so visual rendering still needs a browser check. The PyPI
-JSON API and package downloads were available and verified successfully.
+The first automated project-page fetch returned a `Client Challenge` page. A later
+Chrome inspection and fresh installs on Python 3.11 and 3.13 completed the remaining
+release checks, as recorded below.
+
+## Final release checks — 2026-11-03
+
+Both remaining release checks passed. No full test suite was rerun and no package
+was republished. The following checks used the existing PyPI `0.1.0b1` release.
+
+### Fresh Python 3.11 and 3.13 installs
+
+uv 0.13.7 installed CPython 3.11.18 and 3.13.18 into a temporary directory. Each
+runtime created its own new venv outside the repository. For each interpreter,
+`python -m pip --isolated install --pre --disable-pip-version-check --index-url https://pypi.org/simple cookieguard-browser-use`
+exited 0. Separate temporary cache directories and pip JSON reports were also used.
+
+| Check | Python 3.11.18 | Python 3.13.18 |
+| --- | --- | --- |
+| Installed package | `cookieguard-browser-use 0.1.0b1` | `cookieguard-browser-use 0.1.0b1` |
+| Browser Use dependency | `0.13.14` | `0.13.14` |
+| CDP dependency | `1.4.5` | `1.4.5` |
+| Public API imports | `CookieGuardAudit`, `Agent`, `BrowserProfile`, `BrowserSession`, `Tools`: passed | Same imports: passed |
+| Import location | Fresh venv's `lib/python3.11/site-packages` | Fresh venv's `lib/python3.13/site-packages` |
+| `python -m pip check` | Exit 0: `No broken requirements found.` | Exit 0: `No broken requirements found.` |
+
+Both pip reports identify the wheel downloaded from `files.pythonhosted.org`, with
+SHA-256 `7661a88e0c36fa64d28772ea415cc379e0b15c5f10ba1dc2ce53ccb6aa952b84`:
+the same file verified by the release workflow. Imports were checked against each
+venv's resolved path to exclude an accidental import from the source checkout.
+The dependency checks emitted a warning that the default pip cache was not writable;
+pip disabled that cache and both checks succeeded.
+
+Together with the Python 3.12 PyPI installation and demo above, fresh installs from
+PyPI are now verified on all three supported Python minor versions.
+
+### Published PyPI page
+
+Opened the public [0.1.0b1 page](https://pypi.org/project/cookieguard-browser-use/0.1.0b1/)
+in an ordinary, temporary Chrome session through Playwright. The page returned
+HTTP 200 and rendered its project description. Desktop (1440 px) and mobile
+(390 px) screenshots were inspected.
+
+- The policy SVG loaded at its natural size of 760 × 640; the demo GIF loaded at
+  1000 × 563. Two screenshots seven seconds apart confirmed the GIF changes frames.
+- The page displays the version, Python `>=3.11`, MIT license, and installation
+  command. The description no longer says the package is unpublished.
+- All seven unique release-tagged GitHub documentation links opened successfully.
+  Six returned HTTP 200 immediately. The overview initially returned HTTP 429;
+  after a pause, a normal Chrome navigation returned HTTP 200. No link was changed
+  to avoid the rate limit.
+- The policy diagram and sampled demo frames use section numbers without leading
+  zeros. The mobile page uses the scaled desktop SVG fallback because PyPI removes
+  the responsive `<picture>` sources; code blocks remain horizontally scrollable.
+- Two PyPI advertising requests were blocked by the browser's cross-origin policy.
+  The project description, package images, and documentation links were unaffected.
+
+Local screenshots, install logs, pip reports, link results, and inspection scripts
+are saved under `artifacts/browser-use/final-release-checks/` (not distributed with
+the package).
 
 ## Not verified
 

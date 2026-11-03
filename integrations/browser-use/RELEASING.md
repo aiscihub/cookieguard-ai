@@ -17,6 +17,9 @@ accounts. An agent must stop and ask at each of them.
   passed its build and package checks, then published through the approved `pypi` environment.
 - The [GitHub pre-release](https://github.com/aiscihub/cookieguard-ai/releases/tag/browser-use-v0.1.0b1)
   includes the verified wheel, source archive, and `SHA256SUMS`.
+- The remaining release checks passed on 2026-11-03: fresh PyPI installs on Python
+  3.11, 3.12, and 3.13, plus the live PyPI page's images, metadata, and documentation
+  links. See [the final validation record](VALIDATION.md#final-release-checks--2026-11-03).
 - `scripts/verify_external.py` builds the wheel and sdist, installs the wheel into a fresh venv
   outside the repo, and runs the copied suite and the demo. Results are in [VALIDATION.md](VALIDATION.md).
 
@@ -141,12 +144,12 @@ PyPI, and the fix ships as `0.1.0b2`.
 
 ## Done when
 
-- [ ] `pip install --pre cookieguard-browser-use` works in a clean venv on Python 3.11–3.13.
-- [ ] The demo installed from PyPI returns insecure FAIL (exit 1), secure PASS (exit 0), and overall exit 0.
-- [ ] The PyPI page renders, with absolute links pinned to the tag.
-- [ ] The release workflow uses Trusted Publishing, and the repo and logs contain no tokens.
-- [ ] The vendored engine equals the npm 0.1.0 packages (`--registry` passed in the build log).
-- [ ] The GitHub release has the artifacts and SHA-256 sums; VALIDATION.md and CHANGELOG are updated.
+- [x] `pip install --pre cookieguard-browser-use` works in a clean venv on Python 3.11–3.13.
+- [x] The demo installed from PyPI returns insecure FAIL (exit 1), secure PASS (exit 0), and overall exit 0.
+- [x] The PyPI page renders, with absolute links pinned to the tag.
+- [x] The release workflow uses Trusted Publishing, and the repo and logs contain no tokens.
+- [x] The vendored engine equals the npm 0.1.0 packages (`--registry` passed in the build log).
+- [x] The GitHub release has the artifacts and SHA-256 sums; VALIDATION.md and CHANGELOG are updated.
 
 ## After the release
 
