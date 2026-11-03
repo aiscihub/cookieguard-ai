@@ -9,7 +9,7 @@
   "scripts": {
     "prepare": "npm run build",
     "build": "node scripts/build.js",
-    "lint": "eslint packages scripts tests examples action eslint.config.js",
+    "lint": "eslint packages scripts tests examples action integrations/browser-use/scripts integrations/browser-use/src eslint.config.js",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "test": "node --test --test-timeout=30000 tests/*.test.js",
     "test:playwright": "playwright test --config examples/playwright/playwright.config.js",
@@ -27,5 +27,8 @@
     "eslint": "10.13.0",
     "onnxruntime-node": "1.30.0",
     "typescript": "7.0.2"
+  },
+  "overrides": {
+    "eslint": { "minimatch": "11.0.4" }
   }
 }

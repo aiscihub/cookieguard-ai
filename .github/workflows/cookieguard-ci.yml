@@ -89,3 +89,68 @@ jobs:
           path: artifacts/
           if-no-files-found: error
           retention-days: 7
+  browser-use:
+    name: Linux / Python ${{ matrix.python }} / Browser Use / Chromium
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      # Report every supported version, even if one fails.
+      fail-fast: false
+      matrix:
+        python: ['3.11', '3.12', '3.13']
+    env:
+      ONNXRUNTIME_NODE_INSTALL: skip
+      ANONYMIZED_TELEMETRY: 'false'
+      BROWSER_USE_CLOUD_SYNC: 'false'
+      BROWSER_USE_DISABLE_EXTENSIONS: '1'
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: ${{ matrix.python }}
+      - run: npm ci
+      - run: npx --no-install playwright install --with-deps chromium
+      - name: Vendor the published CookieGuard engine into the Python package
+        run: node integrations/browser-use/scripts/vendor_engine.mjs --registry
+      - name: Install the Browser Use integration
+        working-directory: integrations/browser-use
+        run: |
+          python -m venv .venv
+          .venv/bin/python -m pip install --upgrade pip build
+          .venv/bin/python -m pip install -e ".[test]"
+      - name: Engine, policy, and attribution tests (no browser)
+        working-directory: integrations/browser-use
+        timeout-minutes: 5
+        run: .venv/bin/python -m pytest -v -p no:cacheprovider tests/test_config.py tests/test_engine.py tests/test_collector.py
+      - name: Allow Chromium's sandbox on Ubuntu 24.04
+        # Ubuntu 23.10+ restricts unprivileged user namespaces with AppArmor. Playwright's
+        # Chromium, which Browser Use prefers, needs them for its sandbox; keep the sandbox on.
+        run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+      - name: Browser smoke diagnostics
+        working-directory: integrations/browser-use
+        timeout-minutes: 4
+        env:
+          PYTHONUNBUFFERED: '1'
+        run: |
+          ls -l /usr/bin/google-chrome-stable || true
+          /usr/bin/google-chrome-stable --version || true
+          sysctl kernel.apparmor_restrict_unprivileged_userns || true
+          timeout 180 .venv/bin/python -u scripts/browser_smoke.py
+      - name: Real-browser and agent tests
+        working-directory: integrations/browser-use
+        timeout-minutes: 15
+        env:
+          PYTHONUNBUFFERED: '1'
+        # faulthandler dumps every thread's stack if one test runs longer than 90s.
+        run: .venv/bin/python -m pytest -v -p no:cacheprovider -o faulthandler_timeout=90 --maxfail=3 tests/test_browser.py tests/test_agent.py
+      - name: Verify the wheel from a clean external consumer
+        working-directory: integrations/browser-use
+        run: .venv/bin/python scripts/verify_external.py
+      - name: Check Browser Use evidence for synthetic-secret leakage
+        run: node scripts/check-artifacts.js artifacts/browser-use
