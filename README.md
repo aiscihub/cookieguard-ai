@@ -221,6 +221,8 @@ real policy assertion fail after a successful login, then pass with HttpOnly.
 
 ## Quick start: Browser Use agents (pre-release)
 
+![A Browser Use agent logs in twice. Both logins succeed; CookieGuard fails the insecure cookie with CG001 and passes the secure one.](integrations/browser-use/docs/cookieguard-browser-use-demo.gif)
+
 [`integrations/browser-use`](integrations/browser-use/README.md) is a Python
 package (`cookieguard-browser-use` 0.1.0b1, not yet on PyPI) for
 [Browser Use](https://github.com/browser-use/browser-use) agents.

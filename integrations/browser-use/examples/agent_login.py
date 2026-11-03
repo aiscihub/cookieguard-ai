@@ -43,7 +43,10 @@ def make_llm(provider: str, model: str | None, origin: str):
 		from browser_use import ChatAnthropic
 		# Adaptive thinking makes browser-use 0.13 send tool_choice "auto"; current
 		# Claude models reject the forced tool_choice it would otherwise send.
-		return ChatAnthropic(model=model or 'claude-opus-5-5', thinking={'type': 'adaptive'})
+		# Server-side fallback: if a safety classifier declines a step (observed
+		# intermittently on this login task), the API reruns it on the fallback model.
+		return ChatAnthropic(model=model or 'claude-opus-5-5', thinking={'type': 'adaptive'},
+			fallbacks=[{'model': 'claude-opus-4-8'}])
 	if provider == 'browser-use':
 		from browser_use import ChatBrowserUse
 		return ChatBrowserUse(**({'model': model} if model else {}))

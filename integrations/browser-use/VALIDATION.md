@@ -13,6 +13,8 @@ All runs used local loopback apps and synthetic tokens. No AI provider was calle
 | External consumer | `scripts/verify_external.py` | Wheel (35 files) installed into a fresh venv outside the repository; import path verified; copied suite **85 passed**; demo FAIL/PASS |
 | Fresh checkout | Copy of only the files git would commit → `npm ci` → vendor → `pip install ./integrations/browser-use[test]` | 67 non-browser tests passed; demo FAIL/PASS. This caught and verified the fix for the root `_*` ignore rule, which had excluded `__init__.py`, `_*.py`, and `_node/` |
 | Demo, installed package | `python -m cookieguard_browser_use.demo` | insecure: login succeeded, agent called the tool, **FAIL CG001 (exit 1)**; secure: login succeeded, **PASS (exit 0)** |
+| README demo recording | `scripts/record_demo.py --provider anthropic --out docs` | Real run with `claude-opus-5-5` (headless Chrome 156, 1280×720): insecure FAIL exit 1, secure PASS exit 0, one server login each; 29.6s and 26.8s real time, 62 and 45 screencast frames. Waits over 2s for the model are condensed and labelled. Media SHA-256 in `docs/demo-provenance.json`. No canary, password, or API key in captured text, provenance, or media bytes |
+| Animated diagram | `docs/build_diagram.py` | Four SVGs (light/dark × desktop/mobile). Rendered as `<img>` in Chromium: steps animate in sequence. As a document under `prefers-reduced-motion: reduce`: 0 running animations, static caption and chips shown |
 | Example, scripted provider | `examples/agent_login.py --mode insecure` / `--mode secure` | exit **1** with `CG001 "session_id"` / exit **0**; JSON written `0600` |
 | Existing toolkit | `npm run check` | build, lint, typecheck, **29/29** Node tests, **8/8** Playwright tests |
 | Existing packages | `node scripts/verify-packages.js` | Packed CLI/Playwright consumers exit 0/1/2 verified |
@@ -66,13 +68,47 @@ moves to minimatch 11.
   subprocess is denied file writes and child processes under its permission flags.
   Its environment drops `NODE_OPTIONS` and API keys, and a tampered vendored engine is refused.
 
+## Real model run (Anthropic)
+
+Run on 2026-11-03 with `examples/agent_login.py --provider anthropic`: `claude-opus-5-5` through
+Browser Use's `ChatAnthropic`, with adaptive thinking and a server-side fallback to
+`claude-opus-4-8`. The key was loaded from an owner-only file and appears in no log or report.
+
+| Scenario | Agent | Server logins | CookieGuard | Exit |
+| --- | --- | --- | --- | --- |
+| insecure | logged in with `<secret>` placeholders, called `cookieguard_audit`, reported success | 1 | FAIL, CG001 confirmed, from header evidence | 1 |
+| secure | same steps | 1 | PASS | 0 |
+
+Each run took about 36 seconds with no step retries. Both final answers relayed the
+provisional status and said the final result is enforced outside the agent.
+
+Before the fallback was enabled, one full run failed every step: Opus 5.5 returned
+`stop_reason: refusal` (a safety classifier), which Browser Use reports as "Expected tool use in
+response but none found". A repeat diagnostic call succeeded. CookieGuard reported both
+failed runs as INCOMPLETE (exit 2), never PASS: one failed on billing, one on refusals.
+
+## Hosted CI (GitHub Actions, ubuntu-latest)
+
+The `browser-use` job passed in run 41702699563 (commit `01b1fef`) on Python 3.12, Node 24.22.1,
+and Playwright Chromium 156.0.8078.4 with its sandbox enabled. Results:
+- **No-browser tests:** 67 passed.
+- **Real-browser and Agent tests:** 18 passed.
+- **External consumer:** the wheel installed into a fresh environment outside the repository, the copied suite passed (85), and the demo gave FAIL/PASS.
+- **Leakage:** none in the job log or saved evidence.
+
+Local runs also passed on Node 24.22.2: all 85 Python tests and the toolkit `npm run check`.
+
+Two problems found on the way, both fixed:
+- **Chromium exited at launch.** Ubuntu 24.04 sets `kernel.apparmor_restrict_unprivileged_userns=1`,
+  which blocks Chromium's sandbox, and Browser Use prefers Playwright's Chromium. The job now
+  allows the namespaces rather than using `--no-sandbox`.
+- **The first run hung silently for 29 minutes.** The test helper did not kill a session
+  whose launch failed, and `asyncio.run` then waited forever to cancel Browser Use's tasks.
+  Reproduced locally with a browser that exits immediately, then fixed.
+
 ## Not verified
 
-- No real LLM-driven run. `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, and `BROWSER_USE_API_KEY`
-  were unset. The provider branches of `examples/agent_login.py` are unexecuted.
-- Python 3.11 and 3.13, Node 24, Linux, Windows, Chromium builds other than Chrome 156,
-  Browser Use cloud browsers, and other browser-use versions.
-- The new `browser-use` job in `.github/workflows/cookieguard-ci.yml` has not run on
-  GitHub-hosted runners.
+- The OpenAI and Browser Use Cloud branches of `examples/agent_login.py`, and models other than `claude-opus-5-5`.
+- Python 3.11 and 3.13, Windows, Browser Use cloud browsers, and other browser-use versions.
 - Network denial inside the engine sandbox applies only on Node 25+. The tests assert
   it only there; on Node 24 the permission model does not restrict network access.

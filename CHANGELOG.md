@@ -14,11 +14,17 @@
   - **Enforcement:** `audit.finish()` + `assert_policy()` with PASS/FAIL/INCOMPLETE
     and exit codes 0/1/2, independent of the agent.
 - Add a loopback demo app with a real login form, a scripted deterministic agent
-  demo (`python -m cookieguard_browser_use.demo`), an opt-in LLM example, 85 tests
+  demo (`python -m cookieguard_browser_use.demo`), an LLM example (verified with
+  `claude-opus-5-5` plus server-side fallback), 85 tests
   (real Chromium, Agent loop, attribution, privacy canaries), and external wheel
   verification.
 - Lint `.mjs` files and the integration; scan Browser Use evidence for its canary prefix;
-  add a Browser Use CI job (not yet run on GitHub-hosted runners).
+  add a Browser Use CI job, which passes on `ubuntu-latest` (Python 3.12, Node 24, Chromium
+  with its sandbox; the runner allows the user namespaces Ubuntu 24.04 restricts).
+- Add a README demo recorded from a real `claude-opus-5-5` run (`scripts/record_demo.py`). It shows the
+  agent's Chromium viewport, Browser Use's own log lines, and CookieGuard's verdict, with
+  provenance. Also add an animated, theme-aware "how it works" diagram (pure CSS SVG,
+  static under reduced motion).
 - Pin eslint's `minimatch` to 11.0.4 through an npm override, to clear GHSA-g3hv-75wg-m249 in the
   release gate's dependency audit. This is dev tooling only; published packages are unchanged.
 

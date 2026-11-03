@@ -10,15 +10,33 @@ does the authorized workflow; the decision comes from the local
 Status: `0.1.0b1` pre-release, tested with browser-use 0.13.14. It is not yet on
 PyPI. This is a community integration, not an official Browser Use package.
 
-```text
-Browser Use Agent ──(its own CDP connection)──► Chromium ◄──(separate CDP observer)── CookieGuard
-        │ optional read-only tool: cookieguard_audit                                  │
-        ▼                                                                             ▼
-   LLM provider (task, page text, sanitized tool output)        local Node engine (stdin pipe, sandboxed)
-                                                                 @aiscihub/cookieguard-core 0.1.0 rules CG001–CG009
-                                                                                      │
-                                         your code: result = await audit.finish(); result.assert_policy()
-```
+## See it run
+
+![A Browser Use agent logs in to two local apps. Both logins succeed. CookieGuard fails the first with CG001 Missing HttpOnly (exit 1) and passes the second (exit 0).](docs/cookieguard-browser-use-demo.gif)
+
+The recording shows the same agent logging in to the same local app twice:
+- **Insecure login:** the login succeeds, and CookieGuard returns **FAIL — CG001** (exit 1).
+- **Secure login:** with `HttpOnly` set, it returns **PASS** (exit 0).
+
+The left side is the agent's real Chromium viewport. The right side shows Browser
+Use's own log lines and the `Set-Cookie` line CookieGuard observed, with its value
+withheld. The code strip highlights the line that is running.
+
+It was recorded by [`scripts/record_demo.py`](scripts/record_demo.py) from a real run,
+with Claude (`claude-opus-5-5`) driving the agent. Waits for the model longer than two
+seconds are condensed and labelled *fast-forward*; everything else plays in real time.
+To re-record, run `scripts/record_demo.py --provider anthropic` with `ANTHROPIC_API_KEY` set,
+or omit `--provider` to use the scripted stand-in model, which needs no key.
+[MP4](docs/cookieguard-browser-use-demo.mp4) · [provenance](docs/demo-provenance.json).
+
+## How it works
+
+<picture>
+  <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="docs/how-it-works-dark-mobile.svg">
+  <source media="(max-width: 600px)" srcset="docs/how-it-works-light-mobile.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/how-it-works-dark.svg">
+  <img alt="Your test starts CookieGuard and the Browser Use agent. The agent, guided by any AI model, logs in through Chromium. The app responds with Set-Cookie. A separate CookieGuard observer reads the same browser over its own CDP connection. It sends the evidence to a local CookieGuard engine, which returns PASS, FAIL, or INCOMPLETE to your test. The agent's optional cookieguard_audit tool is read-only, and cookie values never reach the model." src="docs/how-it-works-light.svg" width="100%">
+</picture>
 
 - **Server declarations:** `Set-Cookie` lines from `Network.responseReceivedExtraInfo`,
   attributed to their redirect hop and filtered to your authorized origins.
@@ -33,6 +51,12 @@ Browser Use Agent ──(its own CDP connection)──► Chromium ◄──(sep
 - Python 3.11+ (tested on 3.12.12), browser-use `>=0.13.14,<0.14`.
 - Node.js 24+ on `PATH` (or set `COOKIEGUARD_NODE`) for the local engine. Tested on Node 26.10.
 - Chrome or Chromium. Browser Use finds an installed browser or `uvx playwright install chromium`.
+  On Ubuntu 23.10+ (including GitHub's `ubuntu-latest`), AppArmor blocks the user
+  namespaces Chromium's sandbox needs, and Chrome exits at launch. Fix it in one of two ways:
+  - Allow the namespaces, as this repo's CI does: `sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0`.
+  - Use Google Chrome, which has a setuid sandbox: `BrowserProfile(channel='chrome')`.
+
+  Avoid `--no-sandbox`.
 
 Until a PyPI release exists, install from this repository:
 
@@ -105,9 +129,14 @@ python examples/agent_login.py --mode insecure                           # scrip
 ANTHROPIC_API_KEY=... python examples/agent_login.py --provider anthropic --mode insecure
 ```
 
-The Anthropic, OpenAI, and Browser Use Cloud provider paths are provided as
-opt-in examples. **They have not been run in this repository's validation**,
-because no provider credentials were available. The scripted paths have.
+The Anthropic path has been run with `claude-opus-5-5`; see [VALIDATION.md](VALIDATION.md).
+Claude logged in using only `<secret>` placeholders and called `cookieguard_audit`.
+- **Insecure app:** CookieGuard returned FAIL CG001 (exit 1).
+- **Secure app:** PASS (exit 0).
+
+The example enables Anthropic's server-side fallback, because an unaided diagnostic call
+was intermittently declined by a safety classifier. The OpenAI and Browser Use Cloud
+paths have not been run.
 
 ## Reading results
 
