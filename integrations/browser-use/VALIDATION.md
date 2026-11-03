@@ -9,11 +9,12 @@ All runs used local loopback apps and synthetic tokens. No AI provider was calle
 | Check | Command | Result |
 | --- | --- | --- |
 | Engine provenance | `node scripts/vendor_engine.mjs --registry` | Workspace packages byte-identical to npm `@aiscihub/cookieguard-core@0.1.0` and `@aiscihub/cookieguard-playwright@0.1.0`; hashes recorded |
-| Python suite (dev install) | `.venv/bin/python -m pytest -q` | **85 passed**, 0 warnings, about 2m45s |
-| External consumer | `scripts/verify_external.py` | Wheel (35 files) installed into a fresh venv outside the repository; import path verified; copied suite **85 passed**; demo FAIL/PASS |
+| Python suite (dev install) | `.venv/bin/python -m pytest -q` | **89 passed**, 0 warnings, about 2m55s (includes the policy-option and demo command-line tests) |
+| External consumer | `scripts/verify_external.py` | Wheel installed into a fresh venv outside the repository; import path verified; copied suite passed (85 at the last recorded run; CI reruns it on every push); demo FAIL/PASS |
 | Fresh checkout | Copy of only the files git would commit → `npm ci` → vendor → `pip install ./integrations/browser-use[test]` | 67 non-browser tests passed; demo FAIL/PASS. This caught and verified the fix for the root `_*` ignore rule, which had excluded `__init__.py`, `_*.py`, and `_node/` |
 | Demo, installed package | `python -m cookieguard_browser_use.demo` | insecure: login succeeded, agent called the tool, **FAIL CG001 (exit 1)**; secure: login succeeded, **PASS (exit 0)** |
 | README demo recording | `scripts/record_demo.py --provider anthropic --out docs` | Real run with `claude-opus-5-5` (headless Chrome 156, 1280×720): insecure FAIL exit 1, secure PASS exit 0, one server login each; 29.6s and 26.8s real time, 62 and 45 screencast frames. Waits over 2s for the model are condensed and labelled. Media SHA-256 in `docs/demo-provenance.json`. No canary, password, or API key in captured text, provenance, or media bytes |
+| Policy diagram | `docs/build_policy_diagram.py` | Four SVGs (light/dark × desktop/mobile). Rendered as `<img>` in Chromium: `fail_on` toggles between `'high'` and `'medium'`, and CG003/CG005 switch from reported to FAILS. The rule severities and option effects shown are each asserted by an engine test |
 | Animated diagram | `docs/build_diagram.py` | Four SVGs (light/dark × desktop/mobile). Rendered as `<img>` in Chromium: steps animate in sequence. As a document under `prefers-reduced-motion: reduce`: 0 running animations, static caption and chips shown |
 | Example, scripted provider | `examples/agent_login.py --mode insecure` / `--mode secure` | exit **1** with `CG001 "session_id"` / exit **0**; JSON written `0600` |
 | Existing toolkit | `npm run check` | build, lint, typecheck, **29/29** Node tests, **8/8** Playwright tests |
@@ -89,6 +90,10 @@ failed runs as INCOMPLETE (exit 2), never PASS: one failed on billing, one on re
 
 ## Hosted CI (GitHub Actions, ubuntu-latest)
 
+The merged [PR #13](https://github.com/aiscihub/cookieguard-ai/pull/13) passed the toolkit
+job and Browser Use jobs on Python 3.11, 3.12, and 3.13 on 2026-11-03 (head `720235d`).
+These are the existing hosted results; they were inspected without requesting a rerun.
+
 The `browser-use` job passed in run 41702699563 (commit `01b1fef`) on Python 3.12, Node 24.22.1,
 and Playwright Chromium 156.0.8078.4 with its sandbox enabled. Results:
 - **No-browser tests:** 67 passed.
@@ -106,9 +111,86 @@ Two problems found on the way, both fixed:
   whose launch failed, and `asyncio.run` then waited forever to cancel Browser Use's tasks.
   Reproduced locally with a browser that exits immediately, then fixed.
 
+
+## PyPI release preparation — 2026-11-03
+
+Packaging checks for the release-preparation branch used Python 3.12.12, build 1.6.1,
+Twine 7.0.0, hatch-fancy-pypi-readme 25.1.0, and actionlint 1.7.12. The commands below
+ran from `integrations/browser-use`, except actionlint and the Git checks, which ran
+from the repository root. `python` and `actionlint` came from the temporary tooling
+environment `/tmp/cookieguard-release-tools-ncx5f_t7`. Application tests and
+`verify_external.py` were not rerun locally: the maintainer requested reuse of the
+completed test results. CI still runs its normal checks when the branch is pushed.
+
+`python -m build` (exit 0):
+
+```text
+* Creating isolated environment: venv+pip...
+* Installing packages in isolated environment:
+  - hatch-fancy-pypi-readme==25.1.0
+  - hatchling>=1.27
+* Getting build dependencies for sdist...
+* Installed build dependency versions:
+  - hatch-fancy-pypi-readme==25.1.0
+  - hatchling==1.33.0
+* Building sdist...
+* Building wheel from sdist
+* Creating isolated environment: venv+pip...
+* Installing packages in isolated environment:
+  - hatch-fancy-pypi-readme==25.1.0
+  - hatchling>=1.27
+* Getting build dependencies for wheel...
+* Installed build dependency versions:
+  - hatch-fancy-pypi-readme==25.1.0
+  - hatchling==1.33.0
+* Building wheel...
+Successfully built cookieguard_browser_use-0.1.0b1.tar.gz and cookieguard_browser_use-0.1.0b1-py3-none-any.whl
+```
+
+`python -m twine check --strict dist/*` (exit 0):
+
+```text
+Checking dist/cookieguard_browser_use-0.1.0b1-py3-none-any.whl: PASSED
+Checking dist/cookieguard_browser_use-0.1.0b1.tar.gz: PASSED
+```
+
+`python scripts/verify_metadata.py` (exit 0):
+
+```text
+cookieguard_browser_use-0.1.0b1-py3-none-any.whl: 16 absolute links/images; 15 pinned to browser-use-v0.1.0b1; no relative links.
+cookieguard_browser_use-0.1.0b1.tar.gz: 16 absolute links/images; 15 pinned to browser-use-v0.1.0b1; no relative links.
+```
+
+`actionlint .github/workflows/publish-browser-use.yml` and `git diff --check` both
+exited 0 with no output. The actionlint download was checked against its published
+SHA-256 (`aba9ced2dee8d27fecca3dc7feb1a7f9a52caefa1eb46f3271ea66b6e0e6953f`).
+`git diff --name-only origin/main -- packages integrations/browser-use/src/cookieguard_browser_use/_node package.json package-lock.json`
+exited 0 with no output: the engine and npm packages are unchanged.
+
+The runbook's link-checking logic, with a count and a nonzero exit for broken paths,
+plus a read of the exported SVG section labels, produced (exit 0):
+
+```text
+Checked 67 relative links/images in 7 Markdown files: no broken paths.
+policy-dark-mobile.svg: section labels 1, 2, 3; no leading zeros.
+policy-dark.svg: section labels 1, 2, 3; no leading zeros.
+policy-light-mobile.svg: section labels 1, 2, 3; no leading zeros.
+policy-light.svg: section labels 1, 2, 3; no leading zeros.
+```
+
+The first temporary tooling environment failed during `ensurepip` with `SIGABRT`
+when `venv.create(..., with_pip=True)` copied the macOS interpreter. Creating a new
+environment with `symlinks=True` succeeded; the packaging commands above all ran
+there. No package verification failure was suppressed.
+
+The `testpypi` and `pypi` GitHub environments were absent when inspected. The
+maintainer must complete step 1 of [RELEASING.md](RELEASING.md) before any upload.
+The release tag has not been created, so tagged links cannot yet be checked live.
+No merge, tag, workflow dispatch, or upload was performed during these checks.
+
 ## Not verified
 
 - The OpenAI and Browser Use Cloud branches of `examples/agent_login.py`, and models other than `claude-opus-5-5`.
-- Python 3.11 and 3.13, Windows, Browser Use cloud browsers, and other browser-use versions.
+- Windows, Browser Use cloud browsers, and other browser-use versions.
 - Network denial inside the engine sandbox applies only on Node 25+. The tests assert
   it only there; on Node 24 the permission model does not restrict network access.

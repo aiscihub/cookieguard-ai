@@ -15,7 +15,7 @@
     and exit codes 0/1/2, independent of the agent.
 - Add a loopback demo app with a real login form, a scripted deterministic agent
   demo (`python -m cookieguard_browser_use.demo`), an LLM example (verified with
-  `claude-opus-5-5` plus server-side fallback), 85 tests
+  `claude-opus-5-5` plus server-side fallback), 89 tests
   (real Chromium, Agent loop, attribution, privacy canaries), and external wheel
   verification.
 - Lint `.mjs` files and the integration; scan Browser Use evidence for its canary prefix;
@@ -24,7 +24,14 @@
 - Add a README demo recorded from a real `claude-opus-5-5` run (`scripts/record_demo.py`). It shows the
   agent's Chromium viewport, Browser Use's own log lines, and CookieGuard's verdict, with
   provenance. Also add an animated, theme-aware "how it works" diagram (pure CSS SVG,
-  static under reduced motion).
+  static under reduced motion), and a policy diagram showing which findings each `fail_on`
+  setting fails.
+- Split the Browser Use README into a short overview (policy diagram, demo, integration code)
+  plus tab-style pages under `docs/`. Add `RELEASING.md`, a PyPI release runbook using Trusted Publishing.
+- Prepare the Browser Use package description with release-tagged PyPI links and add a
+  Trusted Publishing workflow for separately approved TestPyPI and PyPI uploads.
+- Lead the main README with Browser Use, followed by the Chrome extension and CI tools;
+  keep the detailed CLI, Playwright, and Action instructions in `docs/CI_GUIDE.md`.
 - Pin eslint's `minimatch` to 11.0.4 through an npm override, to clear GHSA-g3hv-75wg-m249 in the
   release gate's dependency audit. This is dev tooling only; published packages are unchanged.
 
