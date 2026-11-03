@@ -333,3 +333,27 @@ def test_result_json_is_written_owner_only(tmp_path, token):
 	assert data['status'] == 'FAIL' and data['exitCode'] == 1 and data['report']['schemaVersion'] == 1
 	assert_clean(Path(path).read_text())
 	assert list(tmp_path.iterdir()) == [path]
+
+
+def test_explicit_samesite_requirement(token):
+	responses = [(f'{ORIGIN}/', [header(token, 'Secure; HttpOnly')])]  # No SameSite attribute at all.
+	store = [stored(token, sameSite='Lax')]
+	default = evaluate(responses, store, policy={**POLICY, 'failOn': 'medium'})
+	assert default.status == 'PASS' and 'CG003' not in rules(default)
+	strict = evaluate(responses, store, policy={**POLICY, 'failOn': 'medium', 'requireExplicitSameSite': True})
+	assert strict.status == 'FAIL' and 'CG003' in rules(strict, 'confirmed')
+
+
+def test_host_only_requirement(token):
+	responses = [(f'{ORIGIN}/', [header(token, 'Secure; HttpOnly; SameSite=Lax; Domain=127.0.0.1')])]
+	default = evaluate(responses, [], policy={**POLICY, 'failOn': 'medium'})
+	assert default.status == 'PASS' and 'CG004' in rules(default, 'review')
+	strict = evaluate(responses, [], policy={**POLICY, 'failOn': 'medium', 'requireHostOnly': True})
+	assert strict.status == 'FAIL' and 'CG004' in rules(strict, 'confirmed')
+
+
+def test_audit_options_map_to_the_core_policy():
+	audit = CookieGuardAudit(allowed_origins=[ORIGIN], auth_cookies=['s'], fail_on='medium', allowed_same_site=('strict',),
+		require_explicit_same_site=True, require_host_only=True, max_lifetime_days=7)
+	assert audit.policy == {'authCookies': ['s'], 'failOn': 'medium', 'allowedSameSite': ['strict'],
+		'requireExplicitSameSite': True, 'requireHostOnly': True, 'maxLifetimeDays': 7, 'authEvidence': []}
