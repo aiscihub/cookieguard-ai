@@ -90,9 +90,14 @@ jobs:
           if-no-files-found: error
           retention-days: 7
   browser-use:
-    name: Linux / Python 3.12 / Browser Use / Chromium
+    name: Linux / Python ${{ matrix.python }} / Browser Use / Chromium
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    strategy:
+      # Report every supported version, even if one fails.
+      fail-fast: false
+      matrix:
+        python: ['3.11', '3.12', '3.13']
     env:
       ONNXRUNTIME_NODE_INSTALL: skip
       ANONYMIZED_TELEMETRY: 'false'
@@ -108,7 +113,7 @@ jobs:
           package-manager-cache: false
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
         with:
-          python-version: '3.12'
+          python-version: ${{ matrix.python }}
       - run: npm ci
       - run: npx --no-install playwright install --with-deps chromium
       - name: Vendor the published CookieGuard engine into the Python package
