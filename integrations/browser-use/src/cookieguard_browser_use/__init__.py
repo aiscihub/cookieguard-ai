@@ -9,7 +9,7 @@ from ._audit import ACTION_DESCRIPTION, DEFAULT_ACTION_NAME, CookieGuardAudit
 from ._errors import CookieGuardError, CookiePolicyError
 from ._result import AuditResult, Finding
 
-__version__ = '0.1.0b1'
+__version__ = '0.1.0'
 __all__ = [
 	'ACTION_DESCRIPTION',
 	'AuditResult',

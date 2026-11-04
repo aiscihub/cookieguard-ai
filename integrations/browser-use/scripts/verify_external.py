@@ -8,6 +8,8 @@
    installs the wheel with its declared dependencies, and confirms the package
    imports from that virtualenv rather than from the source tree.
 4. Copies the test suite there and runs it, then runs the demo module.
+   Then installs the sdist into a second clean venv (pip builds it from source),
+   checks the engine hashes, and runs the demo again.
 5. Writes sanitized evidence to artifacts/browser-use/ and checks that no
    synthetic canary appears in any output or saved file.
 """
@@ -106,10 +108,35 @@ def main() -> int:
 		if leaks:
 			raise SystemExit(f'Synthetic secret found in consumer artifacts {leaks}; contents withheld.')
 		print(f'Leak scan: {len(produced)} produced files checked outside venv/ and tests/.')
+
+	# The sdist path: pip builds a wheel from the source archive, as it does for
+	# users who install without wheels. Check the result imports, carries an intact
+	# engine, and passes the end-to-end demo (real Chromium, synthetic session tokens).
+	with tempfile.TemporaryDirectory(prefix='cookieguard-browser-use-sdist-') as temporary:
+		consumer = Path(temporary).resolve()
+		venv = consumer / 'venv'
+		require(sh(args.python, '-m', 'venv', str(venv), cwd=consumer), 'sdist venv')
+		python = venv / ('Scripts/python.exe' if os.name == 'nt' else 'bin/python')
+		env = {key: value for key, value in os.environ.items() if not key.startswith(('PYTHON', 'VIRTUAL_ENV'))}
+		env.update(ANONYMIZED_TELEMETRY='false', BROWSER_USE_CLOUD_SYNC='false')
+		require(sh(str(python), '-m', 'pip', 'install', '-q', '--no-binary', 'cookieguard-browser-use', str(sdist),
+			cwd=consumer, env=env), 'sdist install')
+		check = sh(str(python), '-c', 'import cookieguard_browser_use as c; from cookieguard_browser_use._engine import '
+			'verify_engine_files; verify_engine_files(); print(c.__file__); print(c.__version__)', cwd=consumer, env=env)
+		require(check, 'sdist import and engine check')
+		sdist_path, sdist_version = check.stdout.split()
+		if not Path(sdist_path).resolve().is_relative_to(venv) or sdist_version != version:
+			raise SystemExit('sdist install imported the wrong package or version.')
+		sdist_demo = sh(str(python), '-m', 'cookieguard_browser_use.demo', cwd=consumer, env=env, timeout=600)
+		require(sdist_demo, 'sdist demo')
+		sdist_statuses = [line for line in sdist_demo.stdout.splitlines() if line.startswith('CookieGuard for Browser Use:')]
+		print(f'Installed {sdist_version} from {sdist.name} (built from source); engine hashes verified. Demo:\n  '
+			+ '\n  '.join(sdist_statuses))
 	evidence = {
 		'wheel': wheel.name, 'wheelSha256': hashlib.sha256(wheel.read_bytes()).hexdigest(), 'sdist': sdist.name,
+		'sdistSha256': hashlib.sha256(sdist.read_bytes()).hexdigest(),
 		'consumerPython': python_version, 'browserUse': browser_use_version, 'cdpUse': cdp_use_version,
-		'consumerTests': summary, 'demo': statuses, 'canaryLeaks': 0,
+		'consumerTests': summary, 'demo': statuses, 'sdistDemo': sdist_statuses, 'canaryLeaks': 0,
 	}
 	(evidence_dir / 'external-install.json').write_text(json.dumps(evidence, indent=2) + '\n')
 	print(f'Evidence written to {evidence_dir.relative_to(REPO)}/.')

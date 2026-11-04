@@ -4,7 +4,15 @@ Runbook for the maintainer and for a coding agent (for example Codex) doing the 
 Steps marked **Maintainer** need a person with access to the `aiscihub` PyPI and GitHub
 accounts. An agent must stop and ask at each of them.
 
-## State on 2026-11-03
+## State on 2026-11-04
+
+- **0.1.0 (first stable release) is prepared, not published.** It is on branch
+  `release/browser-use-0.1.0`. Release gates and results are in
+  [VALIDATION.md](VALIDATION.md#010-release-candidate--2026-11-04).
+  The tag `browser-use-v0.1.0` does not exist yet. Steps 5 and "Done when (0.1.0)" remain.
+
+0.1.0b1 history:
+
 
 - The integration was merged to `main` in [PR #13](https://github.com/aiscihub/cookieguard-ai/pull/13)
   on 2026-11-03 (`1ed1b82`). Its CI passed: the toolkit job, plus the Browser Use job on
@@ -65,7 +73,7 @@ PyPI also strips `<picture>` and `<source>`, so only the fallback `<img>` (light
   - relative page links (`docs/*.md`, `../../README.md`) to
     `https://github.com/aiscihub/cookieguard-ai/blob/<tag>/…`.
   Keep the repository README relative, so GitHub still renders local files.
-- Pin `<tag>` to the release tag (`browser-use-v0.1.0b1`), not `main`, so the page matches the release.
+- Pin `<tag>` to the release tag (`browser-use-v<version>`, currently `browser-use-v0.1.0`), not `main`, so the page matches the release.
 - In `docs/install.md`, add the PyPI install command. It is a pre-release, so plain `pip install`
   will not select it:
   `pip install --pre cookieguard-browser-use` (or `pip install cookieguard-browser-use==0.1.0b1`).
@@ -130,9 +138,10 @@ Open a PR with steps 2–3. CI must pass, and the maintainer reviews and merges 
 ## 5. Publish to PyPI — Maintainer approves
 
 1. Update `CHANGELOG.md` with the release date. Open a PR, get it merged, then create and push the tag
-   `browser-use-v0.1.0b1` on that `main` commit (with approval).
+   `browser-use-v<version>` (for this release, `browser-use-v0.1.0`) on that `main` commit (with approval).
+   `scripts/verify_metadata.py` fails the workflow if the tag and package version differ.
 2. The tag triggers the workflow. The maintainer approves the `pypi` environment when prompted.
-3. Verify from PyPI in a fresh directory: `pip install --pre cookieguard-browser-use`, then run the demo
+3. Verify from PyPI in a fresh directory: `pip install cookieguard-browser-use==<version>`, then run the demo
    (expect exit 0). Also run the copied test suite, as `verify_external.py` does.
 4. Create a GitHub release for the tag. Attach the wheel and sdist, plus their SHA-256 sums,
    and link the PyPI page and `VALIDATION.md`.
@@ -140,9 +149,19 @@ Open a PR with steps 2–3. CI must pass, and the maintainer reviews and merges 
    install command.
 
 **If something is wrong after publishing:** do not delete. The maintainer can *yank* the version on
-PyPI, and the fix ships as `0.1.0b2`.
+PyPI, and the fix ships as the next patch version (after 0.1.0, `0.1.1`).
 
-## Done when
+## Done when (0.1.0)
+
+- [ ] Hosted CI passes on the release PR: toolkit, plus Browser Use on Python 3.11, 3.12, and 3.13.
+- [ ] The changelog entry is dated, and the PR is merged to `main`.
+- [ ] Tag `browser-use-v0.1.0` is pushed with approval; the release workflow passes and publishes through `pypi`.
+- [ ] `pip install cookieguard-browser-use` (no `--pre`) installs 0.1.0 in clean venvs on Python 3.11–3.13.
+- [ ] The demo installed from PyPI returns insecure FAIL (exit 1) and secure PASS (exit 0).
+- [ ] The PyPI page renders, with links pinned to `browser-use-v0.1.0`.
+- [ ] The GitHub release has the wheel, sdist, and `SHA256SUMS`; VALIDATION.md records the published result.
+
+## Done when (0.1.0b1, completed)
 
 - [x] `pip install --pre cookieguard-browser-use` works in a clean venv on Python 3.11–3.13.
 - [x] The demo installed from PyPI returns insecure FAIL (exit 1), secure PASS (exit 0), and overall exit 0.

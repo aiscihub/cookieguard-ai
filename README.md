@@ -20,7 +20,7 @@
 
 [Quick start](#quick-start) · [How it works](#how-it-works) · [Your policy](#your-policy-decides-what-fails) · [What it checks](#what-it-checks) · [MCP](#use-it-from-an-mcp-client) · [More tools](#more-ways-to-use-cookieguard) · [FAQ](#faq) · [Documentation](#documentation)
 
-<code>pip install --pre cookieguard-browser-use</code>
+<code>pip install cookieguard-browser-use</code>
 
 </div>
 
@@ -58,11 +58,10 @@ logs, or reports.
 
 ### Install
 
-Needs **Python 3.11+, Node.js 24+, and Chrome or Chromium**. Version 0.1.0b1 is a
-pre-release, so include `--pre`:
+Needs **Python 3.11+, Node.js 24+, and Chrome or Chromium**. Install version 0.1.0:
 
 ```bash
-pip install --pre cookieguard-browser-use
+pip install cookieguard-browser-use
 ```
 
 ### Try the demo
@@ -322,12 +321,16 @@ Ubuntu 23.10+ blocks the user namespaces Chromium's sandbox needs. Run
 </details>
 
 <details>
-<summary><strong>Why <code>pip install --pre</code>?</strong></summary>
+<summary><strong>Which environments are tested?</strong></summary>
 
 <br />
 
-0.1.0b1 is a beta. pip skips pre-releases unless you pass `--pre` or pin
-`cookieguard-browser-use==0.1.0b1`.
+Version 0.1.0 is tested with Browser Use 0.13.14 and Chromium-family browsers:
+- **Linux (GitHub `ubuntu-latest`):** Python 3.11, 3.12, and 3.13, Node.js 24, Chromium 156.
+- **macOS (Apple silicon):** Python 3.12, Node.js 24 and 26, Chrome 156.
+
+Windows, Browser Use cloud browsers, and other Browser Use versions are not tested yet.
+[Tested environments and dependencies](integrations/browser-use/docs/limits-and-privacy.md#tested-environments-and-dependencies)
 
 </details>
 

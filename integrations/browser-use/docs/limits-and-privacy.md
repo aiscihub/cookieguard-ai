@@ -40,3 +40,25 @@
   (`BROWSER_USE_CLOUD_SYNC`). A configured `storage_state` path, HAR recording
   (`record_har_path`), traces, or a persistent `user_data_dir` can write cookie
   values to disk. These are outside CookieGuard's control.
+
+## Tested environments and dependencies
+
+Version 0.1.0 is tested in these environments only:
+
+| Platform | Python | Node.js | Browser | Browser Use |
+| --- | --- | --- | --- | --- |
+| Linux, GitHub `ubuntu-latest` (x86_64) | 3.11, 3.12, 3.13 | 24 | Playwright Chromium 156, sandbox on | 0.13.14 |
+| macOS 26 (Apple silicon) | 3.12 | 24, 26 | Google Chrome 156 | 0.13.14 |
+
+- **Not tested:** Windows, Browser Use cloud browsers, other Browser Use versions, and
+  non-Chromium browsers.
+- **Models:** the real-model run used `claude-opus-5-5`. Other providers' paths in
+  `examples/agent_login.py` are untested. The demo and tests use a scripted stand-in model.
+- **Inherited dependency advisories:** Browser Use 0.13.14 pins exact versions of
+  `anyio` (4.12.1), `mcp` (2.1.1), `pillow` (12.3.0), and `pypdf` (6.16.2). On 2026-11-04,
+  `pip-audit` listed published advisories against all four.
+  - CookieGuard does not import them, and it cannot raise Browser Use's exact pins.
+  - Every Browser Use 0.13.14 installation includes them, with or without CookieGuard.
+  - Update when Browser Use releases newer pins, and review those advisories for your own
+    Browser Use workloads, such as PDF or image handling.
+
