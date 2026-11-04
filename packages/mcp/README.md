@@ -179,8 +179,9 @@ npm run verify:mcp
 ```
 
 `verify:mcp` installs packed artifacts into an isolated directory and runs the
-same MCP demo against the installed binary. It uses the npm cache populated by
-`npm ci`; it does not publish. CI includes the MCP tests in `npm test` and the
+same MCP demo against the installed binary. It packs the installed, locked runtime
+dependencies and installs offline with an empty npm cache; it does not publish.
+CI includes the MCP tests in `npm test` and the
 packaged-consumer check in `npm run release:check`.
 
 The official SDK serves both legacy initialization and the 2026-07-28 protocol

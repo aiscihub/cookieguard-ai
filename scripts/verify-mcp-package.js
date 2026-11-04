@@ -37,10 +37,23 @@ try {
       integrity, sha256: createHash('sha256').update(bytes).digest('hex') }, null, 2) + '\n');
     process.stdout.write(`MCP package: ${pack.filename}; required files and registry metadata match.\n`);
   }
+  // npm ci caches locked tarballs, but need not cache the registry metadata
+  // required by npm install in a new consumer. Pack the installed runtime
+  // dependency closure too, and prove the install works with an empty cache.
+  const lock = JSON.parse(await readFile('package-lock.json', 'utf8'));
+  for (const name of ['@modelcontextprotocol/server', '@modelcontextprotocol/core', 'zod']) {
+    const source = resolve('node_modules', name);
+    const { stdout } = await exec('npm', ['pack', source, '--ignore-scripts', '--pack-destination', temp, '--json']);
+    const [pack] = JSON.parse(stdout);
+    assert.equal(pack.name, name);
+    assert.equal(pack.version, lock.packages[`node_modules/${name}`].version);
+    tarballs.push(join(temp, pack.filename));
+  }
   await writeFile(join(temp, 'package.json'), JSON.stringify({ name: 'cookieguard-mcp-consumer', private: true, type: 'module' }));
-  // npm ci populates the dependency cache; CookieGuard workspaces are packed
-  // together so this test never substitutes unpublished code from the registry.
-  await exec('npm', ['install', '--offline', '--ignore-scripts', '--omit=dev', '--no-audit', '--no-fund', ...tarballs], { cwd: temp });
+  await exec('npm', ['install', '--offline', '--ignore-scripts', '--omit=dev', '--no-audit', '--no-fund', ...tarballs], {
+    cwd: temp, env: { ...process.env, npm_config_cache: join(temp, 'npm-cache') },
+  });
+  process.stdout.write('Offline MCP install passed with an empty npm cache and packed locked runtime dependencies.\n');
   for (const name of ['@modelcontextprotocol/client', 'playwright-core', 'onnxruntime-node']) {
     await assert.rejects(stat(join(temp, 'node_modules', name)), { code: 'ENOENT' });
   }

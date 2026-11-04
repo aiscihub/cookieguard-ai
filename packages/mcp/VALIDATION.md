@@ -34,6 +34,7 @@ unknown-identity review, and safe startup errors.
 
 ```text
 MCP package: aiscihub-cookieguard-mcp-0.1.0-beta.1.tgz; required files and registry metadata match.
+Offline MCP install passed with an empty npm cache and packed locked runtime dependencies.
 MCP tools: cookieguard_policy, cookieguard_scan
 secure: PASSED (exitCode 0)
 missing-httponly: FAILED (exitCode 1) — CG001 Missing HttpOnly
@@ -42,9 +43,10 @@ MCP demo passed; cookie-value canary absent from results and diagnostics.
 Isolated MCP tarball consumer passed; no client SDK, browser, or native runtime installed.
 ```
 
-This installs local core, CLI, and MCP tarballs into a temporary consumer using
-the populated npm cache. It validates packaging and dependency resolution without
-workspace links. A published-npm consumer check remains a release-stage task.
+This installs local core, CLI, and MCP tarballs plus the installed, locked MCP SDK
+and Zod dependencies into a temporary consumer with an empty npm cache. It
+validates offline packaging and dependency resolution without workspace links or
+cached registry metadata. A published-npm consumer check remains a release-stage task.
 
 `npm run lint` and `npm run typecheck` — both exit 0, with no diagnostics after
 their command banners.
@@ -95,6 +97,16 @@ has been uploaded or that namespace ownership has been authenticated.
   extracted explicitly instead.
 - The first registry validation attempt exited 1 because sandbox DNS access was
   blocked (`no such host`). Validation with permitted network access succeeded.
+- The initial [Node 24 CI job](https://github.com/aiscihub/cookieguard-ai/actions/runs/41758744428/job/126341070026)
+  failed at `installed-mcp-tarball` with `ENOTCACHED` for
+  `@modelcontextprotocol/server`. The original verifier incorrectly assumed that
+  `npm ci` cached the registry metadata required by a fresh offline install.
+  It now packs the installed runtime dependencies, checks their versions against
+  the lockfile, and installs with an explicitly empty temporary cache. The
+  corrected `npm run verify:mcp` exited 0 with the output above. Targeted ESLint
+  on `scripts/verify-mcp-package.js` and `git diff --check` also exited 0.
+  Before this packaging failure, CI passed all 38 Node tests and 8 Playwright
+  tests; all three Browser Use Python jobs passed as well.
 
 No full Browser Use or Playwright suite was rerun locally for this adapter. Their
 runtime code, vendored engine, and published package versions were not changed.
