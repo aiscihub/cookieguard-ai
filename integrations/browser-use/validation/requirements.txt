@@ -1,0 +1,5 @@
+# Direct requirements for the published-package reproduction (Python 3.11+).
+# Node.js 24+ and Chrome/Chromium are separate, required runtimes.
+browser-use==0.13.14
+cookieguard-browser-use==0.1.0
+pytest==9.0.2
