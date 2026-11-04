@@ -75,7 +75,7 @@ new file mode 100644
 +```
 +
 +Broader fixtures, paired timing measurements and limitations live with the
-+[adapter's validation suite](https://github.com/aiscihub/cookieguard-ai/tree/main/integrations/browser-use/validation).
++[adapter's validation suite](https://github.com/aiscihub/cookieguard-ai/tree/39f6232d86276b6b5caaa114eab2654842f74750/integrations/browser-use/validation).
 +
 +The [existing insecure-login versus secure-login demonstration](https://github.com/aiscihub/cookieguard-ai/blob/browser-use-v0.1.0b1/integrations/browser-use/docs/demo-and-tests.md)
 +includes a recording and provenance. Its November 3 model-driven run is separate

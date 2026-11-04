@@ -60,8 +60,8 @@ The patch applies to the inspected upstream `main`, and upstream pre-commit
 checks passed locally. Hosted PR checks have not run.
 
 [Adapter and installation](https://github.com/aiscihub/cookieguard-ai/tree/main/integrations/browser-use)
-· [Reproduction and raw results](https://github.com/aiscihub/cookieguard-ai/tree/main/integrations/browser-use/validation)
-· [Stable wheel verification](https://github.com/aiscihub/cookieguard-ai/blob/main/integrations/browser-use/validation/evidence/stable-release.json)
+· [Reproduction and raw results](https://github.com/aiscihub/cookieguard-ai/tree/39f6232d86276b6b5caaa114eab2654842f74750/integrations/browser-use/validation)
+· [Stable wheel verification](https://github.com/aiscihub/cookieguard-ai/blob/39f6232d86276b6b5caaa114eab2654842f74750/integrations/browser-use/validation/evidence/stable-release.json)
 · [Existing published demo and provenance](https://github.com/aiscihub/cookieguard-ai/blob/browser-use-v0.1.0b1/integrations/browser-use/docs/demo-and-tests.md)
 
 The linked published demo is from November 3; the fresh reproducible comparison

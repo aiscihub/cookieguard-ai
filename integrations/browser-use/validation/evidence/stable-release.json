@@ -203,12 +203,12 @@
   "upstream_sha": "b49a68e4060acb226da8f784194fef301c53a6d7",
   "prepared_patches": {
     "community-list.patch": "27f216305d779eb2412d594c08ae8330ad3c3480b4e27ee84c7a02940df3d97b",
-    "runnable-example.patch": "6e54f21d776c200e1fd7a50309f0f0baa0f2c6afc78ef49da9c5f7f8b9ef01f0"
+    "runnable-example.patch": "2824193060982870e1478d0d65b09331ca08d55083fc126f035ebcca2cdb53be"
   },
   "example_sources": {
     "cookie_policy.py": "dbe0d4803f1246ede020619bad5f2fa383c0563166626a76062e1d7be6895d8d",
     "test_cookie_policy.py": "7366e79f764c3b9fa46fba51be24b4bcb1a1f368de72facd36a0509fc839d6c4",
-    "README.md": "0f6fc8bad5af2dec8b51f9027e8b23d7b0666d4e6b86e3c0f3909c726c5e23a9"
+    "README.md": "12a62d2a1ec193bcbbff6960209e81b7b07f381938640973dc16e36f336a0a66"
   },
   "metadata_issue": {
     "development_status": [
@@ -229,5 +229,6 @@
       "aborted-run.json"
     ],
     "note": "The earlier 100-trial timings and detection results remain beta measurements, including the recorded Chrome startup failure. No stable timing result is claimed."
-  }
+  },
+  "submission_refresh": "submission-refresh.json; example runtime and tests unchanged, README evidence link pinned to a published commit"
 }
