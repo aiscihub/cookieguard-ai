@@ -2,22 +2,23 @@
 
 # CookieGuard AI
 
-### Cookie security checks for AI browser agents, tests, and CI.
+### Cookie security checks for AI browser agents, MCP clients, tests, and CI.
 
 **A successful agent login is not a secure session cookie.**
 
 [![PyPI](https://img.shields.io/pypi/v/cookieguard-browser-use?style=flat-square&color=3775A9&label=PyPI)](https://pypi.org/project/cookieguard-browser-use/)
 [![Python versions](https://img.shields.io/pypi/pyversions/cookieguard-browser-use?style=flat-square&logo=python&logoColor=white)](https://pypi.org/project/cookieguard-browser-use/)
 [![npm cookieguard-ci](https://img.shields.io/npm/v/cookieguard-ci?style=flat-square&color=cb3837&label=npm%20cookieguard-ci)](https://www.npmjs.com/package/cookieguard-ci)
+[![MCP server preview](https://img.shields.io/badge/MCP-2_tools_(preview)-5c4ee5?style=flat-square)](packages/mcp/README.md)
 [![Node.js 24+](https://img.shields.io/badge/Node.js-24%2B-339933?style=flat-square&logo=nodedotjs&logoColor=white)](integrations/browser-use/docs/install.md)
 [![Browser Use 0.13](https://img.shields.io/badge/Browser_Use-0.13-111111?style=flat-square)](https://github.com/browser-use/browser-use)
 [![CI](https://img.shields.io/github/actions/workflow/status/aiscihub/cookieguard-ai/cookieguard-ci.yml?branch=main&style=flat-square&label=CI)](https://github.com/aiscihub/cookieguard-ai/actions/workflows/cookieguard-ci.yml)
 [![MIT license](https://img.shields.io/badge/license-MIT-f4c430?style=flat-square)](LICENSE)
 [![Girls Who Code Challenge 2026 winner](https://img.shields.io/badge/Girls_Who_Code_Challenge_2026-winner-8250df?style=flat-square)](https://girlswhocode.com/news/gwc-challenge-2026-winners)
 
-**[Browser Use integration](integrations/browser-use/README.md) · [CI guide](docs/CI_GUIDE.md) · [Website](https://aiscihub.github.io/cookieguard-ai/)**
+**[Browser Use integration](integrations/browser-use/README.md) · [MCP server](packages/mcp/README.md) · [CI guide](docs/CI_GUIDE.md) · [Website](https://aiscihub.github.io/cookieguard-ai/)**
 
-[Quick start](#quick-start) · [How it works](#how-it-works) · [Your policy](#your-policy-decides-what-fails) · [What it checks](#what-it-checks) · [More tools](#more-ways-to-use-cookieguard) · [FAQ](#faq) · [Documentation](#documentation)
+[Quick start](#quick-start) · [How it works](#how-it-works) · [Your policy](#your-policy-decides-what-fails) · [What it checks](#what-it-checks) · [MCP](#use-it-from-an-mcp-client) · [More tools](#more-ways-to-use-cookieguard) · [FAQ](#faq) · [Documentation](#documentation)
 
 <code>pip install --pre cookieguard-browser-use</code>
 
@@ -159,6 +160,7 @@ The same published policy engine powers every tool:
 | Tool | Use it for | Get started |
 | --- | --- | --- |
 | **Browser Use** | AI agents that log in and run browser workflows | [Quick start](#quick-start) |
+| **MCP server** (preview) | Letting an AI client scan your app's `Set-Cookie` headers | [Use it from an MCP client](#use-it-from-an-mcp-client) |
 | **Playwright** | Cookies created during login in your existing tests | [Playwright quickstart](docs/CI_GUIDE.md#quick-start-playwright) |
 | **CLI** | `Set-Cookie` headers from a running test app | [CLI quickstart](docs/CI_GUIDE.md#quick-start-cli) |
 | **GitHub Action** | Header checks, a build summary, and a sanitized report | [Action quickstart](docs/CI_GUIDE.md#quick-start-github-actions) |
@@ -170,9 +172,58 @@ With **Node.js 24+**, scan a local endpoint that sets your authentication cookie
 npx cookieguard-ci@0.1.0 scan http://localhost:3000 --auth-cookie session_id
 ```
 
-The CLI and Action do not log in or execute JavaScript. Use Browser Use or Playwright
-for authenticated workflows. Every tool exits **0** for a pass, **1** for a confirmed
-policy failure, and **2** for an incomplete audit.
+The CLI, Action, and MCP server do not log in or execute JavaScript. Use Browser Use or
+Playwright for authenticated workflows. Every tool reports **0** for a pass, **1** for a
+confirmed policy failure, and **2** for an incomplete audit. The MCP server reports it as
+the `exitCode` result field.
+
+### Use it from an MCP client
+
+The CookieGuard MCP server lets an AI client, such as a coding agent, check the cookies
+your app sets. It runs locally over stdio and offers two tools. Your configuration file
+fixes the allowed origins and policy; the client can only choose which URL to scan.
+
+> [!NOTE]
+> Development preview: `@aiscihub/cookieguard-mcp` 0.1.0-beta.1 is not yet on npm or in
+> the MCP Registry. Run it from a checkout of this repository with Node.js 24+.
+
+Try it with no API key or browser. The demo connects a real MCP client to the server:
+
+```bash
+npm ci && npm run demo:mcp
+```
+
+```text
+MCP tools: cookieguard_policy, cookieguard_scan
+secure: PASSED (exitCode 0)
+missing-httponly: FAILED (exitCode 1) — CG001 Missing HttpOnly
+preference: INCOMPLETE (exitCode 2)
+```
+
+To connect your own client, write a config file
+(like [this example](examples/mcp/cookieguard.example.json)) with your app's origin and
+session cookie names. Then add the server to your client's MCP settings:
+
+```json
+{
+  "mcpServers": {
+    "cookieguard": {
+      "command": "node",
+      "args": ["/absolute/path/cookieguard-ai/packages/mcp/bin/cookieguard-mcp.js",
+               "--config", "/absolute/path/cookieguard.json"]
+    }
+  }
+}
+```
+
+| Tool | What it does |
+| --- | --- |
+| `cookieguard_policy` | Shows the allowed origins and the policy in force |
+| `cookieguard_scan` | Scans one allowed URL's `Set-Cookie` headers and returns status, findings, and fixes |
+
+Results never contain cookie values. The agent decides whether to call the tool, so
+enforce results in your tests or CI when you need a gate.
+[MCP guide](packages/mcp/README.md)
 
 ### Browser extension
 
@@ -220,6 +271,18 @@ tests check this with synthetic tokens. Your model provider still receives the t
 page content. Pass credentials through Browser Use `sensitive_data`, and set
 `ANONYMIZED_TELEMETRY=false` to turn off Browser Use telemetry.
 [Limits & privacy](integrations/browser-use/docs/limits-and-privacy.md)
+
+</details>
+
+<details>
+<summary><strong>Browser Use or MCP: which should I use?</strong></summary>
+
+<br />
+
+Use **Browser Use** when an agent logs in and you need the browser's evidence: it sees the
+cookies created during the real workflow, and your code enforces the result. Use the **MCP
+server** to let an AI client check the `Set-Cookie` headers an endpoint returns, without a
+browser or login. Its result is information for the agent, not an enforced gate.
 
 </details>
 
@@ -273,6 +336,7 @@ Ubuntu 23.10+ blocks the user namespaces Chromium's sandbox needs. Run
 | Area | Guides |
 | --- | --- |
 | Browser Use | [Overview](integrations/browser-use/README.md) · [Install](integrations/browser-use/docs/install.md) · [Policy](integrations/browser-use/docs/policy.md) · [How it works](integrations/browser-use/docs/how-it-works.md) · [Results](integrations/browser-use/docs/results.md) · [Limits & privacy](integrations/browser-use/docs/limits-and-privacy.md) · [Demo & tests](integrations/browser-use/docs/demo-and-tests.md) · [Validation](integrations/browser-use/VALIDATION.md) |
+| MCP server | [Guide](packages/mcp/README.md) · [Validation](packages/mcp/VALIDATION.md) · [Release checklist](packages/mcp/RELEASING.md) · [Example config](examples/mcp/cookieguard.example.json) |
 | CI tools | [CI guide](docs/CI_GUIDE.md) · [Playwright demo](docs/CI_GUIDE.md#watch-the-playwright-demo) · [Validation](docs/CI_VALIDATION.md) · [Architecture](docs/CI_ARCHITECTURE.md) |
 | Extension & research | [Original README](docs/ORIGINAL_README.md) · [Project summary](PROJECT_SUMMARY.md) · [Historical report](https://aiscihub.github.io/cookieguard-ai/report.html) |
 | Project | [Release notes](CHANGELOG.md) · [Contributing](CONTRIBUTING.md) · [Troubleshooting](docs/CI_GUIDE.md#contributing-and-troubleshooting) · [Security](SECURITY.md) · [Privacy](PRIVACY.md) |
