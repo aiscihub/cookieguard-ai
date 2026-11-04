@@ -39,6 +39,16 @@ are separate from the preserved beta measurements. The proposed example now
 pins 0.1.0. The wheel still declares `Development Status :: 4 - Beta`; this is
 a packaging metadata inconsistency despite the final version number.
 
+PR review identified a URL-prefix allowlist in the example and POSIX-only setup
+commands without an explicit platform requirement. The example now uses the
+exact hostname `127.0.0.1`, and the README specifies a POSIX shell on macOS or
+Linux (verified on macOS). A new regression checks the actual demo profile
+against lookalike hosts without contacting them. It failed before the fix;
+all seven example tests and upstream pre-commit passed afterward. The existing
+six browser checks still pass with the stable wheel. [Review verification](../validation/evidence/review-fixes.json)
+records the current source and patch hashes; the earlier measurements and
+verification records are preserved.
+
 Browser Use `main` was inspected at
 [`b49a68e4060acb226da8f784194fef301c53a6d7`](https://github.com/browser-use/browser-use/commit/b49a68e4060acb226da8f784194fef301c53a6d7).
 All **171 packaged Python files** matched the released wheel. The upstream

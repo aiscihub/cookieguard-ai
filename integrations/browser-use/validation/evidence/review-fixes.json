@@ -1,0 +1,79 @@
+{
+  "verified_at_utc": "2026-11-04T18:30:22.472301+00:00",
+  "upstream_pr": "https://github.com/browser-use/browser-use/pull/6308",
+  "upstream_commit": "8c3266f794f3a917fc094585e8ac97c9edd9bcd4",
+  "upstream_base": "b49a68e4060acb226da8f784194fef301c53a6d7",
+  "review_comments": [
+    {
+      "url": "https://github.com/browser-use/browser-use/pull/6308#discussion_r4471539771",
+      "fix": "README explicitly requires a POSIX shell on macOS or Linux and states that this walkthrough was verified on macOS."
+    },
+    {
+      "url": "https://github.com/browser-use/browser-use/pull/6308#discussion_r4471539778",
+      "fix": "Use the exact hostname pattern 127.0.0.1 in the actual demo browser profile; add a regression for lookalike hosts."
+    }
+  ],
+  "regression": {
+    "name": "test_demo_navigation_rejects_loopback_lookalikes",
+    "before_fix": {
+      "selected_tests": 1,
+      "failures": 1,
+      "exit_code": 1,
+      "counterexample": "http://127.0.0.1.evil.example/",
+      "log_sha256": "701619087e7bcb0c6ed1ab14ed4b77d2e77d4b6d67d4c1907962dfc3e397f557"
+    },
+    "checks": [
+      "Allows loopback login/account URLs on different ephemeral ports",
+      "Rejects hostname suffix lookalikes, userinfo tricks, adjacent IPs, www-prefixed lookalikes, and query-string imitations"
+    ],
+    "method": "Construct the demo browser profile and use Browser Use SecurityWatchdog matching; no browser is launched and none of the regression URLs is contacted."
+  },
+  "example_suite_after_fix": {
+    "command": "python -m pytest -o addopts='' -o log_cli=false examples/integrations/cookieguard/test_cookie_policy.py -q",
+    "tests": 7,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "exit_code": 0,
+    "real_browser_checks": 6,
+    "matcher_regression_checks": 1,
+    "time_seconds": 36.462,
+    "timestamp": "2026-11-04T10:27:44.102300-08:00",
+    "junit_sha256": "01419d2e927eb8179c2f4aec94313b48aab1ca1984313230c76e4fec76b4e0dc",
+    "log_sha256": "83b45e7237346baf9949c84d509b6769fd0b5407260384ccb020848143b49d1e",
+    "cases": [
+      "test_demo_navigation_rejects_loopback_lookalikes",
+      "test_baseline_logs_in_without_a_security_verdict[insecure]",
+      "test_baseline_logs_in_without_a_security_verdict[secure]",
+      "test_final_audit_enforces_missing_httponly_without_an_agent_tool_call",
+      "test_secure_cookie_passes_and_agent_can_call_the_optional_tool",
+      "test_command_enforces_policy[insecure-1]",
+      "test_command_enforces_policy[secure-0]"
+    ],
+    "warning": "The minimal example environment lacks pytest-timeout; upstream's timeout config produces one warning. No tests failed or were skipped."
+  },
+  "environment": {
+    "python": "3.12.12",
+    "platform": "macOS-26.6.2-arm64-arm-64bit",
+    "browser-use": "0.13.14",
+    "cookieguard-browser-use": "0.1.0"
+  },
+  "upstream_pre_commit": {
+    "result": "All applicable hooks passed on the four proposed paths",
+    "log_sha256": "59d1eec38c06fbcc68abffe471eb2f18e6240bb9c7f5787d4e3b33e44255db64"
+  },
+  "example_sources": {
+    "README.md": "f8e88cb554c1f603317d489ddbaf73d7858378ce209c852385f426580b581ac1",
+    "cookie_policy.py": "a323203b33191053385330494a0eafbb5392b64ff51d541389be396cdc7197a9",
+    "test_cookie_policy.py": "5a056f7fb383ef7c1b6a8d6a3ec2a7d6f01324613ef03ec44658f2dab7dca7ac"
+  },
+  "prepared_patches": {
+    "community-list.patch": "27f216305d779eb2412d594c08ae8330ad3c3480b4e27ee84c7a02940df3d97b",
+    "runnable-example.patch": "1383b9701d070440ace5fb607a35cc640ab732795f17a06677f915b30676d890"
+  },
+  "historical_evidence": {
+    "benchmark_sha256": "c6fbf8eee9fb64f8e169f8a82d3e98efb58dd1e69591be36ce7305081eb29090",
+    "benchmark_repeated": false,
+    "note": "Original benchmark and beta/stable verification records remain unchanged. This record covers the PR review corrections only."
+  }
+}

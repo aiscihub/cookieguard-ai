@@ -10,6 +10,7 @@ This bundle records local verification; hosted PR checks are separate.
 - [Listing-only fallback patch](community-list.patch)
 - [Runnable example and its tests](example/README.md)
 - [Stable-release verification](../validation/evidence/stable-release.json)
+- [PR review fixes and regression checks](../validation/evidence/review-fixes.json)
 - [Recorded beta demo command outcomes](../validation/evidence/example-cli.json)
 
 The selected proposal is the existing insecure-login versus secure-login demo,
@@ -23,8 +24,8 @@ prefer an external pointer. Apply only one patch. Both target upstream commit
 The example pins CookieGuard **0.1.0** and Browser Use **0.13.14**. The original
 benchmark remains labeled **0.1.0b1**; stable verification records the wheel
 comparison and fresh demo checks separately. Original patch hashes in the beta
-provenance describe the earlier preparation; current hashes are in the stable
-verification record.
+provenance and stable verification describe the earlier preparation; current
+example and patch hashes are in the PR review verification record.
 
 From a clean Browser Use checkout:
 

@@ -14,7 +14,7 @@ diff --git a/examples/integrations/cookieguard/README.md b/examples/integrations
 new file mode 100644
 --- /dev/null
 +++ b/examples/integrations/cookieguard/README.md
-@@ -0,0 +1,66 @@
+@@ -0,0 +1,68 @@
 +# CookieGuard AI
 +
 +Independent authentication-cookie security auditing for Browser Use workflows.
@@ -26,6 +26,8 @@ new file mode 100644
 +
 +Requires Python 3.11+, Node.js 24+, and a local Chrome/Chromium. Tested with
 +`browser-use==0.13.14` and `cookieguard-browser-use==0.1.0`.
++The commands below require macOS or Linux with a POSIX shell; this walkthrough
++was verified on macOS.
 +
 +From the Browser Use repository root, install into a separate environment:
 +
@@ -85,7 +87,7 @@ diff --git a/examples/integrations/cookieguard/cookie_policy.py b/examples/integ
 new file mode 100644
 --- /dev/null
 +++ b/examples/integrations/cookieguard/cookie_policy.py
-@@ -0,0 +1,96 @@
+@@ -0,0 +1,101 @@
 +"""Enforce an optional cookie audit after a local Browser Use agent login.
 +
 +Uses the external package's synthetic app and scripted model to exercise the
@@ -118,19 +120,24 @@ new file mode 100644
 +	result: AuditResult | None
 +
 +
++def create_local_browser() -> BrowserSession:
++	"""Create the disposable browser used by the loopback demo."""
++	return BrowserSession(
++		browser_profile=BrowserProfile(
++			headless=True,
++			keep_alive=True,
++			user_data_dir=None,
++			enable_default_extensions=False,
++			allowed_domains=['127.0.0.1'],  # Exact hostname matching rejects lookalike external hosts.
++		)
++	)
++
++
 +async def run_login(mode: str, *, guarded: bool = True, call_tool: bool = False) -> LoginRun:
 +	"""Use a fresh loopback app/browser; retain the final audit for developer enforcement."""
 +	with DemoApp(mode) as app:
 +		audit = CookieGuardAudit(allowed_origins=[app.origin], auth_cookies=['session_id']) if guarded else None
-+		session = BrowserSession(
-+			browser_profile=BrowserProfile(
-+				headless=True,
-+				keep_alive=True,
-+				user_data_dir=None,
-+				enable_default_extensions=False,
-+				allowed_domains=['http://127.0.0.1'],
-+			)
-+		)
++		session = create_local_browser()
 +		tools = Tools()
 +		if audit:
 +			audit.register_tools(tools)  # Optional provisional, value-free check for the agent.
@@ -186,7 +193,7 @@ diff --git a/examples/integrations/cookieguard/test_cookie_policy.py b/examples/
 new file mode 100644
 --- /dev/null
 +++ b/examples/integrations/cookieguard/test_cookie_policy.py
-@@ -0,0 +1,45 @@
+@@ -0,0 +1,63 @@
 +"""Opt-in real-browser checks; requires the external package and Node.js 24+."""
 +
 +import asyncio
@@ -195,8 +202,26 @@ new file mode 100644
 +
 +pytest.importorskip('cookieguard_browser_use')
 +
-+from cookie_policy import main, run_login
++from cookie_policy import create_local_browser, main, run_login
 +from cookieguard_browser_use import CookiePolicyError  # pyright: ignore[reportMissingImports]
++
++from browser_use.browser.watchdogs.security_watchdog import SecurityWatchdog
++
++
++def test_demo_navigation_rejects_loopback_lookalikes():
++	"""Check the demo's actual profile without launching a browser or contacting any URL."""
++	session = create_local_browser()
++	watchdog = SecurityWatchdog(browser_session=session, event_bus=session.event_bus)
++	assert watchdog._is_url_allowed('http://127.0.0.1:12345/login')
++	assert watchdog._is_url_allowed('http://127.0.0.1:54321/account')
++	for url in (
++		'http://127.0.0.1.evil.example/',
++		'http://127.0.0.1@evil.example/',
++		'http://127.0.0.10/',
++		'http://www.127.0.0.1/',
++		'http://evil.example/?next=http://127.0.0.1/',
++	):
++		assert not watchdog._is_url_allowed(url), url
 +
 +
 +@pytest.mark.parametrize('mode', ['insecure', 'secure'])

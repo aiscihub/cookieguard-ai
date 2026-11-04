@@ -1,6 +1,6 @@
 # Proposed title
 
-examples: add CookieGuard AI authentication-cookie audit demo
+docs(examples): add CookieGuard AI authentication-cookie audit demo
 
 # Proposed body
 
@@ -17,8 +17,9 @@ The script shows the integration points directly: start the audit before login,
 optionally register its tool, run the Browser Use agent, finish before browser
 cleanup, and enforce the result in developer code. It uses the external
 package's disposable app and scripted model to exercise the real Agent loop
-without an API key. Its six opt-in tests check those outcomes and enforcement
-when the agent never calls the audit tool.
+without an API key. Its six browser tests check those outcomes and enforcement
+when the agent never calls the audit tool. A seventh test checks that the demo's
+navigation profile rejects external hosts that imitate the loopback address.
 
 The contribution is a script, README, tests and one community-list entry,
 following the integration example guidelines. CookieGuard stays maintained
@@ -37,6 +38,12 @@ benchmark-scorer tests. The full adapter browser suite was not repeated on 0.1.0
 Upstream pre-commit checks passed on the changed paths; Pyright also passed with
 the optional package absent. The package's scripted demo helper needs a documented
 type cast because it lacks the full static `BaseChatModel` protocol.
+
+Following PR review, the demo uses an exact hostname allowlist and the README
+explicitly requires a POSIX shell on macOS or Linux. The new hostname regression
+failed with the original URL-prefix pattern. All seven example tests and upstream
+pre-commit passed after the fix; the six browser checks still use CookieGuard
+0.1.0 and Browser Use 0.13.14. Historical benchmark measurements are unchanged.
 
 <!-- measured-pr-results-start -->
 The separate ten-fixture comparison used CookieGuard **0.1.0b1** and completed

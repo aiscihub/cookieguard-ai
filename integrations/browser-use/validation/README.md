@@ -13,6 +13,10 @@ substitute `requirements-beta.txt` for `requirements.txt`. Stable-release
 verification is recorded separately in [stable-release.json](evidence/stable-release.json);
 the old measurements have not been relabeled as stable-release results.
 
+The [PR review follow-up](evidence/review-fixes.json) records the exact-hostname
+navigation fix, explicit POSIX setup requirements, and seven passing example
+tests. The original benchmark and its source hashes remain unchanged.
+
 From the CookieGuard repository root, with `uv`, Python 3.12, Node.js 24+, and
 Chrome/Chromium available:
 
