@@ -1,4 +1,39 @@
-# Validation record — cookieguard-browser-use 0.1.0b1
+# Validation record — cookieguard-browser-use
+
+Newest release first. The 0.1.0b1 records below are kept unchanged as provenance.
+
+## 0.1.0 release candidate — 2026-11-04
+
+Prepared on branch `release/browser-use-0.1.0` from `main` at `6875489`. Nothing was
+published, and no release tag was pushed.
+
+Local environment: macOS 26.6.2 (arm64), Python 3.12.12, Node.js 26.10.0, browser-use 0.13.14,
+cdp-use 1.4.5, pydantic 2.13.5, Google Chrome 156. All runs used loopback demo apps and synthetic
+`CGBU_CANARY_*` session tokens. No AI provider was called.
+
+| Gate | Command | Result |
+| --- | --- | --- |
+| Code unchanged since beta | `git diff browser-use-v0.1.0b1 -- integrations/browser-use/src packages/core packages/playwright` | Only `__version__` changed |
+| Engine provenance | `node scripts/vendor_engine.mjs --registry` | Byte-identical to npm `@aiscihub/cookieguard-core@0.1.0` and `@aiscihub/cookieguard-playwright@0.1.0` |
+| Python suite | `pytest -q` (fresh venv) | **89 passed**, 0 warnings, 2m44s |
+| Repository release gate | `npm run release:check` | Exit 0, all steps. Source credentials (231 files), licenses (131 entries), npm advisories 0, 38/38 Node tests, 8/8 Playwright, packaged CLI/Playwright/MCP consumers, leakage |
+| Wheel install | `scripts/verify_external.py` | Clean venv outside the repo: 89 passed; demo insecure FAIL (exit 1) / secure PASS (exit 0); no canary in produced files |
+| Sdist install | `scripts/verify_external.py` (new sdist path) | pip built the sdist from source in a second clean venv; engine hashes verified; demo FAIL/PASS |
+| Python dependency audit | `pip-audit` 2.10.1 on the 104 runtime packages of a fresh install | Advisories only in Browser Use's exact pins: anyio 4.12.1 (2), mcp 2.1.1 (4), pillow 12.3.0 (39), pypdf 6.16.2 (26). Not imported by CookieGuard; documented as inherited |
+
+After the version change, the same gates were rerun on the 0.1.0 artifacts themselves:
+
+| Gate | Command | Result |
+| --- | --- | --- |
+| Build and description | `python -m build`, `twine check --strict dist/*`, `scripts/verify_metadata.py` | Both PASSED. `Version: 0.1.0`. 18 absolute links/images, 16 pinned to `browser-use-v0.1.0`. No `--pre` or `0.1.0b1` in the description |
+| Tag guard | `GITHUB_REF=refs/tags/browser-use-v0.1.0` / `…-v0.1.0b1 verify_metadata.py` | Exit 0 for the matching tag; exit 1 for a mismatched tag |
+| Wheel install | `scripts/verify_external.py` | Clean venv: **89 passed**; demo FAIL (exit 1) / PASS (exit 0); no canary in produced files |
+| Sdist install | `scripts/verify_external.py` | Built from source; engine hashes verified; demo FAIL / PASS |
+| Docs | Link and anchor check | 143 relative links and anchors in 11 files; none broken |
+
+Hosted CI for the release branch is recorded on its pull request.
+
+## 0.1.0b1 beta records — 2026-11-03
 
 Recorded 2026-11-03 on macOS 26.6.2 (arm64), Python 3.12.12, Node.js 26.10.0,
 browser-use 0.13.14, cdp-use 1.4.5, Google Chrome 156.0.8078.80 (found by Browser Use).

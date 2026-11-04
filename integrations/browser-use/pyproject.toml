@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "cookieguard-browser-use"
-version = "0.1.0b1"
+version = "0.1.0"
 description = "CookieGuard authentication-cookie policy checks for Browser Use agents"
 dynamic = ["readme"]
 license = "MIT"
@@ -46,15 +46,15 @@ fragments = [{ path = "README.md" }]
 # Update these release-tag pins together with the package version.
 [[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
 pattern = '''(?P<prefix>(?:src|srcset)="|!\[[^\]]*\]\()(?P<path>docs/[^"()\s]+\.(?:svg|gif))'''
-replacement = '\g<prefix>https://raw.githubusercontent.com/aiscihub/cookieguard-ai/browser-use-v0.1.0b1/integrations/browser-use/\g<path>'
+replacement = '\g<prefix>https://raw.githubusercontent.com/aiscihub/cookieguard-ai/browser-use-v0.1.0/integrations/browser-use/\g<path>'
 
 [[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
 pattern = '''(?P<prefix>\]\()(?P<path>docs/[^)\s]+\.md(?:#[^)\s]*)?)'''
-replacement = '\g<prefix>https://github.com/aiscihub/cookieguard-ai/blob/browser-use-v0.1.0b1/integrations/browser-use/\g<path>'
+replacement = '\g<prefix>https://github.com/aiscihub/cookieguard-ai/blob/browser-use-v0.1.0/integrations/browser-use/\g<path>'
 
 [[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
 pattern = '''(?P<prefix>\]\()\.\./\.\./(?P<path>README\.md(?:#[^)\s]*)?)'''
-replacement = '\g<prefix>https://github.com/aiscihub/cookieguard-ai/blob/browser-use-v0.1.0b1/\g<path>'
+replacement = '\g<prefix>https://github.com/aiscihub/cookieguard-ai/blob/browser-use-v0.1.0/\g<path>'
 
 [[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
 pattern = ', not yet on PyPI\.'

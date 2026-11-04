@@ -1,5 +1,24 @@
 # Changelog
 
+## CookieGuard for Browser Use 0.1.0 — first stable release — unreleased
+
+The code and behavior are the same as 0.1.0b1. Since the `browser-use-v0.1.0b1` tag, only
+the version string changed in `src/cookieguard_browser_use`, and the vendored engine is
+still the published `@aiscihub/cookieguard-core` and `@aiscihub/cookieguard-playwright` 0.1.0.
+
+- Release 0.1.0 as a final version: `pip install cookieguard-browser-use` no longer needs
+  `--pre`. Package description links are pinned to `browser-use-v0.1.0`.
+- `scripts/verify_external.py` now also installs the sdist into a second clean venv,
+  where pip builds it from source. It checks the engine hashes and runs the end-to-end demo.
+- Document the tested environments:
+  - Linux with Python 3.11–3.13 and macOS with Python 3.12;
+  - Browser Use 0.13.14 and Chromium-family browsers 156.
+- Document the dependency advisories inherited from Browser Use 0.13.14's exact pins:
+  `anyio`, `mcp`, `pillow`, and `pypdf`. CookieGuard does not import them and cannot
+  change those pins.
+- Known limits are unchanged. Windows, Browser Use cloud browsers, other Browser Use
+  versions, and model providers other than `claude-opus-5-5` remain untested.
+
 ## CookieGuard for Browser Use 0.1.0b1 — pre-release — 2026-11-03
 
 - Add `integrations/browser-use`: the `cookieguard-browser-use` Python package for
