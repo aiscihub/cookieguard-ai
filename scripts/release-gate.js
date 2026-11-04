@@ -11,6 +11,7 @@ const steps = [
   ['dependency-advisories', 'npm', ['audit', '--audit-level=low', '--json']],
   ['toolkit-tests', 'npm', ['run', 'check']],
   ['installed-tarballs', process.execPath, ['scripts/verify-packages.js']],
+  ['installed-mcp-tarball', process.execPath, ['scripts/verify-mcp-package.js']],
   ['controlled-benchmark', 'npm', ['run', 'benchmark']],
   ['output-leakage', process.execPath, ['scripts/check-artifacts.js']],
 ];

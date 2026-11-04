@@ -1,0 +1,25 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.aiscihub/cookieguard",
+  "title": "CookieGuard",
+  "description": "Audit HTTP cookie security against your local policy. Returns findings without cookie values.",
+  "repository": {
+    "url": "https://github.com/aiscihub/cookieguard-ai",
+    "source": "github",
+    "subfolder": "packages/mcp"
+  },
+  "version": "0.1.0-beta.1",
+  "packages": [{
+    "registryType": "npm",
+    "identifier": "@aiscihub/cookieguard-mcp",
+    "version": "0.1.0-beta.1",
+    "transport": { "type": "stdio" },
+    "packageArguments": [{
+      "type": "named",
+      "name": "--config",
+      "description": "Absolute path to your local CookieGuard JSON configuration (allowedOrigins, policy, timeoutMs).",
+      "format": "filepath",
+      "isRequired": true
+    }]
+  }]
+}

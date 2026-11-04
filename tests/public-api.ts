@@ -3,6 +3,7 @@ import { createOnnxClassifier } from '@aiscihub/cookieguard-core/onnx';
 import { scanUrl, runCli } from 'cookieguard-ci';
 import { startCookieAudit, auditPage } from '@aiscihub/cookieguard-playwright';
 import type { BrowserContext, Page } from 'playwright-core';
+import { createCookieGuardServer, type CookieGuardMcpOptions } from '@aiscihub/cookieguard-mcp';
 
 const policy: Policy = { authCookies: ['session_id'], failOn: 'high', allowedSameSite: ['strict', 'lax'] };
 const observation = normalizeCookie({ name: 'session_id', secure: true, httpOnly: true }, { source: 'browser' });
@@ -15,3 +16,5 @@ declare const context: BrowserContext;
 declare const page: Page;
 void startCookieAudit(context, { origins: ['http://localhost:3000'], policy }).evaluate();
 void auditPage(page, { policy });
+const mcpOptions: CookieGuardMcpOptions = { allowedOrigins: ['http://localhost:3000'], policy, timeoutMs: 1000 };
+void createCookieGuardServer(mcpOptions).close();

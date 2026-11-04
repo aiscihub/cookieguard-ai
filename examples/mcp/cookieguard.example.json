@@ -1,0 +1,12 @@
+{
+  "allowedOrigins": ["http://127.0.0.1:3000"],
+  "policy": {
+    "authCookies": ["session_id"],
+    "failOn": "high",
+    "allowedSameSite": ["lax", "strict"],
+    "requireExplicitSameSite": true,
+    "requireHostOnly": true,
+    "maxLifetimeDays": 30
+  },
+  "timeoutMs": 10000
+}
