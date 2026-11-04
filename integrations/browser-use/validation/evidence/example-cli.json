@@ -1,0 +1,45 @@
+{
+  "runs": [
+    {
+      "case": "baseline",
+      "arguments": [
+        "--baseline"
+      ],
+      "exit_code": 0,
+      "expected_exit": 0,
+      "matched": true,
+      "summary": [
+        "Server login succeeded: True; agent succeeded: True",
+        "Cookie policy: NOT_AUDITED"
+      ]
+    },
+    {
+      "case": "insecure",
+      "arguments": [],
+      "exit_code": 1,
+      "expected_exit": 1,
+      "matched": true,
+      "summary": [
+        "Server login succeeded: True; agent succeeded: True",
+        "CookieGuard CI \u2014 Authentication Cookie Audit",
+        "HIGH CG001 \u2014 \"session_id\": Missing HttpOnly",
+        "Result: FAILED \u2014 1 confirmed violations at or above high"
+      ]
+    },
+    {
+      "case": "secure",
+      "arguments": [
+        "--mode",
+        "secure"
+      ],
+      "exit_code": 0,
+      "expected_exit": 0,
+      "matched": true,
+      "summary": [
+        "Server login succeeded: True; agent succeeded: True",
+        "CookieGuard CI \u2014 Authentication Cookie Audit",
+        "Result: PASSED \u2014 0 confirmed violations at or above high"
+      ]
+    }
+  ]
+}

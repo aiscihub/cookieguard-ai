@@ -1,0 +1,5 @@
+# Historical direct pins for the recorded 100-trial benchmark.
+# Node.js 24+ and Chrome/Chromium are separate, required runtimes.
+browser-use==0.13.14
+cookieguard-browser-use==0.1.0b1
+pytest==9.0.2

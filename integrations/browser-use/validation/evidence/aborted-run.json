@@ -1,0 +1,17 @@
+{
+  "run": "initial-five-repetition-attempt",
+  "completed_trials": 75,
+  "completed_repetitions": 3,
+  "failed_trial": {
+    "repetition": 4,
+    "case": "samesite_omitted",
+    "arm": "cookieguard",
+    "phase": "BrowserSession.start (before audit.start)",
+    "type": "RuntimeError",
+    "message": "Browser process exited before CDP became available"
+  },
+  "final_report_written": false,
+  "timing_rows_preserved": false,
+  "disposition": "Do not use this aborted run for detailed timing or pooled detection metrics. Its stdout log remains in ignored local artifacts. Retain this failure alongside the subsequent complete attempt.",
+  "harness_change": "Persist each trial to JSONL; retain execution failures in denominators and report validation failure without retrying or omitting them."
+}

@@ -1,0 +1,3833 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-11-04T17:03:18.182122+00:00",
+  "environment": {
+    "python": "3.12.12",
+    "platform": "macOS-26.6.2-arm64-arm-64bit",
+    "node": "v26.10.0",
+    "packages": {
+      "browser-use": "0.13.14",
+      "cookieguard-browser-use": "0.1.0b1",
+      "cdp-use": "1.4.5"
+    },
+    "import_locations": {
+      "browser_use": "<isolated-venv>/lib/python3.12/site-packages/browser_use/__init__.py",
+      "cookieguard_browser_use": "<isolated-venv>/lib/python3.12/site-packages/cookieguard_browser_use/__init__.py"
+    },
+    "harness_sha256": {
+      "benchmark.py": "a1a28009b954d5648065e615c25d310870f1198b567b1208d4eda2eceb314275",
+      "local_site.py": "98c60f51645005c7a45dafbfe5f0cbb4d8e456cedc55974c21cc46017eb1df0e",
+      "test_benchmark.py": "14aef759e53a8bc6e3d9ec401e812e8527f2ab033d567ae70ce06d385f2ad12b"
+    }
+  },
+  "method": {
+    "driver": "Browser Use Actor; no LLM",
+    "repetitions": 5,
+    "fresh_browser_per_trial": true,
+    "discarded_warmup_trials": 2,
+    "pair_order": "alternating",
+    "policy": {
+      "auth_cookies": [
+        "session_id"
+      ],
+      "fail_on": "medium",
+      "require_explicit_same_site": true,
+      "max_lifetime_days": 30
+    },
+    "total_includes": "browser construction/start, audit start, login workflow, audit finish, version probe, cleanup",
+    "total_excludes": "imports, local site startup/shutdown, serialization, assert_policy call"
+  },
+  "summary": {
+    "policy": {
+      "positive_trials": 30,
+      "negative_trials": 15,
+      "true_positive": 29,
+      "false_negative_incomplete_or_error": 1,
+      "false_positive": 0,
+      "true_negative": 15,
+      "incomplete_negative_trials": 0,
+      "expected_rule_detections": 35,
+      "matched_rule_detections": 34,
+      "unexpected_confirmed_rules": 0,
+      "gap_trials": 5,
+      "gaps_reported_incomplete": 5
+    },
+    "baseline": {
+      "trials": 50,
+      "security_verdict": "NOT_AUDITED"
+    },
+    "execution_errors": {
+      "baseline": 0,
+      "cookieguard": 1
+    },
+    "complete_timing_pairs": 49,
+    "paired_overhead": {
+      "workflow_ms": {
+        "delta_ms": {
+          "n": 49,
+          "median": -0.8344161324203014,
+          "p95": 12.364457827061415,
+          "min": -97.30095905251801,
+          "max": 28.52112497203052
+        },
+        "delta_percent": {
+          "n": 49,
+          "median": -0.3662452659987214,
+          "p95": 5.4679344037433575,
+          "min": -28.813586092472942,
+          "max": 12.654767408526467
+        }
+      },
+      "audited_workflow_ms": {
+        "delta_ms": {
+          "n": 49,
+          "median": 166.43841681070626,
+          "p95": 200.90712537057698,
+          "min": 75.03241579979658,
+          "max": 205.96770709380507
+        },
+        "delta_percent": {
+          "n": 49,
+          "median": 72.45557553379027,
+          "p95": 88.40641050850593,
+          "min": 22.219236001638553,
+          "max": 91.39985623649657
+        }
+      },
+      "total_ms": {
+        "delta_ms": {
+          "n": 49,
+          "median": -3477.8402091469616,
+          "p95": 8614.875499159098,
+          "min": -8511.450917925686,
+          "max": 8842.006124788895
+        },
+        "delta_percent": {
+          "n": 49,
+          "median": -39.77494415242756,
+          "p95": 765.0162016880901,
+          "min": -87.67257669173559,
+          "max": 854.4800860251921
+        }
+      }
+    },
+    "timing_ms": {
+      "baseline": {
+        "audit_finish_ms": {
+          "n": 50,
+          "median": 0.0,
+          "p95": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "audit_start_ms": {
+          "n": 50,
+          "median": 0.0,
+          "p95": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "audited_workflow_ms": {
+          "n": 50,
+          "median": 230.3006665315479,
+          "p95": 265.55704209022224,
+          "min": 223.1047919485718,
+          "max": 337.6912500243634
+        },
+        "browser_start_ms": {
+          "n": 50,
+          "median": 4852.547479560599,
+          "p95": 9285.54141591303,
+          "min": 611.151667078957,
+          "max": 9366.030832985416
+        },
+        "cleanup_ms": {
+          "n": 50,
+          "median": 108.51935402024537,
+          "p95": 114.61162497289479,
+          "min": 107.01612499542534,
+          "max": 117.44808312505484
+        },
+        "total_ms": {
+          "n": 50,
+          "median": 5205.759999458678,
+          "p95": 9671.042999951169,
+          "min": 956.8304170388728,
+          "max": 9721.236124867573
+        },
+        "workflow_ms": {
+          "n": 50,
+          "median": 230.3006665315479,
+          "p95": 265.55704209022224,
+          "min": 223.1047919485718,
+          "max": 337.6912500243634
+        }
+      },
+      "cookieguard": {
+        "audit_finish_ms": {
+          "n": 49,
+          "median": 7.936791051179171,
+          "p95": 16.73508295789361,
+          "min": 4.520541988313198,
+          "max": 25.555791100487113
+        },
+        "audit_start_ms": {
+          "n": 49,
+          "median": 157.08962501958013,
+          "p95": 184.34612499549985,
+          "min": 146.44312509335577,
+          "max": 196.86370808631182
+        },
+        "audited_workflow_ms": {
+          "n": 49,
+          "median": 401.15854097530246,
+          "p95": 427.9282921925187,
+          "min": 376.5557501465082,
+          "max": 456.31774910725653
+        },
+        "browser_start_ms": {
+          "n": 49,
+          "median": 4450.808000052348,
+          "p95": 9352.565667126328,
+          "min": 601.5137499198318,
+          "max": 9388.346042018384
+        },
+        "cleanup_ms": {
+          "n": 49,
+          "median": 109.20933308079839,
+          "p95": 111.37391696684062,
+          "min": 107.5061250012368,
+          "max": 128.6829172167927
+        },
+        "total_ms": {
+          "n": 49,
+          "median": 4970.814000116661,
+          "p95": 9880.955875152722,
+          "min": 1096.503417007625,
+          "max": 9924.33362500742
+        },
+        "workflow_ms": {
+          "n": 49,
+          "median": 229.836291866377,
+          "p95": 246.57262512482703,
+          "min": 222.86037495359778,
+          "max": 259.9412500858307
+        }
+      }
+    }
+  },
+  "validation_failures": [
+    "missing_httponly/cookieguard/3: execution error at browser_start"
+  ],
+  "warmups": [
+    {
+      "case": "secure_lax",
+      "arm": "baseline",
+      "expected_status": "PASS",
+      "expected_rules": [],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 1081.797458929941,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 227.3308748845011,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 111.09295906499028,
+        "total_ms": 1454.855625052005,
+        "audited_workflow_ms": 227.3308748845011
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 0
+    },
+    {
+      "case": "secure_lax",
+      "arm": "cookieguard",
+      "expected_status": "PASS",
+      "expected_rules": [],
+      "login_succeeded": true,
+      "status": "PASS",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 4792.708165943623,
+        "audit_start_ms": 155.74787487275898,
+        "workflow_ms": 228.52516593411565,
+        "audit_finish_ms": 6.1036660335958,
+        "cleanup_ms": 108.40437491424382,
+        "total_ms": 5302.395333070308,
+        "audited_workflow_ms": 390.37670684047043
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 0
+    }
+  ],
+  "rows": [
+    {
+      "case": "secure_lax",
+      "arm": "baseline",
+      "expected_status": "PASS",
+      "expected_rules": [],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 1030.6810829788446,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 223.1047919485718,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 108.06387499906123,
+        "total_ms": 1372.1689998637885,
+        "audited_workflow_ms": 223.1047919485718
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 1
+    },
+    {
+      "case": "secure_lax",
+      "arm": "cookieguard",
+      "expected_status": "PASS",
+      "expected_rules": [],
+      "login_succeeded": true,
+      "status": "PASS",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 4702.592083020136,
+        "audit_start_ms": 154.9279170576483,
+        "workflow_ms": 224.4524999987334,
+        "audit_finish_ms": 5.753666860982776,
+        "cleanup_ms": 110.1022909861058,
+        "total_ms": 5207.840667106211,
+        "audited_workflow_ms": 385.1340839173645
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 1
+    },
+    {
+      "case": "secure_strict",
+      "arm": "cookieguard",
+      "expected_status": "PASS",
+      "expected_rules": [],
+      "login_succeeded": true,
+      "status": "PASS",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 4945.869917050004,
+        "audit_start_ms": 150.0928751192987,
+        "workflow_ms": 226.65149997919798,
+        "audit_finish_ms": 6.737666903063655,
+        "cleanup_ms": 108.32820786163211,
+        "total_ms": 5453.3521248959005,
+        "audited_workflow_ms": 383.48204200156033
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 1
+    },
+    {
+      "case": "secure_strict",
+      "arm": "baseline",
+      "expected_status": "PASS",
+      "expected_rules": [],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 651.6158750746399,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 230.41125014424324,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 108.5294159129262,
+        "total_ms": 1000.4755419213325,
+        "audited_workflow_ms": 230.41125014424324
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 1
+    },
+    {
+      "case": "preference_control",
+      "arm": "baseline",
+      "expected_status": "PASS",
+      "expected_rules": [],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 4431.744291912764,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 250.35004201345146,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 107.2350419126451,
+        "total_ms": 4800.1680839806795,
+        "audited_workflow_ms": 250.35004201345146
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 1
+    },
+    {
+      "case": "preference_control",
+      "arm": "cookieguard",
+      "expected_status": "PASS",
+      "expected_rules": [],
+      "login_succeeded": true,
+      "status": "PASS",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 712.8385831601918,
+        "audit_start_ms": 170.82070792093873,
+        "workflow_ms": 259.9412500858307,
+        "audit_finish_ms": 25.555791100487113,
+        "cleanup_ms": 128.6829172167927,
+        "total_ms": 1307.8971251379699,
+        "audited_workflow_ms": 456.31774910725653
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 1
+    },
+    {
+      "case": "missing_httponly",
+      "arm": "cookieguard",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG001"
+      ],
+      "login_succeeded": true,
+      "status": "FAIL",
+      "error": null,
+      "policy_blocked": true,
+      "confirmed_rules": [
+        "CG001"
+      ],
+      "confirmed_evidence": [
+        {
+          "rule": "CG001",
+          "cookie": "session_id",
+          "source": "server-declaration",
+          "store_status": "present"
+        }
+      ],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 1095.2823751140386,
+        "audit_start_ms": 184.34612499549985,
+        "workflow_ms": 233.56795799918473,
+        "audit_finish_ms": 6.776415975764394,
+        "cleanup_ms": 109.06145884655416,
+        "total_ms": 1640.0654590688646,
+        "audited_workflow_ms": 424.69049897044897
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 1
+    },
+    {
+      "case": "missing_httponly",
+      "arm": "baseline",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG001"
+      ],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 699.424333171919,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 228.74520812183619,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 108.24229218997061,
+        "total_ms": 1050.1142090652138,
+        "audited_workflow_ms": 228.74520812183619
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 1
+    },
+    {
+      "case": "missing_secure",
+      "arm": "baseline",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG002"
+      ],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 4643.086374970153,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 238.41025005094707,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 117.44808312505484,
+        "total_ms": 5010.489499894902,
+        "audited_workflow_ms": 238.41025005094707
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 1
+    },
+    {
+      "case": "missing_secure",
+      "arm": "cookieguard",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG002"
+      ],
+      "login_succeeded": true,
+      "status": "FAIL",
+      "error": null,
+      "policy_blocked": true,
+      "confirmed_rules": [
+        "CG002"
+      ],
+      "confirmed_evidence": [
+        {
+          "rule": "CG002",
+          "cookie": "session_id",
+          "source": "server-declaration",
+          "store_status": "present"
+        }
+      ],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 722.0989579800516,
+        "audit_start_ms": 161.9384998921305,
+        "workflow_ms": 234.9938340485096,
+        "audit_finish_ms": 15.906500164419413,
+        "cleanup_ms": 109.75120798684657,
+        "total_ms": 1262.1192911174148,
+        "audited_workflow_ms": 412.8388341050595
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 1
+    },
+    {
+      "case": "missing_both",
+      "arm": "cookieguard",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG001",
+        "CG002"
+      ],
+      "login_succeeded": true,
+      "status": "FAIL",
+      "error": null,
+      "policy_blocked": true,
+      "confirmed_rules": [
+        "CG001",
+        "CG002"
+      ],
+      "confirmed_evidence": [
+        {
+          "rule": "CG001",
+          "cookie": "session_id",
+          "source": "server-declaration",
+          "store_status": "present"
+        },
+        {
+          "rule": "CG002",
+          "cookie": "session_id",
+          "source": "server-declaration",
+          "store_status": "present"
+        }
+      ],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 5289.013833971694,
+        "audit_start_ms": 148.19141593761742,
+        "workflow_ms": 227.63308393768966,
+        "audit_finish_ms": 16.097625019028783,
+        "cleanup_ms": 109.28862495347857,
+        "total_ms": 5802.144584013149,
+        "audited_workflow_ms": 391.92212489433587
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 1
+    },
+    {
+      "case": "missing_both",
+      "arm": "baseline",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG001",
+        "CG002"
+      ],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 689.1002920456231,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 231.08770791441202,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 109.69387483783066,
+        "total_ms": 1042.580499779433,
+        "audited_workflow_ms": 231.08770791441202
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 1
+    },
+    {
+      "case": "samesite_none",
+      "arm": "baseline",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG003"
+      ],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 9160.561250057071,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 238.39824995957315,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 114.61162497289479,
+        "total_ms": 9525.660041021183,
+        "audited_workflow_ms": 238.39824995957315
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 1
+    },
+    {
+      "case": "samesite_none",
+      "arm": "cookieguard",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG003"
+      ],
+      "login_succeeded": true,
+      "status": "FAIL",
+      "error": null,
+      "policy_blocked": true,
+      "confirmed_rules": [
+        "CG003"
+      ],
+      "confirmed_evidence": [
+        {
+          "rule": "CG003",
+          "cookie": "session_id",
+          "source": "server-declaration",
+          "store_status": "present"
+        }
+      ],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 4722.284625051543,
+        "audit_start_ms": 157.84283285029233,
+        "workflow_ms": 233.26395801268518,
+        "audit_finish_ms": 10.051750112324953,
+        "cleanup_ms": 109.84962503425777,
+        "total_ms": 5247.468125075102,
+        "audited_workflow_ms": 401.15854097530246
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 1
+    },
+    {
+      "case": "samesite_omitted",
+      "arm": "cookieguard",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG003"
+      ],
+      "login_succeeded": true,
+      "status": "FAIL",
+      "error": null,
+      "policy_blocked": true,
+      "confirmed_rules": [
+        "CG003"
+      ],
+      "confirmed_evidence": [
+        {
+          "rule": "CG003",
+          "cookie": "session_id",
+          "source": "server-declaration",
+          "store_status": "present"
+        }
+      ],
+      "review_rules": [
+        "CG009"
+      ],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 5111.358083086088,
+        "audit_start_ms": 151.15504199638963,
+        "workflow_ms": 238.49112493917346,
+        "audit_finish_ms": 9.882917162030935,
+        "cleanup_ms": 109.29158283397555,
+        "total_ms": 5632.465207949281,
+        "audited_workflow_ms": 399.529084097594
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 1
+    },
+    {
+      "case": "samesite_omitted",
+      "arm": "baseline",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG003"
+      ],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 776.2867498677224,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 226.12666711211205,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 107.79512487351894,
+        "total_ms": 1122.1042920369655,
+        "audited_workflow_ms": 226.12666711211205
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 1
+    },
+    {
+      "case": "long_lifetime",
+      "arm": "baseline",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG005"
+      ],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 9276.580249890685,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 234.4967918470502,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 109.26395794376731,
+        "total_ms": 9635.893834056333,
+        "audited_workflow_ms": 234.4967918470502
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 1
+    },
+    {
+      "case": "long_lifetime",
+      "arm": "cookieguard",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG005"
+      ],
+      "login_succeeded": true,
+      "status": "FAIL",
+      "error": null,
+      "policy_blocked": true,
+      "confirmed_rules": [
+        "CG005"
+      ],
+      "confirmed_evidence": [
+        {
+          "rule": "CG005",
+          "cookie": "session_id",
+          "source": "server-declaration",
+          "store_status": "present"
+        }
+      ],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 811.1377079039812,
+        "audit_start_ms": 156.28616698086262,
+        "workflow_ms": 238.5127500165254,
+        "audit_finish_ms": 9.603874990716577,
+        "cleanup_ms": 108.61554206348956,
+        "total_ms": 1338.2837078534067,
+        "audited_workflow_ms": 404.4027919881046
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 1
+    },
+    {
+      "case": "missing_session",
+      "arm": "cookieguard",
+      "expected_status": "INCOMPLETE",
+      "expected_rules": [],
+      "login_succeeded": false,
+      "status": "INCOMPLETE",
+      "error": null,
+      "policy_blocked": true,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 0,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [
+        "no-cookies-observed",
+        "expected-auth-cookie-not-observed"
+      ],
+      "timing_ms": {
+        "browser_start_ms": 5171.663417015225,
+        "audit_start_ms": 154.1047499049455,
+        "workflow_ms": 235.51300005055964,
+        "audit_finish_ms": 13.125917175784707,
+        "cleanup_ms": 109.59116695448756,
+        "total_ms": 5697.687958134338,
+        "audited_workflow_ms": 402.74366713128984
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 1
+    },
+    {
+      "case": "missing_session",
+      "arm": "baseline",
+      "expected_status": "INCOMPLETE",
+      "expected_rules": [],
+      "login_succeeded": false,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 4863.345417194068,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 229.8703750129789,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 109.96137489564717,
+        "total_ms": 5216.547582997009,
+        "audited_workflow_ms": 229.8703750129789
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 1
+    },
+    {
+      "case": "secure_lax",
+      "arm": "cookieguard",
+      "expected_status": "PASS",
+      "expected_rules": [],
+      "login_succeeded": true,
+      "status": "PASS",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 1048.7919999286532,
+        "audit_start_ms": 153.40570802800357,
+        "workflow_ms": 231.0042919125408,
+        "audit_finish_ms": 13.418667018413544,
+        "cleanup_ms": 109.34012499637902,
+        "total_ms": 1572.3249579314142,
+        "audited_workflow_ms": 397.8286669589579
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 2
+    },
+    {
+      "case": "secure_lax",
+      "arm": "baseline",
+      "expected_status": "PASS",
+      "expected_rules": [],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 4864.751749904826,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 231.1620421241969,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 108.98312507197261,
+        "total_ms": 5217.188582988456,
+        "audited_workflow_ms": 231.1620421241969
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 2
+    },
+    {
+      "case": "secure_strict",
+      "arm": "baseline",
+      "expected_status": "PASS",
+      "expected_rules": [],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 5041.256791912019,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 232.12112486362457,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 109.26120798103511,
+        "total_ms": 5397.698124870658,
+        "audited_workflow_ms": 232.12112486362457
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 2
+    },
+    {
+      "case": "secure_strict",
+      "arm": "cookieguard",
+      "expected_status": "PASS",
+      "expected_rules": [],
+      "login_succeeded": true,
+      "status": "PASS",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 761.498416075483,
+        "audit_start_ms": 157.9053329769522,
+        "workflow_ms": 236.7200420703739,
+        "audit_finish_ms": 14.818292111158371,
+        "cleanup_ms": 110.0855830591172,
+        "total_ms": 1296.0227499715984,
+        "audited_workflow_ms": 409.44366715848446
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 2
+    },
+    {
+      "case": "preference_control",
+      "arm": "cookieguard",
+      "expected_status": "PASS",
+      "expected_rules": [],
+      "login_succeeded": true,
+      "status": "PASS",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 5230.128957889974,
+        "audit_start_ms": 155.91412503272295,
+        "workflow_ms": 236.90475011244416,
+        "audit_finish_ms": 10.2999999653548,
+        "cleanup_ms": 109.3511248473078,
+        "total_ms": 5755.8100419119,
+        "audited_workflow_ms": 403.1188751105219
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 2
+    },
+    {
+      "case": "preference_control",
+      "arm": "baseline",
+      "expected_status": "PASS",
+      "expected_rules": [],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 9199.108957778662,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 229.2485001962632,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 115.92991696670651,
+        "total_ms": 9557.168459054083,
+        "audited_workflow_ms": 229.2485001962632
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 2
+    },
+    {
+      "case": "missing_httponly",
+      "arm": "baseline",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG001"
+      ],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 768.7017498537898,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 235.77299993485212,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 108.82108402438462,
+        "total_ms": 1126.1036668438464,
+        "audited_workflow_ms": 235.77299993485212
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 2
+    },
+    {
+      "case": "missing_httponly",
+      "arm": "cookieguard",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG001"
+      ],
+      "login_succeeded": true,
+      "status": "FAIL",
+      "error": null,
+      "policy_blocked": true,
+      "confirmed_rules": [
+        "CG001"
+      ],
+      "confirmed_evidence": [
+        {
+          "rule": "CG001",
+          "cookie": "session_id",
+          "source": "server-declaration",
+          "store_status": "present"
+        }
+      ],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 9214.854874880984,
+        "audit_start_ms": 157.08962501958013,
+        "workflow_ms": 234.12608285434544,
+        "audit_finish_ms": 10.50079194828868,
+        "cleanup_ms": 110.04145792685449,
+        "total_ms": 9740.979166002944,
+        "audited_workflow_ms": 401.71649982221425
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 2
+    },
+    {
+      "case": "missing_secure",
+      "arm": "cookieguard",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG002"
+      ],
+      "login_succeeded": true,
+      "status": "FAIL",
+      "error": null,
+      "policy_blocked": true,
+      "confirmed_rules": [
+        "CG002"
+      ],
+      "confirmed_evidence": [
+        {
+          "rule": "CG002",
+          "cookie": "session_id",
+          "source": "server-declaration",
+          "store_status": "present"
+        }
+      ],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 832.436874974519,
+        "audit_start_ms": 154.03699991293252,
+        "workflow_ms": 233.8744169101119,
+        "audit_finish_ms": 8.351166965439916,
+        "cleanup_ms": 108.94587496295571,
+        "total_ms": 1352.9448749031872,
+        "audited_workflow_ms": 396.26258378848433
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 2
+    },
+    {
+      "case": "missing_secure",
+      "arm": "baseline",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG002"
+      ],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 5267.339957877994,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 236.6039170883596,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 109.19483308680356,
+        "total_ms": 5632.125500123948,
+        "audited_workflow_ms": 236.6039170883596
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 2
+    },
+    {
+      "case": "missing_both",
+      "arm": "baseline",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG001",
+        "CG002"
+      ],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 4841.749541927129,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 232.91620798408985,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 108.81595802493393,
+        "total_ms": 5194.972415920347,
+        "audited_workflow_ms": 232.91620798408985
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 2
+    },
+    {
+      "case": "missing_both",
+      "arm": "cookieguard",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG001",
+        "CG002"
+      ],
+      "login_succeeded": true,
+      "status": "FAIL",
+      "error": null,
+      "policy_blocked": true,
+      "confirmed_rules": [
+        "CG001",
+        "CG002"
+      ],
+      "confirmed_evidence": [
+        {
+          "rule": "CG001",
+          "cookie": "session_id",
+          "source": "server-declaration",
+          "store_status": "present"
+        },
+        {
+          "rule": "CG002",
+          "cookie": "session_id",
+          "source": "server-declaration",
+          "store_status": "present"
+        }
+      ],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 742.6101248711348,
+        "audit_start_ms": 164.1867500729859,
+        "workflow_ms": 227.43129101581872,
+        "audit_finish_ms": 8.209915831685066,
+        "cleanup_ms": 109.18883397243917,
+        "total_ms": 1264.6375000476837,
+        "audited_workflow_ms": 399.82795692048967
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 2
+    },
+    {
+      "case": "samesite_none",
+      "arm": "cookieguard",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG003"
+      ],
+      "login_succeeded": true,
+      "status": "FAIL",
+      "error": null,
+      "policy_blocked": true,
+      "confirmed_rules": [
+        "CG003"
+      ],
+      "confirmed_evidence": [
+        {
+          "rule": "CG003",
+          "cookie": "session_id",
+          "source": "server-declaration",
+          "store_status": "present"
+        }
+      ],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 9364.457207964733,
+        "audit_start_ms": 154.6938749961555,
+        "workflow_ms": 226.99545905925333,
+        "audit_finish_ms": 11.085791978985071,
+        "cleanup_ms": 109.57983299158514,
+        "total_ms": 9880.955875152722,
+        "audited_workflow_ms": 392.7751260343939
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 2
+    },
+    {
+      "case": "samesite_none",
+      "arm": "baseline",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG003"
+      ],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 4997.863334137946,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 227.82987519167364,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 112.60166694410145,
+        "total_ms": 5351.958416868001,
+        "audited_workflow_ms": 227.82987519167364
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 2
+    },
+    {
+      "case": "samesite_omitted",
+      "arm": "baseline",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG003"
+      ],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 5057.9511660616845,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 244.2290000617504,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 110.45616609044373,
+        "total_ms": 5425.781833939254,
+        "audited_workflow_ms": 244.2290000617504
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 2
+    },
+    {
+      "case": "samesite_omitted",
+      "arm": "cookieguard",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG003"
+      ],
+      "login_succeeded": true,
+      "status": "FAIL",
+      "error": null,
+      "policy_blocked": true,
+      "confirmed_rules": [
+        "CG003"
+      ],
+      "confirmed_evidence": [
+        {
+          "rule": "CG003",
+          "cookie": "session_id",
+          "source": "server-declaration",
+          "store_status": "present"
+        }
+      ],
+      "review_rules": [
+        "CG009"
+      ],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 4755.913959117606,
+        "audit_start_ms": 159.65637494809926,
+        "workflow_ms": 227.17333305627108,
+        "audit_finish_ms": 7.497833110392094,
+        "cleanup_ms": 109.09950011409819,
+        "total_ms": 5275.231417035684,
+        "audited_workflow_ms": 394.3275411147624
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 2
+    },
+    {
+      "case": "long_lifetime",
+      "arm": "cookieguard",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG005"
+      ],
+      "login_succeeded": true,
+      "status": "FAIL",
+      "error": null,
+      "policy_blocked": true,
+      "confirmed_rules": [
+        "CG005"
+      ],
+      "confirmed_evidence": [
+        {
+          "rule": "CG005",
+          "cookie": "session_id",
+          "source": "server-declaration",
+          "store_status": "present"
+        }
+      ],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 1142.4570421222597,
+        "audit_start_ms": 151.78900002501905,
+        "workflow_ms": 227.00941609218717,
+        "audit_finish_ms": 7.936083013191819,
+        "cleanup_ms": 109.22708385623991,
+        "total_ms": 1649.9710830394179,
+        "audited_workflow_ms": 386.73449913039804
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 2
+    },
+    {
+      "case": "long_lifetime",
+      "arm": "baseline",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG005"
+      ],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 4782.823875080794,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 224.3825839832425,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 108.55412506498396,
+        "total_ms": 5127.811292186379,
+        "audited_workflow_ms": 224.3825839832425
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 2
+    },
+    {
+      "case": "missing_session",
+      "arm": "baseline",
+      "expected_status": "INCOMPLETE",
+      "expected_rules": [],
+      "login_succeeded": false,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 4612.722082994878,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 236.7214160040021,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 110.29962496832013,
+        "total_ms": 4972.249082988128,
+        "audited_workflow_ms": 236.7214160040021
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 2
+    },
+    {
+      "case": "missing_session",
+      "arm": "cookieguard",
+      "expected_status": "INCOMPLETE",
+      "expected_rules": [],
+      "login_succeeded": false,
+      "status": "INCOMPLETE",
+      "error": null,
+      "policy_blocked": true,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 0,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [
+        "no-cookies-observed",
+        "expected-auth-cookie-not-observed"
+      ],
+      "timing_ms": {
+        "browser_start_ms": 731.995124835521,
+        "audit_start_ms": 158.45433296635747,
+        "workflow_ms": 227.95216692611575,
+        "audit_finish_ms": 6.412583868950605,
+        "cleanup_ms": 108.95537491887808,
+        "total_ms": 1245.1804589945823,
+        "audited_workflow_ms": 392.8190837614238
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 2
+    },
+    {
+      "case": "secure_lax",
+      "arm": "baseline",
+      "expected_status": "PASS",
+      "expected_rules": [],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 9366.030832985416,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 232.36529203131795,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 107.68845793791115,
+        "total_ms": 9717.199083883315,
+        "audited_workflow_ms": 232.36529203131795
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 3
+    },
+    {
+      "case": "secure_lax",
+      "arm": "cookieguard",
+      "expected_status": "PASS",
+      "expected_rules": [],
+      "login_succeeded": true,
+      "status": "PASS",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 680.7058330159634,
+        "audit_start_ms": 169.71554211340845,
+        "workflow_ms": 230.26850004680455,
+        "audit_finish_ms": 6.729083135724068,
+        "cleanup_ms": 107.60129196569324,
+        "total_ms": 1205.7481659576297,
+        "audited_workflow_ms": 406.71312529593706
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 3
+    },
+    {
+      "case": "secure_strict",
+      "arm": "cookieguard",
+      "expected_status": "PASS",
+      "expected_rules": [],
+      "login_succeeded": true,
+      "status": "PASS",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 2,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 4450.808000052348,
+        "audit_start_ms": 169.76537508890033,
+        "workflow_ms": 226.26595804467797,
+        "audit_finish_ms": 5.661583039909601,
+        "cleanup_ms": 107.5061250012368,
+        "total_ms": 4970.814000116661,
+        "audited_workflow_ms": 401.6929161734879
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 3
+    },
+    {
+      "case": "secure_strict",
+      "arm": "baseline",
+      "expected_status": "PASS",
+      "expected_rules": [],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 611.151667078957,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 227.61258389800787,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 108.32512495107949,
+        "total_ms": 956.8304170388728,
+        "audited_workflow_ms": 227.61258389800787
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 3
+    },
+    {
+      "case": "preference_control",
+      "arm": "baseline",
+      "expected_status": "PASS",
+      "expected_rules": [],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 4371.519665932283,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 253.5425410605967,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 108.03904198110104,
+        "total_ms": 4744.447708129883,
+        "audited_workflow_ms": 253.5425410605967
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 3
+    },
+    {
+      "case": "preference_control",
+      "arm": "cookieguard",
+      "expected_status": "PASS",
+      "expected_rules": [],
+      "login_succeeded": true,
+      "status": "PASS",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 601.5137499198318,
+        "audit_start_ms": 146.44312509335577,
+        "workflow_ms": 222.86037495359778,
+        "audit_finish_ms": 7.252250099554658,
+        "cleanup_ms": 108.32733404822648,
+        "total_ms": 1096.503417007625,
+        "audited_workflow_ms": 376.5557501465082
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 3
+    },
+    {
+      "case": "missing_httponly",
+      "arm": "cookieguard",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG001"
+      ],
+      "login_succeeded": false,
+      "status": "ERROR",
+      "error": {
+        "phase": "browser_start",
+        "type": "RuntimeError"
+      },
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 0.0,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 0.0,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 3.5444169770926237,
+        "total_ms": 3696.5047910343856,
+        "audited_workflow_ms": 0.0
+      },
+      "browser": null,
+      "repetition": 3
+    },
+    {
+      "case": "missing_httponly",
+      "arm": "baseline",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG001"
+      ],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 943.3571249246597,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 224.52824981883168,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 107.35508380457759,
+        "total_ms": 1284.795792074874,
+        "audited_workflow_ms": 224.52824981883168
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 3
+    },
+    {
+      "case": "missing_secure",
+      "arm": "baseline",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG002"
+      ],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 4755.374042084441,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 227.53220796585083,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 108.15337509848177,
+        "total_ms": 5101.660125190392,
+        "audited_workflow_ms": 227.53220796585083
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 3
+    },
+    {
+      "case": "missing_secure",
+      "arm": "cookieguard",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG002"
+      ],
+      "login_succeeded": true,
+      "status": "FAIL",
+      "error": null,
+      "policy_blocked": true,
+      "confirmed_rules": [
+        "CG002"
+      ],
+      "confirmed_evidence": [
+        {
+          "rule": "CG002",
+          "cookie": "session_id",
+          "source": "server-declaration",
+          "store_status": "present"
+        }
+      ],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 2,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 4488.075916888192,
+        "audit_start_ms": 159.0862909797579,
+        "workflow_ms": 227.7508331462741,
+        "audit_finish_ms": 5.706500029191375,
+        "cleanup_ms": 107.71412495523691,
+        "total_ms": 4998.539792140946,
+        "audited_workflow_ms": 392.54362415522337
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 3
+    },
+    {
+      "case": "missing_both",
+      "arm": "cookieguard",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG001",
+        "CG002"
+      ],
+      "login_succeeded": true,
+      "status": "FAIL",
+      "error": null,
+      "policy_blocked": true,
+      "confirmed_rules": [
+        "CG001",
+        "CG002"
+      ],
+      "confirmed_evidence": [
+        {
+          "rule": "CG001",
+          "cookie": "session_id",
+          "source": "server-declaration",
+          "store_status": "present"
+        },
+        {
+          "rule": "CG002",
+          "cookie": "session_id",
+          "source": "server-declaration",
+          "store_status": "present"
+        }
+      ],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 671.8148340005428,
+        "audit_start_ms": 194.62608406320214,
+        "workflow_ms": 227.47558308765292,
+        "audit_finish_ms": 5.826625041663647,
+        "cleanup_ms": 107.6994170434773,
+        "total_ms": 1217.3378749284893,
+        "audited_workflow_ms": 427.9282921925187
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 3
+    },
+    {
+      "case": "missing_both",
+      "arm": "baseline",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG001",
+        "CG002"
+      ],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 5066.722665913403,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 227.02116682194173,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 107.53079201094806,
+        "total_ms": 5410.518999909982,
+        "audited_workflow_ms": 227.02116682194173
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 3
+    },
+    {
+      "case": "samesite_none",
+      "arm": "baseline",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG003"
+      ],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 5046.622083056718,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 224.5834581553936,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 108.54083299636841,
+        "total_ms": 5389.319000067189,
+        "audited_workflow_ms": 224.5834581553936
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 3
+    },
+    {
+      "case": "samesite_none",
+      "arm": "cookieguard",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG003"
+      ],
+      "login_succeeded": true,
+      "status": "FAIL",
+      "error": null,
+      "policy_blocked": true,
+      "confirmed_rules": [
+        "CG003"
+      ],
+      "confirmed_evidence": [
+        {
+          "rule": "CG003",
+          "cookie": "session_id",
+          "source": "server-declaration",
+          "store_status": "present"
+        }
+      ],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 5095.6876669079065,
+        "audit_start_ms": 196.86370808631182,
+        "workflow_ms": 226.92145803011954,
+        "audit_finish_ms": 6.067249923944473,
+        "cleanup_ms": 107.58537496440113,
+        "total_ms": 5647.6989588700235,
+        "audited_workflow_ms": 429.85241604037583
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 3
+    },
+    {
+      "case": "samesite_omitted",
+      "arm": "cookieguard",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG003"
+      ],
+      "login_succeeded": true,
+      "status": "FAIL",
+      "error": null,
+      "policy_blocked": true,
+      "confirmed_rules": [
+        "CG003"
+      ],
+      "confirmed_evidence": [
+        {
+          "rule": "CG003",
+          "cookie": "session_id",
+          "source": "server-declaration",
+          "store_status": "present"
+        }
+      ],
+      "review_rules": [
+        "CG009"
+      ],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 4600.509375100955,
+        "audit_start_ms": 150.4839591216296,
+        "workflow_ms": 223.61749992705882,
+        "audit_finish_ms": 6.1500410083681345,
+        "cleanup_ms": 107.98712517134845,
+        "total_ms": 5099.453458096832,
+        "audited_workflow_ms": 380.25150005705655
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 3
+    },
+    {
+      "case": "samesite_omitted",
+      "arm": "baseline",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG003"
+      ],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 4416.403040988371,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 230.17183295451105,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 107.69645893014967,
+        "total_ms": 4763.997416943312,
+        "audited_workflow_ms": 230.17183295451105
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 3
+    },
+    {
+      "case": "long_lifetime",
+      "arm": "baseline",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG005"
+      ],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 9327.111082850024,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 272.8641249705106,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 110.49362504854798,
+        "total_ms": 9721.236124867573,
+        "audited_workflow_ms": 272.8641249705106
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 3
+    },
+    {
+      "case": "long_lifetime",
+      "arm": "cookieguard",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG005"
+      ],
+      "login_succeeded": true,
+      "status": "FAIL",
+      "error": null,
+      "policy_blocked": true,
+      "confirmed_rules": [
+        "CG005"
+      ],
+      "confirmed_evidence": [
+        {
+          "rule": "CG005",
+          "cookie": "session_id",
+          "source": "server-declaration",
+          "store_status": "present"
+        }
+      ],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 760.7125828508288,
+        "audit_start_ms": 157.0864161476493,
+        "workflow_ms": 236.68770911172032,
+        "audit_finish_ms": 19.945082953199744,
+        "cleanup_ms": 109.48041710071266,
+        "total_ms": 1294.2736658733338,
+        "audited_workflow_ms": 413.71920821256936
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 3
+    },
+    {
+      "case": "missing_session",
+      "arm": "cookieguard",
+      "expected_status": "INCOMPLETE",
+      "expected_rules": [],
+      "login_succeeded": false,
+      "status": "INCOMPLETE",
+      "error": null,
+      "policy_blocked": true,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 0,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [
+        "no-cookies-observed",
+        "expected-auth-cookie-not-observed"
+      ],
+      "timing_ms": {
+        "browser_start_ms": 5303.431167034432,
+        "audit_start_ms": 154.7667921986431,
+        "workflow_ms": 234.02974987402558,
+        "audit_finish_ms": 5.522958002984524,
+        "cleanup_ms": 112.30091587640345,
+        "total_ms": 5822.802540846169,
+        "audited_workflow_ms": 394.3195000756532
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 3
+    },
+    {
+      "case": "missing_session",
+      "arm": "baseline",
+      "expected_status": "INCOMPLETE",
+      "expected_rules": [],
+      "login_succeeded": false,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 9285.54141591303,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 265.55704209022224,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 109.11575006321073,
+        "total_ms": 9671.042999951169,
+        "audited_workflow_ms": 265.55704209022224
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 3
+    },
+    {
+      "case": "secure_lax",
+      "arm": "cookieguard",
+      "expected_status": "PASS",
+      "expected_rules": [],
+      "login_succeeded": true,
+      "status": "PASS",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 706.9670001510531,
+        "audit_start_ms": 178.26191685162485,
+        "workflow_ms": 236.11800000071526,
+        "audit_finish_ms": 8.506458019837737,
+        "cleanup_ms": 109.95654202997684,
+        "total_ms": 1251.6442500054836,
+        "audited_workflow_ms": 422.88637487217784
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 4
+    },
+    {
+      "case": "secure_lax",
+      "arm": "baseline",
+      "expected_status": "PASS",
+      "expected_rules": [],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 5350.35162512213,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 227.85795899108052,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 108.00462495535612,
+        "total_ms": 5697.436582995579,
+        "audited_workflow_ms": 227.85795899108052
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 4
+    },
+    {
+      "case": "secure_strict",
+      "arm": "baseline",
+      "expected_status": "PASS",
+      "expected_rules": [],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 4520.9961659274995,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 232.46587510220706,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 107.66687500290573,
+        "total_ms": 4871.206665877253,
+        "audited_workflow_ms": 232.46587510220706
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 4
+    },
+    {
+      "case": "secure_strict",
+      "arm": "cookieguard",
+      "expected_status": "PASS",
+      "expected_rules": [],
+      "login_succeeded": true,
+      "status": "PASS",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 8886.005042120814,
+        "audit_start_ms": 174.04912482015789,
+        "workflow_ms": 229.36991602182388,
+        "audit_finish_ms": 6.981417071074247,
+        "cleanup_ms": 108.0617499537766,
+        "total_ms": 9415.084958076477,
+        "audited_workflow_ms": 410.400457913056
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 4
+    },
+    {
+      "case": "preference_control",
+      "arm": "cookieguard",
+      "expected_status": "PASS",
+      "expected_rules": [],
+      "login_succeeded": true,
+      "status": "PASS",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 670.6082499586046,
+        "audit_start_ms": 156.39241691678762,
+        "workflow_ms": 228.5279999487102,
+        "audit_finish_ms": 9.71316616050899,
+        "cleanup_ms": 109.30654196999967,
+        "total_ms": 1185.082625132054,
+        "audited_workflow_ms": 394.6335830260068
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 4
+    },
+    {
+      "case": "preference_control",
+      "arm": "baseline",
+      "expected_status": "PASS",
+      "expected_rules": [],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 5338.237583870068,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 229.10975012928247,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 107.01612499542534,
+        "total_ms": 5684.801750117913,
+        "audited_workflow_ms": 229.10975012928247
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 4
+    },
+    {
+      "case": "missing_httponly",
+      "arm": "baseline",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG001"
+      ],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 9284.080208977684,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 263.4126250632107,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 108.50929212756455,
+        "total_ms": 9666.517917066813,
+        "audited_workflow_ms": 263.4126250632107
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 4
+    },
+    {
+      "case": "missing_httponly",
+      "arm": "cookieguard",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG001"
+      ],
+      "login_succeeded": true,
+      "status": "FAIL",
+      "error": null,
+      "policy_blocked": true,
+      "confirmed_rules": [
+        "CG001"
+      ],
+      "confirmed_evidence": [
+        {
+          "rule": "CG001",
+          "cookie": "session_id",
+          "source": "server-declaration",
+          "store_status": "present"
+        }
+      ],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 679.0999171789736,
+        "audit_start_ms": 151.2804999947548,
+        "workflow_ms": 231.0121669434011,
+        "audit_finish_ms": 9.577624965459108,
+        "cleanup_ms": 109.16333389468491,
+        "total_ms": 1191.6325828060508,
+        "audited_workflow_ms": 391.870291903615
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 4
+    },
+    {
+      "case": "missing_secure",
+      "arm": "cookieguard",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG002"
+      ],
+      "login_succeeded": true,
+      "status": "FAIL",
+      "error": null,
+      "policy_blocked": true,
+      "confirmed_rules": [
+        "CG002"
+      ],
+      "confirmed_evidence": [
+        {
+          "rule": "CG002",
+          "cookie": "session_id",
+          "source": "server-declaration",
+          "store_status": "present"
+        }
+      ],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 9349.990792106837,
+        "audit_start_ms": 163.40325004421175,
+        "workflow_ms": 235.4404169600457,
+        "audit_finish_ms": 7.936791051179171,
+        "cleanup_ms": 109.20933308079839,
+        "total_ms": 9876.788124907762,
+        "audited_workflow_ms": 406.7804580554366
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 4
+    },
+    {
+      "case": "missing_secure",
+      "arm": "baseline",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG002"
+      ],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 684.6185000613332,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 229.19308301061392,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 109.07949996180832,
+        "total_ms": 1034.7820001188666,
+        "audited_workflow_ms": 229.19308301061392
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 4
+    },
+    {
+      "case": "missing_both",
+      "arm": "baseline",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG001",
+        "CG002"
+      ],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 5436.958791920915,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 226.74424992874265,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 110.07541604340076,
+        "total_ms": 5784.411582862958,
+        "audited_workflow_ms": 226.74424992874265
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 4
+    },
+    {
+      "case": "missing_both",
+      "arm": "cookieguard",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG001",
+        "CG002"
+      ],
+      "login_succeeded": true,
+      "status": "FAIL",
+      "error": null,
+      "policy_blocked": true,
+      "confirmed_rules": [
+        "CG001",
+        "CG002"
+      ],
+      "confirmed_evidence": [
+        {
+          "rule": "CG001",
+          "cookie": "session_id",
+          "source": "server-declaration",
+          "store_status": "present"
+        },
+        {
+          "rule": "CG002",
+          "cookie": "session_id",
+          "source": "server-declaration",
+          "store_status": "present"
+        }
+      ],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 5023.870208999142,
+        "audit_start_ms": 157.66812511719763,
+        "workflow_ms": 229.26679090596735,
+        "audit_finish_ms": 7.445666939020157,
+        "cleanup_ms": 108.77770790830255,
+        "total_ms": 5537.339499918744,
+        "audited_workflow_ms": 394.38058296218514
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 4
+    },
+    {
+      "case": "samesite_none",
+      "arm": "cookieguard",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG003"
+      ],
+      "login_succeeded": true,
+      "status": "FAIL",
+      "error": null,
+      "policy_blocked": true,
+      "confirmed_rules": [
+        "CG003"
+      ],
+      "confirmed_evidence": [
+        {
+          "rule": "CG003",
+          "cookie": "session_id",
+          "source": "server-declaration",
+          "store_status": "present"
+        }
+      ],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 9388.346042018384,
+        "audit_start_ms": 178.65558294579387,
+        "workflow_ms": 227.00033290311694,
+        "audit_finish_ms": 9.085041005164385,
+        "cleanup_ms": 109.73562486469746,
+        "total_ms": 9924.33362500742,
+        "audited_workflow_ms": 414.7409568540752
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 4
+    },
+    {
+      "case": "samesite_none",
+      "arm": "baseline",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG003"
+      ],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 758.3140002097934,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 230.19008291885257,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 109.65987504459918,
+        "total_ms": 1109.6212500706315,
+        "audited_workflow_ms": 230.19008291885257
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 4
+    },
+    {
+      "case": "samesite_omitted",
+      "arm": "baseline",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG003"
+      ],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 4482.311332831159,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 254.2902920395136,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 112.10229201242328,
+        "total_ms": 4860.950291855261,
+        "audited_workflow_ms": 254.2902920395136
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 4
+    },
+    {
+      "case": "samesite_omitted",
+      "arm": "cookieguard",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG003"
+      ],
+      "login_succeeded": true,
+      "status": "FAIL",
+      "error": null,
+      "policy_blocked": true,
+      "confirmed_rules": [
+        "CG003"
+      ],
+      "confirmed_evidence": [
+        {
+          "rule": "CG003",
+          "cookie": "session_id",
+          "source": "server-declaration",
+          "store_status": "present"
+        }
+      ],
+      "review_rules": [
+        "CG009"
+      ],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 4736.6361250169575,
+        "audit_start_ms": 169.8261669371277,
+        "workflow_ms": 239.44816691800952,
+        "audit_finish_ms": 6.498958915472031,
+        "cleanup_ms": 107.84320905804634,
+        "total_ms": 5279.091165866703,
+        "audited_workflow_ms": 415.77329277060926
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 4
+    },
+    {
+      "case": "long_lifetime",
+      "arm": "cookieguard",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG005"
+      ],
+      "login_succeeded": true,
+      "status": "FAIL",
+      "error": null,
+      "policy_blocked": true,
+      "confirmed_rules": [
+        "CG005"
+      ],
+      "confirmed_evidence": [
+        {
+          "rule": "CG005",
+          "cookie": "session_id",
+          "source": "server-declaration",
+          "store_status": "present"
+        }
+      ],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 694.821042008698,
+        "audit_start_ms": 149.423916824162,
+        "workflow_ms": 226.33741586469114,
+        "audit_finish_ms": 8.502791170030832,
+        "cleanup_ms": 108.55174995958805,
+        "total_ms": 1197.6220419164747,
+        "audited_workflow_ms": 384.264123858884
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 4
+    },
+    {
+      "case": "long_lifetime",
+      "arm": "baseline",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG005"
+      ],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 4968.907791888341,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 233.7270830757916,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 108.16045803949237,
+        "total_ms": 5320.9079168736935,
+        "audited_workflow_ms": 233.7270830757916
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 4
+    },
+    {
+      "case": "missing_session",
+      "arm": "baseline",
+      "expected_status": "INCOMPLETE",
+      "expected_rules": [],
+      "login_succeeded": false,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 4520.517083117738,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 261.8927080184221,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 109.08224992454052,
+        "total_ms": 4901.883875019848,
+        "audited_workflow_ms": 261.8927080184221
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 4
+    },
+    {
+      "case": "missing_session",
+      "arm": "cookieguard",
+      "expected_status": "INCOMPLETE",
+      "expected_rules": [],
+      "login_succeeded": false,
+      "status": "INCOMPLETE",
+      "error": null,
+      "policy_blocked": true,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 0,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [
+        "no-cookies-observed",
+        "expected-auth-cookie-not-observed"
+      ],
+      "timing_ms": {
+        "browser_start_ms": 751.8717080820352,
+        "audit_start_ms": 147.89837505668402,
+        "workflow_ms": 234.91087486036122,
+        "audit_finish_ms": 4.99991700053215,
+        "cleanup_ms": 107.75858396664262,
+        "total_ms": 1257.2052909526974,
+        "audited_workflow_ms": 387.8091669175774
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 4
+    },
+    {
+      "case": "secure_lax",
+      "arm": "baseline",
+      "expected_status": "PASS",
+      "expected_rules": [],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 971.7114591039717,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 224.51716591604054,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 107.37512493506074,
+        "total_ms": 1313.5899999178946,
+        "audited_workflow_ms": 224.51716591604054
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 5
+    },
+    {
+      "case": "secure_lax",
+      "arm": "cookieguard",
+      "expected_status": "PASS",
+      "expected_rules": [],
+      "login_succeeded": true,
+      "status": "PASS",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 820.9147499874234,
+        "audit_start_ms": 167.40875015966594,
+        "workflow_ms": 227.97183296643198,
+        "audit_finish_ms": 7.664249977096915,
+        "cleanup_ms": 110.45616609044373,
+        "total_ms": 1344.5844158995897,
+        "audited_workflow_ms": 403.04483310319483
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 5
+    },
+    {
+      "case": "secure_strict",
+      "arm": "cookieguard",
+      "expected_status": "PASS",
+      "expected_rules": [],
+      "login_succeeded": true,
+      "status": "PASS",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 1038.4964579716325,
+        "audit_start_ms": 164.0557919163257,
+        "workflow_ms": 229.20025000348687,
+        "audit_finish_ms": 8.107249857857823,
+        "cleanup_ms": 109.45495800115168,
+        "total_ms": 1560.276708099991,
+        "audited_workflow_ms": 401.3632917776704
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 5
+    },
+    {
+      "case": "secure_strict",
+      "arm": "baseline",
+      "expected_status": "PASS",
+      "expected_rules": [],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 5105.974583886564,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 230.72750004939735,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 108.13024989329278,
+        "total_ms": 5455.818250076845,
+        "audited_workflow_ms": 230.72750004939735
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 5
+    },
+    {
+      "case": "preference_control",
+      "arm": "baseline",
+      "expected_status": "PASS",
+      "expected_rules": [],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 5394.605542067438,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 225.37850006483495,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 107.81929106451571,
+        "total_ms": 5738.057625014335,
+        "audited_workflow_ms": 225.37850006483495
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 5
+    },
+    {
+      "case": "preference_control",
+      "arm": "cookieguard",
+      "expected_status": "PASS",
+      "expected_rules": [],
+      "login_succeeded": true,
+      "status": "PASS",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 4956.014542141929,
+        "audit_start_ms": 154.38829199410975,
+        "workflow_ms": 253.89962503686547,
+        "audit_finish_ms": 16.33962499909103,
+        "cleanup_ms": 109.12208282388747,
+        "total_ms": 5501.073874998838,
+        "audited_workflow_ms": 424.62754203006625
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 5
+    },
+    {
+      "case": "missing_httponly",
+      "arm": "cookieguard",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG001"
+      ],
+      "login_succeeded": true,
+      "status": "FAIL",
+      "error": null,
+      "policy_blocked": true,
+      "confirmed_rules": [
+        "CG001"
+      ],
+      "confirmed_evidence": [
+        {
+          "rule": "CG001",
+          "cookie": "session_id",
+          "source": "server-declaration",
+          "store_status": "present"
+        }
+      ],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 9352.565667126328,
+        "audit_start_ms": 163.36187487468123,
+        "workflow_ms": 240.3902909718454,
+        "audit_finish_ms": 8.971499977633357,
+        "cleanup_ms": 111.37391696684062,
+        "total_ms": 9890.026208013296,
+        "audited_workflow_ms": 412.72366582416
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 5
+    },
+    {
+      "case": "missing_httponly",
+      "arm": "baseline",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG001"
+      ],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 1022.8253749664873,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 337.6912500243634,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 108.17475011572242,
+        "total_ms": 1485.920500010252,
+        "audited_workflow_ms": 337.6912500243634
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 5
+    },
+    {
+      "case": "missing_secure",
+      "arm": "baseline",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG002"
+      ],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 5056.224541040137,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 228.4977079834789,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 108.3095408976078,
+        "total_ms": 5403.780959080905,
+        "audited_workflow_ms": 228.4977079834789
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 5
+    },
+    {
+      "case": "missing_secure",
+      "arm": "cookieguard",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG002"
+      ],
+      "login_succeeded": true,
+      "status": "FAIL",
+      "error": null,
+      "policy_blocked": true,
+      "confirmed_rules": [
+        "CG002"
+      ],
+      "confirmed_evidence": [
+        {
+          "rule": "CG002",
+          "cookie": "session_id",
+          "source": "server-declaration",
+          "store_status": "present"
+        }
+      ],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 9287.765332963318,
+        "audit_start_ms": 157.5988328550011,
+        "workflow_ms": 229.836291866377,
+        "audit_finish_ms": 7.501000072807074,
+        "cleanup_ms": 109.55870896577835,
+        "total_ms": 9803.57929202728,
+        "audited_workflow_ms": 394.93612479418516
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 5
+    },
+    {
+      "case": "missing_both",
+      "arm": "cookieguard",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG001",
+        "CG002"
+      ],
+      "login_succeeded": true,
+      "status": "FAIL",
+      "error": null,
+      "policy_blocked": true,
+      "confirmed_rules": [
+        "CG001",
+        "CG002"
+      ],
+      "confirmed_evidence": [
+        {
+          "rule": "CG001",
+          "cookie": "session_id",
+          "source": "server-declaration",
+          "store_status": "present"
+        },
+        {
+          "rule": "CG002",
+          "cookie": "session_id",
+          "source": "server-declaration",
+          "store_status": "present"
+        }
+      ],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 749.9470841139555,
+        "audit_start_ms": 153.25799980200827,
+        "workflow_ms": 246.57262512482703,
+        "audit_finish_ms": 16.73508295789361,
+        "cleanup_ms": 109.266750048846,
+        "total_ms": 1287.0035420637578,
+        "audited_workflow_ms": 416.5657078847289
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 5
+    },
+    {
+      "case": "missing_both",
+      "arm": "baseline",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG001",
+        "CG002"
+      ],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 5035.840041004121,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 227.72095794789493,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 107.43829212151468,
+        "total_ms": 5382.346958853304,
+        "audited_workflow_ms": 227.72095794789493
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 5
+    },
+    {
+      "case": "samesite_none",
+      "arm": "baseline",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG003"
+      ],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 5035.6546668335795,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 226.19608300738037,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 107.98266693018377,
+        "total_ms": 5379.0814590174705,
+        "audited_workflow_ms": 226.19608300738037
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 5
+    },
+    {
+      "case": "samesite_none",
+      "arm": "cookieguard",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG003"
+      ],
+      "login_succeeded": true,
+      "status": "FAIL",
+      "error": null,
+      "policy_blocked": true,
+      "confirmed_rules": [
+        "CG003"
+      ],
+      "confirmed_evidence": [
+        {
+          "rule": "CG003",
+          "cookie": "session_id",
+          "source": "server-declaration",
+          "store_status": "present"
+        }
+      ],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 9276.298874989152,
+        "audit_start_ms": 176.6097079962492,
+        "workflow_ms": 229.910375084728,
+        "audit_finish_ms": 7.895166985690594,
+        "cleanup_ms": 109.78945810347795,
+        "total_ms": 9811.424457933754,
+        "audited_workflow_ms": 414.4152500666678
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 5
+    },
+    {
+      "case": "samesite_omitted",
+      "arm": "cookieguard",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG003"
+      ],
+      "login_succeeded": true,
+      "status": "FAIL",
+      "error": null,
+      "policy_blocked": true,
+      "confirmed_rules": [
+        "CG003"
+      ],
+      "confirmed_evidence": [
+        {
+          "rule": "CG003",
+          "cookie": "session_id",
+          "source": "server-declaration",
+          "store_status": "present"
+        }
+      ],
+      "review_rules": [
+        "CG009"
+      ],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 797.095833113417,
+        "audit_start_ms": 152.47395797632635,
+        "workflow_ms": 225.66462494432926,
+        "audit_finish_ms": 7.081582909449935,
+        "cleanup_ms": 108.516292180866,
+        "total_ms": 1301.8762501887977,
+        "audited_workflow_ms": 385.22016583010554
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 5
+    },
+    {
+      "case": "samesite_omitted",
+      "arm": "baseline",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG003"
+      ],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 9183.121167123318,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 224.37766613438725,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 108.56933379545808,
+        "total_ms": 9527.053166879341,
+        "audited_workflow_ms": 224.37766613438725
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 5
+    },
+    {
+      "case": "long_lifetime",
+      "arm": "baseline",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG005"
+      ],
+      "login_succeeded": true,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 4768.691417062655,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 224.0322500001639,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 107.36962500959635,
+        "total_ms": 5109.468542039394,
+        "audited_workflow_ms": 224.0322500001639
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 5
+    },
+    {
+      "case": "long_lifetime",
+      "arm": "cookieguard",
+      "expected_status": "FAIL",
+      "expected_rules": [
+        "CG005"
+      ],
+      "login_succeeded": true,
+      "status": "FAIL",
+      "error": null,
+      "policy_blocked": true,
+      "confirmed_rules": [
+        "CG005"
+      ],
+      "confirmed_evidence": [
+        {
+          "rule": "CG005",
+          "cookie": "session_id",
+          "source": "server-declaration",
+          "store_status": "present"
+        }
+      ],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 1,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 1002.6061660610139,
+        "audit_start_ms": 154.17420794256032,
+        "workflow_ms": 224.6597909834236,
+        "audit_finish_ms": 5.947459023445845,
+        "cleanup_ms": 107.95191605575383,
+        "total_ms": 1505.0587500445545,
+        "audited_workflow_ms": 384.78145794942975
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 5
+    },
+    {
+      "case": "missing_session",
+      "arm": "cookieguard",
+      "expected_status": "INCOMPLETE",
+      "expected_rules": [],
+      "login_succeeded": false,
+      "status": "INCOMPLETE",
+      "error": null,
+      "policy_blocked": true,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {
+        "headerCapture": "enabled",
+        "targetsObserved": 1,
+        "setCookieResponsesForwarded": 0,
+        "unattributedSetCookieResponses": 0,
+        "attachFailures": 0,
+        "evidence": "server-declarations-and-browser-store",
+        "requireHeaderEvidence": true,
+        "incompleteReasons": [],
+        "agentChecks": 0
+      },
+      "issues": [
+        "no-cookies-observed",
+        "expected-auth-cookie-not-observed"
+      ],
+      "timing_ms": {
+        "browser_start_ms": 4743.830292019993,
+        "audit_start_ms": 146.5560831129551,
+        "workflow_ms": 228.26266707852483,
+        "audit_finish_ms": 4.520541988313198,
+        "cleanup_ms": 107.67487506382167,
+        "total_ms": 5241.429041838273,
+        "audited_workflow_ms": 379.3392921797931
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 5
+    },
+    {
+      "case": "missing_session",
+      "arm": "baseline",
+      "expected_status": "INCOMPLETE",
+      "expected_rules": [],
+      "login_succeeded": false,
+      "status": "NOT_AUDITED",
+      "error": null,
+      "policy_blocked": false,
+      "confirmed_rules": [],
+      "confirmed_evidence": [],
+      "review_rules": [],
+      "collection": {},
+      "issues": [],
+      "timing_ms": {
+        "browser_start_ms": 4515.927291009575,
+        "audit_start_ms": 0.0,
+        "workflow_ms": 244.43737510591745,
+        "audit_finish_ms": 0.0,
+        "cleanup_ms": 107.48270899057388,
+        "total_ms": 4877.92250001803,
+        "audited_workflow_ms": 244.43737510591745
+      },
+      "browser": "Chrome/156.0.8078.81",
+      "repetition": 5
+    }
+  ],
+  "evidence_note": "Only absolute virtual-environment path prefixes were replaced with <isolated-venv>; measurements and failures are unchanged. Original data remains under artifacts/browser-use-upstream/benchmark.json."
+}

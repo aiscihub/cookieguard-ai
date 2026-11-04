@@ -1,0 +1,234 @@
+{
+  "verified_at_utc": "2026-11-04T18:10:09.583908+00:00",
+  "cookieguard_version": "0.1.0",
+  "browser_use_version": "0.13.14",
+  "installation": "Fresh isolated environment; verified published stable wheel, not editable source; all other dependency versions fixed to the beta validation environment.",
+  "release_index": "https://pypi.org/simple/cookieguard-browser-use/",
+  "release_workflow": "https://github.com/aiscihub/cookieguard-ai/actions/runs/41882052045",
+  "wheels": {
+    "0.1.0b1": {
+      "filename": "cookieguard_browser_use-0.1.0b1-py3-none-any.whl",
+      "url": "https://files.pythonhosted.org/packages/56/44/0df9d69589eaf589fdcd217b2e571d47b4cc249425d97f8b1ae0063bc61d/cookieguard_browser_use-0.1.0b1-py3-none-any.whl",
+      "sha256": "7661a88e0c36fa64d28772ea415cc379e0b15c5f10ba1dc2ce53ccb6aa952b84",
+      "uploaded": "2026-11-03T21:57:24.473452Z",
+      "yanked": false
+    },
+    "0.1.0": {
+      "filename": "cookieguard_browser_use-0.1.0-py3-none-any.whl",
+      "url": "https://files.pythonhosted.org/packages/b3/d8/08a821e6559eabb0e11b078185caae048b1febffb21abcc6729b6241a8c7/cookieguard_browser_use-0.1.0-py3-none-any.whl",
+      "sha256": "d2d2987e5d46eb78dbab7c4ca4db5075a636978ff92ce424fbb334fb3e1948b6",
+      "uploaded": "2026-11-04T18:01:33.331715Z",
+      "yanked": false
+    }
+  },
+  "package_payload_comparison": {
+    "beta_files": 31,
+    "stable_files": 31,
+    "added": [],
+    "removed": [],
+    "changed": [
+      "cookieguard_browser_use/__init__.py"
+    ],
+    "version_string_only": true,
+    "unchanged_files": [
+      "cookieguard_browser_use/_audit.py",
+      "cookieguard_browser_use/_collector.py",
+      "cookieguard_browser_use/_engine.py",
+      "cookieguard_browser_use/_errors.py",
+      "cookieguard_browser_use/_node/bridge.mjs",
+      "cookieguard_browser_use/_node/manifest.json",
+      "cookieguard_browser_use/_node/node_modules/@aiscihub/cookieguard-core/LICENSE",
+      "cookieguard_browser_use/_node/node_modules/@aiscihub/cookieguard-core/README.md",
+      "cookieguard_browser_use/_node/node_modules/@aiscihub/cookieguard-core/package.json",
+      "cookieguard_browser_use/_node/node_modules/@aiscihub/cookieguard-core/src/index.d.ts",
+      "cookieguard_browser_use/_node/node_modules/@aiscihub/cookieguard-core/src/index.js",
+      "cookieguard_browser_use/_node/node_modules/@aiscihub/cookieguard-core/src/normalize.js",
+      "cookieguard_browser_use/_node/node_modules/@aiscihub/cookieguard-core/src/onnx.d.ts",
+      "cookieguard_browser_use/_node/node_modules/@aiscihub/cookieguard-core/src/onnx.js",
+      "cookieguard_browser_use/_node/node_modules/@aiscihub/cookieguard-core/src/policy.js",
+      "cookieguard_browser_use/_node/node_modules/@aiscihub/cookieguard-core/src/report.js",
+      "cookieguard_browser_use/_node/node_modules/@aiscihub/cookieguard-core/src/safety.js",
+      "cookieguard_browser_use/_node/node_modules/@aiscihub/cookieguard-core/vendor/engine.cjs",
+      "cookieguard_browser_use/_node/node_modules/@aiscihub/cookieguard-playwright/LICENSE",
+      "cookieguard_browser_use/_node/node_modules/@aiscihub/cookieguard-playwright/README.md",
+      "cookieguard_browser_use/_node/node_modules/@aiscihub/cookieguard-playwright/package.json",
+      "cookieguard_browser_use/_node/node_modules/@aiscihub/cookieguard-playwright/src/index.d.ts",
+      "cookieguard_browser_use/_node/node_modules/@aiscihub/cookieguard-playwright/src/index.js",
+      "cookieguard_browser_use/_origins.py",
+      "cookieguard_browser_use/_result.py",
+      "cookieguard_browser_use/demo/__init__.py",
+      "cookieguard_browser_use/demo/__main__.py",
+      "cookieguard_browser_use/demo/app.py",
+      "cookieguard_browser_use/demo/scripted.py",
+      "cookieguard_browser_use/py.typed"
+    ],
+    "dependencies_identical": true,
+    "requires_dist": [
+      "browser-use<0.14,>=0.13.14",
+      "cdp-use<2,>=1.4.5",
+      "pydantic<3,>=2.10",
+      "pytest>=8.3; extra == 'test'"
+    ]
+  },
+  "environment": {
+    "python": "3.12.12",
+    "platform": "macOS-26.6.2-arm64-arm-64bit",
+    "node": "v26.10.0",
+    "package_count": 125,
+    "differences_from_beta_environment": {
+      "cookieguard-browser-use": {
+        "beta_environment": "0.1.0b1",
+        "stable_environment": "0.1.0"
+      }
+    },
+    "base_environment_record": "installed-requirements.txt",
+    "dependency_check": "uv pip check: all installed packages are compatible"
+  },
+  "tests": {
+    "example": {
+      "command": "python -m pytest integrations/browser-use/upstream/example/test_cookie_policy.py -q",
+      "exit_code": 0,
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "deselected": 0,
+      "time_seconds": 41.894,
+      "timestamp": "2026-11-04T10:06:54.391913-08:00",
+      "junit_sha256": "95613e97bfedd6e1b451783b139e1e2ff5f8f7264af25726f50f6e72ebf85e65",
+      "log_sha256": "93adffe9d26a78cf7f8eaf0bc5980fc9b3270103e7c519c92ceea456297ad39c",
+      "cases": [
+        "test_baseline_logs_in_without_a_security_verdict[insecure]",
+        "test_baseline_logs_in_without_a_security_verdict[secure]",
+        "test_final_audit_enforces_missing_httponly_without_an_agent_tool_call",
+        "test_secure_cookie_passes_and_agent_can_call_the_optional_tool",
+        "test_command_enforces_policy[insecure-1]",
+        "test_command_enforces_policy[secure-0]"
+      ]
+    },
+    "adapter_unit": {
+      "command": "python -m pytest integrations/browser-use/tests -m 'not browser' -q",
+      "exit_code": 0,
+      "tests": 71,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "deselected": 18,
+      "time_seconds": 7.692,
+      "timestamp": "2026-11-04T10:07:03.719462-08:00",
+      "junit_sha256": "69725c902103c5b798646fe26e6970159f9c82326bc8b602d87cd8f1ff71283a",
+      "log_sha256": "daf9ff544d15ea4354788200dc627e9af47b83a961f7a62280cf5baf0f766fe9",
+      "cases": [
+        "test_redirect_set_cookie_is_attributed_to_its_hop_in_either_order",
+        "test_cross_origin_redirect_forwards_only_authorized_hops",
+        "test_cached_hops_do_not_shift_attribution",
+        "test_status_mismatch_is_incomplete_not_misattributed",
+        "test_unrelated_origins_are_never_forwarded",
+        "test_unattributable_set_cookie_is_dropped_and_counted",
+        "test_mid_flight_attach_uses_the_redirect_response_url",
+        "test_service_worker_responses_make_collection_incomplete",
+        "test_bounds_mark_incomplete",
+        "test_handler_exceptions_are_contained",
+        "test_loopback_origins_are_normalized_and_deduplicated",
+        "test_nonlocal_origins_require_explicit_authorization",
+        "test_origins_must_be_exact_http_origins[http://127.0.0.1:3000/login]",
+        "test_origins_must_be_exact_http_origins[http://127.0.0.1:3000/?next=1]",
+        "test_origins_must_be_exact_http_origins[http://127.0.0.1:3000/#x]",
+        "test_origins_must_be_exact_http_origins[http://user:pass@127.0.0.1:3000]",
+        "test_origins_must_be_exact_http_origins[ftp://127.0.0.1]",
+        "test_origins_must_be_exact_http_origins[javascript:alert(1)]",
+        "test_origins_must_be_exact_http_origins[127.0.0.1:3000]",
+        "test_origins_must_be_exact_http_origins[]",
+        "test_origins_must_be_exact_http_origins[http://127.0.0.1:99999]",
+        "test_origins_must_be_exact_http_origins[http://b\\xfccher.test]",
+        "test_origin_list_is_bounded_and_not_a_string",
+        "test_invalid_options_are_rejected[options0]",
+        "test_invalid_options_are_rejected[options1]",
+        "test_invalid_options_are_rejected[options2]",
+        "test_invalid_options_are_rejected[options3]",
+        "test_invalid_options_are_rejected[options4]",
+        "test_invalid_options_are_rejected[options5]",
+        "test_invalid_options_are_rejected[options6]",
+        "test_invalid_options_are_rejected[options7]",
+        "test_invalid_options_are_rejected[options8]",
+        "test_header_evidence_requirement_defaults_to_header_capture",
+        "test_errors_never_echo_input",
+        "test_start_requires_keep_alive_and_a_started_session",
+        "test_finish_and_check_require_a_running_audit",
+        "test_tool_registration_uses_the_browser_use_registry",
+        "test_tool_before_start_returns_fixed_text",
+        "test_demo_command_line_defaults_and_validation",
+        "test_missing_httponly_is_a_confirmed_cg001_failure",
+        "test_missing_secure_is_a_confirmed_cg002_failure",
+        "test_valid_authentication_cookie_passes",
+        "test_unknown_and_candidate_identities_are_review_only",
+        "test_missing_expected_auth_cookie_is_incomplete",
+        "test_no_evidence_at_all_is_incomplete",
+        "test_ambiguous_header_attributes_are_review_not_confirmed",
+        "test_browser_state_never_becomes_a_server_declaration",
+        "test_unspecified_store_samesite_stays_unknown",
+        "test_partitioned_store_cookie_is_uncertain",
+        "test_rejected_header_is_not_reported_as_an_accepted_cookie",
+        "test_severity_threshold_controls_failure",
+        "test_lifetime_policy",
+        "test_collection_failure_is_incomplete_even_with_violations",
+        "test_unavailable_cookie_store_is_incomplete",
+        "test_required_header_evidence_blocks_a_store_only_pass_but_not_a_failure",
+        "test_provisional_snapshot_is_store_only_and_never_satisfies_policy",
+        "test_baseline_detects_a_protection_regression",
+        "test_core_policy_validation_rejects_bad_configuration",
+        "test_explicit_validated_auth_evidence_confirms_identity",
+        "test_vendored_engine_matches_manifest_and_published_versions",
+        "test_tampered_engine_is_refused",
+        "test_missing_or_old_node_is_an_engine_error",
+        "test_child_environment_is_minimal",
+        "test_engine_sandbox_denies_writes_and_child_processes",
+        "test_bridge_rejects_malformed_and_oversized_input_without_echo",
+        "test_engine_errors_never_include_values",
+        "test_killed_engine_is_reported_without_details",
+        "test_result_json_is_written_owner_only",
+        "test_explicit_samesite_requirement",
+        "test_host_only_requirement",
+        "test_audit_options_map_to_the_core_policy"
+      ]
+    }
+  },
+  "checks": {
+    "upstream_pre_commit": "Passed for all four proposed paths",
+    "pre_commit_log_sha256": "59d1eec38c06fbcc68abffe471eb2f18e6240bb9c7f5787d4e3b33e44255db64",
+    "pre_commit_note": "Rerun on the final patch in the isolated upstream source snapshot; hook environment unchanged from the beta verification.",
+    "patch_apply_check": "Both alternative patches apply cleanly to the inspected source snapshot",
+    "hosted_ci": "Not run; no upstream PR opened"
+  },
+  "upstream_sha": "b49a68e4060acb226da8f784194fef301c53a6d7",
+  "prepared_patches": {
+    "community-list.patch": "27f216305d779eb2412d594c08ae8330ad3c3480b4e27ee84c7a02940df3d97b",
+    "runnable-example.patch": "2824193060982870e1478d0d65b09331ca08d55083fc126f035ebcca2cdb53be"
+  },
+  "example_sources": {
+    "cookie_policy.py": "dbe0d4803f1246ede020619bad5f2fa383c0563166626a76062e1d7be6895d8d",
+    "test_cookie_policy.py": "7366e79f764c3b9fa46fba51be24b4bcb1a1f368de72facd36a0509fc839d6c4",
+    "README.md": "12a62d2a1ec193bcbbff6960209e81b7b07f381938640973dc16e36f336a0a66"
+  },
+  "metadata_issue": {
+    "development_status": [
+      "Development Status :: 4 - Beta"
+    ],
+    "note": "The final-version 0.1.0 wheel still declares a Beta development classifier. This does not change its runtime payload."
+  },
+  "measurement_scope": {
+    "stable_demo_tests": 6,
+    "stable_adapter_unit_tests": 71,
+    "full_adapter_browser_suite_repeated": false,
+    "benchmark_repeated": false,
+    "historical_cookieguard_version": "0.1.0b1",
+    "historical_evidence": [
+      "provenance.json",
+      "benchmark.json",
+      "example-cli.json",
+      "aborted-run.json"
+    ],
+    "note": "The earlier 100-trial timings and detection results remain beta measurements, including the recorded Chrome startup failure. No stable timing result is claimed."
+  },
+  "submission_refresh": "submission-refresh.json; example runtime and tests unchanged, README evidence link pinned to a published commit"
+}

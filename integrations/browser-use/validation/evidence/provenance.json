@@ -1,0 +1,110 @@
+{
+  "investigated_on": "2026-11-04",
+  "client_timezone": "America/Los_Angeles",
+  "cookieguard_repository_head": "2118b47e31615b883d8c1ded2e85cab9cb17e287",
+  "upstream": {
+    "sha": "b49a68e4060acb226da8f784194fef301c53a6d7",
+    "date": "2026-10-30T04:28:48Z",
+    "source_archive_sha256": "aedd51a301e821f928754c5f890b6f2dedae147f785d51a56a47c7deb2118bc6",
+    "packaged_python_comparison": {
+      "compared_files": 171,
+      "different_files": []
+    }
+  },
+  "published_wheels": [
+    {
+      "name": "browser-use",
+      "version": "0.13.14",
+      "requires_python": "<4.0,>=3.11",
+      "url": "https://files.pythonhosted.org/packages/a0/4f/38a786733ed276b361890893687f90829d6d979ae0d06fdaa2124ab4f974/browser_use-0.13.14-py3-none-any.whl",
+      "sha256": "0023721820b32a71f209955960eb771f7683cde4ddc2071f36b1641b04925095",
+      "uploaded": "2026-10-26T23:00:51.596203Z"
+    },
+    {
+      "name": "cookieguard-browser-use",
+      "version": "0.1.0b1",
+      "requires_python": ">=3.11",
+      "url": "https://files.pythonhosted.org/packages/56/44/0df9d69589eaf589fdcd217b2e571d47b4cc249425d97f8b1ae0063bc61d/cookieguard_browser_use-0.1.0b1-py3-none-any.whl",
+      "sha256": "7661a88e0c36fa64d28772ea415cc379e0b15c5f10ba1dc2ce53ccb6aa952b84",
+      "uploaded": "2026-11-03T21:57:24.473452Z"
+    }
+  ],
+  "cookieguard_source_vs_installed_python_differences": [],
+  "vendored_packages": {
+    "@aiscihub/cookieguard-core": "0.1.0",
+    "@aiscihub/cookieguard-playwright": "0.1.0"
+  },
+  "environment": {
+    "python": "3.12.12",
+    "platform": "macOS-26.6.2-arm64-arm-64bit",
+    "node": "v26.10.0",
+    "packages": {
+      "browser-use": "0.13.14",
+      "cookieguard-browser-use": "0.1.0b1",
+      "cdp-use": "1.4.5"
+    },
+    "import_locations": {
+      "browser_use": "<isolated-venv>/lib/python3.12/site-packages/browser_use/__init__.py",
+      "cookieguard_browser_use": "<isolated-venv>/lib/python3.12/site-packages/cookieguard_browser_use/__init__.py"
+    },
+    "harness_sha256": {
+      "benchmark.py": "a1a28009b954d5648065e615c25d310870f1198b567b1208d4eda2eceb314275",
+      "local_site.py": "98c60f51645005c7a45dafbfe5f0cbb4d8e456cedc55974c21cc46017eb1df0e",
+      "test_benchmark.py": "14aef759e53a8bc6e3d9ec401e812e8527f2ab033d567ae70ce06d385f2ad12b"
+    }
+  },
+  "browser": "Chrome/156.0.8078.81",
+  "tests": {
+    "published": {
+      "tests": "89",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "184.918",
+      "timestamp": "2026-11-04T08:35:22.722357-08:00"
+    },
+    "example": {
+      "tests": "6",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "37.998",
+      "timestamp": "2026-11-04T08:50:19.079684-08:00"
+    }
+  },
+  "benchmark_scorer_tests": {
+    "passed": 7,
+    "failed": 0
+  },
+  "dependency_check": "No broken requirements found",
+  "benchmark": {
+    "measured_trials": 100,
+    "warmup_trials": 2,
+    "exit_code": 1,
+    "validation_failures": [
+      "missing_httponly/cookieguard/3: execution error at browser_start"
+    ],
+    "raw_json_sha256": "f085767ebf631d43eada4e8c84a8338f9db42fa73d9f2d678b2dc47da5905081",
+    "shareable_json_sha256": "c6fbf8eee9fb64f8e169f8a82d3e98efb58dd1e69591be36ce7305081eb29090",
+    "journal_sha256": "7205ee6b318f05ad3a30ab1600eef37a564863af40fe868244101a3a81607f9f",
+    "note": "Recorded attempt completed with one browser_start error; failed attempt is retained, not retried. The earlier aborted run is recorded separately."
+  },
+  "checks": {
+    "upstream_pre_commit": "Passed for all four proposed paths",
+    "pyright_without_optional_package": "Passed",
+    "patch_apply_check": "Both alternative patches apply to the inspected original README",
+    "hosted_ci": "Not run; no upstream PR opened",
+    "final_pre_commit_log_sha256": "59d1eec38c06fbcc68abffe471eb2f18e6240bb9c7f5787d4e3b33e44255db64",
+    "example_cli": {
+      "baseline_exit": 0,
+      "insecure_exit": 1,
+      "secure_exit": 0,
+      "all_matched": true,
+      "evidence": "example-cli.json"
+    }
+  },
+  "prepared_patches": {
+    "community-list.patch": "27f216305d779eb2412d594c08ae8330ad3c3480b4e27ee84c7a02940df3d97b",
+    "runnable-example.patch": "b911237e605596608081a86d2e6d12eff48128a146030dc9e972f979cab2332e"
+  }
+}

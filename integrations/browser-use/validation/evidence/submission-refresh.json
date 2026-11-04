@@ -1,0 +1,28 @@
+{
+  "checked_at_utc": "2026-11-04T18:16:01.918174+00:00",
+  "upstream_main": "b49a68e4060acb226da8f784194fef301c53a6d7",
+  "cookieguard_main": "d1b5de084c9dbc1b772153a73f5fde8404b4b4a7",
+  "pypi": {
+    "browser-use": {
+      "latest_final": "0.13.14",
+      "index": "https://pypi.org/simple/browser-use/"
+    },
+    "cookieguard-browser-use": {
+      "latest_final": "0.1.0",
+      "index": "https://pypi.org/simple/cookieguard-browser-use/"
+    }
+  },
+  "published_evidence_commit": "39f6232d86276b6b5caaa114eab2654842f74750",
+  "checks": {
+    "upstream_pre_commit": "All applicable hooks passed on all four proposed paths in a fresh main checkout with stable CookieGuard installed",
+    "upstream_pre_commit_log_sha256": "59d1eec38c06fbcc68abffe471eb2f18e6240bb9c7f5787d4e3b33e44255db64",
+    "benchmark_scorer": "7 passed in the fresh CookieGuard main checkout",
+    "evidence_leakage": "6 evidence files checked; no synthetic sentinel values found",
+    "example_source": "Runtime and test code identical to the stable release verification; README now pins its evidence link to an immutable commit",
+    "historical_benchmark": "Unchanged, including Chrome startup failures; no stable timing result claimed"
+  },
+  "prepared_patches": {
+    "community-list.patch": "27f216305d779eb2412d594c08ae8330ad3c3480b4e27ee84c7a02940df3d97b",
+    "runnable-example.patch": "2824193060982870e1478d0d65b09331ca08d55083fc126f035ebcca2cdb53be"
+  }
+}
