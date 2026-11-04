@@ -12,6 +12,9 @@
     "lint": "eslint packages scripts tests examples action integrations/browser-use/scripts integrations/browser-use/src eslint.config.js",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "test": "node --test --test-timeout=30000 tests/*.test.js",
+    "test:mcp": "node --test --test-timeout=30000 tests/mcp.test.js",
+    "verify:mcp": "node scripts/verify-mcp-package.js",
+    "demo:mcp": "node examples/mcp/run.js",
     "test:playwright": "playwright test --config examples/playwright/playwright.config.js",
     "benchmark": "node scripts/benchmark.js",
     "check": "npm run build && npm run lint && npm run typecheck && npm test && npm run test:playwright",
@@ -23,6 +26,7 @@
     "demo:browser:pass": "node examples/browser-demo/run.js secure-login"
   },
   "devDependencies": {
+    "@modelcontextprotocol/client": "2.4.0",
     "@playwright/test": "1.64.1",
     "eslint": "10.13.0",
     "onnxruntime-node": "1.30.0",
