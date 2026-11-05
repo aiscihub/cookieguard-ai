@@ -11,7 +11,7 @@
 [![Python versions](https://img.shields.io/pypi/pyversions/cookieguard-browser-use?style=flat-square&logo=python&logoColor=white)](https://pypi.org/project/cookieguard-browser-use/)
 [![npm cookieguard-ci](https://img.shields.io/npm/v/cookieguard-ci?style=flat-square&color=cb3837&label=npm%20cookieguard-ci)](https://www.npmjs.com/package/cookieguard-ci)
 [![npm downloads](https://img.shields.io/npm/dt/cookieguard-ci?style=flat-square&color=cb3837&label=npm%20downloads)](https://www.npmjs.com/package/cookieguard-ci)
-[![MCP server preview](https://img.shields.io/badge/MCP-2_tools_(preview)-5c4ee5?style=flat-square)](packages/mcp/README.md)
+[![MCP server on npm](https://img.shields.io/npm/v/@aiscihub/cookieguard-mcp?style=flat-square&color=5c4ee5&label=MCP%20server)](https://www.npmjs.com/package/@aiscihub/cookieguard-mcp)
 [![Node.js 24+](https://img.shields.io/badge/Node.js-24%2B-339933?style=flat-square&logo=nodedotjs&logoColor=white)](integrations/browser-use/docs/install.md)
 [![Browser Use 0.13](https://img.shields.io/badge/Browser_Use-0.13-111111?style=flat-square)](https://github.com/browser-use/browser-use)
 [![CI](https://img.shields.io/github/actions/workflow/status/aiscihub/cookieguard-ai/cookieguard-ci.yml?branch=main&style=flat-square&label=CI)](https://github.com/aiscihub/cookieguard-ai/actions/workflows/cookieguard-ci.yml)
@@ -161,7 +161,7 @@ The same published policy engine powers every tool:
 | Tool | Use it for | Get started |
 | --- | --- | --- |
 | **Browser Use** | AI agents that log in and run browser workflows | [Quick start](#quick-start) |
-| **MCP server** (preview) | Letting an AI client scan your app's `Set-Cookie` headers | [Use it from an MCP client](#use-it-from-an-mcp-client) |
+| **MCP server** | Letting an AI client scan your app's `Set-Cookie` headers | [Use it from an MCP client](#use-it-from-an-mcp-client) |
 | **Playwright** | Cookies created during login in your existing tests | [Playwright quickstart](docs/CI_GUIDE.md#quick-start-playwright) |
 | **CLI** | `Set-Cookie` headers from a running test app | [CLI quickstart](docs/CI_GUIDE.md#quick-start-cli) |
 | **GitHub Action** | Header checks, a build summary, and a sanitized report | [Action quickstart](docs/CI_GUIDE.md#quick-start-github-actions) |
@@ -185,8 +185,8 @@ your app sets. It runs locally over stdio and offers two tools. Your configurati
 fixes the allowed origins and policy; the client can only choose which URL to scan.
 
 > [!NOTE]
-> Beta: [`@aiscihub/cookieguard-mcp`](https://www.npmjs.com/package/@aiscihub/cookieguard-mcp)
-> 0.1.0-beta.1 is a preview release on npm. It needs Node.js 24+.
+> [`@aiscihub/cookieguard-mcp`](https://www.npmjs.com/package/@aiscihub/cookieguard-mcp)
+> 0.1.0 is on npm. It needs Node.js 24+.
 
 Try it from a clone of this repository, with no API key or browser. The demo connects a
 real MCP client to the server:
@@ -211,7 +211,7 @@ session cookie names. Then add the server to your client's MCP settings:
   "mcpServers": {
     "cookieguard": {
       "command": "npx",
-      "args": ["--yes", "@aiscihub/cookieguard-mcp@0.1.0-beta.1",
+      "args": ["--yes", "@aiscihub/cookieguard-mcp@0.1.0",
                "--config", "/absolute/path/cookieguard.json"]
     }
   }

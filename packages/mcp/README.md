@@ -4,7 +4,7 @@ Let an MCP client check HTTP cookie configuration against your local policy.
 CookieGuard returns **PASS / FAIL / INCOMPLETE**, rule IDs, explanations, and fixes.
 Cookie values never appear in tool results.
 
-**Beta:** `0.1.0-beta.1` is a preview release on npm. Requires **Node.js 24+**.
+Version **0.1.0** on npm. Requires **Node.js 24+**.
 
 ```mermaid
 flowchart LR
@@ -83,7 +83,7 @@ For clients that use an `mcpServers` JSON object:
       "command": "npx",
       "args": [
         "--yes",
-        "@aiscihub/cookieguard-mcp@0.1.0-beta.1",
+        "@aiscihub/cookieguard-mcp@0.1.0",
         "--config",
         "/absolute/path/cookieguard.json"
       ]
@@ -98,7 +98,9 @@ until you update it. Use an absolute path to `npx` if your client cannot find it
 `command` to `node`, and make
 `/absolute/path/cookieguard-ai/packages/mcp/bin/cookieguard-mcp.js` the first argument
 before `--config`. Client-specific configuration locations and wrapper keys vary; the
-command and argument array above are the stdio launch settings.
+command and argument array above are the stdio launch settings. This release was
+tested with the official MCP SDK client on Linux (Node.js 24) and macOS (Node.js 26);
+desktop MCP clients have not been tested yet.
 
 Ask your client: **“Read CookieGuard's policy, then scan
 http://127.0.0.1:3000/secure and explain any confirmed failures.”** In a clone of this
