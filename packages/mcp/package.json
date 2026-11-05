@@ -1,6 +1,6 @@
 {
   "name": "@aiscihub/cookieguard-mcp",
-  "version": "0.1.0-beta.1",
+  "version": "0.1.0",
   "description": "Local MCP tools for CookieGuard authentication-cookie policy checks",
   "mcpName": "io.github.aiscihub/cookieguard",
   "type": "module",
@@ -9,7 +9,7 @@
   "bin": { "cookieguard-mcp": "bin/cookieguard-mcp.js" },
   "exports": { ".": { "types": "./src/index.d.ts", "import": "./src/index.js" } },
   "files": ["bin", "src", "LICENSE", "README.md", "server.json"],
-  "publishConfig": { "access": "public", "tag": "beta", "registry": "https://registry.npmjs.org" },
+  "publishConfig": { "access": "public", "registry": "https://registry.npmjs.org" },
   "dependencies": {
     "@aiscihub/cookieguard-core": "0.1.0",
     "cookieguard-ci": "0.1.0",

@@ -185,6 +185,6 @@ test('bad startup configuration exits 2 without reflecting paths or input; help 
   }
   await assert.rejects(readConfig('relative.json'), { code: 'CONFIG' });
   assert.match((await exec(process.execPath, [bin, '--help'])).stdout, /--config/);
-  assert.equal((await exec(process.execPath, [bin, '--version'])).stdout.trim(), '0.1.0-beta.1');
+  assert.equal((await exec(process.execPath, [bin, '--version'])).stdout.trim(), '0.1.0');
   await assert.rejects(exec(process.execPath, [bin, `--${DEMO_VALUE}`]), error => { clean(error.stdout + error.stderr); return error.code === 2; });
 });

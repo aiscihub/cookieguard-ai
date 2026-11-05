@@ -4,6 +4,9 @@
 on 2026-11-05; see [the publication record](VALIDATION.md#npm-publication--2026-11-05).
 Registration as `io.github.aiscihub/cookieguard` in the MCP Registry (step 3) has not
 been performed.
+
+`0.1.0`, the first stable release, has the same code as the beta. It is prepared in
+this repository and published under the default `latest` dist-tag.
 The existing core, CLI, Playwright, and Browser Use versions do not change.
 
 ## 1. Review and merge
@@ -37,8 +40,8 @@ Do not create, request, or expose API tokens. This implementation does not add a
 automatic upload workflow. Any future Actions must be pinned to full commit SHAs.
 
 **Stop for maintainer approval before any npm upload.** Publish only the reviewed
-MCP package at `0.1.0-beta.1` with public access and the `beta` dist-tag; do not
-run a workspace-wide publish. Check npm metadata, the published integrity, and
+MCP package with public access; do not run a workspace-wide publish. Prereleases
+such as `0.1.0-beta.1` use the `beta` dist-tag; final releases use the default `latest`. Check npm metadata, the published integrity, and
 an isolated install from npm. Exercise tool discovery and the three fixture
 outcomes against that installed binary.
 
@@ -55,7 +58,7 @@ After a successful upload, users can configure:
   "mcpServers": {
     "cookieguard": {
       "command": "npx",
-      "args": ["--yes", "@aiscihub/cookieguard-mcp@0.1.0-beta.1", "--config", "/absolute/path/cookieguard.json"]
+      "args": ["--yes", "@aiscihub/cookieguard-mcp@0.1.0", "--config", "/absolute/path/cookieguard.json"]
     }
   }
 }
