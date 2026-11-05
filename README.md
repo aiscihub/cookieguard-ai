@@ -186,7 +186,8 @@ fixes the allowed origins and policy; the client can only choose which URL to sc
 
 > [!NOTE]
 > [`@aiscihub/cookieguard-mcp`](https://www.npmjs.com/package/@aiscihub/cookieguard-mcp)
-> 0.1.0 is on npm. It needs Node.js 24+.
+> 0.1.0 is on npm and in the official MCP Registry as `io.github.aiscihub/cookieguard`.
+> It needs Node.js 24+.
 
 Try it from a clone of this repository, with no API key or browser. The demo connects a
 real MCP client to the server:
