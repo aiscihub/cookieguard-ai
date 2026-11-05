@@ -4,9 +4,7 @@ Let an MCP client check HTTP cookie configuration against your local policy.
 CookieGuard returns **PASS / FAIL / INCOMPLETE**, rule IDs, explanations, and fixes.
 Cookie values never appear in tool results.
 
-**Development preview:** `0.1.0-beta.1` is prepared in this repository; it has not
-been published to npm or registered in the MCP Registry. Use the checkout
-instructions below until the release is approved. Requires **Node.js 24+**.
+**Beta:** `0.1.0-beta.1` is a preview release on npm. Requires **Node.js 24+**.
 
 ```mermaid
 flowchart LR
@@ -24,7 +22,7 @@ API key, Python, or browser installation is needed. The adapter uses the existin
 
 ## Try the working demo
 
-From the repository root:
+From a clone of this repository:
 
 ```bash
 npm ci
@@ -47,7 +45,7 @@ observed. The demo itself exits 0 when all three expected outcomes are verified.
 
 ## Connect your MCP client
 
-1. Install the checkout's dependencies with `npm ci` in the repository root.
+1. Install Node.js 24 or later.
 2. Save a configuration file outside any directory your agent can modify.
 3. Add the server command to your client's local stdio MCP configuration.
 
@@ -82,9 +80,10 @@ For clients that use an `mcpServers` JSON object:
 {
   "mcpServers": {
     "cookieguard": {
-      "command": "node",
+      "command": "npx",
       "args": [
-        "/absolute/path/cookieguard-ai/packages/mcp/bin/cookieguard-mcp.js",
+        "--yes",
+        "@aiscihub/cookieguard-mcp@0.1.0-beta.1",
         "--config",
         "/absolute/path/cookieguard.json"
       ]
@@ -93,13 +92,17 @@ For clients that use an `mcpServers` JSON object:
 }
 ```
 
-Replace both paths. Use an absolute path to Node if your client cannot find it on
-`PATH`. Client-specific configuration locations and wrapper keys vary; the
+Replace the configuration path. The pinned version keeps the server from changing
+until you update it. Use an absolute path to `npx` if your client cannot find it on
+`PATH`. To run from a checkout instead, run `npm ci` in the repository root, set
+`command` to `node`, and make
+`/absolute/path/cookieguard-ai/packages/mcp/bin/cookieguard-mcp.js` the first argument
+before `--config`. Client-specific configuration locations and wrapper keys vary; the
 command and argument array above are the stdio launch settings.
 
 Ask your client: **“Read CookieGuard's policy, then scan
-http://127.0.0.1:3000/secure and explain any confirmed failures.”** Run
-`npm run demo` in another terminal to provide that fixture endpoint.
+http://127.0.0.1:3000/secure and explain any confirmed failures.”** In a clone of this
+repository, run `npm run demo` in another terminal to provide that fixture endpoint.
 
 Restart the MCP server after changing configuration. The server loads a snapshot
 at startup; neither a tool call nor an edit to the file changes a running policy.

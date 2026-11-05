@@ -1,5 +1,20 @@
 # Changelog
 
+## CookieGuard MCP 0.1.0-beta.1 — preview — unreleased
+
+- Add `@aiscihub/cookieguard-mcp`, a local stdio MCP server with two tools:
+  - `cookieguard_policy` shows the allowed origins and the policy in force.
+  - `cookieguard_scan` audits one allowed URL's `Set-Cookie` headers and returns
+    PASS / FAIL / INCOMPLETE with rule IDs, explanations, and fixes.
+- The allowed origins, policy, and timeout are fixed at startup from a local
+  configuration file; the client can choose only which URL to scan.
+- The server uses the published `cookieguard-ci` scanner and
+  `@aiscihub/cookieguard-core` policy engine at 0.1.0. Results never contain cookie
+  values or arbitrary observed cookie names.
+- Add MCP Registry metadata (`server.json`, name `io.github.aiscihub/cookieguard`).
+- Run it with `npx --yes @aiscihub/cookieguard-mcp@0.1.0-beta.1 --config <path>`
+  on Node.js 24+. The core, CLI, Playwright, and Browser Use packages are unchanged.
+
 ## CookieGuard for Browser Use 0.1.0 — first stable release — 2026-11-04
 
 The code and behavior are the same as 0.1.0b1. Since the `browser-use-v0.1.0b1` tag, only

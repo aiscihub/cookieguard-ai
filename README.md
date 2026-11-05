@@ -185,10 +185,11 @@ your app sets. It runs locally over stdio and offers two tools. Your configurati
 fixes the allowed origins and policy; the client can only choose which URL to scan.
 
 > [!NOTE]
-> Development preview: `@aiscihub/cookieguard-mcp` 0.1.0-beta.1 is not yet on npm or in
-> the MCP Registry. Run it from a checkout of this repository with Node.js 24+.
+> Beta: [`@aiscihub/cookieguard-mcp`](https://www.npmjs.com/package/@aiscihub/cookieguard-mcp)
+> 0.1.0-beta.1 is a preview release on npm. It needs Node.js 24+.
 
-Try it with no API key or browser. The demo connects a real MCP client to the server:
+Try it from a clone of this repository, with no API key or browser. The demo connects a
+real MCP client to the server:
 
 ```bash
 npm ci && npm run demo:mcp
@@ -209,8 +210,8 @@ session cookie names. Then add the server to your client's MCP settings:
 {
   "mcpServers": {
     "cookieguard": {
-      "command": "node",
-      "args": ["/absolute/path/cookieguard-ai/packages/mcp/bin/cookieguard-mcp.js",
+      "command": "npx",
+      "args": ["--yes", "@aiscihub/cookieguard-mcp@0.1.0-beta.1",
                "--config", "/absolute/path/cookieguard.json"]
     }
   }
