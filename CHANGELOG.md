@@ -1,6 +1,6 @@
 # Changelog
 
-## CookieGuard MCP 0.1.0-beta.1 — preview — unreleased
+## CookieGuard MCP 0.1.0-beta.1 — preview — 2026-11-05
 
 - Add `@aiscihub/cookieguard-mcp`, a local stdio MCP server with two tools:
   - `cookieguard_policy` shows the allowed origins and the policy in force.
