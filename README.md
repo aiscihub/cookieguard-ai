@@ -10,6 +10,7 @@
 [![PyPI downloads](https://img.shields.io/pepy/dt/cookieguard-browser-use?style=flat-square&color=3775A9&label=PyPI%20downloads)](https://pepy.tech/projects/cookieguard-browser-use)
 [![Python versions](https://img.shields.io/pypi/pyversions/cookieguard-browser-use?style=flat-square&logo=python&logoColor=white)](https://pypi.org/project/cookieguard-browser-use/)
 [![npm cookieguard-ci](https://img.shields.io/npm/v/cookieguard-ci?style=flat-square&color=cb3837&label=npm%20cookieguard-ci)](https://www.npmjs.com/package/cookieguard-ci)
+[![npm downloads](https://img.shields.io/npm/dt/cookieguard-ci?style=flat-square&color=cb3837&label=npm%20downloads)](https://www.npmjs.com/package/cookieguard-ci)
 [![MCP server preview](https://img.shields.io/badge/MCP-2_tools_(preview)-5c4ee5?style=flat-square)](packages/mcp/README.md)
 [![Node.js 24+](https://img.shields.io/badge/Node.js-24%2B-339933?style=flat-square&logo=nodedotjs&logoColor=white)](integrations/browser-use/docs/install.md)
 [![Browser Use 0.13](https://img.shields.io/badge/Browser_Use-0.13-111111?style=flat-square)](https://github.com/browser-use/browser-use)
