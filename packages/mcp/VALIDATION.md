@@ -165,3 +165,84 @@ Node.js v26.10.0 and npm 11.19.1:
 
 Not yet done: registration in the MCP Registry, and testing in named desktop MCP
 clients. Only the official MCP SDK client has been used.
+
+## 0.1.0 publication — 2026-11-05
+
+### npm
+
+The maintainer published the tarball re-packed from `main` at `ce705d9` (PR #28) from
+their own npm session:
+
+```bash
+npm publish aiscihub-cookieguard-mcp-0.1.0.tgz --access public --registry=https://registry.npmjs.org
+```
+
+Before the upload, `npm run verify:mcp` on `main` exited 0, and the tarball was
+byte-identical to the one tested on the PR branch:
+
+```text
+sha256     9cef3be1fc773711a7c67f5ca1f06abd8a8db050d1bc5856d684dda61c917815
+integrity  sha512-c8sGonAUGpmZ9csH/NDfhZFUVP+OZVaWCQzfDH+g+bIg3QBA26kJS7VMfQtS571QL594WnhDRdehQIPoYDWwyQ==
+```
+
+`0.1.0` was published at 21:42:13 UTC. Compared with the published beta tarball, only
+`README.md`, `package.json`, and `server.json` differ; `bin/` and `src/` are identical.
+Registry metadata after release:
+
+| Field | Value |
+| --- | --- |
+| Versions | `0.0.0-stage`, `0.1.0-beta.1`, `0.1.0` |
+| Dist-tags | `latest` points to `0.1.0`; `beta` still points to `0.1.0-beta.1` |
+| `mcpName` | `io.github.aiscihub/cookieguard` |
+| Integrity | Matches the tested tarball; the downloaded registry tarball is byte-identical |
+| Files | 8 |
+| Dependencies | `@aiscihub/cookieguard-core` 0.1.0, `cookieguard-ci` 0.1.0, `@modelcontextprotocol/server` 2.4.0, `zod` 4.6.7 |
+| Provenance | None (published locally) |
+
+Installed from npm in a new directory with an empty npm cache, on macOS (arm64) with
+Node.js v26.10.0 and npm 11.19.1:
+
+- `npm install @aiscihub/cookieguard-mcp@0.1.0` added 6 packages, all resolved from
+  `registry.npmjs.org`. `npm audit signatures` reported verified registry signatures
+  for all 6.
+- The repository's MCP SDK client (`examples/mcp/run.js`) against the installed binary,
+  exit 0:
+
+  ```text
+  MCP tools: cookieguard_policy, cookieguard_scan
+  secure: PASSED (exitCode 0)
+  missing-httponly: FAILED (exitCode 1) — CG001 Missing HttpOnly
+  preference: INCOMPLETE (exitCode 2)
+  MCP demo passed; cookie-value canary absent from results and diagnostics.
+  ```
+
+- `npx --yes @aiscihub/cookieguard-mcp@0.1.0 --version` and
+  `npx --yes @aiscihub/cookieguard-mcp --version`, each with an empty cache, both
+  printed `0.1.0`.
+
+### MCP Registry
+
+- The publisher was `mcp-publisher` v1.8.7 from the official `modelcontextprotocol/registry`
+  GitHub release. The SHA-256 of `mcp-publisher_darwin_arm64.tar.gz`
+  (`b63dc083beb27e1a44c07c252ac147ff2c34af2f7822f705a17f8d0e1b44d592`) matched the
+  release's checksum file. Its Sigstore bundle was not checked.
+- `server.json` was taken from the published npm 0.1.0 tarball and is identical to
+  `main`. `mcp-publisher validate` against the live registry printed
+  `✅ server.json is valid`.
+- The maintainer authenticated with `mcp-publisher login github` and ran
+  `mcp-publisher publish`:
+
+  ```text
+  Publishing io.github.aiscihub/cookieguard@0.1.0 to https://registry.modelcontextprotocol.io...
+  ✓ Successfully published
+  ✓ Server io.github.aiscihub/cookieguard version 0.1.0
+  ```
+
+- `GET https://registry.modelcontextprotocol.io/v0.1/servers?search=io.github.aiscihub/cookieguard`
+  returned one entry: version 0.1.0, status `active`, marked latest, published
+  2026-11-05T22:18:23Z. It names npm package `@aiscihub/cookieguard-mcp` 0.1.0 with
+  stdio transport and a required `--config` file-path argument. Apart from `$schema`,
+  the listing matches the published `server.json`.
+
+Not yet done: testing in named desktop MCP clients. Only the official MCP SDK client
+has been used.

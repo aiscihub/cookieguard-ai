@@ -4,7 +4,8 @@ Let an MCP client check HTTP cookie configuration against your local policy.
 CookieGuard returns **PASS / FAIL / INCOMPLETE**, rule IDs, explanations, and fixes.
 Cookie values never appear in tool results.
 
-Version **0.1.0** on npm. Requires **Node.js 24+**.
+Version **0.1.0** on npm, listed in the official MCP Registry as
+`io.github.aiscihub/cookieguard`. Requires **Node.js 24+**.
 
 ```mermaid
 flowchart LR

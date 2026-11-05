@@ -1,12 +1,12 @@
 # Changelog
 
-## CookieGuard MCP 0.1.0 — first stable release — unreleased
+## CookieGuard MCP 0.1.0 — first stable release — 2026-11-05
 
 The code is the same as 0.1.0-beta.1; only the version changed.
 
 - Publish under the default `latest` npm dist-tag. Run it with
   `npx --yes @aiscihub/cookieguard-mcp@0.1.0 --config <path>` on Node.js 24+.
-- The MCP Registry metadata (`server.json`) names version 0.1.0.
+- Listed in the official MCP Registry as `io.github.aiscihub/cookieguard`, version 0.1.0.
 - Tested with the official MCP SDK client on Linux (Node.js 24) and macOS
   (Node.js 26). Desktop MCP clients have not been tested yet.
 
