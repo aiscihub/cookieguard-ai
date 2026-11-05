@@ -6,10 +6,15 @@ accounts. An agent must stop and ask at each of them.
 
 ## State on 2026-11-04
 
-- **0.1.0 (first stable release) is prepared, not published.** It is on branch
-  `release/browser-use-0.1.0`. Release gates and results are in
-  [VALIDATION.md](VALIDATION.md#010-release-candidate--2026-11-04).
-  The tag `browser-use-v0.1.0` does not exist yet. Steps 5 and "Done when (0.1.0)" remain.
+- **0.1.0 (first stable release) is [published on PyPI](https://pypi.org/project/cookieguard-browser-use/0.1.0/).**
+  It was merged in [PR #22](https://github.com/aiscihub/cookieguard-ai/pull/22) and published on
+  2026-11-04 from tag `browser-use-v0.1.0` at commit `d1b5de0`, through Trusted Publishing in
+  [release run 41882052045](https://github.com/aiscihub/cookieguard-ai/actions/runs/41882052045)
+  after maintainer approval. The [GitHub release](https://github.com/aiscihub/cookieguard-ai/releases/tag/browser-use-v0.1.0)
+  includes the verified wheel, source archive, and `SHA256SUMS`.
+- Release gates are in [VALIDATION.md](VALIDATION.md#010-release-candidate--2026-11-04), and the
+  published result in [VALIDATION.md](VALIDATION.md#010-publication--2026-11-04).
+  One item remains: a person's visual check of the rendered PyPI page (see "Done when (0.1.0)").
 
 0.1.0b1 history:
 
@@ -153,13 +158,15 @@ PyPI, and the fix ships as the next patch version (after 0.1.0, `0.1.1`).
 
 ## Done when (0.1.0)
 
-- [ ] Hosted CI passes on the release PR: toolkit, plus Browser Use on Python 3.11, 3.12, and 3.13.
-- [ ] The changelog entry is dated, and the PR is merged to `main`.
-- [ ] Tag `browser-use-v0.1.0` is pushed with approval; the release workflow passes and publishes through `pypi`.
-- [ ] `pip install cookieguard-browser-use` (no `--pre`) installs 0.1.0 in clean venvs on Python 3.11–3.13.
-- [ ] The demo installed from PyPI returns insecure FAIL (exit 1) and secure PASS (exit 0).
-- [ ] The PyPI page renders, with links pinned to `browser-use-v0.1.0`.
-- [ ] The GitHub release has the wheel, sdist, and `SHA256SUMS`; VALIDATION.md records the published result.
+- [x] Hosted CI passes on the release PR: toolkit, plus Browser Use on Python 3.11, 3.12, and 3.13.
+- [x] The changelog entry is dated, and the PR is merged to `main`.
+- [x] Tag `browser-use-v0.1.0` is pushed with approval; the release workflow passes and publishes through `pypi`.
+- [x] `pip install cookieguard-browser-use` (no `--pre`) installs 0.1.0 in clean venvs on Python 3.11–3.13.
+- [x] The demo installed from PyPI returns insecure FAIL (exit 1) and secure PASS (exit 0).
+- [ ] The PyPI page renders, with links pinned to `browser-use-v0.1.0`. The links are verified through
+  PyPI's JSON API. The rendered page still needs a person's look: PyPI served its bot check to
+  every automated browser.
+- [x] The GitHub release has the wheel, sdist, and `SHA256SUMS`; VALIDATION.md records the published result.
 
 ## Done when (0.1.0b1, completed)
 
