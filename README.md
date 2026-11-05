@@ -7,6 +7,7 @@
 **A successful agent login is not a secure session cookie.**
 
 [![PyPI](https://img.shields.io/pypi/v/cookieguard-browser-use?style=flat-square&color=3775A9&label=PyPI)](https://pypi.org/project/cookieguard-browser-use/)
+[![PyPI downloads](https://img.shields.io/pepy/dt/cookieguard-browser-use?style=flat-square&color=3775A9&label=PyPI%20downloads)](https://pepy.tech/projects/cookieguard-browser-use)
 [![Python versions](https://img.shields.io/pypi/pyversions/cookieguard-browser-use?style=flat-square&logo=python&logoColor=white)](https://pypi.org/project/cookieguard-browser-use/)
 [![npm cookieguard-ci](https://img.shields.io/npm/v/cookieguard-ci?style=flat-square&color=cb3837&label=npm%20cookieguard-ci)](https://www.npmjs.com/package/cookieguard-ci)
 [![MCP server preview](https://img.shields.io/badge/MCP-2_tools_(preview)-5c4ee5?style=flat-square)](packages/mcp/README.md)
