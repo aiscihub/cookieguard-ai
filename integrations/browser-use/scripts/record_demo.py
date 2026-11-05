@@ -355,7 +355,7 @@ def end_card(captures: list[Capture], fonts: dict) -> Image.Image:
 		rules = ', '.join(sorted({e.text.split(' ')[0] for e in capture.events if e.lane == 'guard' and e.tone == 'fail' and e.text.startswith('CG')}))
 		draw.text((x + 32, 446), f'Confirmed violations: {rules or "none"}', font=fonts['comment'], fill=COLORS['muted'])
 		draw.text((x + 32, 490), f'{capture.status} · exit {capture.exit_code}', font=fonts['card'], fill=color)
-	footer = 'pip install ./integrations/browser-use  ·  python -m cookieguard_browser_use.demo'
+	footer = 'pip install cookieguard-browser-use  ·  python -m cookieguard_browser_use.demo'
 	draw.text(((WIDTH - draw.textlength(footer, font=fonts['code'])) / 2, 640), footer, font=fonts['code'], fill=COLORS['text'])
 	return image
 

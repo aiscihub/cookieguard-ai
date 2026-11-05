@@ -2,6 +2,78 @@
 
 Newest release first. The 0.1.0b1 records below are kept unchanged as provenance.
 
+## 0.1.0 publication — 2026-11-04
+
+Published [cookieguard-browser-use 0.1.0](https://pypi.org/project/cookieguard-browser-use/0.1.0/)
+from tag `browser-use-v0.1.0` (`d1b5de0`) through Trusted Publishing in
+[run 41882052045](https://github.com/aiscihub/cookieguard-ai/actions/runs/41882052045).
+Both `build` and `publish-pypi` succeeded after the maintainer approved the `pypi`
+environment. The tag-triggered run does not use TestPyPI.
+
+Selected actual output from the completed build log, which contains no canary-prefixed line:
+
+```text
+Vendored @aiscihub/cookieguard-core, @aiscihub/cookieguard-playwright (workspace-verified-against-npm-registry).
+Checking dist/cookieguard_browser_use-0.1.0-py3-none-any.whl: PASSED
+Checking dist/cookieguard_browser_use-0.1.0.tar.gz: PASSED
+cookieguard_browser_use-0.1.0-py3-none-any.whl: 18 absolute links/images; 16 pinned to browser-use-v0.1.0; no relative links.
+cookieguard_browser_use-0.1.0.tar.gz: 18 absolute links/images; 16 pinned to browser-use-v0.1.0; no relative links.
+Built cookieguard_browser_use-0.1.0-py3-none-any.whl (35 files) and cookieguard_browser_use-0.1.0.tar.gz; engine, manifest, and licenses present.
+Installed 0.1.0 into a clean Python 3.12.15 venv outside the repository (browser-use 0.13.14, cdp-use 1.4.5).
+Consumer test suite: 89 passed in 73.84s (0:01:13)
+  CookieGuard for Browser Use: FAIL (exit code 1); evidence: server-declarations-and-browser-store
+  CookieGuard for Browser Use: PASS (exit code 0); evidence: server-declarations-and-browser-store
+Installed 0.1.0 from cookieguard_browser_use-0.1.0.tar.gz (built from source); engine hashes verified. Demo:
+  CookieGuard for Browser Use: FAIL (exit code 1); evidence: server-declarations-and-browser-store
+  CookieGuard for Browser Use: PASS (exit code 0); evidence: server-declarations-and-browser-store
+```
+
+The files downloaded from PyPI match the SHA-256 values in PyPI's JSON API, and they are
+byte-identical to the workflow's `cookieguard-browser-use-dist` artifact:
+
+```text
+d2d2987e5d46eb78dbab7c4ca4db5075a636978ff92ce424fbb334fb3e1948b6  cookieguard_browser_use-0.1.0-py3-none-any.whl
+45cb596a3cb1a4cdbfa5a071df28ea97e8d292c0d90b7b6593b88c5482230e8a  cookieguard_browser_use-0.1.0.tar.gz
+```
+
+PyPI's integrity API lists one publish attestation for each file, from the GitHub publisher
+`aiscihub/cookieguard-ai`, workflow `publish-browser-use.yml`, environment `pypi`.
+The [GitHub release](https://github.com/aiscihub/cookieguard-ai/releases/tag/browser-use-v0.1.0)
+includes both files and `SHA256SUMS`, and it is the repository's latest release.
+
+### Fresh installs from PyPI
+
+On macOS 26.6.2 (arm64), each Python created a new venv outside the repository and ran
+`python -m pip --isolated install --disable-pip-version-check --no-cache-dir --index-url https://pypi.org/simple cookieguard-browser-use`,
+with no `--pre` and no version pin. uv 0.13.7 provided CPython 3.11.18 and 3.13.18 in a
+temporary directory; 3.12.12 is a local interpreter.
+
+| Check | Python 3.11.18 | Python 3.12.12 | Python 3.13.18 |
+| --- | --- | --- | --- |
+| Install | Exit 0; `cookieguard-browser-use 0.1.0` | Exit 0; `0.1.0` | Exit 0; `0.1.0` |
+| Dependencies | browser-use 0.13.14, cdp-use 1.4.5 | Same | Same |
+| Wheel in pip's report | `files.pythonhosted.org`, SHA-256 `d2d2987e…1948b6` | Same file | Same file |
+| Public API imports | `CookieGuardAudit`, `Agent`, `BrowserProfile`, `BrowserSession`, `Tools`: passed | Passed | Passed |
+| Import location | The fresh venv's `site-packages` | Same | Same |
+| `python -m pip check` | `No broken requirements found.` | Same | Same |
+| `python -m cookieguard_browser_use.demo` | Insecure FAIL (exit 1), secure PASS (exit 0); exit 0 | Same | Same |
+
+The demo used its scripted provider and local loopback apps, with telemetry and cloud sync
+disabled. Browser Use chose the browser; Google Chrome 156.0.8078.81 was installed. No demo
+output contained a canary-prefixed line. The full suite was not rerun locally; the
+published files are the artifacts that passed all 89 tests in the release workflow.
+
+### Published PyPI page
+
+PyPI's JSON API for 0.1.0 reports version `0.1.0`, `Requires-Python >=3.11`, and a
+`text/markdown` description. Every link into this repository is pinned to
+`browser-use-v0.1.0`. There are no relative links, and the description mentions neither
+`--pre` nor `0.1.0b1`.
+
+The rendered page was not inspected. PyPI served its `Client Challenge` page to headless
+Chrome for Testing, and also to Chrome for Testing and Google Chrome with windows when
+Playwright drove them. A person's visual check remains, as tracked in [RELEASING.md](RELEASING.md#done-when-010).
+
 ## 0.1.0 release candidate — 2026-11-04
 
 Prepared on branch `release/browser-use-0.1.0` from `main` at `6875489`. Nothing was

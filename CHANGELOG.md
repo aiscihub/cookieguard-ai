@@ -1,6 +1,6 @@
 # Changelog
 
-## CookieGuard for Browser Use 0.1.0 — first stable release — unreleased
+## CookieGuard for Browser Use 0.1.0 — first stable release — 2026-11-04
 
 The code and behavior are the same as 0.1.0b1. Since the `browser-use-v0.1.0b1` tag, only
 the version string changed in `src/cookieguard_browser_use`, and the vendored engine is

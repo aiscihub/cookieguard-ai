@@ -161,8 +161,18 @@
     }
   ],
   "outputs": {
-    "cookieguard-browser-use-demo.mp4": "72b402c1ff587358e5a20da5ac7c94554336b6fcf650636484c4decc679e03fc",
-    "cookieguard-browser-use-demo.gif": "5ec08037eec0450f49a97429eaa0288959e4c648748837ff3383e0d7b43704c1"
+    "cookieguard-browser-use-demo.mp4": "01c42d910011e44419c448afcfe28aa3352e8f1d7a16ced970fa16aa35dc7ede",
+    "cookieguard-browser-use-demo.gif": "f837f2ec5761b51ea18e0e082bcf394dc29720bc33edc59d512917274223ee9f"
   },
-  "compositeFrames": 349
+  "compositeFrames": 349,
+  "revisions": [
+    {
+      "date": "2026-11-04",
+      "change": "End-card install command changed from `pip install ./integrations/browser-use` to `pip install cookieguard-browser-use` after the 0.1.0 PyPI release. Only the last 42 frames (the end card) were redrawn, with record_demo.end_card(); the recorded run, results, panel lines, and timing are unchanged. Re-encoded with the same ffmpeg settings.",
+      "previousOutputs": {
+        "cookieguard-browser-use-demo.mp4": "72b402c1ff587358e5a20da5ac7c94554336b6fcf650636484c4decc679e03fc",
+        "cookieguard-browser-use-demo.gif": "5ec08037eec0450f49a97429eaa0288959e4c648748837ff3383e0d7b43704c1"
+      }
+    }
+  ]
 }

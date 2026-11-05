@@ -19,6 +19,8 @@ with Claude (`claude-opus-5-5`) driving the agent. Waits for the model longer th
 seconds are condensed and labelled *fast-forward*; everything else plays in real time.
 To re-record, run `scripts/record_demo.py --provider anthropic` with `ANTHROPIC_API_KEY` set,
 or omit `--provider` to use the scripted stand-in model, which needs no key.
+After the 0.1.0 release, only the end card's install command was updated to the PyPI
+package; the recorded run is unchanged, as the provenance records.
 [MP4](cookieguard-browser-use-demo.mp4) · [provenance](demo-provenance.json).
 
 ## Run the demonstration
