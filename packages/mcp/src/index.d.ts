@@ -8,6 +8,11 @@ export interface CookieGuardMcpOptions {
   policy?: Policy;
   /** Total scan timeout, 100–10000 milliseconds. Default: 10000. */
   timeoutMs?: number;
+  /**
+   * Absolute directory of sanitized CookieGuard JSON reports written by your own
+   * tests. Enables cookieguard_audit {"evidenceFile"}. Resolved once at startup.
+   */
+  evidenceDir?: string;
 }
 export const VERSION: string;
 /** Creates an unconnected MCP server with an independent configuration snapshot. */

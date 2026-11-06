@@ -20,7 +20,7 @@
 
 **[Browser Use integration](integrations/browser-use/README.md) · [MCP server](packages/mcp/README.md) · [CI guide](docs/CI_GUIDE.md) · [Website](https://aiscihub.github.io/cookieguard-ai/)**
 
-[Quick start](#quick-start) · [How it works](#how-it-works) · [Your policy](#your-policy-decides-what-fails) · [What it checks](#what-it-checks) · [MCP](#use-it-from-an-mcp-client) · [More tools](#more-ways-to-use-cookieguard) · [FAQ](#faq) · [Documentation](#documentation)
+[Quick start](#quick-start) · [How it works](#how-it-works) · [Your policy](#your-policy-decides-what-fails) · [What it checks](#what-it-checks) · [MCP](#use-it-from-an-mcp-client) · [Coding agents](#use-it-from-a-coding-agent) · [More tools](#more-ways-to-use-cookieguard) · [FAQ](#faq) · [Documentation](#documentation)
 
 <code>pip install cookieguard-browser-use</code>
 
@@ -162,6 +162,7 @@ The same published policy engine powers every tool:
 | --- | --- | --- |
 | **Browser Use** | AI agents that log in and run browser workflows | [Quick start](#quick-start) |
 | **MCP server** | Letting an AI client scan your app's `Set-Cookie` headers | [Use it from an MCP client](#use-it-from-an-mcp-client) |
+| **Agent Skill** | Teaching coding agents when and how to add these checks | [Use it from a coding agent](#use-it-from-a-coding-agent) |
 | **Playwright** | Cookies created during login in your existing tests | [Playwright quickstart](docs/CI_GUIDE.md#quick-start-playwright) |
 | **CLI** | `Set-Cookie` headers from a running test app | [CLI quickstart](docs/CI_GUIDE.md#quick-start-cli) |
 | **GitHub Action** | Header checks, a build summary, and a sanitized report | [Action quickstart](docs/CI_GUIDE.md#quick-start-github-actions) |
@@ -181,8 +182,8 @@ the `exitCode` result field.
 ### Use it from an MCP client
 
 The CookieGuard MCP server lets an AI client, such as a coding agent, check the cookies
-your app sets. It runs locally over stdio and offers two tools. Your configuration file
-fixes the allowed origins and policy; the client can only choose which URL to scan.
+your app sets. It runs locally over stdio. Your configuration file fixes the allowed
+origins and policy; the client can only choose which URL or evidence file to audit.
 
 > [!NOTE]
 > [`@aiscihub/cookieguard-mcp`](https://www.npmjs.com/package/@aiscihub/cookieguard-mcp)
@@ -197,10 +198,13 @@ npm ci && npm run demo:mcp
 ```
 
 ```text
-MCP tools: cookieguard_policy, cookieguard_scan
+MCP tools: cookieguard_audit, cookieguard_capabilities, cookieguard_explain, cookieguard_policy, cookieguard_scan
+Capabilities: 9 checks; allowed origins: 1; evidence files: enabled
 secure: PASSED (exitCode 0)
 missing-httponly: FAILED (exitCode 1) — CG001 Missing HttpOnly
-preference: INCOMPLETE (exitCode 2)
+preference: INCOMPLETE (exitCode 2) — expected-auth-cookie-not-observed
+Explain CG001: Set HttpOnly on the authentication cookie at the server.
+Evidence login-report.json: FAILED (exitCode 1); observed by server: no
 ```
 
 To connect your own client, write a config file
@@ -219,14 +223,42 @@ session cookie names. Then add the server to your client's MCP settings:
 }
 ```
 
-| Tool | What it does |
-| --- | --- |
-| `cookieguard_policy` | Shows the allowed origins and the policy in force |
-| `cookieguard_scan` | Scans one allowed URL's `Set-Cookie` headers and returns status, findings, and fixes |
+| Tool | What it does | Available in |
+| --- | --- | --- |
+| `cookieguard_policy` | Shows the allowed origins and the policy in force | 0.1.0 |
+| `cookieguard_scan` | Scans one allowed URL's `Set-Cookie` headers and returns status, findings, and fixes | 0.1.0 |
+| `cookieguard_capabilities` | Describes the checks, this server's configuration, result meanings, and limits | `main` |
+| `cookieguard_audit` | Audits one allowed URL, or one sanitized report your own Browser Use, Playwright, or CLI run wrote to the configured `evidenceDir` | `main` |
+| `cookieguard_explain` | Explains a rule ID, incomplete reason, or error code | `main` |
+
+Tools marked `main` are in this repository but not yet published; the demo above runs them
+from a clone.
 
 Results never contain cookie values. The agent decides whether to call the tool, so
 enforce results in your tests or CI when you need a gate.
 [MCP guide](packages/mcp/README.md)
+
+### Use it from a coding agent
+
+The [CookieGuard Agent Skill](skills/cookieguard/SKILL.md) tells coding agents when a task
+calls for these checks (Browser Use or Playwright logins, CI gates, MCP clients), which
+integration to pick, and how to read the result without exposing cookie values. In
+Claude Code:
+
+```text
+/plugin install cookieguard --marketplace aiscihub/cookieguard-ai
+```
+
+For Codex, copy [`skills/cookieguard`](skills/cookieguard) to `.agents/skills/` in your
+repository or to `~/.agents/skills/`. Other agents that read `SKILL.md` can use the same
+folder.
+
+Automated tools can read [`cookieguard.capabilities.json`](cookieguard.capabilities.json):
+a versioned, machine-readable description of every check, input, output schema, exit
+code, privacy property, and limitation. Output schemas are in [`schemas/`](schemas). On
+`main`, `cookieguard-ci capabilities --json` and `cookieguard-ci explain CG001` print the
+same information; these commands are not in the published 0.1.0 CLI yet.
+[Agent discovery details](docs/agent-discovery.md)
 
 ### Browser extension
 

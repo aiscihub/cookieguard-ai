@@ -44,7 +44,8 @@ accounts. An agent must stop and ask at each of them.
    [Trusted Publishing](https://docs.pypi.org/trusted-publishers/) (GitHub OIDC). No secret exists.
 3. **Do not change the CookieGuard engine.** The wheel must contain the published
    `@aiscihub/cookieguard-core` and `@aiscihub/cookieguard-playwright` 0.1.0, vendored with
-   `node scripts/vendor_engine.mjs --registry`. Do not edit `src/cookieguard_browser_use/_node/`.
+   `node scripts/vendor_engine.mjs --published` (it vendors the published npm engine; `--registry`
+   instead checks that the workspace still matches it). Do not edit `src/cookieguard_browser_use/_node/`.
 4. **Work on a branch and open a PR.** Do not push to `main` or create tags without approval.
 5. **Commit messages carry no AI attribution trailers** (for example no `Co-Authored-By: Claude`).
 6. **Pin every GitHub Action to a full commit SHA** with a version comment, as the existing workflow does.
@@ -108,7 +109,7 @@ Create `.github/workflows/publish-browser-use.yml`:
 - Job `build` on `ubuntu-latest`:
   1. `actions/checkout` with `persist-credentials: false`.
   2. Node 24 and Python 3.12, using the same pinned SHAs as `cookieguard-ci.yml`.
-  3. `npm ci`, then `node integrations/browser-use/scripts/vendor_engine.mjs --registry`.
+  3. `npm ci`, then `node integrations/browser-use/scripts/vendor_engine.mjs --published`.
   4. `python -m build` in `integrations/browser-use`, then `twine check --strict dist/*`.
   5. The `sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0` step, then
      `npx --no-install playwright install --with-deps chromium`, then `python scripts/verify_external.py`.

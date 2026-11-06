@@ -1,6 +1,6 @@
-import { normalizeCookie, parseSetCookie, evaluateCookiePolicy, formatJson, type Policy } from '@aiscihub/cookieguard-core';
+import { normalizeCookie, parseSetCookie, evaluateCookiePolicy, formatJson, explain, readEvidence, ruleCatalog, type Policy } from '@aiscihub/cookieguard-core';
 import { createOnnxClassifier } from '@aiscihub/cookieguard-core/onnx';
-import { scanUrl, runCli } from 'cookieguard-ci';
+import { scanUrl, runCli, capabilities } from 'cookieguard-ci';
 import { startCookieAudit, auditPage } from '@aiscihub/cookieguard-playwright';
 import type { BrowserContext, Page } from 'playwright-core';
 import { createCookieGuardServer, type CookieGuardMcpOptions } from '@aiscihub/cookieguard-mcp';
@@ -11,10 +11,13 @@ const declared = parseSetCookie('session_id=synthetic; Secure; HttpOnly; SameSit
 formatJson(evaluateCookiePolicy([observation, declared], policy));
 void scanUrl('http://localhost:3000');
 void runCli(['--help']);
+const rule: string | undefined = explain('CG001')?.fix;
+void rule; void ruleCatalog()[0]?.confirmedWhen; void capabilities().schemaVersion;
+void readEvidence({}).observations;
 void createOnnxClassifier({ modelPath: 'model.onnx', metadataPath: 'model_meta.json' });
 declare const context: BrowserContext;
 declare const page: Page;
 void startCookieAudit(context, { origins: ['http://localhost:3000'], policy }).evaluate();
 void auditPage(page, { policy });
-const mcpOptions: CookieGuardMcpOptions = { allowedOrigins: ['http://localhost:3000'], policy, timeoutMs: 1000 };
+const mcpOptions: CookieGuardMcpOptions = { allowedOrigins: ['http://localhost:3000'], policy, timeoutMs: 1000, evidenceDir: '/tmp/evidence' };
 void createCookieGuardServer(mcpOptions).close();

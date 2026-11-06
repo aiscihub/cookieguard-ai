@@ -1,3 +1,4 @@
+import { realpathSync, statSync } from 'node:fs';
 import { open } from 'node:fs/promises';
 import { isAbsolute } from 'node:path';
 import { AuditError, validatePolicy } from '@aiscihub/cookieguard-core';
@@ -6,7 +7,7 @@ import { validateTarget } from 'cookieguard-ci';
 export function validateConfig(input) {
   try {
     if (!input || typeof input !== 'object' || Array.isArray(input)
-      || Object.keys(input).some(key => !['allowedOrigins', 'policy', 'timeoutMs'].includes(key))) throw new Error();
+      || Object.keys(input).some(key => !['allowedOrigins', 'policy', 'timeoutMs', 'evidenceDir'].includes(key))) throw new Error();
     if (!Array.isArray(input.allowedOrigins) || !input.allowedOrigins.length || input.allowedOrigins.length > 20) throw new Error();
     const allowedOrigins = [...new Set(input.allowedOrigins.map(origin => {
       if (typeof origin !== 'string') throw new Error();
@@ -16,8 +17,16 @@ export function validateConfig(input) {
     }))];
     const timeoutMs = input.timeoutMs ?? 10000;
     if (!Number.isInteger(timeoutMs) || timeoutMs < 100 || timeoutMs > 10000) throw new Error();
+    // Optional directory of sanitized CookieGuard reports written by the developer's
+    // own tests. Resolved once at startup; tool calls can only name files inside it.
+    let evidenceDir = null;
+    if (input.evidenceDir !== undefined && input.evidenceDir !== null) {
+      if (typeof input.evidenceDir !== 'string' || !isAbsolute(input.evidenceDir)) throw new Error();
+      evidenceDir = realpathSync(input.evidenceDir);
+      if (!statSync(evidenceDir).isDirectory()) throw new Error();
+    }
     // Copy caller-owned arrays/objects so subsequent mutations cannot change policy.
-    return structuredClone({ allowedOrigins, policy: validatePolicy(input.policy), timeoutMs });
+    return structuredClone({ allowedOrigins, policy: validatePolicy(input.policy), timeoutMs, evidenceDir });
   } catch { throw new AuditError('CONFIG'); }
 }
 

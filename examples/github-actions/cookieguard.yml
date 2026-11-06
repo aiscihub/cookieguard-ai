@@ -1,0 +1,35 @@
+# Minimal session-cookie gate for your own repository. Copy to
+# .github/workflows/cookieguard.yml and replace the start command, URL, and
+# cookie name. The audit fails the job on FAIL (exit 1) and on INCOMPLETE
+# (exit 2: app not reachable, cookie not observed, or target not allowed).
+name: Session cookie policy
+on: [pull_request, push]
+permissions:
+  contents: read
+jobs:
+  cookieguard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+      - name: Start the application under test
+        run: |
+          npm ci
+          npm start > "$RUNNER_TEMP/app.log" 2>&1 &
+          for attempt in $(seq 1 30); do
+            curl --fail --silent http://127.0.0.1:3000/ > /dev/null && exit 0
+            sleep 1
+          done
+          exit 1
+      # Audits the Set-Cookie headers of a URL whose GET response sets the session
+      # cookie. For cookies set only after a form login, use the Playwright adapter.
+      - uses: aiscihub/cookieguard-ai/action@12a09fe322b135ac2a5aec45cae1f880b717575f # ci-v0.1.0
+        with:
+          target: http://127.0.0.1:3000/
+          auth-cookies: session_id
+          fail-on: high

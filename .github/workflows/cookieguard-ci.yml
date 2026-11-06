@@ -117,7 +117,7 @@ jobs:
       - run: npm ci
       - run: npx --no-install playwright install --with-deps chromium
       - name: Vendor the published CookieGuard engine into the Python package
-        run: node integrations/browser-use/scripts/vendor_engine.mjs --registry
+        run: node integrations/browser-use/scripts/vendor_engine.mjs --published
       - name: Install the Browser Use integration
         working-directory: integrations/browser-use
         run: |
@@ -149,6 +149,12 @@ jobs:
           PYTHONUNBUFFERED: '1'
         # faulthandler dumps every thread's stack if one test runs longer than 90s.
         run: .venv/bin/python -m pytest -v -p no:cacheprovider -o faulthandler_timeout=90 --maxfail=3 tests/test_browser.py tests/test_agent.py
+      - name: Browser Use evidence through the MCP server (Python MCP SDK client)
+        working-directory: integrations/browser-use
+        timeout-minutes: 5
+        env:
+          PYTHONUNBUFFERED: '1'
+        run: .venv/bin/python scripts/agent_discovery_e2e.py
       - name: Verify the wheel from a clean external consumer
         working-directory: integrations/browser-use
         run: .venv/bin/python scripts/verify_external.py

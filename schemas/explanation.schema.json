@@ -1,0 +1,116 @@
+{
+  "$id": "https://raw.githubusercontent.com/aiscihub/cookieguard-ai/main/schemas/explanation.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "enum": [
+        "CG001",
+        "CG002",
+        "CG003",
+        "CG004",
+        "CG005",
+        "CG006",
+        "CG007",
+        "CG008",
+        "CG009",
+        "collection-incomplete",
+        "no-cookies-observed",
+        "expected-auth-cookie-not-observed",
+        "validated-auth-cookie-not-observed",
+        "scan-not-completed",
+        "CONFIG",
+        "INPUT",
+        "TARGET",
+        "NETWORK",
+        "REDIRECT",
+        "COLLECT",
+        "MODEL",
+        "OUTPUT",
+        "BASELINE",
+        "EVIDENCE",
+        "BUSY",
+        "passed",
+        "failed",
+        "incomplete"
+      ]
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "rule",
+        "issue",
+        "error",
+        "status"
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "meaning": {
+      "type": "string"
+    },
+    "fix": {
+      "type": "string"
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "info",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ]
+    },
+    "confirmedWhen": {
+      "type": "string"
+    },
+    "reviewWhen": {
+      "type": "string"
+    },
+    "secureExample": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "passed",
+        "failed",
+        "incomplete"
+      ]
+    },
+    "label": {
+      "type": "string",
+      "enum": [
+        "PASS",
+        "FAIL",
+        "INCOMPLETE"
+      ]
+    },
+    "exitCode": {
+      "anyOf": [
+        {
+          "type": "number",
+          "const": 0
+        },
+        {
+          "type": "number",
+          "const": 1
+        },
+        {
+          "type": "number",
+          "const": 2
+        }
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "kind",
+    "title",
+    "meaning"
+  ],
+  "additionalProperties": false
+}

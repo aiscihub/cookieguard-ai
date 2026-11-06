@@ -160,6 +160,7 @@ export function evaluateCookiePolicy(observations, policyInput = {}, options = {
       ...(mode === 'http' ? ['HTTP headers only: no JavaScript, login workflow, or browser-acceptance check.'] : []),
       ...(cookies.some(c => c.sameSite.declared === 'unknown') ? ['Browser or fixture effective SameSite does not establish the original declaration.'] : []),
       ...(comparison.status === 'not-comparable' ? ['Baseline cannot be compared with this target, policy, or observation mode.'] : []),
+      ...(options.supplied === true ? ['Evaluated from a supplied evidence file; CookieGuard did not observe its collection.'] : []),
     ], comparison, cookies: entries, findings: uniqueFindings };
   // Renderers use an immutable private copy, even if callers mutate a report.
   reportCache.set(report, structuredClone(report));

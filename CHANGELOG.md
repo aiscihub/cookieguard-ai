@@ -1,5 +1,38 @@
 # Changelog
 
+## Unreleased — agent discovery
+
+Not published. The packages below keep version 0.1.0 until a release is approved.
+
+- **Capability interface.** `cookieguard-ci capabilities --json` and the generated
+  `cookieguard.capabilities.json` describe every check, operation, input, permission,
+  privacy property, output schema, exit code, and limitation. `cookieguard-ci explain ID`
+  explains rule IDs, incomplete reasons, error codes, and statuses. `--json` is a shortcut
+  for `--format json`, and JSON mode now prints a machine-readable error on stdout.
+- **JSON Schemas** for the core report, MCP audit and explain results, CLI errors, and
+  capabilities are published under `schemas/`, generated from the zod schemas the MCP
+  server enforces.
+- **Evidence files.** `@aiscihub/cookieguard-core` adds `readEvidence()`: a sanitized
+  CookieGuard report or Browser Use result can be re-evaluated under a new policy. Values
+  and unknown fields are dropped; provisional or incomplete collections stay incomplete.
+  `cookieguard-ci scan --input` accepts these reports.
+- **MCP server.** New tools `cookieguard_capabilities`, `cookieguard_audit` (`url`, or
+  `evidenceFile` inside an optional startup `evidenceDir`), and `cookieguard_explain`.
+  Findings add `evidenceSource` and `identityBasis`; results add `provenance`. The 0.1.0
+  tools are unchanged apart from these added fields.
+- **Agent Skill** `skills/cookieguard` (Agent Skills format) and a Claude Code plugin
+  marketplace file. `scripts/check-skill.js` checks the skill against the specification.
+- **Discovery benchmark** under `benchmarks/discovery`: 24 tasks that never name the
+  tool, run as 80 real Claude Code sessions. Agents found CookieGuard in 0/24 runs with
+  ordinary tools, 0/24 with web search, 23/24 with the Agent Skill installed, and 8/8 with
+  the MCP server configured. See its README for method and limits.
+- **End-to-end check:** `integrations/browser-use/scripts/agent_discovery_e2e.py` runs a
+  real Browser Use login, then audits the evidence through the MCP server with the
+  Python MCP SDK. It passes in CI on Linux with Python 3.11-3.13.
+- Package metadata: npm keywords, homepage, and issue links; PyPI keywords, classifiers,
+  and Documentation/Changelog URLs. They take effect on the next publish.
+- `llms.txt`, a minimal GitHub Actions example, and `docs/agent-discovery.md`.
+
 ## CookieGuard MCP 0.1.0 — first stable release — 2026-11-05
 
 The code is the same as 0.1.0-beta.1; only the version changed.

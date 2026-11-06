@@ -1,0 +1,55 @@
+{
+  "$id": "https://raw.githubusercontent.com/aiscihub/cookieguard-ai/main/schemas/cli-error.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "type": "number",
+      "const": 1
+    },
+    "status": {
+      "type": "string",
+      "const": "incomplete"
+    },
+    "exitCode": {
+      "type": "number",
+      "const": 2
+    },
+    "error": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "enum": [
+            "CONFIG",
+            "INPUT",
+            "TARGET",
+            "NETWORK",
+            "REDIRECT",
+            "COLLECT",
+            "MODEL",
+            "OUTPUT",
+            "BASELINE",
+            "EVIDENCE",
+            "BUSY"
+          ]
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "status",
+    "exitCode",
+    "error"
+  ],
+  "additionalProperties": false
+}

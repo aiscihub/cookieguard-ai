@@ -5,7 +5,9 @@ CookieGuard returns **PASS / FAIL / INCOMPLETE**, rule IDs, explanations, and fi
 Cookie values never appear in tool results.
 
 Version **0.1.0** on npm, listed in the official MCP Registry as
-`io.github.aiscihub/cookieguard`. Requires **Node.js 24+**.
+`io.github.aiscihub/cookieguard`. Requires **Node.js 24+**. The `main` branch adds
+`cookieguard_capabilities`, `cookieguard_audit` (including sanitized evidence files), and
+`cookieguard_explain`; they are not published yet. See [Tools and results](#tools-and-results).
 
 ```mermaid
 flowchart LR
@@ -31,18 +33,22 @@ npm run demo:mcp
 ```
 
 The demo starts a local fixture and connects a real MCP SDK client to the server.
-It discovers the tools, scans three endpoints, checks the outcomes, and exits:
+It reads the capabilities, audits three endpoints, explains the failure, audits a
+report written by a separate CLI run, checks every outcome, and exits:
 
 ```text
-MCP tools: cookieguard_policy, cookieguard_scan
+MCP tools: cookieguard_audit, cookieguard_capabilities, cookieguard_explain, cookieguard_policy, cookieguard_scan
+Capabilities: 9 checks; allowed origins: 1; evidence files: enabled
 secure: PASSED (exitCode 0)
 missing-httponly: FAILED (exitCode 1) — CG001 Missing HttpOnly
-preference: INCOMPLETE (exitCode 2)
+preference: INCOMPLETE (exitCode 2) — expected-auth-cookie-not-observed
+Explain CG001: Set HttpOnly on the authentication cookie at the server.
+Evidence login-report.json: FAILED (exitCode 1); observed by server: no
 MCP demo passed; cookie-value canary absent from results and diagnostics.
 ```
 
-The last endpoint is incomplete because the configured `session_id` was not
-observed. The demo itself exits 0 when all three expected outcomes are verified.
+The `preference` endpoint is incomplete because the configured `session_id` was not
+observed. The demo itself exits 0 when every expected outcome is verified.
 
 ## Connect your MCP client
 
@@ -63,11 +69,13 @@ Example `/absolute/path/cookieguard.json`:
     "requireHostOnly": true,
     "maxLifetimeDays": 30
   },
-  "timeoutMs": 10000
+  "timeoutMs": 10000,
+  "evidenceDir": "/absolute/path/cookieguard-evidence"
 }
 ```
 
-Use your actual application origin and authentication-cookie names. An origin
+`evidenceDir` is optional and only used by `main`'s `cookieguard_audit`; omit it for
+0.1.0. Use your actual application origin and authentication-cookie names. An origin
 contains scheme, host, and optional port, with no URL path, credentials, query,
 or fragment. `localhost` and `127.0.0.1` are distinct origins. The allowlist is
 required even for loopback; there is no default authorization for other local
@@ -114,10 +122,35 @@ process, so filesystem permissions and client permissions remain your boundary.
 
 ## Tools and results
 
-| Tool | Arguments | Result |
-| --- | --- | --- |
-| `cookieguard_policy` | `{}` | Allowed origins, resolved policy defaults, timeout, and scope |
-| `cookieguard_scan` | `{"url":"http://127.0.0.1:3000/secure"}` | Status, exit code, counts, findings, limitations, and any scan error |
+| Tool | Arguments | Result | Available in |
+| --- | --- | --- | --- |
+| `cookieguard_policy` | `{}` | Allowed origins, resolved policy defaults, timeout, and scope | 0.1.0 |
+| `cookieguard_scan` | `{"url":"http://127.0.0.1:3000/secure"}` | Status, exit code, counts, findings, limitations, and any scan error | 0.1.0 |
+| `cookieguard_capabilities` | `{}` | Checks, this server's configuration, result semantics, integrations, privacy, and limits | `main` |
+| `cookieguard_audit` | `{"url":"…"}` or `{"evidenceFile":"login.json"}` | Same result as `cookieguard_scan`, plus `provenance` | `main` |
+| `cookieguard_explain` | `{"id":"CG001"}` | Meaning, confirmed versus review conditions, and fix for a rule, issue, error, or status | `main` |
+
+On `main`, every finding also carries `evidenceSource` (`header` for a server
+`Set-Cookie` declaration, `browser` for cookie-store metadata) and `identityBasis`
+(developer configuration versus uncalibrated heuristics). Output schemas are published
+in [`schemas/`](https://github.com/aiscihub/cookieguard-ai/tree/main/schemas).
+
+### Evidence handoff for authenticated browser workflows
+
+The server never attaches to a browser or reads another process's cookies. To audit a
+login that only a browser can perform, run it in your own test code with the
+[Browser Use integration](https://github.com/aiscihub/cookieguard-ai/tree/main/integrations/browser-use)
+(`result.write_json(path)`), the Playwright adapter (write `formatJson(await audit.evaluate())`), or
+the CLI (`--output`). Write the
+sanitized report into the configured `evidenceDir`, then call
+`cookieguard_audit {"evidenceFile": "login.json"}`. The server reads only plain `.json`
+names inside that directory (no paths or symlinks, at most 1 MiB), rebuilds the
+value-free observations field by field, and evaluates them under its own startup policy.
+Evidence for origins outside `allowedOrigins` is rejected, provisional or incomplete
+collections stay incomplete, and results carry `provenance.observedByServer: false`,
+because the server cannot verify who wrote the file.
+`integrations/browser-use/scripts/agent_discovery_e2e.py` runs this path end to end with
+a real Browser Use agent and the Python MCP SDK.
 
 Only `url` is accepted by the scan tool. Policy, headers, credentials, and origin
 overrides are rejected. `timeoutMs` is a startup setting from 100 to 10000
@@ -167,8 +200,8 @@ authentication-cookie failures. Defaults and rules are described in the
 - Responses include at most 100 findings. `omittedFindings` records truncation;
   summary counts and status cover every finding. Use the CLI's local report when
   you need full cookie metadata. IDs are not stable across scans.
-- Configured origins, policy, summary counts, and findings are visible to the
-  client and may be sent to its model provider. Do not put secrets in config or
+- Configured origins, policy, the evidence directory path (when set), summary counts,
+  and findings are visible to the client and may be sent to its model provider. Do not put secrets in config or
   tool arguments. The server creates no audit log or report file.
 - A pass covers only these configured checks. MCP exposes a tool; it cannot force
   an agent to call it or enforce its result. Enforce results in your test runner

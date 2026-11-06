@@ -13,6 +13,7 @@ import { readConfig } from '../packages/mcp/src/config.js';
 import { createDemoServer, DEMO_VALUE } from '../examples/demo/server.js';
 
 const exec = promisify(execFile);
+export const TOOL_NAMES = ['cookieguard_audit', 'cookieguard_capabilities', 'cookieguard_explain', 'cookieguard_policy', 'cookieguard_scan'];
 const bin = resolve('packages/mcp/bin/cookieguard-mcp.js');
 let demo, hostile, target, hostileTarget, temp, requests = 0, sawSlow;
 before(async () => {
@@ -63,7 +64,7 @@ async function connect(t, options = {}) {
   t.after(async () => { await client.close(); clean(stderr); assert.equal(stderr, ''); });
   await client.connect(transport);
   const { tools } = await client.listTools();
-  assert.deepEqual(tools.map(tool => tool.name).sort(), ['cookieguard_policy', 'cookieguard_scan']);
+  assert.deepEqual(tools.map(tool => tool.name).sort(), TOOL_NAMES);
   return { client, path, tools, scan: async args => {
     const result = await client.callTool({ name: 'cookieguard_scan', arguments: typeof args === 'string' ? { url: args } : args });
     clean(result);
@@ -83,6 +84,7 @@ for (const mode of ['legacy', { pin: '2026-07-28' }]) {
     const policy = await client.callTool({ name: 'cookieguard_policy', arguments: {} });
     assert.deepEqual(policy.structuredContent.allowedOrigins, [target]);
     assert.deepEqual(policy.structuredContent.policy.authCookies, ['session_id']);
+    assert.equal(policy.structuredContent.evidenceDir, null);
     for (const [path, status, code] of [['secure', 'passed', 0], ['missing-httponly', 'failed', 1], ['preference', 'incomplete', 2], ['login', 'incomplete', 2]]) {
       const response = await scan(`${target}/${path}`);
       assert.equal(response.isError, false);

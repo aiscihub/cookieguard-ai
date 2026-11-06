@@ -1,0 +1,11 @@
+{
+  "name": "acme-portal",
+  "version": "1.4.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test test/"
+  },
+  "engines": { "node": ">=24" }
+}
