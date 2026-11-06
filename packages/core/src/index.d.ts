@@ -59,7 +59,11 @@ export interface Report {
   comparison: { status: 'not-requested' | 'not-comparable' | 'comparable'; comparedCookies: number };
   cookies: { observation: Observation; identity: Identity }[]; findings: Finding[];
 }
-export interface EvaluateOptions { target?: string; mode?: Report['mode']; complete?: boolean; baseline?: unknown }
+export interface EvaluateOptions {
+  target?: string; mode?: Report['mode']; complete?: boolean; baseline?: unknown;
+  /** Adds a limitation stating that the evidence came from a supplied file. */
+  supplied?: boolean;
+}
 export class AuditError extends Error { readonly code: string; constructor(code?: string) }
 export function safeError(error: unknown): AuditError;
 export function normalizeCookie(input: CookieInput, options?: NormalizeOptions): Observation;
@@ -78,3 +82,27 @@ export function formatJson(report: Report): string;
 export function formatMarkdown(report: Report): string;
 export function exitCode(report: Report): 0 | 1 | 2;
 export function assertCookiePolicy(report: Report): void;
+export interface Evidence {
+  observations: Observation[]; mode: Report['mode']; target: string | null; complete: boolean;
+  supplied: true; producer: 'cookieguard-report' | 'cookieguard-browser-use';
+}
+/** True for a sanitized CookieGuard report or a cookieguard-browser-use result. */
+export function isEvidenceReport(input: unknown): boolean;
+/** Rebuilds value-free observations from a sanitized report for re-evaluation. Throws AuditError('INPUT'). */
+export function readEvidence(input: unknown): Evidence;
+export interface Explanation {
+  id: string; kind: 'rule' | 'issue' | 'error' | 'status'; title: string; meaning: string;
+  fix?: string; severity?: Severity; confirmedWhen?: string; reviewWhen?: string; secureExample?: string;
+  status?: Report['status']; label?: string; exitCode?: 0 | 1 | 2;
+}
+export interface RuleEntry {
+  ruleId: string; title: string; severity: Severity; checks: string;
+  confirmedWhen: string; reviewWhen: string; why: string; fix: string;
+}
+/** Static explanation of a rule ID, incomplete reason, error code, or status; null if unknown. */
+export function explain(id: string): Explanation | null;
+export function ruleCatalog(): RuleEntry[];
+export function statusCatalog(): { status: Report['status']; label: 'PASS' | 'FAIL' | 'INCOMPLETE'; exitCode: 0 | 1 | 2; meaning: string }[];
+export const EXPLAIN_IDS: readonly string[];
+export const ERROR_CODES: readonly string[];
+export const ISSUE_CODES: readonly string[];

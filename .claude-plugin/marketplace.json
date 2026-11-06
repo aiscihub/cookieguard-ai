@@ -1,0 +1,26 @@
+{
+  "name": "aiscihub",
+  "description": "CookieGuard authentication-cookie security checks for login tests, AI browser agents, CI, and MCP clients.",
+  "owner": { "name": "aiscihub", "url": "https://github.com/aiscihub" },
+  "plugins": [
+    {
+      "name": "cookieguard",
+      "source": "./skills/cookieguard",
+      "description": "Agent Skill: add CookieGuard session-cookie checks (HttpOnly, Secure, SameSite, Domain, lifetime) to Browser Use, Playwright, CI, or MCP workflows for apps you are authorized to test.",
+      "author": { "name": "aiscihub", "url": "https://github.com/aiscihub" },
+      "homepage": "https://github.com/aiscihub/cookieguard-ai/tree/main/skills/cookieguard",
+      "repository": "https://github.com/aiscihub/cookieguard-ai",
+      "license": "MIT",
+      "keywords": ["security", "cookies", "session-cookie", "authentication", "browser-use", "playwright", "ci", "mcp"],
+      "relevance": {
+        "topic": "browser login tests",
+        "signals": {
+          "manifestDeps": [
+            { "file": "(pyproject\\.toml|requirements[^/\\\\]*\\.txt)$", "pattern": "browser-use" },
+            { "file": "[/\\\\]package\\.json$", "pattern": "\"@playwright/test\"\\s*:" }
+          ]
+        }
+      }
+    }
+  ]
+}

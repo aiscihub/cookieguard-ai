@@ -1,0 +1,110 @@
+{
+  "generatedAt": "2026-11-06T15:24:21.586Z",
+  "runs": 80,
+  "model": [
+    "sonnet"
+  ],
+  "byCondition": {
+    "A": {
+      "runs": 24,
+      "notExecuted": 0,
+      "completed": 24,
+      "discoveryRate": 0,
+      "correctSelectionRate": 0,
+      "installRate": 0,
+      "correctIntegrationRate": 0,
+      "integrationTasks": 20,
+      "auditExecutionRate": 0,
+      "unsupportedClaimCandidates": 0,
+      "secretExposureRuns": 4,
+      "secretInCookieGuardOutput": 0,
+      "discoverySources": {},
+      "byCategory": {
+        "secure-ai-agent": "0/4",
+        "browser-use-login": "0/4",
+        "ci-security": "0/4",
+        "cookie-config": "0/4",
+        "session-security": "0/4",
+        "web-app-testing": "0/4"
+      },
+      "medianDurationSeconds": 37,
+      "totalCostUsd": 2.5
+    },
+    "B": {
+      "runs": 24,
+      "notExecuted": 0,
+      "completed": 24,
+      "discoveryRate": 0,
+      "correctSelectionRate": 0,
+      "installRate": 0,
+      "correctIntegrationRate": 0,
+      "integrationTasks": 20,
+      "auditExecutionRate": 0,
+      "unsupportedClaimCandidates": 0,
+      "secretExposureRuns": 5,
+      "secretInCookieGuardOutput": 0,
+      "discoverySources": {},
+      "byCategory": {
+        "secure-ai-agent": "0/4",
+        "browser-use-login": "0/4",
+        "ci-security": "0/4",
+        "cookie-config": "0/4",
+        "session-security": "0/4",
+        "web-app-testing": "0/4"
+      },
+      "medianDurationSeconds": 35,
+      "totalCostUsd": 2.58
+    },
+    "C": {
+      "runs": 24,
+      "notExecuted": 0,
+      "completed": 24,
+      "discoveryRate": 95.8,
+      "correctSelectionRate": 91.7,
+      "installRate": 37.5,
+      "correctIntegrationRate": 60,
+      "integrationTasks": 20,
+      "auditExecutionRate": 20.8,
+      "unsupportedClaimCandidates": 0,
+      "secretExposureRuns": 0,
+      "secretInCookieGuardOutput": 0,
+      "discoverySources": {
+        "skill": 23
+      },
+      "byCategory": {
+        "secure-ai-agent": "4/4",
+        "browser-use-login": "4/4",
+        "ci-security": "4/4",
+        "cookie-config": "3/4",
+        "session-security": "4/4",
+        "web-app-testing": "4/4"
+      },
+      "medianDurationSeconds": 32,
+      "totalCostUsd": 3.03
+    },
+    "D": {
+      "runs": 8,
+      "notExecuted": 0,
+      "completed": 8,
+      "discoveryRate": 100,
+      "correctSelectionRate": 100,
+      "installRate": 75,
+      "correctIntegrationRate": 60,
+      "integrationTasks": 5,
+      "auditExecutionRate": 75,
+      "unsupportedClaimCandidates": 0,
+      "secretExposureRuns": 0,
+      "secretInCookieGuardOutput": 0,
+      "discoverySources": {
+        "mcp-tools": 8
+      },
+      "byCategory": {
+        "ci-security": "2/2",
+        "cookie-config": "2/2",
+        "session-security": "4/4"
+      },
+      "medianDurationSeconds": 41,
+      "totalCostUsd": 0.91
+    }
+  }
+}

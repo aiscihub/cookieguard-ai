@@ -1,0 +1,488 @@
+{
+  "$id": "https://raw.githubusercontent.com/aiscihub/cookieguard-ai/main/schemas/capabilities.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "format": "uri"
+    },
+    "schemaVersion": {
+      "type": "number",
+      "const": 1
+    },
+    "tool": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "const": "cookieguard"
+        },
+        "name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "license": {
+          "type": "string"
+        },
+        "repository": {
+          "type": "string",
+          "format": "uri"
+        },
+        "documentation": {
+          "type": "string",
+          "format": "uri"
+        },
+        "capabilitiesUrl": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "version",
+        "license",
+        "repository",
+        "documentation",
+        "capabilitiesUrl"
+      ],
+      "additionalProperties": false
+    },
+    "summary": {
+      "type": "string"
+    },
+    "useWhen": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "doNotUseWhen": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "integrations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "python-package",
+              "npm-package",
+              "github-action",
+              "mcp-server",
+              "agent-skill"
+            ]
+          },
+          "registry": {
+            "type": "string",
+            "enum": [
+              "pypi",
+              "npm"
+            ]
+          },
+          "package": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "mcpRegistryName": {
+            "type": "string"
+          },
+          "transport": {
+            "type": "string",
+            "const": "stdio"
+          },
+          "install": {
+            "type": "string"
+          },
+          "entryPoint": {
+            "type": "string"
+          },
+          "requires": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "tested": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "documentation": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "package",
+          "version",
+          "install",
+          "entryPoint",
+          "requires",
+          "tested",
+          "documentation"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "operations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "availability": {
+            "type": "string",
+            "enum": [
+              "released",
+              "unreleased"
+            ]
+          },
+          "surfaces": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "description": {
+            "type": "string"
+          },
+          "inputs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "permissions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "network": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "availability",
+          "surfaces",
+          "description",
+          "inputs",
+          "permissions",
+          "evidence",
+          "network"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "ruleId": {
+            "type": "string",
+            "enum": [
+              "CG001",
+              "CG002",
+              "CG003",
+              "CG004",
+              "CG005",
+              "CG006",
+              "CG007",
+              "CG008",
+              "CG009"
+            ]
+          },
+          "title": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "info",
+              "low",
+              "medium",
+              "high",
+              "critical"
+            ]
+          },
+          "checks": {
+            "type": "string"
+          },
+          "confirmedWhen": {
+            "type": "string"
+          },
+          "reviewWhen": {
+            "type": "string"
+          },
+          "fix": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "ruleId",
+          "title",
+          "severity",
+          "checks",
+          "confirmedWhen",
+          "reviewWhen",
+          "fix"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "results": {
+      "type": "object",
+      "properties": {
+        "statuses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "string",
+                "enum": [
+                  "passed",
+                  "failed",
+                  "incomplete"
+                ]
+              },
+              "label": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "INCOMPLETE"
+                ]
+              },
+              "exitCode": {
+                "anyOf": [
+                  {
+                    "type": "number",
+                    "const": 0
+                  },
+                  {
+                    "type": "number",
+                    "const": 1
+                  },
+                  {
+                    "type": "number",
+                    "const": 2
+                  }
+                ]
+              },
+              "meaning": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "status",
+              "label",
+              "exitCode",
+              "meaning"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "failOnLevels": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "info",
+              "low",
+              "medium",
+              "high",
+              "critical"
+            ]
+          }
+        },
+        "defaultFailOn": {
+          "type": "string",
+          "enum": [
+            "info",
+            "low",
+            "medium",
+            "high",
+            "critical"
+          ]
+        },
+        "findingStatuses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "string",
+                "enum": [
+                  "confirmed",
+                  "review"
+                ]
+              },
+              "meaning": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "status",
+              "meaning"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "evidenceSources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "source": {
+                "type": "string",
+                "enum": [
+                  "header",
+                  "browser",
+                  "fixture",
+                  "legacy"
+                ]
+              },
+              "category": {
+                "type": "string"
+              },
+              "meaning": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "source",
+              "category",
+              "meaning"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "identityBases": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "developer-name",
+              "validated-auth-flow",
+              "extension-rule-heuristic",
+              "extension-onnx-uncalibrated"
+            ]
+          }
+        },
+        "issueCodes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "errorCodes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "schemas": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "exitCodes": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "statuses",
+        "failOnLevels",
+        "defaultFailOn",
+        "findingStatuses",
+        "evidenceSources",
+        "identityBases",
+        "issueCodes",
+        "errorCodes",
+        "schemas",
+        "exitCodes"
+      ],
+      "additionalProperties": false
+    },
+    "privacy": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "authorization": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "evidenceRequirements": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "$schema",
+    "schemaVersion",
+    "tool",
+    "summary",
+    "useWhen",
+    "doNotUseWhen",
+    "integrations",
+    "operations",
+    "checks",
+    "results",
+    "privacy",
+    "authorization",
+    "evidenceRequirements",
+    "limitations"
+  ],
+  "additionalProperties": false
+}

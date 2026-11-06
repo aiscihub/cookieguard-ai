@@ -1,0 +1,691 @@
+{
+  "$id": "https://raw.githubusercontent.com/aiscihub/cookieguard-ai/main/schemas/report.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "type": "number",
+      "const": 1
+    },
+    "toolVersion": {
+      "type": "string"
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "http",
+        "browser",
+        "fixture"
+      ]
+    },
+    "target": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "passed",
+        "failed",
+        "incomplete"
+      ]
+    },
+    "classificationModes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "rule",
+          "onnx"
+        ]
+      }
+    },
+    "policy": {
+      "type": "object",
+      "properties": {
+        "authCookies": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "failOn": {
+          "type": "string",
+          "enum": [
+            "info",
+            "low",
+            "medium",
+            "high",
+            "critical"
+          ]
+        },
+        "allowedSameSite": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "lax",
+              "strict",
+              "none"
+            ]
+          }
+        },
+        "maxLifetimeDays": {
+          "type": "number"
+        },
+        "requireExplicitSameSite": {
+          "type": "boolean"
+        },
+        "requireHostOnly": {
+          "type": "boolean"
+        },
+        "authEvidence": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "domain": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              },
+              "origin": {
+                "type": "string"
+              },
+              "validation": {
+                "type": "string",
+                "const": "server-session-validated"
+              }
+            },
+            "required": [
+              "name",
+              "domain",
+              "path",
+              "origin",
+              "validation"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "authCookies",
+        "failOn",
+        "allowedSameSite",
+        "maxLifetimeDays",
+        "requireExplicitSameSite",
+        "requireHostOnly",
+        "authEvidence"
+      ],
+      "additionalProperties": false
+    },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "cookies": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "observations": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "confirmedAuth": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "candidateAuth": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "unknownIdentity": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "confirmedViolations": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "failures": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "reviewItems": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "cookies",
+        "observations",
+        "confirmedAuth",
+        "candidateAuth",
+        "unknownIdentity",
+        "confirmedViolations",
+        "failures",
+        "reviewItems"
+      ],
+      "additionalProperties": false
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "collection-incomplete",
+          "no-cookies-observed",
+          "expected-auth-cookie-not-observed",
+          "validated-auth-cookie-not-observed",
+          "scan-not-completed"
+        ]
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "comparison": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "not-requested",
+            "not-comparable",
+            "comparable"
+          ]
+        },
+        "comparedCookies": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "status",
+        "comparedCookies"
+      ],
+      "additionalProperties": false
+    },
+    "cookies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "observation": {
+            "type": "object",
+            "properties": {
+              "schemaVersion": {
+                "type": "number",
+                "const": 1
+              },
+              "name": {
+                "type": "string"
+              },
+              "domain": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              },
+              "secure": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "httpOnly": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "hostOnly": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "sameSite": {
+                "type": "object",
+                "properties": {
+                  "declared": {
+                    "type": "string",
+                    "enum": [
+                      "strict",
+                      "lax",
+                      "none",
+                      "absent",
+                      "invalid",
+                      "unknown"
+                    ]
+                  },
+                  "effective": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "enum": [
+                          "lax",
+                          "strict",
+                          "none"
+                        ]
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "declared",
+                  "effective"
+                ],
+                "additionalProperties": false
+              },
+              "expiresAt": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "lifetimeSeconds": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "deleted": {
+                "type": "boolean"
+              },
+              "source": {
+                "type": "string",
+                "enum": [
+                  "header",
+                  "browser",
+                  "fixture",
+                  "legacy"
+                ]
+              },
+              "origin": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "confidence": {
+                "type": "string",
+                "enum": [
+                  "observed",
+                  "uncertain"
+                ]
+              },
+              "header": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "prefixValid": {
+                        "type": [
+                          "boolean",
+                          "null"
+                        ]
+                      },
+                      "scheme": {
+                        "type": "string",
+                        "enum": [
+                          "http",
+                          "https"
+                        ]
+                      },
+                      "warnings": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "required": [
+                      "prefixValid",
+                      "scheme",
+                      "warnings"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "storeStatus": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "not-observed",
+                  "unverified"
+                ]
+              },
+              "triage": {
+                "type": "object",
+                "properties": {
+                  "mode": {
+                    "type": "string",
+                    "enum": [
+                      "rule",
+                      "onnx"
+                    ]
+                  },
+                  "label": {
+                    "type": "string",
+                    "enum": [
+                      "authentication",
+                      "tracking",
+                      "preference",
+                      "other"
+                    ]
+                  },
+                  "score": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  "origin": {
+                    "type": "string",
+                    "enum": [
+                      "extension-rule-heuristic",
+                      "extension-onnx-uncalibrated"
+                    ]
+                  }
+                },
+                "required": [
+                  "mode",
+                  "label",
+                  "score",
+                  "origin"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "name",
+              "domain",
+              "path",
+              "secure",
+              "httpOnly",
+              "hostOnly",
+              "sameSite",
+              "expiresAt",
+              "lifetimeSeconds",
+              "deleted",
+              "source",
+              "origin",
+              "confidence",
+              "header",
+              "storeStatus",
+              "triage"
+            ],
+            "additionalProperties": false
+          },
+          "identity": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "string",
+                "enum": [
+                  "confirmed",
+                  "candidate",
+                  "unknown",
+                  "non-auth-candidate"
+                ]
+              },
+              "basis": {
+                "type": "string",
+                "enum": [
+                  "developer-name",
+                  "validated-auth-flow",
+                  "extension-rule-heuristic",
+                  "extension-onnx-uncalibrated"
+                ]
+              }
+            },
+            "required": [
+              "status",
+              "basis"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "observation",
+          "identity"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "ruleId": {
+            "type": "string",
+            "enum": [
+              "CG001",
+              "CG002",
+              "CG003",
+              "CG004",
+              "CG005",
+              "CG006",
+              "CG007",
+              "CG008",
+              "CG009"
+            ]
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "info",
+              "low",
+              "medium",
+              "high",
+              "critical"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "confirmed",
+              "review"
+            ]
+          },
+          "title": {
+            "type": "string"
+          },
+          "why": {
+            "type": "string"
+          },
+          "fix": {
+            "type": "string"
+          },
+          "cookie": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "domain": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              },
+              "origin": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "name",
+              "domain",
+              "path",
+              "origin"
+            ],
+            "additionalProperties": false
+          },
+          "evidence": {
+            "type": "object",
+            "properties": {
+              "source": {
+                "type": "string",
+                "enum": [
+                  "header",
+                  "browser",
+                  "fixture",
+                  "legacy"
+                ]
+              },
+              "identityBasis": {
+                "type": "string",
+                "enum": [
+                  "developer-name",
+                  "validated-auth-flow",
+                  "extension-rule-heuristic",
+                  "extension-onnx-uncalibrated"
+                ]
+              },
+              "secure": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "httpOnly": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "hostOnly": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "declaredSameSite": {
+                "type": "string",
+                "enum": [
+                  "strict",
+                  "lax",
+                  "none",
+                  "absent",
+                  "invalid",
+                  "unknown"
+                ]
+              },
+              "effectiveSameSite": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "lax",
+                      "strict",
+                      "none"
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "remainingLifetimeDays": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "storeStatus": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "not-observed",
+                  "unverified"
+                ]
+              },
+              "headerWarnings": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "changes": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "source",
+              "identityBasis",
+              "secure",
+              "httpOnly",
+              "hostOnly",
+              "declaredSameSite",
+              "effectiveSameSite",
+              "remainingLifetimeDays",
+              "storeStatus",
+              "headerWarnings",
+              "changes"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ruleId",
+          "severity",
+          "status",
+          "title",
+          "why",
+          "fix",
+          "cookie",
+          "evidence"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "toolVersion",
+    "mode",
+    "target",
+    "status",
+    "classificationModes",
+    "policy",
+    "summary",
+    "issues",
+    "limitations",
+    "comparison",
+    "cookies",
+    "findings"
+  ],
+  "additionalProperties": false
+}

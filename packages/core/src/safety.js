@@ -1,4 +1,4 @@
-const messages = Object.freeze({
+export const messages = Object.freeze({
   CONFIG: 'Invalid CookieGuard configuration. See --help or the API documentation.',
   INPUT: 'Invalid or oversized cookie input. Raw input has been withheld.',
   TARGET: 'Target is outside the authorized HTTP(S) scan boundary.',
@@ -8,6 +8,7 @@ const messages = Object.freeze({
   MODEL: 'Explicit ONNX classification failed. Check the runtime, model, and metadata; no fallback was used.',
   OUTPUT: 'Could not write the sanitized report. Check the destination and permissions.',
   BASELINE: 'Baseline is invalid or incompatible with this audit.',
+  EVIDENCE: 'Evidence file is unavailable, not enabled, or outside the evidence directory. Raw input has been withheld.',
 });
 
 export class AuditError extends Error {
