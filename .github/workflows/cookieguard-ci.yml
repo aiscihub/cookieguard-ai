@@ -117,7 +117,7 @@ jobs:
       - run: npm ci
       - run: npx --no-install playwright install --with-deps chromium
       - name: Vendor the published CookieGuard engine into the Python package
-        run: node integrations/browser-use/scripts/vendor_engine.mjs --registry
+        run: node integrations/browser-use/scripts/vendor_engine.mjs --published
       - name: Install the Browser Use integration
         working-directory: integrations/browser-use
         run: |

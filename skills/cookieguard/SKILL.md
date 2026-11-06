@@ -43,7 +43,11 @@ Playwright, not the header scan. All integrations need Node.js 24+ on `PATH`.
 
 ## 3. Integrate
 
-**Browser Use.** Start the audit before the login and enforce it after the run:
+**Browser Use.** It needs Python 3.11-3.13. Check `python3 --version` first: if it
+is older, create the virtualenv with a newer interpreter that exists on the machine
+(`python3.12 -m venv .venv`, or `python3.11` / `python3.13`), then
+`.venv/bin/pip install cookieguard-browser-use`. Start the audit before the login and
+enforce it after the run:
 
 ```python
 from browser_use import Agent, BrowserProfile, BrowserSession, Tools
@@ -138,6 +142,8 @@ npx --yes cookieguard-ci@0.1.0 scan http://127.0.0.1:3000/ --auth-cookie session
 
 - `node` missing or older than 24: install Node.js 24+; the engine runs in a
   local Node subprocess.
+- `pip` cannot find `cookieguard-browser-use` or `browser-use`: the interpreter is
+  older than 3.11. Recreate the virtualenv with `python3.11`, `python3.12`, or `python3.13`.
 - `TARGET` error: remove query strings and credentials from the URL; nonlocal
   origins need `--allow-origin` (CLI) or `allowed_origins` / `origins`.
 - Browser Use closes the browser before `finish()`: set `keep_alive=True`.

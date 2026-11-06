@@ -64,7 +64,10 @@ function cleanEnv(sandbox, project) {
   }
   return { ...env, SHELL: '/bin/bash', TMPDIR: join(sandbox, 'tmp'), GIT_CONFIG_GLOBAL: join(sandbox, 'gitconfig'),
     npm_config_userconfig: join(sandbox, 'npmrc'), npm_config_cache: join(sandbox, 'npm-cache'), npm_config_update_notifier: 'false',
-    PIP_CONFIG_FILE: '/dev/null', PIP_CACHE_DIR: join(sandbox, 'pip-cache'), PLAYWRIGHT_BROWSERS_PATH: join(homedir(), 'Library/Caches/ms-playwright'),
+    // pip's default truststore check needs the macOS trust service, which the sandbox
+    // blocks; the bundled CA file works and changes nothing else.
+    PIP_CONFIG_FILE: '/dev/null', PIP_CACHE_DIR: join(sandbox, 'pip-cache'), PIP_USE_DEPRECATED: 'legacy-certs',
+    PIP_DISABLE_PIP_VERSION_CHECK: '1', PLAYWRIGHT_BROWSERS_PATH: join(homedir(), 'Library/Caches/ms-playwright'),
     XDG_CONFIG_HOME: join(sandbox, 'xdg-config'), XDG_CACHE_HOME: join(sandbox, 'xdg-cache'),
     BROWSER_USE_CONFIG_DIR: join(sandbox, 'browseruse'), ANONYMIZED_TELEMETRY: 'false', BROWSER_USE_CLOUD_SYNC: 'false',
     PWD: project };

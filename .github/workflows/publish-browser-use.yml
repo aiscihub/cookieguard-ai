@@ -41,7 +41,7 @@ jobs:
           python-version: '3.12'
       - run: npm ci
       - name: Vendor the published engine without changing it
-        run: node integrations/browser-use/scripts/vendor_engine.mjs --registry
+        run: node integrations/browser-use/scripts/vendor_engine.mjs --published
       - name: Install packaging tools
         run: python -m pip install build==1.6.1 twine==7.0.0
       - name: Build and check package descriptions

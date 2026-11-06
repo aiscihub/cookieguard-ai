@@ -123,10 +123,26 @@ None reported PASS.
   real session token reached the model through tool output: `curl -i` against the login,
   or the agent's own test printing the `Set-Cookie` header. No C or D run exposed one.
 
+### Skill revision: Python version guidance
+
+After the main runs, the skill gained one instruction: check `python3 --version`, and
+create the virtualenv with Python 3.11 or newer if the default is older. BU1-BU4 were then
+re-run in condition C ([`results/skill-v2-runs.jsonl`](results/skill-v2-runs.jsonl)). The
+usage guard stopped the batch at 70%, so AG1-AG4 did not run.
+
+All 4 agents followed the new instruction and created a Python 3.12 virtualenv, and all 4
+wired CookieGuard in correctly. None installed it: inside the macOS sandbox, Homebrew
+Python's pip failed TLS to PyPI (`OSStatus -26276`), because its default `truststore`
+check needs the system trust service. That is a harness defect, not a product one. The
+harness now sets `PIP_USE_DEPRECATED=legacy-certs`, which a single-command check
+confirmed works inside the sandbox. Install and audit rates under the revised skill
+remain unmeasured until these tasks are re-run.
+
 ### Limits of these numbers
 
 - Install, integration, and audit rates for C are environment-bound. On this machine,
-  `python3` is 3.9, below Browser Use's 3.11 minimum (two runs stopped there). Browsers
+  `python3` is 3.9, below Browser Use's 3.11 minimum (two runs stopped there). Newer
+  Pythons also could not reach PyPI from the sandbox until the harness fix above. Browsers
   cannot start inside the macOS sandbox, which blocked every Playwright audit and the
   Browser Use runs. Claude Code's permission mode refused writes to `.mcp.json` in MS1-C
   and MS2-C; those agents wrote a correct server configuration and the remaining command.

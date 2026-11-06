@@ -108,9 +108,9 @@ is installed, or through a directory that the agent searches.
 3. Consider a PyPI `cookieguard` package that installs `cookieguard-browser-use`, since
    agents probe that name. npm `cookieguard` is taken by an unrelated project.
 4. Add GitHub topics for Agent Skills, MCP, and Claude Code plugins.
-5. In the skill, tell agents to create the virtualenv with Python 3.11+ explicitly when
-   `python3` is older; two benchmark runs stopped there. (Not changed yet, so the
-   committed skill is the one that was benchmarked.)
+5. Re-run BU1-BU4 and AG1-AG4 in condition C with the fixed harness. The skill now tells
+   agents to use Python 3.11+; in the partial re-run all 4 agents did, but pip could not
+   reach PyPI from the sandbox.
 
 ## Next release
 

@@ -3,6 +3,8 @@
 //   node scripts/vendor_engine.mjs             # pack this monorepo's workspaces (offline)
 //   node scripts/vendor_engine.mjs --registry  # also require byte-identical contents
 //                                              # to the published npm release
+//   node scripts/vendor_engine.mjs --published # vendor the published npm release itself,
+//                                              # for when main has unreleased engine changes
 //
 // Only the packed npm contents are copied: no hand-maintained fork of the
 // engine. The manifest records per-file SHA-256 hashes, which the Python
@@ -23,9 +25,14 @@ const packages = [
   { name: '@aiscihub/cookieguard-core', dir: 'cookieguard-core' },
   { name: '@aiscihub/cookieguard-playwright', dir: 'cookieguard-playwright' },
 ];
+// The engine version this Browser Use release pins. Workspaces may be ahead of it.
+const ENGINE_VERSION = '0.1.0';
 const args = process.argv.slice(2);
-if (args.some(arg => arg !== '--registry')) throw new Error('Usage: node scripts/vendor_engine.mjs [--registry]');
+if (args.length > 1 || args.some(arg => !['--registry', '--published'].includes(arg))) {
+  throw new Error('Usage: node scripts/vendor_engine.mjs [--registry | --published]');
+}
 const verifyRegistry = args.includes('--registry');
+const published = args.includes('--published');
 
 async function files(directory) {
   const result = [];
@@ -54,21 +61,30 @@ async function unpack(tarball, destination) {
 
 const temporary = await mkdtemp(join(tmpdir(), 'cookieguard-browser-use-engine-'));
 try {
-  await exec(process.execPath, ['scripts/build.js'], { cwd: root });
   await mkdir(join(temporary, 'workspace'), { recursive: true });
   await mkdir(join(temporary, 'registry'), { recursive: true });
-  const { stdout } = await exec('npm', ['pack', ...packages.flatMap(p => ['--workspace', p.name]),
-    '--pack-destination', join(temporary, 'workspace'), '--json'], { cwd: root });
-  const packed = JSON.parse(stdout);
-  const manifest = { schemaVersion: 1, source: verifyRegistry ? 'workspace-verified-against-npm-registry' : 'workspace', packages: [] };
+  let packed;
+  if (published) {
+    // npm verifies the registry's sha512 integrity while downloading.
+    const { stdout } = await exec('npm', ['pack', ...packages.map(p => `${p.name}@${ENGINE_VERSION}`),
+      '--registry=https://registry.npmjs.org', '--pack-destination', join(temporary, 'workspace'), '--json'], { cwd: temporary });
+    packed = JSON.parse(stdout);
+  } else {
+    await exec(process.execPath, ['scripts/build.js'], { cwd: root });
+    const { stdout } = await exec('npm', ['pack', ...packages.flatMap(p => ['--workspace', p.name]),
+      '--pack-destination', join(temporary, 'workspace'), '--json'], { cwd: root });
+    packed = JSON.parse(stdout);
+  }
+  const manifest = { schemaVersion: 1,
+    source: published ? 'npm-registry' : verifyRegistry ? 'workspace-verified-against-npm-registry' : 'workspace', packages: [] };
   const modules = join(engineDir, 'node_modules');
   await rm(modules, { recursive: true, force: true });
   for (const pkg of packages) {
     const result = packed.find(entry => entry.name === pkg.name);
-    if (!result || result.version !== '0.1.0') throw new Error('Unexpected package version.');
+    if (!result || result.version !== ENGINE_VERSION) throw new Error('Unexpected package version.');
     const contents = await unpack(join(temporary, 'workspace', result.filename), join(temporary, 'workspace', pkg.dir));
     const fileHashes = await hashes(contents);
-    let registryIntegrity = null;
+    let registryIntegrity = published ? result.integrity : null;
     if (verifyRegistry) {
       // npm verifies the registry's sha512 integrity while downloading.
       const download = await exec('npm', ['pack', `${pkg.name}@${result.version}`, '--registry=https://registry.npmjs.org',
