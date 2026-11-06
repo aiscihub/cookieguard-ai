@@ -84,7 +84,7 @@ async function prepare(task, condition, slot, run) {
     if (text.includes('{{')) await writeFile(file, text.replaceAll('{{PORT}}', String(port)).replaceAll('{{TEST_PORT}}', String(port + 5)));
   }
   await writeFile(join(project, '.gitignore'), 'node_modules/\n.venv/\nvenv/\n__pycache__/\ntest-results/\nplaywright-report/\n');
-  if (CONDITIONS[condition].skill) await cp(join(repo, 'skills/cookieguard'), join(project, '.claude/skills/cookieguard'), { recursive: true });
+  if (CONDITIONS[condition].skill) await cp(join(repo, 'skills/cookieguard-browser-auth-security'), join(project, '.claude/skills/cookieguard-browser-auth-security'), { recursive: true });
   for (const directory of ['tmp', 'xdg-config', 'xdg-cache', 'browseruse']) await mkdir(join(sandbox, directory));
   await writeFile(join(sandbox, 'gitconfig'), '[user]\n\tname = Developer\n\temail = dev@example.invalid\n[init]\n\tdefaultBranch = main\n');
   await writeFile(join(sandbox, 'npmrc'), 'fund=false\naudit=false\n');

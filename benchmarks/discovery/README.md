@@ -29,7 +29,7 @@ countable.
 | --- | --- | --- |
 | A | Baseline | Bash, Read, Write, Edit, Glob, Grep, Skill. No web search, no CookieGuard material |
 | B | Searchable | A plus WebSearch and WebFetch: CookieGuard is public on PyPI, npm, GitHub, and the MCP Registry |
-| C | Agent-native | A plus the [Agent Skill](../../skills/cookieguard) installed in the project's `.claude/skills/` |
+| C | Agent-native | A plus the [Agent Skill](../../skills/cookieguard-browser-auth-security) installed in the project's `.claude/skills/` (the runs below used it under its earlier name, `cookieguard`) |
 | D | MCP configured | A plus the local MCP server (from `main`) already configured in the client, as a developer would after installing it |
 
 ## Isolation

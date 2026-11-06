@@ -241,7 +241,7 @@ enforce results in your tests or CI when you need a gate.
 
 ### Use it from a coding agent
 
-The [CookieGuard Agent Skill](skills/cookieguard/SKILL.md) tells coding agents when a task
+The [CookieGuard Agent Skill](skills/cookieguard-browser-auth-security/SKILL.md) tells coding agents when a task
 calls for these checks (Browser Use or Playwright logins, CI gates, MCP clients), which
 integration to pick, and how to read the result without exposing cookie values. In
 Claude Code:
@@ -250,9 +250,9 @@ Claude Code:
 /plugin install cookieguard --marketplace aiscihub/cookieguard-ai
 ```
 
-For Codex, copy [`skills/cookieguard`](skills/cookieguard) to `.agents/skills/` in your
+For Codex, copy [`skills/cookieguard-browser-auth-security`](skills/cookieguard-browser-auth-security) to `.agents/skills/` in your
 repository or to `~/.agents/skills/`. Other agents that read `SKILL.md` can use the same
-folder.
+folder, and `npm run package:skill` builds a ZIP of it for skill marketplaces.
 
 Automated tools can read [`cookieguard.capabilities.json`](cookieguard.capabilities.json):
 a versioned, machine-readable description of every check, input, output schema, exit

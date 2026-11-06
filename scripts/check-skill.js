@@ -42,11 +42,19 @@ export async function checkSkill(directory) {
   if (body.split('\n').length > 500) errors.push('Body should stay under 500 lines');
   // Rough token estimate: the spec recommends under 5000 tokens for the body.
   if (body.length / 4 > 5000) errors.push('Body should stay under about 5000 tokens');
-  for (const [, target] of body.matchAll(/\]\(([^)#\s]+)(?:#[^)]*)?\)/g)) {
-    if (/^[a-z]+:/i.test(target)) continue;
-    const path = resolve(directory, target);
-    if (relative(directory, path).startsWith('..')) errors.push(`Link leaves the skill directory: ${target}`);
-    else await stat(path).catch(() => errors.push(`Broken link: ${target}`));
+  // Every relative link in every Markdown file must stay inside the skill and resolve,
+  // so the folder works when distributed on its own.
+  const documents = (await readdir(directory, { recursive: true, withFileTypes: true }))
+    .filter(entry => entry.isFile() && entry.name.endsWith('.md')).map(entry => join(entry.parentPath, entry.name));
+  for (const document of documents) {
+    const content = document.endsWith('SKILL.md') ? body : await readFile(document, 'utf8');
+    for (const [, target] of content.matchAll(/\]\(([^)#\s]+)(?:#[^)]*)?\)/g)) {
+      if (/^[a-z]+:/i.test(target)) continue;
+      const path = resolve(dirname(document), target);
+      const label = document.endsWith('SKILL.md') ? target : `${relative(directory, document)} -> ${target}`;
+      if (relative(directory, path).startsWith('..')) errors.push(`Link leaves the skill directory: ${label}`);
+      else await stat(path).catch(() => errors.push(`Broken link: ${label}`));
+    }
   }
   return { name, description, errors };
 }

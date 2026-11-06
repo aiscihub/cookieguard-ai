@@ -13,12 +13,12 @@ interfaces below; the files are served from this repository.
 | JSON Schemas for every output | [`schemas/`](../schemas) (generated from the zod schemas the MCP server enforces) | repository |
 | JSON errors | `cookieguard-ci ... --json` prints `{status: "incomplete", exitCode: 2, error}` on stdout | 0.2.0 |
 | MCP tools | `cookieguard_capabilities`, `cookieguard_audit` (`url` or `evidenceFile`), `cookieguard_explain`; 0.1.0 tools kept | 0.2.0 |
-| Agent Skill | [`skills/cookieguard`](../skills/cookieguard) (Agent Skills `SKILL.md`) | repository |
+| Agent Skill | [`skills/cookieguard-browser-auth-security`](../skills/cookieguard-browser-auth-security) (Agent Skills `SKILL.md`) | repository |
 | Claude Code plugin marketplace | [`.claude-plugin/marketplace.json`](../.claude-plugin/marketplace.json) | repository |
 | `llms.txt` | [`llms.txt`](../llms.txt), served at `https://aiscihub.github.io/cookieguard-ai/llms.txt` | live |
 
 `npm run build:schemas` regenerates the schemas, the capability document, and the skill's
-`rules.md` and `capabilities.json`; tests fail when any of them is stale.
+`security-checks.md` and `capabilities.json`; tests fail when any of them is stale.
 
 ## Does discovery work?
 
@@ -74,15 +74,21 @@ Agent discovery end-to-end passed; the session-token canary never appeared in ev
 - **Claude Code:** `/plugin install cookieguard --marketplace aiscihub/cookieguard-ai`, or
   `claude plugin marketplace add aiscihub/cookieguard-ai` then
   `claude plugin install cookieguard@aiscihub`. Validated with `claude plugin validate .`
-  (Claude Code 2.1.318). A copy in a project's `.claude/skills/cookieguard` also works and
+  (Claude Code 2.1.318). A copy in a project's `.claude/skills/cookieguard-browser-auth-security` also works and
   is what the [discovery benchmark](../benchmarks/discovery/README.md) uses.
-- **Codex:** copy `skills/cookieguard` to `.agents/skills/` in a repository or to
+- **Codex:** copy `skills/cookieguard-browser-auth-security` to `.agents/skills/` in a repository or to
   `~/.agents/skills/`, or ask `$skill-installer` to install it from
-  `https://github.com/aiscihub/cookieguard-ai/tree/main/skills/cookieguard`. Not tested here:
+  `https://github.com/aiscihub/cookieguard-ai/tree/main/skills/cookieguard-browser-auth-security`. Not tested here:
   Codex is not installed on the validation machine.
 - **Other agents** that read Agent Skills can use the same folder.
   `node scripts/check-skill.js` checks it against the
   [specification](https://agentskills.io/specification).
+
+`npm run package:skill` writes `artifacts/skill/cookieguard-browser-auth-security.zip` and its
+SHA-256: one top-level folder, reproducible, and refused if the pre-submission scan in
+`scripts/lib/skill-scan.js` finds a problem. That scan checks structure, file types,
+dangerous commands, secrets, environment reads, outbound hosts, obfuscation, and
+prompt-injection phrases.
 
 Installing a skill does not make it globally discoverable. An agent sees it only where it
 is installed, or through a directory that the agent searches.
@@ -96,6 +102,7 @@ is installed, or through a directory that the agent searches.
 | PyPI (`cookieguard-browser-use`) | 0.1.0 published; keywords, classifiers, and Documentation/Changelog URLs added on main | Next release |
 | PyPI (`cookieguard`) | 0.1.0 published (2026-11-06); installs `cookieguard-browser-use` | Publishing a new version |
 | Anthropic's Claude Code plugin directory | Not submitted; the marketplace file validates | Submission |
+| Agensi skill marketplace | ZIP built by `npm run package:skill` and checked by a pre-submission scan; not submitted | Submission |
 | OpenAI curated skills (`openai/skills`) | Not submitted | External pull request |
 | skills.sh / `npx skills` and other skill indexes | Not submitted or tested | Submission |
 | GitHub topics such as `agent-skills`, `mcp-server`, `claude-code-plugin` | Not changed | Repository settings |

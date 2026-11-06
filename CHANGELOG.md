@@ -1,5 +1,19 @@
 # Changelog
 
+## Unreleased — Agent Skill for marketplaces
+
+- The Agent Skill is now `cookieguard-browser-auth-security` ("CookieGuard AI — Browser
+  Agent Authentication Security Audit"), restructured for distribution on its own. It
+  covers when and when not to use it, the trust boundary between agent, browser
+  automation, and CookieGuard, an A-E workflow (detect, install with consent, audit,
+  interpret, report), a report template, and redaction rules. References cover
+  installation, Browser Use, Playwright and CI, MCP, security checks, and findings, plus
+  a real worked example. It adds a README and LICENSE.
+- `npm run package:skill` builds a reproducible ZIP after a pre-submission scan, and
+  `integrations/browser-use/scripts/check_skill_examples.py` checks the skill's Python
+  examples against the installed `cookieguard_browser_use` API in CI.
+- The Claude Code plugin keeps the name `cookieguard`; its source moved to the renamed folder.
+
 ## cookieguard 0.1.0 (PyPI alias) — 2026-11-06
 
 - `pip install cookieguard` installs `cookieguard-browser-use` 0.1.x and re-exports its

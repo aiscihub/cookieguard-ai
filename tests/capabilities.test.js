@@ -37,7 +37,7 @@ test('capability document is schema-valid, stable, and identical to the publishe
   const { code, out } = await run(['capabilities', '--json']);
   assert.equal(code, 0);
   assert.deepEqual(JSON.parse(out), document);
-  for (const path of ['cookieguard.capabilities.json', 'skills/cookieguard/references/capabilities.json']) {
+  for (const path of ['cookieguard.capabilities.json', 'skills/cookieguard-browser-auth-security/references/capabilities.json']) {
     assert.equal(await readFile(path, 'utf8'), out, `${path} is stale; run npm run build:schemas`);
   }
   await exec(process.execPath, ['scripts/build-schemas.js', '--check']);

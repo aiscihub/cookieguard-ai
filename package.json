@@ -11,6 +11,7 @@
     "build": "node scripts/build.js",
     "build:schemas": "node scripts/build-schemas.js",
     "check:skill": "node scripts/check-skill.js",
+    "package:skill": "node scripts/package-skill.js",
     "lint": "eslint packages scripts tests examples action integrations/browser-use/scripts integrations/browser-use/src benchmarks/discovery/run.mjs benchmarks/discovery/score.mjs eslint.config.js",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "test": "node --test --test-timeout=30000 tests/*.test.js",

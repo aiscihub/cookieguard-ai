@@ -13,16 +13,16 @@ const write = async (root, name, frontmatter, body = '# Skill\n') => {
 };
 
 test('the CookieGuard skill follows the Agent Skills specification and links resolve', async () => {
-  const result = await checkSkill('skills/cookieguard');
+  const result = await checkSkill('skills/cookieguard-browser-auth-security');
   assert.deepEqual(result.errors, []);
-  assert.equal(result.name, 'cookieguard');
-  const text = await readFile('skills/cookieguard/SKILL.md', 'utf8');
+  assert.equal(result.name, 'cookieguard-browser-auth-security');
+  const text = await readFile('skills/cookieguard-browser-auth-security/SKILL.md', 'utf8');
   // Install commands in the skill must use released versions that exist today.
   const { version: released } = JSON.parse(await readFile('packages/cli/package.json', 'utf8'));
   for (const [, version] of text.matchAll(/@aiscihub\/cookieguard-[a-z]+@(\S+?)[`\s]/g)) assert.equal(version, released);
   for (const [, version] of text.matchAll(/cookieguard-ci@(\S+?)[`\s]/g)) assert.equal(version, released);
   const marketplace = JSON.parse(await readFile('.claude-plugin/marketplace.json', 'utf8'));
-  assert.equal(marketplace.plugins[0].source, './skills/cookieguard');
+  assert.equal(marketplace.plugins[0].source, './skills/cookieguard-browser-auth-security');
 });
 
 test('the checker rejects specification violations', async () => {
