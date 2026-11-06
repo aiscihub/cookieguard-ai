@@ -5,7 +5,7 @@ license: MIT
 compatibility: Needs Node.js 24+. The Browser Use integration also needs Python 3.11-3.13, browser-use 0.13.x, and Chrome or Chromium. Installing needs network access to PyPI or npm.
 metadata:
   project: https://github.com/aiscihub/cookieguard-ai
-  packages: cookieguard-browser-use 0.1.0 (PyPI); cookieguard-ci, @aiscihub/cookieguard-playwright, @aiscihub/cookieguard-mcp 0.1.0 (npm)
+  packages: cookieguard-browser-use 0.1.0 (PyPI); cookieguard-ci, @aiscihub/cookieguard-playwright, @aiscihub/cookieguard-mcp 0.2.0 (npm)
 ---
 
 # CookieGuard: session-cookie security checks
@@ -33,8 +33,8 @@ from the agent.
 | Situation | Use | Install |
 | --- | --- | --- |
 | A Browser Use agent signs in | `cookieguard-browser-use` (Python) | `pip install cookieguard-browser-use` |
-| Playwright tests sign in | `@aiscihub/cookieguard-playwright` | `npm install --save-dev @aiscihub/cookieguard-playwright@0.1.0` |
-| A GET response sets the cookie, or a quick CI smoke check | `cookieguard-ci` CLI | `npx --yes cookieguard-ci@0.1.0 ...` |
+| Playwright tests sign in | `@aiscihub/cookieguard-playwright` | `npm install --save-dev @aiscihub/cookieguard-playwright@0.2.0` |
+| A GET response sets the cookie, or a quick CI smoke check | `cookieguard-ci` CLI | `npx --yes cookieguard-ci@0.2.0 ...` |
 | GitHub Actions | CookieGuard Action | see [CLI and CI](references/cli-and-ci.md) |
 | An MCP client should run audits | `@aiscihub/cookieguard-mcp` | see [MCP](references/mcp.md) |
 
@@ -106,7 +106,7 @@ test('session-cookie policy', async ({ context, page }) => {
 **CLI** (the app must be running; use a URL whose GET response sets the cookie):
 
 ```bash
-npx --yes cookieguard-ci@0.1.0 scan http://127.0.0.1:3000/ --auth-cookie session_id --format json
+npx --yes cookieguard-ci@0.2.0 scan http://127.0.0.1:3000/ --auth-cookie session_id --format json
 ```
 
 ## 4. Read the result
@@ -147,4 +147,5 @@ npx --yes cookieguard-ci@0.1.0 scan http://127.0.0.1:3000/ --auth-cookie session
 - `TARGET` error: remove query strings and credentials from the URL; nonlocal
   origins need `--allow-origin` (CLI) or `allowed_origins` / `origins`.
 - Browser Use closes the browser before `finish()`: set `keep_alive=True`.
-- Run `npx --yes cookieguard-ci@0.1.0 --help` for every CLI option.
+- Run `npx --yes cookieguard-ci@0.2.0 --help` for every CLI option, and
+  `npx --yes cookieguard-ci@0.2.0 explain ID` for any rule ID, issue, or error code.

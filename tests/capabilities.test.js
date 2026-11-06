@@ -48,7 +48,7 @@ test('capability document is schema-valid, stable, and identical to the publishe
   for (const integration of document.integrations.filter(i => i.registry)) {
     assert.match(integration.version, /^\d+\.\d+\.\d+$/);
   }
-  assert.equal(document.operations.find(o => o.id === 'audit-evidence-file').availability, 'unreleased');
+  assert.ok(document.operations.every(o => o.availability === 'released'));
 });
 
 test('every explainable identifier has a schema-valid explanation; unknown identifiers are not reflected', async () => {

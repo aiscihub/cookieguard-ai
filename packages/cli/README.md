@@ -1,11 +1,13 @@
 # cookieguard-ci
 
-Bounded local HTTP cookie-policy scanner. Node 24+, ESM. Version 0.1.0 is a
-public beta. Against your running local test application:
+Bounded local HTTP cookie-policy scanner. Node 24+, ESM. Version 0.2.0. Against
+your running local test application:
 
 ```bash
-npx cookieguard-ci@0.1.0 scan http://localhost:3000 --auth-cookie session_id
-npx cookieguard-ci@0.1.0 --help
+npx cookieguard-ci@0.2.0 scan http://localhost:3000 --auth-cookie session_id
+npx cookieguard-ci@0.2.0 capabilities --json   # machine-readable description
+npx cookieguard-ci@0.2.0 explain CG001          # what a rule means and how to fix it
+npx cookieguard-ci@0.2.0 --help
 ```
 
 To try the controlled demo, clone

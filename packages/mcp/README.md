@@ -4,10 +4,10 @@ Let an MCP client check HTTP cookie configuration against your local policy.
 CookieGuard returns **PASS / FAIL / INCOMPLETE**, rule IDs, explanations, and fixes.
 Cookie values never appear in tool results.
 
-Version **0.1.0** on npm, listed in the official MCP Registry as
-`io.github.aiscihub/cookieguard`. Requires **Node.js 24+**. The `main` branch adds
+Version **0.2.0** on npm, listed in the official MCP Registry as
+`io.github.aiscihub/cookieguard`. Requires **Node.js 24+**. Version 0.2.0 adds
 `cookieguard_capabilities`, `cookieguard_audit` (including sanitized evidence files), and
-`cookieguard_explain`; they are not published yet. See [Tools and results](#tools-and-results).
+`cookieguard_explain`. See [Tools and results](#tools-and-results).
 
 ```mermaid
 flowchart LR
@@ -74,8 +74,7 @@ Example `/absolute/path/cookieguard.json`:
 }
 ```
 
-`evidenceDir` is optional and only used by `main`'s `cookieguard_audit`; omit it for
-0.1.0. Use your actual application origin and authentication-cookie names. An origin
+`evidenceDir` is optional and only used by `cookieguard_audit` (0.2.0+). Use your actual application origin and authentication-cookie names. An origin
 contains scheme, host, and optional port, with no URL path, credentials, query,
 or fragment. `localhost` and `127.0.0.1` are distinct origins. The allowlist is
 required even for loopback; there is no default authorization for other local
@@ -92,7 +91,7 @@ For clients that use an `mcpServers` JSON object:
       "command": "npx",
       "args": [
         "--yes",
-        "@aiscihub/cookieguard-mcp@0.1.0",
+        "@aiscihub/cookieguard-mcp@0.2.0",
         "--config",
         "/absolute/path/cookieguard.json"
       ]
@@ -126,11 +125,11 @@ process, so filesystem permissions and client permissions remain your boundary.
 | --- | --- | --- | --- |
 | `cookieguard_policy` | `{}` | Allowed origins, resolved policy defaults, timeout, and scope | 0.1.0 |
 | `cookieguard_scan` | `{"url":"http://127.0.0.1:3000/secure"}` | Status, exit code, counts, findings, limitations, and any scan error | 0.1.0 |
-| `cookieguard_capabilities` | `{}` | Checks, this server's configuration, result semantics, integrations, privacy, and limits | `main` |
-| `cookieguard_audit` | `{"url":"…"}` or `{"evidenceFile":"login.json"}` | Same result as `cookieguard_scan`, plus `provenance` | `main` |
-| `cookieguard_explain` | `{"id":"CG001"}` | Meaning, confirmed versus review conditions, and fix for a rule, issue, error, or status | `main` |
+| `cookieguard_capabilities` | `{}` | Checks, this server's configuration, result semantics, integrations, privacy, and limits | 0.2.0 |
+| `cookieguard_audit` | `{"url":"…"}` or `{"evidenceFile":"login.json"}` | Same result as `cookieguard_scan`, plus `provenance` | 0.2.0 |
+| `cookieguard_explain` | `{"id":"CG001"}` | Meaning, confirmed versus review conditions, and fix for a rule, issue, error, or status | 0.2.0 |
 
-On `main`, every finding also carries `evidenceSource` (`header` for a server
+Since 0.2.0, every finding also carries `evidenceSource` (`header` for a server
 `Set-Cookie` declaration, `browser` for cookie-store metadata) and `identityBasis`
 (developer configuration versus uncalibrated heuristics). Output schemas are published
 in [`schemas/`](https://github.com/aiscihub/cookieguard-ai/tree/main/schemas).

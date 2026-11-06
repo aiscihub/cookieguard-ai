@@ -9,6 +9,7 @@ import { createDemoServer } from '../examples/demo/server.js';
 import { assertNoSentinels } from './lib/leakage.js';
 
 const exec = promisify(execFile);
+const RELEASE = JSON.parse(await readFile(new URL('../packages/cli/package.json', import.meta.url), 'utf8')).version;
 const fromRegistry = process.argv[2] === '--registry';
 if (process.argv.length > (fromRegistry ? 3 : 2)) throw new Error('Usage: node scripts/verify-packages.js [--registry]');
 const names = ['@aiscihub/cookieguard-core', 'cookieguard-ci', '@aiscihub/cookieguard-playwright'];
@@ -21,7 +22,7 @@ for (const name of fromRegistry ? [] : names) {
   const { stdout } = await exec('npm', ['pack', '--workspace', name, '--pack-destination', destination, '--json']);
   const [result] = JSON.parse(stdout);
   assert.equal(result.name, name);
-  assert.equal(result.version, '0.1.0');
+  assert.equal(result.version, RELEASE);
   const paths = result.files.map(file => file.path);
   assert.ok(paths.includes('LICENSE') && paths.includes('src/index.d.ts') && paths.includes('README.md'));
   if (name === '@aiscihub/cookieguard-core') assert.ok(paths.includes('vendor/engine.cjs'));
@@ -42,14 +43,14 @@ await mkdir(proof, { recursive: true });
 const outcomes = [];
 try {
   await writeFile(join(temporary, 'package.json'), JSON.stringify({ name: 'cookieguard-package-smoke', private: true, type: 'module' }));
-  const sources = fromRegistry ? names.map(name => `${name}@0.1.0`) : tarballs;
+  const sources = fromRegistry ? names.map(name => `${name}@${RELEASE}`) : tarballs;
   const network = fromRegistry ? ['--registry=https://registry.npmjs.org'] : ['--offline'];
   await exec('npm', ['install', ...network, '--ignore-scripts', '--no-audit', '--no-fund', ...sources], {
     cwd: temporary, env: { ...process.env, npm_config_cache: join(temporary, 'npm-cache') },
   });
   const bin = join(temporary, 'node_modules/.bin/cookieguard-ci');
   const version = await exec(bin, ['--version'], { cwd: temporary });
-  assert.equal(version.stdout.trim(), '0.1.0');
+  assert.equal(version.stdout.trim(), RELEASE);
   await exec(process.execPath, ['--input-type=module', '-e', `
     import { normalizeCookie, evaluateCookiePolicy, exitCode } from '@aiscihub/cookieguard-core';
     import { startCookieAudit } from '@aiscihub/cookieguard-playwright';
@@ -132,7 +133,7 @@ try {
   }
   await writeFile(join(proof, 'results.json'), JSON.stringify({ installSource: fromRegistry ? 'npm-registry' : 'local-tarballs',
     installedFromTarballs: !fromRegistry, outcomes, sentinelLeaks: 0 }, null, 2) + '\n');
-  if (!fromRegistry) await writeFile(join(destination, 'manifest.json'), JSON.stringify({ version: '0.1.0', packages: manifest }, null, 2) + '\n');
+  if (!fromRegistry) await writeFile(join(destination, 'manifest.json'), JSON.stringify({ version: RELEASE, packages: manifest }, null, 2) + '\n');
 } finally {
   if (server.listening) await new Promise(resolve => server.close(resolve));
   await rm(temporary, { recursive: true, force: true });

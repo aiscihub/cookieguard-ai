@@ -3,6 +3,7 @@ import https from 'node:https';
 import { lookup } from 'node:dns/promises';
 import { isIP } from 'node:net';
 import { AuditError, parseSetCookie } from '@aiscihub/cookieguard-core';
+import manifest from '../package.json' with { type: 'json' };
 
 function parseTarget(value) {
   try {
@@ -59,7 +60,7 @@ function getHeaders(url, address, signal) {
     const transport = url.protocol === 'https:' ? https : http;
     const request = transport.request(url, {
       method: 'GET', agent: false, signal, maxHeaderSize: 32768,
-      headers: { 'user-agent': 'CookieGuard-CI/0.1.0', accept: '*/*', connection: 'close' },
+      headers: { 'user-agent': `CookieGuard-CI/${manifest.version}`, accept: '*/*', connection: 'close' },
       lookup: (_hostname, options, callback) => {
         if (options.all) callback(null, [address]);
         else callback(null, address.address, address.family);

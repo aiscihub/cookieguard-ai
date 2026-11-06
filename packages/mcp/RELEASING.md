@@ -57,7 +57,7 @@ After a successful upload, users can configure:
   "mcpServers": {
     "cookieguard": {
       "command": "npx",
-      "args": ["--yes", "@aiscihub/cookieguard-mcp@0.1.0", "--config", "/absolute/path/cookieguard.json"]
+      "args": ["--yes", "@aiscihub/cookieguard-mcp@0.2.0", "--config", "/absolute/path/cookieguard.json"]
     }
   }
 }

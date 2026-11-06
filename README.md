@@ -171,7 +171,7 @@ The same published policy engine powers every tool:
 With **Node.js 24+**, scan a local endpoint that sets your authentication cookie:
 
 ```bash
-npx cookieguard-ci@0.1.0 scan http://localhost:3000 --auth-cookie session_id
+npx cookieguard-ci@0.2.0 scan http://localhost:3000 --auth-cookie session_id
 ```
 
 The CLI, Action, and MCP server do not log in or execute JavaScript. Use Browser Use or
@@ -187,7 +187,7 @@ origins and policy; the client can only choose which URL or evidence file to aud
 
 > [!NOTE]
 > [`@aiscihub/cookieguard-mcp`](https://www.npmjs.com/package/@aiscihub/cookieguard-mcp)
-> 0.1.0 is on npm and in the official MCP Registry as `io.github.aiscihub/cookieguard`.
+> 0.2.0 is on npm and in the official MCP Registry as `io.github.aiscihub/cookieguard`.
 > It needs Node.js 24+.
 
 Try it from a clone of this repository, with no API key or browser. The demo connects a
@@ -216,7 +216,7 @@ session cookie names. Then add the server to your client's MCP settings:
   "mcpServers": {
     "cookieguard": {
       "command": "npx",
-      "args": ["--yes", "@aiscihub/cookieguard-mcp@0.1.0",
+      "args": ["--yes", "@aiscihub/cookieguard-mcp@0.2.0",
                "--config", "/absolute/path/cookieguard.json"]
     }
   }
@@ -227,12 +227,10 @@ session cookie names. Then add the server to your client's MCP settings:
 | --- | --- | --- |
 | `cookieguard_policy` | Shows the allowed origins and the policy in force | 0.1.0 |
 | `cookieguard_scan` | Scans one allowed URL's `Set-Cookie` headers and returns status, findings, and fixes | 0.1.0 |
-| `cookieguard_capabilities` | Describes the checks, this server's configuration, result meanings, and limits | `main` |
-| `cookieguard_audit` | Audits one allowed URL, or one sanitized report your own Browser Use, Playwright, or CLI run wrote to the configured `evidenceDir` | `main` |
-| `cookieguard_explain` | Explains a rule ID, incomplete reason, or error code | `main` |
+| `cookieguard_capabilities` | Describes the checks, this server's configuration, result meanings, and limits | 0.2.0 |
+| `cookieguard_audit` | Audits one allowed URL, or one sanitized report your own Browser Use, Playwright, or CLI run wrote to the configured `evidenceDir` | 0.2.0 |
+| `cookieguard_explain` | Explains a rule ID, incomplete reason, or error code | 0.2.0 |
 
-Tools marked `main` are in this repository but not yet published; the demo above runs them
-from a clone.
 
 Results never contain cookie values. The agent decides whether to call the tool, so
 enforce results in your tests or CI when you need a gate.
@@ -255,9 +253,9 @@ folder.
 
 Automated tools can read [`cookieguard.capabilities.json`](cookieguard.capabilities.json):
 a versioned, machine-readable description of every check, input, output schema, exit
-code, privacy property, and limitation. Output schemas are in [`schemas/`](schemas). On
-`main`, `cookieguard-ci capabilities --json` and `cookieguard-ci explain CG001` print the
-same information; these commands are not in the published 0.1.0 CLI yet.
+code, privacy property, and limitation. Output schemas are in [`schemas/`](schemas).
+`npx cookieguard-ci@0.2.0 capabilities --json` and `npx cookieguard-ci@0.2.0 explain CG001`
+print the same information.
 [Agent discovery details](docs/agent-discovery.md)
 
 ### Browser extension

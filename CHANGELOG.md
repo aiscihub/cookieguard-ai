@@ -1,8 +1,13 @@
 # Changelog
 
-## Unreleased — agent discovery
+## CookieGuard 0.2.0 — agent discovery — 2026-11-06
 
-Not published. The packages below keep version 0.1.0 until a release is approved.
+npm packages `@aiscihub/cookieguard-core`, `cookieguard-ci`,
+`@aiscihub/cookieguard-playwright`, and `@aiscihub/cookieguard-mcp` move to 0.2.0 under
+the default `latest` dist-tag. Playwright's code is unchanged; its version follows core.
+`cookieguard-browser-use` stays at 0.1.0 and keeps the published 0.1.0 engine. Report
+`toolVersion`, the CLI's `--version` and user agent, and the MCP version now come from
+each package manifest.
 
 - **Capability interface.** `cookieguard-ci capabilities --json` and the generated
   `cookieguard.capabilities.json` describe every check, operation, input, permission,

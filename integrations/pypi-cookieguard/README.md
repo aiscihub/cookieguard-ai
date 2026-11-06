@@ -24,5 +24,7 @@ On npm, the official packages are `cookieguard-ci`, `@aiscihub/cookieguard-core`
 ## Releasing
 
 Publish with the `Publish cookieguard alias` workflow (`.github/workflows/publish-cookieguard.yml`)
-through PyPI Trusted Publishing. Widen the `cookieguard-browser-use` range in `pyproject.toml`
+through PyPI Trusted Publishing. The `pypi` environment deploys only from allowed tags, so
+run the workflow from a `cookieguard-v<version>` tag (allowed in the environment's
+deployment rules), not from `main`. Widen the `cookieguard-browser-use` range in `pyproject.toml`
 and bump this version when a new `cookieguard-browser-use` minor version is released.

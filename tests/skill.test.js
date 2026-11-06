@@ -18,8 +18,9 @@ test('the CookieGuard skill follows the Agent Skills specification and links res
   assert.equal(result.name, 'cookieguard');
   const text = await readFile('skills/cookieguard/SKILL.md', 'utf8');
   // Install commands in the skill must use released versions that exist today.
-  for (const [, version] of text.matchAll(/@aiscihub\/cookieguard-[a-z]+@(\S+?)[`\s]/g)) assert.equal(version, '0.1.0');
-  for (const [, version] of text.matchAll(/cookieguard-ci@(\S+?)[`\s]/g)) assert.equal(version, '0.1.0');
+  const { version: released } = JSON.parse(await readFile('packages/cli/package.json', 'utf8'));
+  for (const [, version] of text.matchAll(/@aiscihub\/cookieguard-[a-z]+@(\S+?)[`\s]/g)) assert.equal(version, released);
+  for (const [, version] of text.matchAll(/cookieguard-ci@(\S+?)[`\s]/g)) assert.equal(version, released);
   const marketplace = JSON.parse(await readFile('.claude-plugin/marketplace.json', 'utf8'));
   assert.equal(marketplace.plugins[0].source, './skills/cookieguard');
 });
