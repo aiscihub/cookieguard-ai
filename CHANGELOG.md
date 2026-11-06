@@ -1,5 +1,23 @@
 # Changelog
 
+## cookieguard 0.2.0 (Python) — unreleased
+
+- `cookieguard` is now CookieGuard's Python package. The shared core (results, errors,
+  origin checks, and the vendored engine) is `cookieguard`. Each integration is a
+  subpackage; the first is `cookieguard.browser_use`. `from cookieguard import
+  CookieGuardAudit` keeps working and loads the integration on first use.
+- `cookieguard-browser-use` 0.2.0 becomes a compatibility package. It depends on
+  `cookieguard==0.2.0`, re-exports its API under `cookieguard_browser_use`, aliases the
+  demo modules, and keeps `python -m cookieguard_browser_use.demo` working.
+- The source moves from `integrations/browser-use` to `integrations/python`, with the
+  compatibility package in `compat/`. One workflow, `publish-cookieguard.yml`, releases
+  both in lockstep; `publish-browser-use.yml` and `integrations/pypi-cookieguard` are removed.
+- `verify_upgrade.py` checks a fresh install and upgrades from both 0.1.0 releases: the
+  same objects under both names, no stale 0.1 files, engine verification, and `pip check`.
+  CI runs it on Python 3.12, and the release workflow runs it before publishing.
+- No behavior changes. The vendored engine is still the published npm 0.1.0, and result
+  JSON still identifies the integration as `cookieguard-browser-use`.
+
 ## Unreleased — Agent Skill for marketplaces
 
 - The Agent Skill is now `cookieguard-browser-auth-security` ("CookieGuard AI — Browser

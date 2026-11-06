@@ -10,7 +10,7 @@ An illustrative walkthrough; the output below is from a real run.
 1. **Detect.** `requirements.txt` pins `browser-use`, the login handler sets a cookie
    named `session_id`, and `python3.12` and Node.js 24+ are available.
 2. **Install, after telling the user.** Run `python3.12 -m venv .venv` and
-   `.venv/bin/pip install cookieguard-browser-use==0.1.0` as a test dependency.
+   `.venv/bin/pip install cookieguard==0.2.0` as a test dependency.
 3. **Audit.** Wrap the existing agent run with `CookieGuardAudit(allowed_origins=[...],
    auth_cookies=['session_id'])`, starting collection before the login and calling
    `finish()` afterwards. The password stays in Browser Use `sensitive_data`.
@@ -19,8 +19,9 @@ An illustrative walkthrough; the output below is from a real run.
 
 ## CookieGuard output
 
-This is the output of `python -m cookieguard_browser_use.demo`, insecure scenario, with
-the `cookieguard-browser-use` 0.1.0 wheel from PyPI, Browser Use 0.13.14, Python 3.12, and
+This is the output of the demo (`python -m cookieguard.browser_use.demo` since 0.2.0), insecure
+scenario, recorded with the `cookieguard-browser-use` 0.1.0 wheel from PyPI, the same engine
+and code that `cookieguard` 0.2.0 ships, Browser Use 0.13.14, Python 3.12, and
 Node.js 26 on macOS. A real Browser Use `Agent`, driven by a scripted stand-in for the
 model, signed in through a real browser while CookieGuard observed it:
 
@@ -46,7 +47,7 @@ The output names the configured cookie but contains no value.
 ```markdown
 ## Browser session cookie audit
 
-**Overall:** FAIL (cookieguard-browser-use 0.1.0)
+**Overall:** FAIL (CookieGuard 0.1.0 engine)
 
 **Environment:** Browser Use 0.13.14, Chromium-family browser, macOS; integration: Browser Use
 **Scope:** origin http://127.0.0.1:61978; authentication cookie `session_id`; policy failOn=high,
