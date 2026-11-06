@@ -1,6 +1,10 @@
 # Changelog
 
-## cookieguard 0.2.0 (Python) — unreleased
+## cookieguard 0.2.0 (Python) — 2026-11-06
+
+Published on PyPI with `cookieguard-browser-use` 0.2.0; see
+[the publication record](integrations/python/VALIDATION.md#cookieguard-020-and-cookieguard-browser-use-020-publication--2026-11-06).
+
 
 - `cookieguard` is now CookieGuard's Python package. The shared core (results, errors,
   origin checks, and the vendored engine) is `cookieguard`. Each integration is a

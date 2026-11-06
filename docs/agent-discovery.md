@@ -99,8 +99,8 @@ is installed, or through a directory that the agent searches.
 | --- | --- | --- |
 | Official MCP Registry | `io.github.aiscihub/cookieguard` 0.2.0 is active and latest (2026-11-06) | Publishing a new version |
 | npm (`cookieguard-ci`, `@aiscihub/cookieguard-core`, `-playwright`, `-mcp`) | 0.2.0 published under `latest` (2026-11-06) | Publishing a new version |
-| PyPI (`cookieguard-browser-use`) | 0.1.0 published; 0.2.0 prepared as the compatibility package for `cookieguard` | Publishing |
-| PyPI (`cookieguard`) | 0.1.0 alias published (2026-11-06); 0.2.0 prepared as the Python package (`cookieguard.browser_use`) | Publishing |
+| PyPI (`cookieguard-browser-use`) | 0.2.0 published (2026-11-06) as the compatibility package for `cookieguard` | Publishing a new version |
+| PyPI (`cookieguard`) | 0.2.0 published (2026-11-06): the Python package, with `cookieguard.browser_use` | Publishing a new version |
 | Anthropic's Claude Code plugin directory | Not submitted; the marketplace file validates | Submission |
 | Agensi skill marketplace | ZIP built by `npm run package:skill` and checked by a pre-submission scan; not submitted | Submission |
 | OpenAI curated skills (`openai/skills`) | Not submitted | External pull request |

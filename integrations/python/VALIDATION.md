@@ -440,3 +440,36 @@ Published by `publish-cookieguard.yml` with PyPI Trusted Publishing from tag
 - `pip install cookieguard==0.1.0` from PyPI in a clean Python 3.12 venv on macOS arm64
   installed `cookieguard-browser-use` 0.1.0, and `cookieguard.CookieGuardAudit is
   cookieguard_browser_use.CookieGuardAudit` was `True`.
+
+## cookieguard 0.2.0 and cookieguard-browser-use 0.2.0 publication — 2026-11-06
+
+Published together by `publish-cookieguard.yml` from tag `cookieguard-v0.2.0` (`1fd52de`, #36),
+run [42301325198](https://github.com/aiscihub/cookieguard-ai/actions/runs/42301325198). `main` CI
+passed on that commit before tagging.
+
+- Build job: `verify_external.py` (clean consumer, tests, real-browser demo, sdist), `twine check
+  --strict`, `verify_metadata.py` (links pinned to the tag), the version-lockstep check, and
+  `verify_upgrade.py` all passed.
+- Attempt 1 failed at upload with `403 Invalid API Token: OIDC scoped token is not valid for project
+  'cookieguard'`: the two projects' trusted publishers were not identical, so the token covered only
+  `cookieguard-browser-use`. The upload stopped at the first file and published nothing. After the
+  maintainer made both publishers identical (`publish-cookieguard.yml`, environment `pypi`),
+  attempt 2 uploaded all four files.
+- PyPI files are byte-identical to the verified workflow artifact. Both wheels have PyPI provenance
+  attestations.
+
+| File | SHA-256 |
+| --- | --- |
+| `cookieguard-0.2.0-py3-none-any.whl` | `46906ddcbd3396d272bb7fab564c667faef14a46f848fea4ffd5add3f3b621ed` |
+| `cookieguard-0.2.0.tar.gz` | `3e08609b863a28754130a1a3fe8fabcc1fdfc6f195a78a7417f87b8953052f59` |
+| `cookieguard_browser_use-0.2.0-py3-none-any.whl` | `0e433a555978e77b9b1be2c6c3627215b9230282eb347c4af60e71115ead1fea` |
+| `cookieguard_browser_use-0.2.0.tar.gz` | `b4cf7bad1e937800d9bdde9a09e12e646bd3a89a7f0bc45bca41a8d67e7f71a3` |
+
+- Fresh `pip install cookieguard==0.2.0` from PyPI on macOS arm64: Python 3.11.14 and 3.12.16
+  imported it, verified the engine, and resolved `CookieGuardAudit` from `cookieguard.browser_use`.
+  On 3.12 the real-browser demo returned FAIL (exit 1) for the insecure login and PASS (exit 0) for
+  the secure one. Python 3.13 was covered by CI on the release commit, not by a PyPI install.
+- `verify_upgrade.py` with PyPI packages only: a fresh `cookieguard-browser-use` 0.2.0 install, and
+  upgrades from `cookieguard-browser-use` 0.1.0 and `cookieguard` 0.1.0. Each gave the same objects
+  under both names, no stale 0.1 files, engine verification, a clean `pip check`, and a working
+  `python -m cookieguard_browser_use.demo`.
