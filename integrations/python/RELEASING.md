@@ -8,13 +8,14 @@ and publishes both distributions from this folder, always at the same version:
 | `cookieguard` | The package: core (`cookieguard`) and integrations (`cookieguard.browser_use`) |
 | `cookieguard-browser-use` | Compatibility package in `compat/cookieguard-browser-use`; depends on `cookieguard==<version>` and re-exports it |
 
-## 0.2.0 checklist
+## Checklist (used for 0.2.0, published 2026-11-06)
 
 1. Merge with CI green, including the upgrade-path step on Python 3.12.
 2. On pypi.org, make sure both projects trust the same publisher: owner `aiscihub`,
    repository `cookieguard-ai`, workflow `publish-cookieguard.yml`, environment `pypi`.
-   `cookieguard` already has it from the 0.1.0 alias. Add it under
-   `cookieguard-browser-use` → Settings → Publishing.
+   The entries must be identical, environment included. When they differ, PyPI mints a token
+   for only one project and the upload fails with `OIDC scoped token is not valid for project`,
+   as attempt 1 of the 0.2.0 release did.
 3. Tag `main` with an annotated `cookieguard-v0.2.0` and push the tag. The `pypi`
    environment deploys only `browser-use-v*` and `cookieguard-v*` tags.
 4. Run the workflow from the tag with `target: pypi`. The build job runs
