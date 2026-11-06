@@ -1,6 +1,6 @@
 # CookieGuard CI
 
-[Overview](../README.md) · [Browser Use](../integrations/browser-use/README.md) · [Browser extension](../README.md#browser-extension) · **CI guide**
+[Overview](../README.md) · [Browser Use](../integrations/python/README.md) · [Browser extension](../README.md#browser-extension) · **CI guide**
 
 **Find insecure authentication cookies automatically — in your browser, your Playwright tests, and your CI pipeline.**
 

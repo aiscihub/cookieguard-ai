@@ -26,10 +26,10 @@
       "id": "browser-use",
       "kind": "python-package",
       "registry": "pypi",
-      "package": "cookieguard-browser-use",
-      "version": "0.1.0",
-      "install": "pip install cookieguard-browser-use",
-      "entryPoint": "cookieguard_browser_use.CookieGuardAudit",
+      "package": "cookieguard",
+      "version": "0.2.0",
+      "install": "pip install cookieguard",
+      "entryPoint": "cookieguard.CookieGuardAudit",
       "requires": [
         "Python 3.11-3.13",
         "Node.js 24+",
@@ -40,7 +40,7 @@
         "Linux, Python 3.11-3.13, Chromium 156",
         "macOS, Python 3.12, Chrome 156"
       ],
-      "documentation": "https://github.com/aiscihub/cookieguard-ai/tree/main/integrations/browser-use"
+      "documentation": "https://github.com/aiscihub/cookieguard-ai/tree/main/integrations/python"
     },
     {
       "id": "playwright",

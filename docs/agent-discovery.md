@@ -44,8 +44,8 @@ install and audit rates were limited by the test machine's sandbox and Python ve
 capabilities, audits PASS, FAIL (CG001), and INCOMPLETE endpoints, explains CG001, and
 audits a report written by a separate CLI run.
 
-`integrations/browser-use/scripts/agent_discovery_e2e.py` (run from
-`integrations/browser-use` with its virtualenv) adds a real Browser Use agent and
+`integrations/python/scripts/agent_discovery_e2e.py` (run from
+`integrations/python` with its virtualenv) adds a real Browser Use agent and
 Chromium. It writes sanitized results for an insecure login, a secure login, and a run
 that never signs in. It then uses the *Python* MCP SDK to start the Node server, read its
 capabilities, select the browser-session integration, and audit each file. Output
@@ -99,8 +99,8 @@ is installed, or through a directory that the agent searches.
 | --- | --- | --- |
 | Official MCP Registry | `io.github.aiscihub/cookieguard` 0.2.0 is active and latest (2026-11-06) | Publishing a new version |
 | npm (`cookieguard-ci`, `@aiscihub/cookieguard-core`, `-playwright`, `-mcp`) | 0.2.0 published under `latest` (2026-11-06) | Publishing a new version |
-| PyPI (`cookieguard-browser-use`) | 0.1.0 published; keywords, classifiers, and Documentation/Changelog URLs added on main | Next release |
-| PyPI (`cookieguard`) | 0.1.0 published (2026-11-06); installs `cookieguard-browser-use` | Publishing a new version |
+| PyPI (`cookieguard-browser-use`) | 0.1.0 published; 0.2.0 prepared as the compatibility package for `cookieguard` | Publishing |
+| PyPI (`cookieguard`) | 0.1.0 alias published (2026-11-06); 0.2.0 prepared as the Python package (`cookieguard.browser_use`) | Publishing |
 | Anthropic's Claude Code plugin directory | Not submitted; the marketplace file validates | Submission |
 | Agensi skill marketplace | ZIP built by `npm run package:skill` and checked by a pre-submission scan; not submitted | Submission |
 | OpenAI curated skills (`openai/skills`) | Not submitted | External pull request |

@@ -1,6 +1,0 @@
-# The repository root ignores `_*`; the package needs __init__.py.
-!_*
-dist/
-build/
-__pycache__/
-*.egg-info/

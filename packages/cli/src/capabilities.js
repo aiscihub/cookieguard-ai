@@ -5,7 +5,7 @@ const REPO = 'https://github.com/aiscihub/cookieguard-ai';
 const RAW = 'https://raw.githubusercontent.com/aiscihub/cookieguard-ai/main';
 // Versions that are actually published. Mark an operation "unreleased" while it
 // exists only on the main branch; it then needs a source checkout.
-const PUBLISHED = Object.freeze({ cli: '0.2.0', core: '0.2.0', playwright: '0.2.0', mcp: '0.2.0', browserUse: '0.1.0' });
+const PUBLISHED = Object.freeze({ cli: '0.2.0', core: '0.2.0', playwright: '0.2.0', mcp: '0.2.0', python: '0.2.0' });
 
 /** The stable, versioned description of what CookieGuard can do. Static data only. */
 export function capabilities() {
@@ -26,11 +26,11 @@ export function capabilities() {
       'Reading, exporting, or replaying cookie values or browser profiles.',
     ],
     integrations: [
-      { id: 'browser-use', kind: 'python-package', registry: 'pypi', package: 'cookieguard-browser-use', version: PUBLISHED.browserUse,
-        install: 'pip install cookieguard-browser-use', entryPoint: 'cookieguard_browser_use.CookieGuardAudit',
+      { id: 'browser-use', kind: 'python-package', registry: 'pypi', package: 'cookieguard', version: PUBLISHED.python,
+        install: 'pip install cookieguard', entryPoint: 'cookieguard.CookieGuardAudit',
         requires: ['Python 3.11-3.13', 'Node.js 24+', 'browser-use 0.13.14 (>=0.13.14,<0.14)', 'Chrome or Chromium'],
         tested: ['Linux, Python 3.11-3.13, Chromium 156', 'macOS, Python 3.12, Chrome 156'],
-        documentation: `${REPO}/tree/main/integrations/browser-use` },
+        documentation: `${REPO}/tree/main/integrations/python` },
       { id: 'playwright', kind: 'npm-package', registry: 'npm', package: '@aiscihub/cookieguard-playwright', version: PUBLISHED.playwright,
         install: 'npm install --save-dev @aiscihub/cookieguard-playwright@0.2.0', entryPoint: 'startCookieAudit',
         requires: ['Node.js 24+', '@playwright/test'], tested: ['Linux (CI) and macOS arm64 (local), Node.js 24, Chromium'],

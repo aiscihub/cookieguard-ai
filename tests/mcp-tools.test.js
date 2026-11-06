@@ -70,7 +70,7 @@ test('an MCP client can discover capabilities, audit a URL, and explain a findin
   assert.deepEqual(capabilities.configuration.allowedOrigins, [target]);
   assert.equal(capabilities.configuration.evidenceFiles, false);
   assert.ok(capabilities.checks.some(check => check.ruleId === 'CG001' && check.severity === 'high'));
-  assert.ok(capabilities.integrations.some(i => i.package === 'cookieguard-browser-use'));
+  assert.ok(capabilities.integrations.some(i => i.package === 'cookieguard'));
 
   for (const [path, status, code] of [['secure', 'passed', 0], ['missing-httponly', 'failed', 1], ['preference', 'incomplete', 2]]) {
     const response = await call('cookieguard_audit', { url: `${target}/${path}` });

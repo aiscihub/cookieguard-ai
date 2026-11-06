@@ -138,7 +138,7 @@ in [`schemas/`](https://github.com/aiscihub/cookieguard-ai/tree/main/schemas).
 
 The server never attaches to a browser or reads another process's cookies. To audit a
 login that only a browser can perform, run it in your own test code with the
-[Browser Use integration](https://github.com/aiscihub/cookieguard-ai/tree/main/integrations/browser-use)
+[Browser Use integration](https://github.com/aiscihub/cookieguard-ai/tree/main/integrations/python)
 (`result.write_json(path)`), the Playwright adapter (write `formatJson(await audit.evaluate())`), or
 the CLI (`--output`). Write the
 sanitized report into the configured `evidenceDir`, then call
@@ -148,7 +148,7 @@ value-free observations field by field, and evaluates them under its own startup
 Evidence for origins outside `allowedOrigins` is rejected, provisional or incomplete
 collections stay incomplete, and results carry `provenance.observedByServer: false`,
 because the server cannot verify who wrote the file.
-`integrations/browser-use/scripts/agent_discovery_e2e.py` runs this path end to end with
+`integrations/python/scripts/agent_discovery_e2e.py` runs this path end to end with
 a real Browser Use agent and the Python MCP SDK.
 
 Only `url` is accepted by the scan tool. Policy, headers, credentials, and origin
@@ -182,7 +182,7 @@ authentication-cookie failures. Defaults and rules are described in the
 
 - This is an HTTP GET header audit. It does not log in, execute JavaScript, read
   your browser's cookie store, or attach to another MCP server's browser session.
-  Use the [Browser Use integration](https://github.com/aiscihub/cookieguard-ai/tree/main/integrations/browser-use)
+  Use the [Browser Use integration](https://github.com/aiscihub/cookieguard-ai/tree/main/integrations/python)
   or [Playwright adapter](https://github.com/aiscihub/cookieguard-ai/tree/main/packages/playwright)
   for authenticated browser evidence.
 - GET requests can trigger application side effects. The tool is deliberately

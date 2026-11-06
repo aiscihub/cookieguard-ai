@@ -1,18 +1,19 @@
 # Browser Use integration
 
-`pip install cookieguard-browser-use==0.1.0` (or `pip install cookieguard`, which installs
-it and allows `from cookieguard import CookieGuardAudit`) into a Python 3.11-3.13 virtualenv
+`pip install cookieguard==0.2.0` into a Python 3.11-3.13 virtualenv
 (`python3.12 -m venv .venv` when the default `python3` is older). Tested with browser-use 0.13.14 on
 Linux (Python 3.11-3.13) and macOS (Python 3.12) with Chromium-family browsers.
 Node.js 24+ must be on `PATH` (or set `COOKIEGUARD_NODE`); pip does not install it.
 Windows, Browser Use cloud browsers, and other Browser Use versions are untested.
+Code written for `cookieguard-browser-use` 0.1 (`import cookieguard_browser_use`) keeps
+working: that package now installs `cookieguard` and re-exports it.
 
 ## Complete pattern
 
 ```python
 import asyncio
 from browser_use import Agent, BrowserProfile, BrowserSession, Tools
-from cookieguard_browser_use import CookieGuardAudit, CookiePolicyError
+from cookieguard import CookieGuardAudit, CookiePolicyError
 
 async def login_and_audit(llm) -> int:
     audit = CookieGuardAudit(allowed_origins=['http://127.0.0.1:3000'], auth_cookies=['session_id'])
@@ -72,6 +73,6 @@ store-only check. It cannot satisfy policy; only `audit.finish()` decides.
 
 ## Smoke test without an LLM
 
-`python -m cookieguard_browser_use.demo` runs a real Browser Use Agent with a
+`python -m cookieguard.browser_use.demo` runs a real Browser Use Agent with a
 scripted model against a local demo app: the insecure login FAILs with CG001 and
 the secure login PASSes. Exit code 0 means both matched.
