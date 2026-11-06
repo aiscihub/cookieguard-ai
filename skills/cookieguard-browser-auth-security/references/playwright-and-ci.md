@@ -1,4 +1,51 @@
-# CLI and CI
+# Playwright and CI
+
+## Playwright
+
+`@aiscihub/cookieguard-playwright` 0.2.0 observes `Set-Cookie` responses and the
+browser cookie store of a Playwright `BrowserContext` during your existing login test.
+Verified with Chromium; other browsers are untested.
+
+```js
+// tests/session-cookie.spec.js
+import { test, expect } from '@playwright/test';
+import { startCookieAudit, assertCookiePolicy } from '@aiscihub/cookieguard-playwright';
+
+const ORIGIN = process.env.APP_ORIGIN ?? 'http://127.0.0.1:3000';
+
+test('login sets a protected session cookie', async ({ context, page }) => {
+  const audit = startCookieAudit(context, {
+    origins: [ORIGIN],
+    policy: { authCookies: ['session'], failOn: 'high' },
+  });
+  try {
+    await page.goto(`${ORIGIN}/login`);
+    await page.getByLabel('Username').fill(process.env.TEST_USER ?? 'demo');
+    await page.getByLabel('Password').fill(process.env.TEST_PASSWORD ?? '');
+    await page.getByRole('button', { name: 'Sign in' }).click();
+    await expect(page).toHaveURL(/\/account$/);
+    const report = await audit.evaluate();          // stops collection; call once
+    console.log(report.status, report.findings.map(f => `${f.ruleId}:${f.status}`).join(' '));
+    assertCookiePolicy(report);                     // throws on FAIL or INCOMPLETE
+  } finally {
+    audit.dispose();
+  }
+});
+```
+
+Replace the selectors, the post-login URL, and the cookie name with your application's.
+Read the test password from the environment or your test secret store, never from code.
+
+- `startCookieAudit(context, { origins, policy, timeoutMs, maxObservations })` must run
+  before navigation. It observes only the listed origins and does not restrict the test's
+  own network access.
+- `audit.evaluate(policy?)` returns the report; `audit.dispose()` stops observing.
+- For a page that is already signed in, `auditPage(page, { policy })` audits the cookie
+  store only, so the original SameSite declaration stays unknown (CG009 review item).
+- To keep a sanitized report, install `@aiscihub/cookieguard-core` and write
+  `formatJson(report)` to a file. Never save Playwright storage state as evidence.
+
+## CLI
 
 `cookieguard-ci` 0.2.0 needs only Node.js 24+. It sends one GET (plus same-origin
 redirects), with no cookies or authorization headers, and audits `Set-Cookie`.

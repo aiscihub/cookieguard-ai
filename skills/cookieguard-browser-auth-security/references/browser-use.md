@@ -1,6 +1,7 @@
 # Browser Use integration
 
-`pip install cookieguard-browser-use` (0.1.0) into a Python 3.11-3.13 virtualenv
+`pip install cookieguard-browser-use==0.1.0` (or `pip install cookieguard`, which installs
+it and allows `from cookieguard import CookieGuardAudit`) into a Python 3.11-3.13 virtualenv
 (`python3.12 -m venv .venv` when the default `python3` is older). Tested with browser-use 0.13.14 on
 Linux (Python 3.11-3.13) and macOS (Python 3.12) with Chromium-family browsers.
 Node.js 24+ must be on `PATH` (or set `COOKIEGUARD_NODE`); pip does not install it.

@@ -5,10 +5,10 @@
   "plugins": [
     {
       "name": "cookieguard",
-      "source": "./skills/cookieguard",
+      "source": "./skills/cookieguard-browser-auth-security",
       "description": "Agent Skill: add CookieGuard session-cookie checks (HttpOnly, Secure, SameSite, Domain, lifetime) to Browser Use, Playwright, CI, or MCP workflows for apps you are authorized to test.",
       "author": { "name": "aiscihub", "url": "https://github.com/aiscihub" },
-      "homepage": "https://github.com/aiscihub/cookieguard-ai/tree/main/skills/cookieguard",
+      "homepage": "https://github.com/aiscihub/cookieguard-ai/tree/main/skills/cookieguard-browser-auth-security",
       "repository": "https://github.com/aiscihub/cookieguard-ai",
       "license": "MIT",
       "keywords": ["security", "cookies", "session-cookie", "authentication", "browser-use", "playwright", "ci", "mcp"],

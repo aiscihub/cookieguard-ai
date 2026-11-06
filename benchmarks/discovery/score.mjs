@@ -10,7 +10,7 @@ const here = dirname(fileURLToPath(import.meta.url));
 // Discovery needs an identifier specific to this project. "CookieGuard" alone is a
 // generic coinage that agents guess and other products use, so bare-name mentions
 // are recorded separately and do not count.
-const NAME = /cookieguard[-_]browser[-_]use|cookieguard-ci\b|@aiscihub\/cookieguard|aiscihub\/cookieguard-ai|io\.github\.aiscihub|skills\/cookieguard|"skill":\s*"cookieguard"|Launching skill: cookieguard|mcp__cookieguard__/i;
+const NAME = /cookieguard[-_]browser[-_]use|cookieguard-ci\b|@aiscihub\/cookieguard|aiscihub\/cookieguard-ai|io\.github\.aiscihub|skills\/cookieguard|"skill":\s*"cookieguard[\w-]*"|Launching skill: cookieguard|mcp__cookieguard__/i;
 const BARE_NAME = /cookie[\s_-]?guard/i;
 const CANARY = /BENCH_SECRET_[0-9a-f]{16,}/;
 const INTEGRATIONS = {

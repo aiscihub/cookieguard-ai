@@ -14,10 +14,10 @@ Use it to add a session-cookie check to a Browser Use agent login, a Playwright 
 
 ## For agents
 
-- [Agent Skill (SKILL.md)](https://github.com/aiscihub/cookieguard-ai/blob/main/skills/cookieguard/SKILL.md): when to use CookieGuard, which integration to pick, and how to read results.
+- [Agent Skill (SKILL.md)](https://github.com/aiscihub/cookieguard-ai/blob/main/skills/cookieguard-browser-auth-security/SKILL.md): when to use CookieGuard, which integration to pick, and how to read results.
 - [Capability document (JSON)](https://raw.githubusercontent.com/aiscihub/cookieguard-ai/main/cookieguard.capabilities.json): every check, operation, input, output schema, exit code, privacy property, and limitation.
 - [Output JSON Schemas](https://github.com/aiscihub/cookieguard-ai/tree/main/schemas): report, MCP audit result, explanation, CLI error, and capabilities.
-- [Rules CG001-CG009](https://github.com/aiscihub/cookieguard-ai/blob/main/skills/cookieguard/references/rules.md)
+- [Rules CG001-CG009](https://github.com/aiscihub/cookieguard-ai/blob/main/skills/cookieguard-browser-auth-security/references/security-checks.md)
 
 ## Optional
 

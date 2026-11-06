@@ -149,6 +149,9 @@ jobs:
           PYTHONUNBUFFERED: '1'
         # faulthandler dumps every thread's stack if one test runs longer than 90s.
         run: .venv/bin/python -m pytest -v -p no:cacheprovider -o faulthandler_timeout=90 --maxfail=3 tests/test_browser.py tests/test_agent.py
+      - name: Check the Agent Skill's Python examples against the installed API
+        working-directory: integrations/browser-use
+        run: .venv/bin/python scripts/check_skill_examples.py
       - name: Browser Use evidence through the MCP server (Python MCP SDK client)
         working-directory: integrations/browser-use
         timeout-minutes: 5
