@@ -1,6 +1,17 @@
 # Changelog
 
+## cookieguard 0.1.0 (PyPI alias) — 2026-11-06
+
+- `pip install cookieguard` installs `cookieguard-browser-use` 0.1.x and re-exports its
+  public API, so `from cookieguard import CookieGuardAudit` works. Agents in the discovery
+  benchmark probed this name. Published with Trusted Publishing from tag
+  `cookieguard-v0.1.0`; see [the publication record](integrations/pypi-cookieguard/VALIDATION.md).
+
 ## CookieGuard 0.2.0 — agent discovery — 2026-11-06
+
+Published on npm on 2026-11-06 under `latest`, byte-identical to the tarballs packed from
+`1f0ede1`, and listed in the MCP Registry as `io.github.aiscihub/cookieguard` 0.2.0; see
+[the publication record](packages/mcp/VALIDATION.md#020-publication--2026-11-06).
 
 npm packages `@aiscihub/cookieguard-core`, `cookieguard-ci`,
 `@aiscihub/cookieguard-playwright`, and `@aiscihub/cookieguard-mcp` move to 0.2.0 under

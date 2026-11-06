@@ -246,3 +246,64 @@ Node.js v26.10.0 and npm 11.19.1:
 
 Not yet done: testing in named desktop MCP clients. Only the official MCP SDK client
 has been used.
+
+## 0.2.0 publication — 2026-11-06
+
+The maintainer published the four npm packages from `main` at `1f0ede1` (#32) with
+browser 2FA, in dependency order. Before publishing, `main` CI passed on that commit
+(run 42262646467: toolkit and Browser Use on Python 3.11-3.13). Reference tarballs were
+packed from the same commit with npm 11.19.1.
+
+### npm
+
+| Package | Published shasum | Same as reference |
+| --- | --- | --- |
+| `@aiscihub/cookieguard-core@0.2.0` | `770e1406e16fe12c6f3fbb2e371281fde6e814a6` | yes |
+| `cookieguard-ci@0.2.0` | `a19d4ead7956e417d92c494d8421121dc256f034` | yes |
+| `@aiscihub/cookieguard-playwright@0.2.0` | `c217dec423d1dbdfa9e16275e0981ff87a5ebf76` | yes |
+| `@aiscihub/cookieguard-mcp@0.2.0` | `f2cfa402b99a567c9e2866e9191b1a2630740c03` | yes |
+
+`latest` points to 0.2.0 for all four; `beta` is unchanged (0.1.0, and 0.1.0-beta.1
+for MCP). npm normalized `repository.url` to `git+https://…` during publish; the
+manifests now use that form.
+
+A fresh install of `cookieguard-ci`, `@aiscihub/cookieguard-mcp`, and
+`@aiscihub/cookieguard-playwright` at 0.2.0 in an empty directory:
+
+- `npm install`: 0 vulnerabilities. `npm audit signatures`: 7 packages have verified
+  registry signatures. (The 3 attestations are third-party dependencies; these packages
+  were published locally without provenance.)
+- `cookieguard-ci --version` and `cookieguard-mcp --version`: `0.2.0`.
+  `capabilities --json`: schemaVersion 1, tool 0.2.0, 9 checks, every operation released.
+  `explain CG001`: `CG001 — Missing HttpOnly (high)`.
+- Installed CLI against the local demo fixture: `secure` exit 0 (`passed`),
+  `missing-httponly` exit 1 (`failed`), `preference` exit 2 (`incomplete`), all with
+  `toolVersion` 0.2.0. The cookie-value sentinel appeared in no report.
+- `runMcpDemo` against the npm-installed `cookieguard-mcp` binary:
+
+```text
+MCP tools: cookieguard_audit, cookieguard_capabilities, cookieguard_explain, cookieguard_policy, cookieguard_scan
+Capabilities: 9 checks; allowed origins: 1; evidence files: enabled
+secure: PASSED (exitCode 0)
+missing-httponly: FAILED (exitCode 1) — CG001 Missing HttpOnly
+preference: INCOMPLETE (exitCode 2) — expected-auth-cookie-not-observed
+Explain CG001: Set HttpOnly on the authentication cookie at the server.
+Evidence login-report.json: FAILED (exitCode 1); observed by server: no
+MCP demo passed; cookie-value canary absent from results and diagnostics.
+```
+
+### MCP Registry
+
+The maintainer published `server.json` from the npm 0.2.0 tarball (identical to
+`packages/mcp/server.json`; `mcp-publisher validate` passed) with `mcp-publisher` 1.8.7
+after GitHub login. The registry then returned:
+
+| Field | Value |
+| --- | --- |
+| Name | `io.github.aiscihub/cookieguard` |
+| Version | `0.2.0`, status `active`, `isLatest: true`, published 2026-11-06T18:07:18Z |
+| Package | npm `@aiscihub/cookieguard-mcp@0.2.0`, stdio transport, required `--config` argument |
+| Previous version | `0.1.0` remains `active`, no longer latest |
+
+The first `publish` attempt ran in a directory without `server.json` and stopped with
+`server.json not found`; nothing was submitted.

@@ -16,5 +16,5 @@
   "files": ["src", "vendor", "LICENSE", "README.md"],
   "peerDependencies": { "onnxruntime-node": "1.30.0" },
   "peerDependenciesMeta": { "onnxruntime-node": { "optional": true } },
-  "repository": { "type": "git", "url": "https://github.com/aiscihub/cookieguard-ai.git", "directory": "packages/core" }
+  "repository": { "type": "git", "url": "git+https://github.com/aiscihub/cookieguard-ai.git", "directory": "packages/core" }
 }

@@ -14,5 +14,5 @@
   "dependencies": { "@aiscihub/cookieguard-core": "0.2.0" },
   "peerDependencies": { "playwright-core": ">=1.51.0 <2" },
   "peerDependenciesMeta": { "playwright-core": { "optional": true } },
-  "repository": { "type": "git", "url": "https://github.com/aiscihub/cookieguard-ai.git", "directory": "packages/playwright" }
+  "repository": { "type": "git", "url": "git+https://github.com/aiscihub/cookieguard-ai.git", "directory": "packages/playwright" }
 }
