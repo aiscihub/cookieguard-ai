@@ -1,13 +1,13 @@
 {
   "name": "@aiscihub/cookieguard-core",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Local, evidence-aware authentication-cookie policy engine: HttpOnly, Secure, SameSite, Domain, lifetime, and prefix checks without cookie values",
   "keywords": ["cookie", "session-cookie", "authentication", "security", "httponly", "samesite", "set-cookie", "policy", "audit"],
   "homepage": "https://github.com/aiscihub/cookieguard-ai/tree/main/packages/core",
   "bugs": "https://github.com/aiscihub/cookieguard-ai/issues",
   "type": "module",
   "license": "MIT",
-  "publishConfig": { "access": "public", "tag": "beta", "registry": "https://registry.npmjs.org" },
+  "publishConfig": { "access": "public", "registry": "https://registry.npmjs.org" },
   "engines": { "node": ">=24" },
   "exports": {
     ".": { "types": "./src/index.d.ts", "import": "./src/index.js" },

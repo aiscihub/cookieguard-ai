@@ -1,6 +1,6 @@
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { assertNoSentinels } from './lib/leakage.js';
 
 const exec = promisify(execFile);
@@ -30,7 +30,7 @@ try {
     results.push({ name, exitCode: result.code });
     if (result.code !== 0) throw new Error('A release check failed. Inspect its sanitized log.');
   }
-  await writeFile('artifacts/release/results.json', JSON.stringify({ version: '0.1.0', channel: 'public-beta', results }, null, 2) + '\n');
+  await writeFile('artifacts/release/results.json', JSON.stringify({ version: JSON.parse(await readFile('packages/cli/package.json', 'utf8')).version, results }, null, 2) + '\n');
   process.stdout.write('All local public-beta release gates passed. Hosted Action checks must also pass before merge.\n');
 } catch {
   process.stderr.write('Release gate failed. Unsafe output, if any, was withheld.\n');

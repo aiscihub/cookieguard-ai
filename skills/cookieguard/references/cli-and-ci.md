@@ -1,12 +1,12 @@
 # CLI and CI
 
-`cookieguard-ci` 0.1.0 needs only Node.js 24+. It sends one GET (plus same-origin
+`cookieguard-ci` 0.2.0 needs only Node.js 24+. It sends one GET (plus same-origin
 redirects), with no cookies or authorization headers, and audits `Set-Cookie`.
 It cannot log in or run JavaScript.
 
 ```bash
-npx --yes cookieguard-ci@0.1.0 scan http://127.0.0.1:3000/ --auth-cookie session_id
-npx --yes cookieguard-ci@0.1.0 scan http://127.0.0.1:3000/ --auth-cookie session_id --format json --output cookieguard.json
+npx --yes cookieguard-ci@0.2.0 scan http://127.0.0.1:3000/ --auth-cookie session_id
+npx --yes cookieguard-ci@0.2.0 scan http://127.0.0.1:3000/ --auth-cookie session_id --format json --output cookieguard.json
 ```
 
 | Option | Effect |
@@ -18,7 +18,8 @@ npx --yes cookieguard-ci@0.1.0 scan http://127.0.0.1:3000/ --auth-cookie session
 | `--allow-origin ORIGIN` | Authorize a nonlocal origin you control. Loopback needs none. |
 | `--require-explicit-samesite`, `--require-host-only`, `--max-lifetime-days N`, `--allowed-samesite lax,strict` | Stricter policy. |
 | `--baseline FILE` | Compare with an earlier JSON report; removed protections become CG007. |
-| `--input FILE` | Audit a JSON cookie array instead of scanning. |
+| `--input FILE` | Audit a JSON cookie array, or re-evaluate a sanitized CookieGuard or Browser Use JSON report under this policy. |
+| `--json` | Same as `--format json`; errors are JSON on stdout too. |
 
 Exit codes: `0` PASS, `1` FAIL, `2` INCOMPLETE or error. Treat any nonzero exit
 as a failed gate; never retry with a looser policy to get 0.
@@ -28,7 +29,7 @@ as a failed gate; never retry with a looser policy to get 0.
 Start the application, wait until it answers, then run the CLI and keep its exit code:
 
 ```bash
-npx --yes cookieguard-ci@0.1.0 scan "$APP_URL" --auth-cookie session_id --format json --output cookieguard.json
+npx --yes cookieguard-ci@0.2.0 scan "$APP_URL" --auth-cookie session_id --format json --output cookieguard.json
 ```
 
 ## GitHub Actions
@@ -48,9 +49,9 @@ steps:
 The Action writes a Step Summary and a sanitized JSON artifact, then exits with
 the audit's code. Do not pass credentials or tokens as inputs.
 
-## Main branch only (not in 0.1.0 yet)
+## Machine-readable help
 
-`cookieguard-ci capabilities --json`, `cookieguard-ci explain CG001 --json`,
-`--json` as a shortcut, JSON errors on stdout, and `--input` with a sanitized
-CookieGuard or Browser Use JSON report. These need a source checkout until the
-next release.
+`npx --yes cookieguard-ci@0.2.0 capabilities --json` prints every check, operation,
+output schema, exit code, and limitation. `npx --yes cookieguard-ci@0.2.0 explain CG001 --json`
+explains a rule ID, incomplete reason (such as `expected-auth-cookie-not-observed`),
+error code, or status.

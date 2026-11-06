@@ -3,9 +3,9 @@ import manifest from '../package.json' with { type: 'json' };
 
 const REPO = 'https://github.com/aiscihub/cookieguard-ai';
 const RAW = 'https://raw.githubusercontent.com/aiscihub/cookieguard-ai/main';
-// Versions that are actually published. Operations marked "unreleased" exist on
-// the main branch only and need a source checkout until the next release.
-const PUBLISHED = Object.freeze({ cli: '0.1.0', core: '0.1.0', playwright: '0.1.0', mcp: '0.1.0', browserUse: '0.1.0' });
+// Versions that are actually published. Mark an operation "unreleased" while it
+// exists only on the main branch; it then needs a source checkout.
+const PUBLISHED = Object.freeze({ cli: '0.2.0', core: '0.2.0', playwright: '0.2.0', mcp: '0.2.0', browserUse: '0.1.0' });
 
 /** The stable, versioned description of what CookieGuard can do. Static data only. */
 export function capabilities() {
@@ -32,11 +32,11 @@ export function capabilities() {
         tested: ['Linux, Python 3.11-3.13, Chromium 156', 'macOS, Python 3.12, Chrome 156'],
         documentation: `${REPO}/tree/main/integrations/browser-use` },
       { id: 'playwright', kind: 'npm-package', registry: 'npm', package: '@aiscihub/cookieguard-playwright', version: PUBLISHED.playwright,
-        install: 'npm install --save-dev @aiscihub/cookieguard-playwright@0.1.0', entryPoint: 'startCookieAudit',
+        install: 'npm install --save-dev @aiscihub/cookieguard-playwright@0.2.0', entryPoint: 'startCookieAudit',
         requires: ['Node.js 24+', '@playwright/test'], tested: ['Linux (CI) and macOS arm64 (local), Node.js 24, Chromium'],
         documentation: `${REPO}/blob/main/docs/CI_GUIDE.md#quick-start-playwright` },
       { id: 'cli', kind: 'npm-package', registry: 'npm', package: 'cookieguard-ci', version: PUBLISHED.cli,
-        install: 'npx --yes cookieguard-ci@0.1.0 scan http://127.0.0.1:3000/ --auth-cookie session_id --format json',
+        install: 'npx --yes cookieguard-ci@0.2.0 scan http://127.0.0.1:3000/ --auth-cookie session_id --format json',
         entryPoint: 'cookieguard-ci', requires: ['Node.js 24+'], tested: ['Linux (CI) and macOS arm64 (local), Node.js 24'],
         documentation: `${REPO}/blob/main/docs/CI_GUIDE.md#quick-start-cli` },
       { id: 'github-action', kind: 'github-action', package: 'aiscihub/cookieguard-ai/action', version: 'ci-v0.1.0',
@@ -45,11 +45,11 @@ export function capabilities() {
         tested: ['ubuntu-latest'], documentation: `${REPO}/blob/main/docs/CI_GUIDE.md#quick-start-github-actions` },
       { id: 'mcp', kind: 'mcp-server', registry: 'npm', package: '@aiscihub/cookieguard-mcp', version: PUBLISHED.mcp,
         mcpRegistryName: 'io.github.aiscihub/cookieguard', transport: 'stdio',
-        install: 'npx --yes @aiscihub/cookieguard-mcp@0.1.0 --config /absolute/path/cookieguard.json',
+        install: 'npx --yes @aiscihub/cookieguard-mcp@0.2.0 --config /absolute/path/cookieguard.json',
         entryPoint: 'cookieguard-mcp', requires: ['Node.js 24+', 'A startup JSON configuration with allowedOrigins'],
         tested: ['Official MCP SDK client on Linux (Node.js 24) and macOS (Node.js 26)'],
         documentation: `${REPO}/tree/main/packages/mcp` },
-      { id: 'agent-skill', kind: 'agent-skill', package: 'skills/cookieguard', version: 'unreleased',
+      { id: 'agent-skill', kind: 'agent-skill', package: 'skills/cookieguard', version: 'main',
         install: 'Copy skills/cookieguard into your agent skills directory, or add the repository as a Claude Code plugin marketplace.',
         entryPoint: 'skills/cookieguard/SKILL.md', requires: ['An agent that supports Agent Skills (SKILL.md)'],
         tested: ['Claude Code 2.1'], documentation: `${REPO}/tree/main/skills/cookieguard` },
@@ -65,7 +65,7 @@ export function capabilities() {
         inputs: ['URL on loopback or an explicitly allowed origin, without credentials, query, or fragment'],
         permissions: ['Loopback by default; nonlocal origins need --allow-origin; the MCP server needs an exact startup allowlist'],
         evidence: ['server-declaration'], network: 'GET without cookies or authorization headers; bodies are discarded.' },
-      { id: 'audit-evidence-file', availability: 'unreleased', surfaces: ['cli', 'mcp'],
+      { id: 'audit-evidence-file', availability: 'released', surfaces: ['cli', 'mcp'],
         description: 'Re-evaluate a sanitized CookieGuard JSON report or Browser Use result under the current policy.',
         inputs: ['cookieguard-ci scan --input FILE', 'MCP cookieguard_audit {"evidenceFile": "name.json"} inside the configured evidenceDir'],
         permissions: ['Local file read only; the MCP server reads only plain .json names inside its startup evidenceDir'],
@@ -74,11 +74,11 @@ export function capabilities() {
         description: 'Optional read-only cookieguard_audit action an agent can call mid-run. Provisional; it cannot satisfy policy.',
         inputs: ['None from the agent'], permissions: ['Registered by developer code with audit.register_tools(tools)'],
         evidence: ['browser-observation'], network: 'None.' },
-      { id: 'explain', availability: 'unreleased', surfaces: ['cli', 'mcp'],
+      { id: 'explain', availability: 'released', surfaces: ['cli', 'mcp'],
         description: 'Explain a rule ID, incomplete reason, error code, or status without any cookie data.',
         inputs: ['cookieguard-ci explain CG001 --json', 'MCP cookieguard_explain {"id": "CG001"}'], permissions: [],
         evidence: [], network: 'None.' },
-      { id: 'capabilities', availability: 'unreleased', surfaces: ['cli', 'mcp'],
+      { id: 'capabilities', availability: 'released', surfaces: ['cli', 'mcp'],
         description: 'Return this document.', inputs: ['cookieguard-ci capabilities --json', 'MCP cookieguard_capabilities {}'],
         permissions: [], evidence: [], network: 'None.' },
     ],

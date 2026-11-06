@@ -6,8 +6,9 @@ import { AuditError, safeError, normalizeCookies, normalizeLegacyResults, evalua
   validatePolicy, formatText, formatJson, exitCode, explain, isEvidenceReport, readEvidence } from '@aiscihub/cookieguard-core';
 import { scanUrl } from './scan.js';
 import { capabilities } from './capabilities.js';
+import manifest from '../package.json' with { type: 'json' };
 
-const HELP = `CookieGuard CI — Authentication Cookie Audit (0.1.0)
+const HELP = `CookieGuard CI — Authentication Cookie Audit (${manifest.version})
 Usage:
   cookieguard-ci scan URL [options]
   cookieguard-ci scan --input FILE [options]
@@ -108,7 +109,7 @@ export async function runCli(args, io = { stdout: process.stdout, stderr: proces
       'require-explicit-samesite': { type: 'boolean' }, 'require-host-only': { type: 'boolean' },
     } });
     if (values.help) { io.stdout.write(HELP); return 0; }
-    if (values.version) { io.stdout.write('0.1.0\n'); return 0; }
+    if (values.version) { io.stdout.write(`${manifest.version}\n`); return 0; }
     if (values.json && values.format && values.format !== 'json') throw new AuditError('CONFIG');
     const format = values.json ? 'json' : values.format ?? 'text';
     if (!['json', 'text'].includes(format)) throw new AuditError('CONFIG');

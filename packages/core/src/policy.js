@@ -1,5 +1,6 @@
 import { AuditError, levels, limitArray, originOf, sameSites, textField } from './safety.js';
 import { cleanObservation } from './normalize.js';
+import manifest from '../package.json' with { type: 'json' };
 
 export const RULES = Object.freeze({
   CG001: { title: 'Missing HttpOnly', severity: 'high', why: 'If accepted, a cookie without HttpOnly can be read by JavaScript. This increases token exposure if script execution is compromised; it does not demonstrate XSS.', fix: 'Set HttpOnly on the authentication cookie at the server.' },
@@ -146,7 +147,7 @@ export function evaluateCookiePolicy(observations, policyInput = {}, options = {
   const failed = uniqueFindings.filter(f => f.status === 'confirmed' && levels[f.severity] >= levels[policy.failOn]).length;
   const uniqueEntries = [...new Map(entries.filter(e => !e.observation.deleted).map(e => [cookieKey(e.observation), e])).values()];
   const status = issues.length ? 'incomplete' : failed ? 'failed' : 'passed';
-  const report = { schemaVersion: 1, toolVersion: '0.1.0', mode, target, status,
+  const report = { schemaVersion: 1, toolVersion: manifest.version, mode, target, status,
     classificationModes: [...new Set(cookies.map(cookie => cookie.triage.mode))].sort(),
     policy, summary: { cookies: uniqueEntries.length, observations: cookies.length,
       confirmedAuth: uniqueEntries.filter(e => e.identity.status === 'confirmed').length,

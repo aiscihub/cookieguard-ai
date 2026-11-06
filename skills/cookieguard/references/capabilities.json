@@ -4,7 +4,7 @@
   "tool": {
     "id": "cookieguard",
     "name": "CookieGuard",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "license": "MIT",
     "repository": "https://github.com/aiscihub/cookieguard-ai",
     "documentation": "https://github.com/aiscihub/cookieguard-ai#readme",
@@ -47,8 +47,8 @@
       "kind": "npm-package",
       "registry": "npm",
       "package": "@aiscihub/cookieguard-playwright",
-      "version": "0.1.0",
-      "install": "npm install --save-dev @aiscihub/cookieguard-playwright@0.1.0",
+      "version": "0.2.0",
+      "install": "npm install --save-dev @aiscihub/cookieguard-playwright@0.2.0",
       "entryPoint": "startCookieAudit",
       "requires": [
         "Node.js 24+",
@@ -64,8 +64,8 @@
       "kind": "npm-package",
       "registry": "npm",
       "package": "cookieguard-ci",
-      "version": "0.1.0",
-      "install": "npx --yes cookieguard-ci@0.1.0 scan http://127.0.0.1:3000/ --auth-cookie session_id --format json",
+      "version": "0.2.0",
+      "install": "npx --yes cookieguard-ci@0.2.0 scan http://127.0.0.1:3000/ --auth-cookie session_id --format json",
       "entryPoint": "cookieguard-ci",
       "requires": [
         "Node.js 24+"
@@ -95,10 +95,10 @@
       "kind": "mcp-server",
       "registry": "npm",
       "package": "@aiscihub/cookieguard-mcp",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "mcpRegistryName": "io.github.aiscihub/cookieguard",
       "transport": "stdio",
-      "install": "npx --yes @aiscihub/cookieguard-mcp@0.1.0 --config /absolute/path/cookieguard.json",
+      "install": "npx --yes @aiscihub/cookieguard-mcp@0.2.0 --config /absolute/path/cookieguard.json",
       "entryPoint": "cookieguard-mcp",
       "requires": [
         "Node.js 24+",
@@ -113,7 +113,7 @@
       "id": "agent-skill",
       "kind": "agent-skill",
       "package": "skills/cookieguard",
-      "version": "unreleased",
+      "version": "main",
       "install": "Copy skills/cookieguard into your agent skills directory, or add the repository as a Claude Code plugin marketplace.",
       "entryPoint": "skills/cookieguard/SKILL.md",
       "requires": [
@@ -170,7 +170,7 @@
     },
     {
       "id": "audit-evidence-file",
-      "availability": "unreleased",
+      "availability": "released",
       "surfaces": [
         "cli",
         "mcp"
@@ -208,7 +208,7 @@
     },
     {
       "id": "explain",
-      "availability": "unreleased",
+      "availability": "released",
       "surfaces": [
         "cli",
         "mcp"
@@ -224,7 +224,7 @@
     },
     {
       "id": "capabilities",
-      "availability": "unreleased",
+      "availability": "released",
       "surfaces": [
         "cli",
         "mcp"

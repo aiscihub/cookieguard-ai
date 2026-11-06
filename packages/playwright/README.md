@@ -1,10 +1,10 @@
 # @aiscihub/cookieguard-playwright
 
-Passive cookie auditing for an existing Playwright BrowserContext. Version 0.1.0
-is a public beta. In an existing Playwright project, install:
+Passive cookie auditing for an existing Playwright BrowserContext. Version 0.2.0
+uses `@aiscihub/cookieguard-core` 0.2.0. In an existing Playwright project, install:
 
 ```bash
-npm install --save-dev @aiscihub/cookieguard-playwright@0.1.0
+npm install --save-dev @aiscihub/cookieguard-playwright@0.2.0
 ```
 
 See the runnable [Playwright example](https://github.com/aiscihub/cookieguard-ai/tree/main/examples/playwright).

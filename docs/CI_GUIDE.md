@@ -59,7 +59,8 @@ from this repository, using the same security engine. Published npm packages:
 [`cookieguard-ci`](https://www.npmjs.com/package/cookieguard-ci),
 [`@aiscihub/cookieguard-core`](https://www.npmjs.com/package/@aiscihub/cookieguard-core),
 and [`@aiscihub/cookieguard-playwright`](https://www.npmjs.com/package/@aiscihub/cookieguard-playwright).
-All three are version `0.1.0`, available through the `beta` dist-tag, and published
+All three are version `0.2.0` under the default `latest` dist-tag (0.1.0 was the
+public beta), published
 by [`aiscihub`](https://www.npmjs.com/~aiscihub). Package names, versions, and
 maintainer ownership have been checked against the public npm registry.
 
@@ -89,10 +90,10 @@ Requirements: **Node 24 or newer** and npm. Against your running local test
 application, using its authentication-cookie name:
 
 ```bash
-npx cookieguard-ci@beta scan http://localhost:3000 --auth-cookie session_id
+npx cookieguard-ci@0.2.0 scan http://localhost:3000 --auth-cookie session_id
 ```
 
-Use `cookieguard-ci@0.1.0` to pin this release. The CLI itself needs no browser,
+The version pin keeps CI reproducible. The CLI itself needs no browser,
 Python, or native model runtime. If the endpoint sets the cookie only after login,
 use the Playwright integration below.
 
@@ -171,7 +172,7 @@ printed. No public website is visited by the demo or tests.
 In an existing Playwright project using Node 24 or newer:
 
 ```bash
-npm install --save-dev @aiscihub/cookieguard-playwright@0.1.0
+npm install --save-dev @aiscihub/cookieguard-playwright@0.2.0
 ```
 
 To run this repository's demo tests from a full contributor installation:

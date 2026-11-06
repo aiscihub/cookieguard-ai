@@ -1,17 +1,17 @@
 {
   "name": "cookieguard-ci",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Catch insecure authentication-cookie configurations before production: CLI with JSON output and 0/1/2 exit codes for CI",
   "keywords": ["cookie", "session-cookie", "authentication", "security", "ci", "cli", "httponly", "samesite", "set-cookie", "security-testing", "github-actions"],
   "homepage": "https://github.com/aiscihub/cookieguard-ai/blob/main/docs/CI_GUIDE.md#quick-start-cli",
   "bugs": "https://github.com/aiscihub/cookieguard-ai/issues",
   "type": "module",
   "license": "MIT",
-  "publishConfig": { "access": "public", "tag": "beta", "registry": "https://registry.npmjs.org" },
+  "publishConfig": { "access": "public", "registry": "https://registry.npmjs.org" },
   "engines": { "node": ">=24" },
   "bin": { "cookieguard-ci": "bin/cookieguard-ci.js" },
   "exports": { ".": { "types": "./src/index.d.ts", "import": "./src/index.js" } },
   "files": ["bin", "src", "LICENSE", "README.md"],
-  "dependencies": { "@aiscihub/cookieguard-core": "0.1.0" },
+  "dependencies": { "@aiscihub/cookieguard-core": "0.2.0" },
   "repository": { "type": "git", "url": "https://github.com/aiscihub/cookieguard-ai.git", "directory": "packages/cli" }
 }

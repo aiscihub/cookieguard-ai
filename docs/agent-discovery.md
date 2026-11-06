@@ -1,21 +1,21 @@
 # Agent discovery
 
 How AI coding agents, MCP clients, and CI systems can find CookieGuard, decide whether it
-fits a task, and invoke it. Items marked **main** are in this repository but not in a
-published package yet.
+fits a task, and invoke it. Version 0.2.0 of the npm packages publishes the CLI and MCP
+interfaces below; the files are served from this repository.
 
 ## Machine-readable interfaces
 
 | Interface | Where | Status |
 | --- | --- | --- |
-| Capability document | [`cookieguard.capabilities.json`](../cookieguard.capabilities.json); `cookieguard-ci capabilities --json` | file: main; CLI: main |
-| Rule, issue, error, and status explanations | `cookieguard-ci explain ID [--json]`; MCP `cookieguard_explain` | main |
-| JSON Schemas for every output | [`schemas/`](../schemas) (generated from the zod schemas the MCP server enforces) | main |
-| JSON errors | `cookieguard-ci ... --json` prints `{status: "incomplete", exitCode: 2, error}` on stdout | main |
-| MCP tools | `cookieguard_capabilities`, `cookieguard_audit` (`url` or `evidenceFile`), `cookieguard_explain`; 0.1.0 tools kept | main |
-| Agent Skill | [`skills/cookieguard`](../skills/cookieguard) (Agent Skills `SKILL.md`) | main |
-| Claude Code plugin marketplace | [`.claude-plugin/marketplace.json`](../.claude-plugin/marketplace.json) | main |
-| `llms.txt` | [`llms.txt`](../llms.txt), served at `https://aiscihub.github.io/cookieguard-ai/llms.txt` after merge | main |
+| Capability document | [`cookieguard.capabilities.json`](../cookieguard.capabilities.json); `cookieguard-ci capabilities --json` | file: repository; CLI: 0.2.0 |
+| Rule, issue, error, and status explanations | `cookieguard-ci explain ID [--json]`; MCP `cookieguard_explain` | 0.2.0 |
+| JSON Schemas for every output | [`schemas/`](../schemas) (generated from the zod schemas the MCP server enforces) | repository |
+| JSON errors | `cookieguard-ci ... --json` prints `{status: "incomplete", exitCode: 2, error}` on stdout | 0.2.0 |
+| MCP tools | `cookieguard_capabilities`, `cookieguard_audit` (`url` or `evidenceFile`), `cookieguard_explain`; 0.1.0 tools kept | 0.2.0 |
+| Agent Skill | [`skills/cookieguard`](../skills/cookieguard) (Agent Skills `SKILL.md`) | repository |
+| Claude Code plugin marketplace | [`.claude-plugin/marketplace.json`](../.claude-plugin/marketplace.json) | repository |
+| `llms.txt` | [`llms.txt`](../llms.txt), served at `https://aiscihub.github.io/cookieguard-ai/llms.txt` | live |
 
 `npm run build:schemas` regenerates the schemas, the capability document, and the skill's
 `rules.md` and `capabilities.json`; tests fail when any of them is stale.
@@ -91,9 +91,10 @@ is installed, or through a directory that the agent searches.
 
 | Channel | State | Needs approval to change |
 | --- | --- | --- |
-| Official MCP Registry | `io.github.aiscihub/cookieguard` 0.1.0 is active | Publishing a new version |
-| npm (`cookieguard-ci`, `@aiscihub/cookieguard-core`, `-playwright`, `-mcp`) | 0.1.0 published; keywords, homepage, and issue links added on main | Next publish |
+| Official MCP Registry | `io.github.aiscihub/cookieguard` 0.1.0 is active; 0.2.0 metadata prepared in `packages/mcp/server.json` | Publishing a new version |
+| npm (`cookieguard-ci`, `@aiscihub/cookieguard-core`, `-playwright`, `-mcp`) | 0.1.0 published; 0.2.0 prepared with keywords, homepage, and issue links | Publishing |
 | PyPI (`cookieguard-browser-use`) | 0.1.0 published; keywords, classifiers, and Documentation/Changelog URLs added on main | Next release |
+| PyPI (`cookieguard`) | Alias that installs `cookieguard-browser-use`; publish workflow ready | Publishing |
 | Anthropic's Claude Code plugin directory | Not submitted; the marketplace file validates | Submission |
 | OpenAI curated skills (`openai/skills`) | Not submitted | External pull request |
 | skills.sh / `npx skills` and other skill indexes | Not submitted or tested | Submission |
@@ -101,21 +102,17 @@ is installed, or through a directory that the agent searches.
 
 ## Recommended next steps (each needs approval)
 
-1. Release core, CLI, and MCP together so the tools on main are installable, then
-   republish the MCP Registry entry.
-2. Submit the plugin to Anthropic's directory, the skill to `openai/skills`, and the
+1. Submit the plugin to Anthropic's directory, the skill to `openai/skills`, and the
    server to MCP directories that agents' searches surfaced, such as Glama.
-3. Consider a PyPI `cookieguard` package that installs `cookieguard-browser-use`, since
-   agents probe that name. npm `cookieguard` is taken by an unrelated project.
-4. Add GitHub topics for Agent Skills, MCP, and Claude Code plugins.
-5. Re-run BU1-BU4 and AG1-AG4 in condition C with the fixed harness. The skill now tells
+2. Add GitHub topics for Agent Skills, MCP, and Claude Code plugins.
+3. Re-run BU1-BU4 and AG1-AG4 in condition C with the fixed harness. The skill now tells
    agents to use Python 3.11+; in the partial re-run all 4 agents did, but pip could not
    reach PyPI from the sandbox.
 
-## Next release
+## Releasing
 
-The MCP server on main uses new exports from `@aiscihub/cookieguard-core` and
-`cookieguard-ci`, and depends on exact versions. Release them together (core, then CLI,
-then MCP), update `packages/mcp/server.json`, set each operation's `availability` to
-`released` in `packages/cli/src/capabilities.js`, run `npm run build:schemas`, and
-republish the MCP Registry entry. Every step requires maintainer approval.
+Core, CLI, Playwright, and MCP share one version and exact internal dependencies: publish
+core first, then CLI and Playwright, then MCP, then the MCP Registry entry from
+`packages/mcp/server.json`. Mark any future main-only operation `unreleased` in
+`packages/cli/src/capabilities.js` until it ships, and run `npm run build:schemas`.
+Browser Use keeps vendoring the published engine it pins (`vendor_engine.mjs --published`).

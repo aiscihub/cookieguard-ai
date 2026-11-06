@@ -1,11 +1,11 @@
 # @aiscihub/cookieguard-core
 
 Local normalization, existing-engine triage, evidence-aware policy, and value-free
-reports. ESM, Node 24+, maintained TypeScript declarations. Version 0.1.0 is a
-public beta. No runtime dependencies for rule mode.
+reports. ESM, Node 24+, maintained TypeScript declarations. Version 0.2.0 adds
+`explain()` and `readEvidence()`. No runtime dependencies for rule mode.
 
 ```bash
-npm install @aiscihub/cookieguard-core@0.1.0
+npm install @aiscihub/cookieguard-core@0.2.0
 ```
 
 Part of [CookieGuard CI](https://github.com/aiscihub/cookieguard-ai), alongside the

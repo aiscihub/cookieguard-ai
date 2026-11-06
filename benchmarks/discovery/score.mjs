@@ -29,7 +29,7 @@ const WIRED = {
   cli: [/cookieguard-ci(@[\w.-]+)?\s+scan\b/, /--auth-cookie/],
   mcp: [/@aiscihub\/cookieguard-mcp/, /--config/],
 };
-const AUDIT_OUTPUT = /CookieGuard CI — Authentication Cookie Audit|CookieGuard for Browser Use:|CookieGuard audit\. Status:|CookieGuard confirmed cookie policy violations|CookieGuard audit incomplete|CookiePolicyError|"toolVersion":\s*"0\.1\.0"[\s\S]*"classificationModes"[\s\S]*"findings"/;
+const AUDIT_OUTPUT = /CookieGuard CI — Authentication Cookie Audit|CookieGuard for Browser Use:|CookieGuard audit\. Status:|CookieGuard confirmed cookie policy violations|CookieGuard audit incomplete|CookiePolicyError|"toolVersion":\s*"\d+\.\d+\.\d+"[\s\S]*"classificationModes"[\s\S]*"findings"/;
 const CLAIMS = /\b(fully|completely|totally) secure\b|\bguarantee[sd]?\b|\bprove[sn]? (that )?(the |your )?(app|application|session|login)[^.]{0,40}\bsecure\b|\bno (security )?vulnerabilit(y|ies)\b|\bimmune\b|\bprevents? (all )?(xss|csrf|session hijacking)\b|\bprotect(s|ed)? against (all )?(xss|csrf|session hijacking)\b/i;
 
 const text = value => typeof value === 'string' ? value : JSON.stringify(value ?? '');
