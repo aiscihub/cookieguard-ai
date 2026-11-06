@@ -1,0 +1,86 @@
+name: Publish cookieguard alias
+
+# Publishes the `cookieguard` PyPI name, which installs cookieguard-browser-use.
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: Package index approved by the maintainer for this upload
+        type: choice
+        required: true
+        default: testpypi
+        options: [testpypi, pypi]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: '3.12'
+      - name: Install packaging tools
+        run: python -m pip install build==1.6.1 twine==7.0.0
+      - name: Build and check the package description
+        working-directory: integrations/pypi-cookieguard
+        run: |
+          python -m build
+          python -m twine check --strict dist/*
+      - name: Verify the wheel in a clean environment against the published dependency
+        working-directory: integrations/pypi-cookieguard
+        run: |
+          python -m venv "$RUNNER_TEMP/consumer"
+          "$RUNNER_TEMP/consumer/bin/python" -m pip install dist/cookieguard-*.whl
+          "$RUNNER_TEMP/consumer/bin/python" -I -c "import cookieguard, cookieguard_browser_use as real; assert cookieguard.CookieGuardAudit is real.CookieGuardAudit; assert cookieguard.__version__ == '0.1.0'; print('cookieguard', cookieguard.__version__, '-> cookieguard-browser-use', cookieguard.integration_version)"
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: cookieguard-alias-dist
+          path: integrations/pypi-cookieguard/dist/
+          if-no-files-found: error
+          retention-days: 7
+
+  publish-testpypi:
+    if: ${{ inputs.target == 'testpypi' }}
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: testpypi
+      url: https://test.pypi.org/p/cookieguard
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
+        with:
+          name: cookieguard-alias-dist
+          path: dist/
+      - name: Publish to TestPyPI with Trusted Publishing
+        uses: pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086 # v1.14.3
+        with:
+          repository-url: https://test.pypi.org/legacy/
+
+  publish-pypi:
+    if: ${{ inputs.target == 'pypi' }}
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/cookieguard
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
+        with:
+          name: cookieguard-alias-dist
+          path: dist/
+      - name: Publish to PyPI with Trusted Publishing
+        uses: pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086 # v1.14.3
