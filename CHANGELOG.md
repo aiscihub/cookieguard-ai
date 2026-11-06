@@ -28,7 +28,7 @@ Not published. The packages below keep version 0.1.0 until a release is approved
   the MCP server configured. See its README for method and limits.
 - **End-to-end check:** `integrations/browser-use/scripts/agent_discovery_e2e.py` runs a
   real Browser Use login, then audits the evidence through the MCP server with the
-  Python MCP SDK. The Browser Use CI job is configured to run it.
+  Python MCP SDK. It passes in CI on Linux with Python 3.11-3.13.
 - Package metadata: npm keywords, homepage, and issue links; PyPI keywords, classifiers,
   and Documentation/Changelog URLs. They take effect on the next publish.
 - `llms.txt`, a minimal GitHub Actions example, and `docs/agent-discovery.md`.

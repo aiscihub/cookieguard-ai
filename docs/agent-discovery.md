@@ -49,8 +49,8 @@ audits a report written by a separate CLI run.
 Chromium. It writes sanitized results for an insecure login, a secure login, and a run
 that never signs in. It then uses the *Python* MCP SDK to start the Node server, read its
 capabilities, select the browser-session integration, and audit each file. Output
-observed on macOS arm64 with Python 3.12 and Node.js 26 (abridged). The Browser Use CI
-job is configured to run it on Linux as well:
+observed on macOS arm64 with Python 3.12 and Node.js 26 (abridged). It also passes in
+the Browser Use CI job on Linux with Python 3.11, 3.12, and 3.13:
 
 ```text
 Browser Use insecure-login: login succeeded; local result FAIL; wrote insecure-login.json
