@@ -147,7 +147,7 @@ remain unmeasured until these tasks are re-run.
   Browser Use runs. Claude Code's permission mode refused writes to `.mcp.json` in MS1-C
   and MS2-C; those agents wrote a correct server configuration and the remaining command.
   The real-browser path is verified separately by
-  [`agent_discovery_e2e.py`](../../integrations/browser-use/scripts/agent_discovery_e2e.py).
+  [`agent_discovery_e2e.py`](../../integrations/python/scripts/agent_discovery_e2e.py).
 - D used the server from `main`, preconfigured by the harness, so its install and
   integration figures measure use, not installation.
 - One model, one agent product, one run per task and condition, and a single machine.

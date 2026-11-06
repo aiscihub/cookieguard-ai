@@ -29,7 +29,7 @@ test('the skill passes the pre-submission scan with only disclosed hosts and no 
 
 test('install commands pin the released versions', async () => {
   const npm = JSON.parse(await readFile('packages/cli/package.json', 'utf8')).version;
-  const pypi = /version = "([^"]+)"/.exec(await readFile('integrations/browser-use/pyproject.toml', 'utf8'))[1];
+  const pypi = /version = "([^"]+)"/.exec(await readFile('integrations/python/pyproject.toml', 'utf8'))[1];
   for (const [path, text] of Object.entries(await documents())) {
     for (const [, version] of text.matchAll(/@aiscihub\/cookieguard-[a-z]+@(\d[^\s`'"]*)/g)) assert.equal(version, npm, path);
     for (const [, version] of text.matchAll(/cookieguard-ci@(\d[^\s`'"]*)/g)) assert.equal(version, npm, path);

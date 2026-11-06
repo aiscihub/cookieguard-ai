@@ -6,23 +6,23 @@
 
 **A successful agent login is not a secure session cookie.**
 
-[![PyPI](https://img.shields.io/pypi/v/cookieguard-browser-use?style=flat-square&color=3775A9&label=PyPI)](https://pypi.org/project/cookieguard-browser-use/)
+[![PyPI](https://img.shields.io/pypi/v/cookieguard?style=flat-square&color=3775A9&label=PyPI)](https://pypi.org/project/cookieguard/)
 [![PyPI downloads](https://img.shields.io/pepy/dt/cookieguard-browser-use?style=flat-square&color=3775A9&label=PyPI%20downloads)](https://pepy.tech/projects/cookieguard-browser-use)
-[![Python versions](https://img.shields.io/pypi/pyversions/cookieguard-browser-use?style=flat-square&logo=python&logoColor=white)](https://pypi.org/project/cookieguard-browser-use/)
+[![Python versions](https://img.shields.io/pypi/pyversions/cookieguard?style=flat-square&logo=python&logoColor=white)](https://pypi.org/project/cookieguard/)
 [![npm cookieguard-ci](https://img.shields.io/npm/v/cookieguard-ci?style=flat-square&color=cb3837&label=npm%20cookieguard-ci)](https://www.npmjs.com/package/cookieguard-ci)
 [![npm downloads](https://img.shields.io/npm/dt/cookieguard-ci?style=flat-square&color=cb3837&label=npm%20downloads)](https://www.npmjs.com/package/cookieguard-ci)
 [![MCP server on npm](https://img.shields.io/npm/v/@aiscihub/cookieguard-mcp?style=flat-square&color=5c4ee5&label=MCP%20server)](https://www.npmjs.com/package/@aiscihub/cookieguard-mcp)
-[![Node.js 24+](https://img.shields.io/badge/Node.js-24%2B-339933?style=flat-square&logo=nodedotjs&logoColor=white)](integrations/browser-use/docs/install.md)
+[![Node.js 24+](https://img.shields.io/badge/Node.js-24%2B-339933?style=flat-square&logo=nodedotjs&logoColor=white)](integrations/python/docs/install.md)
 [![Browser Use 0.13](https://img.shields.io/badge/Browser_Use-0.13-111111?style=flat-square)](https://github.com/browser-use/browser-use)
 [![CI](https://img.shields.io/github/actions/workflow/status/aiscihub/cookieguard-ai/cookieguard-ci.yml?branch=main&style=flat-square&label=CI)](https://github.com/aiscihub/cookieguard-ai/actions/workflows/cookieguard-ci.yml)
 [![MIT license](https://img.shields.io/badge/license-MIT-f4c430?style=flat-square)](LICENSE)
 [![Girls Who Code Challenge 2026 winner](https://img.shields.io/badge/Girls_Who_Code_Challenge_2026-winner-8250df?style=flat-square)](https://girlswhocode.com/news/gwc-challenge-2026-winners)
 
-**[Browser Use integration](integrations/browser-use/README.md) · [MCP server](packages/mcp/README.md) · [CI guide](docs/CI_GUIDE.md) · [Website](https://aiscihub.github.io/cookieguard-ai/)**
+**[Browser Use integration](integrations/python/README.md) · [MCP server](packages/mcp/README.md) · [CI guide](docs/CI_GUIDE.md) · [Website](https://aiscihub.github.io/cookieguard-ai/)**
 
 [Quick start](#quick-start) · [How it works](#how-it-works) · [Your policy](#your-policy-decides-what-fails) · [What it checks](#what-it-checks) · [MCP](#use-it-from-an-mcp-client) · [Coding agents](#use-it-from-a-coding-agent) · [More tools](#more-ways-to-use-cookieguard) · [FAQ](#faq) · [Documentation](#documentation)
 
-<code>pip install cookieguard-browser-use</code>
+<code>pip install cookieguard</code>
 
 </div>
 
@@ -34,11 +34,11 @@
 
 <br />
 
-<img src="integrations/browser-use/docs/cookieguard-browser-use-demo.gif" alt="A Browser Use agent driven by Claude logs in to two local apps. Both logins succeed. CookieGuard fails the first with CG001 Missing HttpOnly (exit 1) and passes the second (exit 0)." width="1000" />
+<img src="integrations/python/docs/cookieguard-browser-use-demo.gif" alt="A Browser Use agent driven by Claude logs in to two local apps. Both logins succeed. CookieGuard fails the first with CG001 Missing HttpOnly (exit 1) and passes the second (exit 0)." width="1000" />
 
 <sub>Real run: Claude (<code>claude-opus-5-5</code>) drives a Browser Use agent through the same login twice.
 The insecure app gets <b>FAIL — CG001</b> (exit 1); the secure app gets <b>PASS</b> (exit 0).
-<a href="integrations/browser-use/docs/demo-and-tests.md">Recording and test evidence</a></sub>
+<a href="integrations/python/docs/demo-and-tests.md">Recording and test evidence</a></sub>
 
 <br /><br />
 
@@ -60,28 +60,28 @@ logs, or reports.
 
 ### Install
 
-Needs **Python 3.11+, Node.js 24+, and Chrome or Chromium**. Install version 0.1.0:
+Needs **Python 3.11+, Node.js 24+, and Chrome or Chromium**. Install version 0.2.0:
 
 ```bash
-pip install cookieguard-browser-use
+pip install cookieguard
 ```
 
-`pip install cookieguard` installs the same package and also lets you write
-`from cookieguard import CookieGuardAudit`.
+Code that uses `cookieguard-browser-use` or `import cookieguard_browser_use` keeps working:
+that package now installs `cookieguard` and re-exports it.
 
 ### Try the demo
 
 Runs a real Browser Use agent against a local login app, with no API key needed:
 
 ```bash
-python -m cookieguard_browser_use.demo   # insecure: FAIL CG001 (exit 1) · secure: PASS (exit 0)
+python -m cookieguard.browser_use.demo   # insecure: FAIL CG001 (exit 1) · secure: PASS (exit 0)
 ```
 
 ### Add it to your agent
 
 ```python
 from browser_use import Agent, BrowserProfile, BrowserSession, Tools
-from cookieguard_browser_use import CookieGuardAudit
+from cookieguard import CookieGuardAudit
 
 audit = CookieGuardAudit(
     allowed_origins=['http://127.0.0.1:3000'],  # exact origins you are authorized to test
@@ -110,34 +110,34 @@ result.assert_policy()                          # raises CookiePolicyError on FA
 
 `assert_policy()` raises on FAIL or INCOMPLETE even if the agent never called the
 audit tool, or reported success.
-[Install guide](integrations/browser-use/docs/install.md) · [Real-model example](integrations/browser-use/examples/agent_login.py)
+[Install guide](integrations/python/docs/install.md) · [Real-model example](integrations/python/examples/agent_login.py)
 
 ## How it works
 
 <picture>
-  <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="integrations/browser-use/docs/how-it-works-dark-mobile.svg">
-  <source media="(max-width: 600px)" srcset="integrations/browser-use/docs/how-it-works-light-mobile.svg">
-  <source media="(prefers-color-scheme: dark)" srcset="integrations/browser-use/docs/how-it-works-dark.svg">
-  <img alt="Your test starts CookieGuard and the Browser Use agent. The agent, guided by any AI model, logs in through Chromium. The app responds with Set-Cookie. A separate CookieGuard observer reads the same browser over its own CDP connection. It sends the evidence to a local CookieGuard engine, which returns PASS, FAIL, or INCOMPLETE to your test. The agent's optional cookieguard_audit tool is read-only, and cookie values never reach the model." src="integrations/browser-use/docs/how-it-works-light.svg" width="100%">
+  <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="integrations/python/docs/how-it-works-dark-mobile.svg">
+  <source media="(max-width: 600px)" srcset="integrations/python/docs/how-it-works-light-mobile.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="integrations/python/docs/how-it-works-dark.svg">
+  <img alt="Your test starts CookieGuard and the Browser Use agent. The agent, guided by any AI model, logs in through Chromium. The app responds with Set-Cookie. A separate CookieGuard observer reads the same browser over its own CDP connection. It sends the evidence to a local CookieGuard engine, which returns PASS, FAIL, or INCOMPLETE to your test. The agent's optional cookieguard_audit tool is read-only, and cookie values never reach the model." src="integrations/python/docs/how-it-works-light.svg" width="100%">
 </picture>
 
 CookieGuard reads the agent's browser over its own connection. It sees both what the
 server declared (`Set-Cookie`) and what the browser stored. The published CookieGuard
 engine then evaluates that evidence locally.
-[Details](integrations/browser-use/docs/how-it-works.md)
+[Details](integrations/python/docs/how-it-works.md)
 
 ## Your policy decides what fails
 
 <picture>
-  <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="integrations/browser-use/docs/policy-dark-mobile.svg">
-  <source media="(max-width: 600px)" srcset="integrations/browser-use/docs/policy-light-mobile.svg">
-  <source media="(prefers-color-scheme: dark)" srcset="integrations/browser-use/docs/policy-dark.svg">
-  <img alt="CookieGuardAudit options decide which findings fail. High-severity rules CG001 Missing HttpOnly, CG002 Missing Secure, CG006 invalid prefix, and CG007 regression fail by default. With fail_on set to medium, CG003 SameSite and CG005 lifetime fail too. CG004 Domain sharing fails only with require_host_only. CG008 and CG009 are review only. The result is FAIL (exit 1), INCOMPLETE (exit 2, which overrides FAIL), or PASS (exit 0)." src="integrations/browser-use/docs/policy-light.svg" width="100%">
+  <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="integrations/python/docs/policy-dark-mobile.svg">
+  <source media="(max-width: 600px)" srcset="integrations/python/docs/policy-light-mobile.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="integrations/python/docs/policy-dark.svg">
+  <img alt="CookieGuardAudit options decide which findings fail. High-severity rules CG001 Missing HttpOnly, CG002 Missing Secure, CG006 invalid prefix, and CG007 regression fail by default. With fail_on set to medium, CG003 SameSite and CG005 lifetime fail too. CG004 Domain sharing fails only with require_host_only. CG008 and CG009 are review only. The result is FAIL (exit 1), INCOMPLETE (exit 2, which overrides FAIL), or PASS (exit 0)." src="integrations/python/docs/policy-light.svg" width="100%">
 </picture>
 
 `fail_on` sets the line: a confirmed finding at or above it fails the run; anything
 below is reported. Only cookies you name in `auth_cookies` can be confirmed.
-[All policy options](integrations/browser-use/docs/policy.md)
+[All policy options](integrations/python/docs/policy.md)
 
 ## What it checks
 
@@ -155,7 +155,7 @@ below is reported. Only cookies you name in `auth_cookies` can be confirmed.
 
 These are configuration checks. PASS means the configured checks passed, not that the
 application is secure.
-[Full rule table](docs/CI_GUIDE.md#supported-checks) · [Limits & privacy](integrations/browser-use/docs/limits-and-privacy.md)
+[Full rule table](docs/CI_GUIDE.md#supported-checks) · [Limits & privacy](integrations/python/docs/limits-and-privacy.md)
 
 ## More ways to use CookieGuard
 
@@ -306,7 +306,7 @@ No. Values go only to the local engine over a pipe, and every result is value-fr
 tests check this with synthetic tokens. Your model provider still receives the task and
 page content. Pass credentials through Browser Use `sensitive_data`, and set
 `ANONYMIZED_TELEMETRY=false` to turn off Browser Use telemetry.
-[Limits & privacy](integrations/browser-use/docs/limits-and-privacy.md)
+[Limits & privacy](integrations/python/docs/limits-and-privacy.md)
 
 </details>
 
@@ -329,7 +329,7 @@ browser or login. Its result is information for the agent, not an enforced gate.
 
 Any model Browser Use supports. Verified with `claude-opus-5-5`, using Anthropic's
 server-side fallback for intermittent safety-classifier refusals. The OpenAI and Browser
-Use Cloud paths in the [example](integrations/browser-use/examples/agent_login.py) have
+Use Cloud paths in the [example](integrations/python/examples/agent_login.py) have
 not been run yet. The demo needs no model at all.
 
 </details>
@@ -353,7 +353,7 @@ navigates; use `allowed_domains` to keep the agent on the app.
 Ubuntu 23.10+ blocks the user namespaces Chromium's sandbox needs. Run
 `sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0`, or use Google Chrome with
 `BrowserProfile(channel='chrome')`. Avoid `--no-sandbox`.
-[Install guide](integrations/browser-use/docs/install.md)
+[Install guide](integrations/python/docs/install.md)
 
 </details>
 
@@ -367,7 +367,7 @@ Version 0.1.0 is tested with Browser Use 0.13.14 and Chromium-family browsers:
 - **macOS (Apple silicon):** Python 3.12, Node.js 24 and 26, Chrome 156.
 
 Windows, Browser Use cloud browsers, and other Browser Use versions are not tested yet.
-[Tested environments and dependencies](integrations/browser-use/docs/limits-and-privacy.md#tested-environments-and-dependencies)
+[Tested environments and dependencies](integrations/python/docs/limits-and-privacy.md#tested-environments-and-dependencies)
 
 </details>
 
@@ -375,7 +375,7 @@ Windows, Browser Use cloud browsers, and other Browser Use versions are not test
 
 | Area | Guides |
 | --- | --- |
-| Browser Use | [Overview](integrations/browser-use/README.md) · [Install](integrations/browser-use/docs/install.md) · [Policy](integrations/browser-use/docs/policy.md) · [How it works](integrations/browser-use/docs/how-it-works.md) · [Results](integrations/browser-use/docs/results.md) · [Limits & privacy](integrations/browser-use/docs/limits-and-privacy.md) · [Demo & tests](integrations/browser-use/docs/demo-and-tests.md) · [Validation](integrations/browser-use/VALIDATION.md) |
+| Browser Use | [Overview](integrations/python/README.md) · [Install](integrations/python/docs/install.md) · [Policy](integrations/python/docs/policy.md) · [How it works](integrations/python/docs/how-it-works.md) · [Results](integrations/python/docs/results.md) · [Limits & privacy](integrations/python/docs/limits-and-privacy.md) · [Demo & tests](integrations/python/docs/demo-and-tests.md) · [Validation](integrations/python/VALIDATION.md) |
 | MCP server | [Guide](packages/mcp/README.md) · [Validation](packages/mcp/VALIDATION.md) · [Release checklist](packages/mcp/RELEASING.md) · [Example config](examples/mcp/cookieguard.example.json) |
 | CI tools | [CI guide](docs/CI_GUIDE.md) · [Playwright demo](docs/CI_GUIDE.md#watch-the-playwright-demo) · [Validation](docs/CI_VALIDATION.md) · [Architecture](docs/CI_ARCHITECTURE.md) |
 | Extension & research | [Original README](docs/ORIGINAL_README.md) · [Project summary](PROJECT_SUMMARY.md) · [Historical report](https://aiscihub.github.io/cookieguard-ai/report.html) |
