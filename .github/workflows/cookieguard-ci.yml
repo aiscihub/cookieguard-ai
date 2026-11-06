@@ -154,3 +154,8 @@ jobs:
         run: .venv/bin/python scripts/verify_external.py
       - name: Check Browser Use evidence for synthetic-secret leakage
         run: node scripts/check-artifacts.js artifacts/browser-use
+      - name: Check the cookieguard alias package
+        working-directory: integrations/pypi-cookieguard
+        run: |
+          ../browser-use/.venv/bin/python -m pip install --no-deps .
+          ../browser-use/.venv/bin/python -I -c "import cookieguard, cookieguard_browser_use as real; assert cookieguard.CookieGuardAudit is real.CookieGuardAudit"
