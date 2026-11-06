@@ -1,7 +1,10 @@
 {
   "name": "@aiscihub/cookieguard-mcp",
   "version": "0.1.0",
-  "description": "Local MCP tools for CookieGuard authentication-cookie policy checks",
+  "description": "Local MCP server for authentication-cookie security audits: PASS/FAIL/INCOMPLETE findings without cookie values",
+  "keywords": ["mcp", "mcp-server", "model-context-protocol", "ai-agents", "cookie", "session-cookie", "authentication", "security", "httponly", "samesite"],
+  "homepage": "https://github.com/aiscihub/cookieguard-ai/tree/main/packages/mcp",
+  "bugs": "https://github.com/aiscihub/cookieguard-ai/issues",
   "mcpName": "io.github.aiscihub/cookieguard",
   "type": "module",
   "license": "MIT",

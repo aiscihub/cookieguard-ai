@@ -11,16 +11,22 @@ license = "MIT"
 license-files = ["LICENSE"]
 requires-python = ">=3.11"
 authors = [{ name = "aiscihub" }]
-keywords = ["browser-use", "cookies", "security", "authentication", "ai-agents", "testing"]
+keywords = ["browser-use", "ai-agents", "browser-automation", "session-cookie", "cookies", "authentication", "security", "security-testing", "httponly", "samesite", "testing"]
 classifiers = [
   "Development Status :: 4 - Beta",
+  "Framework :: AsyncIO",
   "Intended Audience :: Developers",
+  "Operating System :: MacOS",
+  "Operating System :: POSIX :: Linux",
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
+  "Topic :: Internet :: WWW/HTTP :: Browsers",
   "Topic :: Security",
+  "Topic :: Software Development :: Quality Assurance",
   "Topic :: Software Development :: Testing",
+  "Typing :: Typed",
 ]
 # Tested with browser-use 0.13.14 / cdp-use 1.4.5. Node.js 24+ is required at
 # runtime for the vendored CookieGuard engine; it is not a Python dependency.
@@ -36,6 +42,8 @@ test = ["pytest>=8.3"]
 [project.urls]
 Homepage = "https://github.com/aiscihub/cookieguard-ai/tree/main/integrations/browser-use"
 Repository = "https://github.com/aiscihub/cookieguard-ai"
+Documentation = "https://github.com/aiscihub/cookieguard-ai/tree/main/integrations/browser-use/docs"
+Changelog = "https://github.com/aiscihub/cookieguard-ai/blob/main/CHANGELOG.md"
 Issues = "https://github.com/aiscihub/cookieguard-ai/issues"
 
 [tool.hatch.metadata.hooks.fancy-pypi-readme]
