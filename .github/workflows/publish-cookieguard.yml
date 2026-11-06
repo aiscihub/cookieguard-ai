@@ -1,6 +1,10 @@
-name: Publish cookieguard alias
+name: Publish cookieguard (Python)
 
-# Publishes the `cookieguard` PyPI name, which installs cookieguard-browser-use.
+# Builds, verifies, and publishes both Python distributions together:
+#   cookieguard              the package (core + cookieguard.browser_use)
+#   cookieguard-browser-use  the compatibility package, pinned to the same version
+# Run it from a cookieguard-v<version> tag; the pypi environment deploys only allowed tags.
+# Both PyPI projects must list this workflow and the chosen environment as a trusted publisher.
 on:
   workflow_dispatch:
     inputs:
@@ -21,31 +25,58 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 40
+    env:
+      ONNXRUNTIME_NODE_INSTALL: skip
+      ANONYMIZED_TELEMETRY: 'false'
+      BROWSER_USE_CLOUD_SYNC: 'false'
+      BROWSER_USE_DISABLE_EXTENSIONS: '1'
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          package-manager-cache: false
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
         with:
           python-version: '3.12'
+      - run: npm ci
+      - name: Vendor the published engine without changing it
+        run: node integrations/python/scripts/vendor_engine.mjs --published
       - name: Install packaging tools
         run: python -m pip install build==1.6.1 twine==7.0.0
-      - name: Build and check the package description
-        working-directory: integrations/pypi-cookieguard
+      - name: Allow Chromium's sandbox on Ubuntu
+        run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+      - run: npx --no-install playwright install --with-deps chromium
+      - name: Verify cookieguard from a clean external consumer
+        working-directory: integrations/python
+        run: python scripts/verify_external.py
+      - name: Build the compatibility package and check both descriptions
+        working-directory: integrations/python
         run: |
-          python -m build
+          python -m build --outdir dist compat/cookieguard-browser-use
           python -m twine check --strict dist/*
-      - name: Verify the wheel in a clean environment against the published dependency
-        working-directory: integrations/pypi-cookieguard
+          python scripts/verify_metadata.py
+      - name: Check that both versions match
+        working-directory: integrations/python
         run: |
-          python -m venv "$RUNNER_TEMP/consumer"
-          "$RUNNER_TEMP/consumer/bin/python" -m pip install dist/cookieguard-*.whl
-          "$RUNNER_TEMP/consumer/bin/python" -I -c "import cookieguard, cookieguard_browser_use as real; assert cookieguard.CookieGuardAudit is real.CookieGuardAudit; assert cookieguard.__version__ == '0.1.0'; print('cookieguard', cookieguard.__version__, '-> cookieguard-browser-use', cookieguard.integration_version)"
+          python - <<'EOF'
+          import tomllib
+          core = tomllib.load(open('pyproject.toml', 'rb'))['project']
+          compat = tomllib.load(open('compat/cookieguard-browser-use/pyproject.toml', 'rb'))['project']
+          assert compat['version'] == core['version'], (compat['version'], core['version'])
+          assert compat['dependencies'] == [f"cookieguard=={core['version']}"], compat['dependencies']
+          print(f"cookieguard {core['version']} and cookieguard-browser-use {compat['version']} are in lockstep")
+          EOF
+      - name: Install and upgrade paths from the published 0.1 packages
+        working-directory: integrations/python
+        run: python scripts/verify_upgrade.py dist
       - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
-          name: cookieguard-alias-dist
-          path: integrations/pypi-cookieguard/dist/
+          name: cookieguard-python-dist
+          path: integrations/python/dist/
           if-no-files-found: error
           retention-days: 7
 
@@ -61,9 +92,9 @@ jobs:
     steps:
       - uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
         with:
-          name: cookieguard-alias-dist
+          name: cookieguard-python-dist
           path: dist/
-      - name: Publish to TestPyPI with Trusted Publishing
+      - name: Publish both distributions to TestPyPI with Trusted Publishing
         uses: pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086 # v1.14.3
         with:
           repository-url: https://test.pypi.org/legacy/
@@ -80,7 +111,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
         with:
-          name: cookieguard-alias-dist
+          name: cookieguard-python-dist
           path: dist/
-      - name: Publish to PyPI with Trusted Publishing
+      - name: Publish both distributions to PyPI with Trusted Publishing
         uses: pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086 # v1.14.3

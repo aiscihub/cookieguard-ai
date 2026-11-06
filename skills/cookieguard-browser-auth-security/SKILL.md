@@ -6,7 +6,7 @@ compatibility: Needs Node.js 24+. Browser Use also needs Python 3.11-3.13, brows
 metadata:
   title: CookieGuard AI — Browser Agent Authentication Security Audit
   project: https://github.com/aiscihub/cookieguard-ai
-  packages: cookieguard-browser-use 0.1.0 (PyPI); cookieguard-ci, @aiscihub/cookieguard-playwright, @aiscihub/cookieguard-mcp 0.2.0 (npm)
+  packages: cookieguard 0.2.0 (PyPI); cookieguard-ci, @aiscihub/cookieguard-playwright, @aiscihub/cookieguard-mcp 0.2.0 (npm)
 ---
 
 # CookieGuard AI — Browser Agent Authentication Security Audit
@@ -57,13 +57,13 @@ your model provider, and running locally does not make them confidential.
    sets it. Ask the user if unsure: without the exact name, findings stay `review` and the
    audit cannot FAIL.
 3. Check prerequisites: `node --version` (24+), `python3 --version` (3.11-3.13 for Browser
-   Use), and whether CookieGuard is already installed (`python -m pip show
-   cookieguard-browser-use`, `npm ls @aiscihub/cookieguard-playwright cookieguard-ci`).
+   Use), and whether CookieGuard is already installed (`python -m pip show cookieguard`,
+   `npm ls @aiscihub/cookieguard-playwright cookieguard-ci`).
 4. Pick the pathway:
 
 | Situation | Use | Details |
 | --- | --- | --- |
-| A Browser Use agent signs in | `cookieguard-browser-use` | [Browser Use](references/browser-use.md) |
+| A Browser Use agent signs in | `cookieguard` (`cookieguard.browser_use`) | [Browser Use](references/browser-use.md) |
 | Playwright tests sign in | `@aiscihub/cookieguard-playwright` | [Playwright and CI](references/playwright-and-ci.md) |
 | A GET response sets the cookie, or a CI smoke check | `cookieguard-ci` CLI or GitHub Action | [Playwright and CI](references/playwright-and-ci.md) |
 | An MCP client should run audits | `@aiscihub/cookieguard-mcp` | [MCP](references/mcp.md) |
@@ -78,7 +78,7 @@ development dependency: Python packages in a virtualenv, npm packages with `--sa
 Do not install globally or change unrelated dependencies.
 
 ```bash
-python3.12 -m venv .venv && .venv/bin/pip install cookieguard-browser-use==0.1.0
+python3.12 -m venv .venv && .venv/bin/pip install cookieguard==0.2.0
 npm install --save-dev @aiscihub/cookieguard-playwright@0.2.0
 npx --yes cookieguard-ci@0.2.0 --version
 ```
@@ -95,7 +95,7 @@ Pass credentials only through the framework's secret mechanism (Browser Use
 
 ```python
 from browser_use import Agent, BrowserProfile, BrowserSession
-from cookieguard_browser_use import CookieGuardAudit
+from cookieguard import CookieGuardAudit
 
 audit = CookieGuardAudit(allowed_origins=['http://127.0.0.1:3000'], auth_cookies=['session_id'])
 session = BrowserSession(browser_profile=BrowserProfile(
@@ -180,7 +180,7 @@ Use this structure; [findings](references/findings.md) has the full template and
 ## Troubleshooting
 
 - `node` missing or older than 24: install Node.js 24+; the engine runs as a local Node process.
-- `pip` cannot find `cookieguard-browser-use` or `browser-use`: the interpreter is older
+- `pip` cannot find `cookieguard` 0.2.0 or `browser-use`: the interpreter is older
   than 3.11; create the virtualenv with `python3.11`, `python3.12`, or `python3.13`.
 - `TARGET` error: remove query strings and credentials from the URL; allow nonlocal origins explicitly.
 - Browser Use closes the browser before `finish()`: set `keep_alive=True`.

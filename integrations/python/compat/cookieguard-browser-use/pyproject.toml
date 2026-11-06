@@ -1,0 +1,38 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "cookieguard-browser-use"
+version = "0.2.0"
+description = "Compatibility package: installs cookieguard and keeps `import cookieguard_browser_use` working"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.11"
+authors = [{ name = "aiscihub" }]
+keywords = ["cookieguard", "browser-use", "ai-agents", "session-cookie", "cookies", "authentication", "security"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Security",
+  "Typing :: Typed",
+]
+# Released in lockstep with cookieguard; this package only re-exports it.
+dependencies = ["cookieguard==0.2.0"]
+
+[project.urls]
+Homepage = "https://github.com/aiscihub/cookieguard-ai/tree/main/integrations/python"
+Repository = "https://github.com/aiscihub/cookieguard-ai"
+Changelog = "https://github.com/aiscihub/cookieguard-ai/blob/main/CHANGELOG.md"
+Issues = "https://github.com/aiscihub/cookieguard-ai/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/cookieguard_browser_use"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src", "README.md", "LICENSE", "pyproject.toml"]
