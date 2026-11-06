@@ -91,10 +91,10 @@ is installed, or through a directory that the agent searches.
 
 | Channel | State | Needs approval to change |
 | --- | --- | --- |
-| Official MCP Registry | `io.github.aiscihub/cookieguard` 0.1.0 is active; 0.2.0 metadata prepared in `packages/mcp/server.json` | Publishing a new version |
-| npm (`cookieguard-ci`, `@aiscihub/cookieguard-core`, `-playwright`, `-mcp`) | 0.1.0 published; 0.2.0 prepared with keywords, homepage, and issue links | Publishing |
+| Official MCP Registry | `io.github.aiscihub/cookieguard` 0.2.0 is active and latest (2026-11-06) | Publishing a new version |
+| npm (`cookieguard-ci`, `@aiscihub/cookieguard-core`, `-playwright`, `-mcp`) | 0.2.0 published under `latest` (2026-11-06) | Publishing a new version |
 | PyPI (`cookieguard-browser-use`) | 0.1.0 published; keywords, classifiers, and Documentation/Changelog URLs added on main | Next release |
-| PyPI (`cookieguard`) | Alias that installs `cookieguard-browser-use`; publish workflow ready | Publishing |
+| PyPI (`cookieguard`) | 0.1.0 published (2026-11-06); installs `cookieguard-browser-use` | Publishing a new version |
 | Anthropic's Claude Code plugin directory | Not submitted; the marketplace file validates | Submission |
 | OpenAI curated skills (`openai/skills`) | Not submitted | External pull request |
 | skills.sh / `npx skills` and other skill indexes | Not submitted or tested | Submission |

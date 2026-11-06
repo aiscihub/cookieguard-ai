@@ -13,5 +13,5 @@
   "exports": { ".": { "types": "./src/index.d.ts", "import": "./src/index.js" } },
   "files": ["bin", "src", "LICENSE", "README.md"],
   "dependencies": { "@aiscihub/cookieguard-core": "0.2.0" },
-  "repository": { "type": "git", "url": "https://github.com/aiscihub/cookieguard-ai.git", "directory": "packages/cli" }
+  "repository": { "type": "git", "url": "git+https://github.com/aiscihub/cookieguard-ai.git", "directory": "packages/cli" }
 }

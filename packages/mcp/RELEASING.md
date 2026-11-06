@@ -1,12 +1,11 @@
 # MCP release checklist
 
-`@aiscihub/cookieguard-mcp` 0.1.0, the first stable release, was
-[published to npm](https://www.npmjs.com/package/@aiscihub/cookieguard-mcp) on 2026-11-05
-under the `latest` dist-tag and registered in the MCP Registry as
-`io.github.aiscihub/cookieguard`. It has the same code as `0.1.0-beta.1`, published
-earlier that day. See the [0.1.0 publication record](VALIDATION.md#010-publication--2026-11-05)
-and the [beta record](VALIDATION.md#npm-publication--2026-11-05).
-The existing core, CLI, Playwright, and Browser Use versions do not change.
+`@aiscihub/cookieguard-mcp` 0.2.0 was [published to npm](https://www.npmjs.com/package/@aiscihub/cookieguard-mcp)
+on 2026-11-06 under the `latest` dist-tag, together with `@aiscihub/cookieguard-core`,
+`cookieguard-ci`, and `@aiscihub/cookieguard-playwright` 0.2.0. See the
+[0.2.0 publication record](VALIDATION.md#020-publication--2026-11-06). Earlier records:
+[0.1.0](VALIDATION.md#010-publication--2026-11-05) and
+[0.1.0-beta.1](VALIDATION.md#npm-publication--2026-11-05). Browser Use stays at 0.1.0.
 
 ## 1. Review and merge
 

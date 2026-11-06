@@ -66,6 +66,9 @@ Needs **Python 3.11+, Node.js 24+, and Chrome or Chromium**. Install version 0.1
 pip install cookieguard-browser-use
 ```
 
+`pip install cookieguard` installs the same package and also lets you write
+`from cookieguard import CookieGuardAudit`.
+
 ### Try the demo
 
 Runs a real Browser Use agent against a local login app, with no API key needed:
