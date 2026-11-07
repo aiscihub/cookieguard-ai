@@ -9,6 +9,8 @@ Version **0.2.0** on npm, listed in the official MCP Registry as
 `cookieguard_capabilities`, `cookieguard_audit` (including sanitized evidence files), and
 `cookieguard_explain`. See [Tools and results](#tools-and-results).
 
+[![CookieGuard MCP server](https://mcprush.com/badge/cookieguard-mcp/card.svg)](https://mcprush.com/to/cookieguard-mcp?ref=badge) [![CookieGuard AI MCP server – quality and maintenance score on Glama](https://glama.ai/mcp/servers/aiscihub/cookieguard-ai/badges/card.svg)](https://glama.ai/mcp/servers/aiscihub/cookieguard-ai)
+
 ```mermaid
 flowchart LR
     Client[AI client] --> MCP[Local MCP adapter]
