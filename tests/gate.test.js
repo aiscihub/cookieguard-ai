@@ -128,3 +128,17 @@ test('gate arguments are validated', async () => {
   assert.equal(await runCli(['scan', 'http://127.0.0.1:1/', '--require', 'x'], { stdout: { write: () => {} }, stderr: { write: () => {} } }), 2);
   assert.equal(checkId('Sign in & out!'), 'sign-in-out');
 });
+
+test('a store that is unreadable during collection does not make the collection incomplete', async () => {
+  // The Browser Use bridge replays CDP evidence and supplies the store only at the end.
+  const context = new Context();
+  let ready = false;
+  context.cookies = async () => { if (!ready) throw new Error('not yet'); return [storeCookie()]; };
+  const audit = startCookieAudit(context, { origins: [origin], policy: { authCookies: ['sid'] } });
+  context.emit('response', response(`sid=${TOKEN}; Path=/; Secure; HttpOnly; SameSite=Lax`));
+  await new Promise(resolve => setTimeout(resolve, 10));
+  ready = true;
+  const report = await audit.evaluate();
+  assert.deepEqual(report.issues, []);
+  assert.equal(exitCode(report), 0);
+});
