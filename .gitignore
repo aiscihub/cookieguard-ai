@@ -15,3 +15,4 @@ playwright-report/
 *.tgz
 benchmarks/discovery/runs/
 benchmarks/auth-testing/runs/
+benchmarks/security-gate/.work/
