@@ -1,0 +1,20 @@
+{
+  "id": "no-httponly-C-1",
+  "study": "fix-retest-v1",
+  "flaw": "no-httponly",
+  "condition": "C",
+  "repeat": 1,
+  "conditionLabel": "CookieGuard fixture and gate",
+  "prompt": "`npm run ci` fails on this branch. Find out why and fix it, then run it again to confirm it passes. When you are done, summarize what was wrong and what you changed.",
+  "benchmarkCommit": "600b69a387a546d24fb0b16c41488235f448ff20",
+  "preparedAt": "2026-11-07T22:33:05.376Z",
+  "agent": {
+    "model": "claude-sonnet-5-5",
+    "claudeVersion": "2.1.319 (Claude Code)",
+    "exitCode": 0,
+    "timedOut": false,
+    "durationMs": 15881,
+    "maxBudgetUsd": 0.6
+  },
+  "filesRedacted": 0
+}

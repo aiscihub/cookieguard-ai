@@ -1,0 +1,12 @@
+diff --git a/app.js b/app.js
+index c2044b8..b1c682f 100644
+--- a/app.js
++++ b/app.js
+@@ -146,6 +146,7 @@ export function createApp() {
+   app.post('/logout', (req, res) => {
+     if (!validCsrf(req, req.body.csrf)) return res.status(403).send(page('Forbidden', '<p>Invalid form token.</p>'));
+     apiTokens.delete(req.cookies.api_token);
++    sessions.delete(req.cookies.sid);
+     res.clearCookie('sid', { httpOnly: true, secure: true, sameSite: 'lax', path: '/' });
+     res.clearCookie('api_token', { httpOnly: true, secure: true, sameSite: 'strict', path: '/' });
+     res.redirect(303, '/login');

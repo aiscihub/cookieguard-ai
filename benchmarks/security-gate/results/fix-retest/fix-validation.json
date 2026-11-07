@@ -1,0 +1,58 @@
+[
+  {
+    "condition": "N",
+    "variant": "fixed",
+    "accepted": true,
+    "ok": true,
+    "credentialInOutput": false
+  },
+  {
+    "condition": "N",
+    "variant": "no-httponly",
+    "accepted": false,
+    "ok": true,
+    "credentialInOutput": false
+  },
+  {
+    "condition": "N",
+    "variant": "logout-kept",
+    "accepted": false,
+    "ok": true,
+    "credentialInOutput": false
+  },
+  {
+    "condition": "N",
+    "variant": "js-token",
+    "accepted": false,
+    "ok": true,
+    "credentialInOutput": false
+  },
+  {
+    "condition": "C",
+    "variant": "fixed",
+    "accepted": true,
+    "ok": true,
+    "credentialInOutput": false
+  },
+  {
+    "condition": "C",
+    "variant": "no-httponly",
+    "accepted": false,
+    "ok": true,
+    "credentialInOutput": false
+  },
+  {
+    "condition": "C",
+    "variant": "logout-kept",
+    "accepted": false,
+    "ok": true,
+    "credentialInOutput": false
+  },
+  {
+    "condition": "C",
+    "variant": "js-token",
+    "accepted": false,
+    "ok": true,
+    "credentialInOutput": false
+  }
+]

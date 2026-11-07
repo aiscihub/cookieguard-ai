@@ -195,3 +195,8 @@ not block SameSite=None (CG003 is medium); C0 measures this.
     option for the runner.
   - **Not affected:** no metric, version, or approach changed. Part 2 runs use the branch
     with this change.
+- **2026-11-07, after Part 2 was dispatched:** CI showed that the store snapshot broke the
+  Browser Use bridge, which supplies the store only at the end. Every collection there
+  became INCOMPLETE. Snapshot failures are now ignored (commit `c5e0eaf`, with a regression
+  test). Part 2 used real Playwright contexts, where the snapshot does not fail, so its
+  results are unaffected.
