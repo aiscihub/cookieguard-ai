@@ -14,3 +14,4 @@ test-results/
 playwright-report/
 *.tgz
 benchmarks/discovery/runs/
+benchmarks/auth-testing/runs/

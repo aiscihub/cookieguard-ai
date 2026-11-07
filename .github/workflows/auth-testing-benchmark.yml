@@ -1,0 +1,177 @@
+# Runs real Claude Code sessions, so every dispatch costs API spend (ANTHROPIC_API_KEY)
+# or plan usage (CLAUDE_CODE_OAUTH_TOKEN). Manual only. Protocol:
+# benchmarks/auth-testing/PROTOCOL.md
+name: Auth testing benchmark
+
+on:
+  workflow_dispatch:
+    inputs:
+      model:
+        description: Claude model for the agent
+        default: claude-sonnet-5-5
+      versions:
+        description: App versions, comma-separated
+        default: fixed,no-httponly,js-token,open-redirect
+      conditions:
+        description: A = default workflow, B = plus the Agent Skill and MCP server
+        default: A,B
+      repeats:
+        description: Runs per version and condition
+        default: '2'
+      max_budget_usd:
+        description: Spend cap per agent run, in USD
+        default: '3'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: auth-testing-benchmark
+  cancel-in-progress: false
+
+env:
+  CLAUDE_CODE_VERSION: 2.1.319
+  PLAYWRIGHT_VERSION: 1.64.1
+  MCP_PACKAGE: '@aiscihub/cookieguard-mcp@0.2.0'
+  PLAYWRIGHT_BROWSERS_PATH: /opt/ms-playwright
+  WORKSPACE: /home/dev/acme-notes
+  TOOLS_DIR: /opt/agent-tools
+
+jobs:
+  validate:
+    name: Validate the harness
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 24
+      - name: Check that an agent credential is configured
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+        run: |
+          if [ -z "$ANTHROPIC_API_KEY" ] && [ -z "$CLAUDE_CODE_OAUTH_TOKEN" ]; then
+            echo "::error::Add the ANTHROPIC_API_KEY or CLAUDE_CODE_OAUTH_TOKEN repository secret."
+            exit 1
+          fi
+      - name: Build the run matrix
+        id: matrix
+        env:
+          VERSIONS: ${{ inputs.versions }}
+          CONDITIONS: ${{ inputs.conditions }}
+          REPEATS: ${{ inputs.repeats }}
+        run: echo "matrix=$(node benchmarks/auth-testing/bench.mjs matrix --versions "$VERSIONS" --conditions "$CONDITIONS" --repeats "$REPEATS")" >> "$GITHUB_OUTPUT"
+      - name: Install Chromium
+        run: sudo -E env "PATH=$PATH" npx --yes "playwright@$PLAYWRIGHT_VERSION" install --with-deps chromium
+      - name: Score reference suites with known results
+        run: node benchmarks/auth-testing/validate.mjs --dir "$RUNNER_TEMP/validate" --out "$RUNNER_TEMP/validation.json"
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        if: always()
+        with:
+          name: validation
+          path: ${{ runner.temp }}/validation.json
+          if-no-files-found: ignore
+
+  run:
+    name: ${{ matrix.id }}
+    needs: validate
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix: ${{ fromJSON(needs.validate.outputs.matrix) }}
+    env:
+      RUN_ID: ${{ matrix.id }}
+      VERSION: ${{ matrix.version }}
+      CONDITION: ${{ matrix.condition }}
+      REPEAT: ${{ matrix.repeat }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 24
+      - name: Install Claude Code and Chromium
+        run: |
+          npm install --global --no-audit --no-fund "@anthropic-ai/claude-code@$CLAUDE_CODE_VERSION"
+          sudo -E env "PATH=$PATH" npx --yes "playwright@$PLAYWRIGHT_VERSION" install --with-deps chromium
+      # The agent and its tests run as `dev`, who cannot read the checkout, the runner's
+      # home, or the run record. The browsers stay writable so the agent can manage them.
+      - name: Create the agent's user
+        run: |
+          sudo useradd --create-home --shell /bin/bash dev
+          sudo chmod 700 "$HOME"
+          sudo chown -R dev:dev "$PLAYWRIGHT_BROWSERS_PATH"
+      - name: Install the MCP server (condition B)
+        if: matrix.condition == 'B'
+        run: |
+          sudo mkdir -p "$TOOLS_DIR"
+          sudo chown "$USER" "$TOOLS_DIR"
+          npm install --prefix "$TOOLS_DIR" --no-audit --no-fund "$MCP_PACKAGE"
+      - name: Prepare the workspace
+        run: >-
+          sudo -E env "PATH=$PATH" node benchmarks/auth-testing/bench.mjs prepare
+          --id "$RUN_ID" --version "$VERSION" --condition "$CONDITION" --repeat "$REPEAT"
+          --workspace "$WORKSPACE" --run "$RUNNER_TEMP/run" --user dev --tools-dir "$TOOLS_DIR"
+      - name: Run the agent
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          MODEL: ${{ inputs.model }}
+          BUDGET: ${{ inputs.max_budget_usd }}
+        run: >-
+          sudo -E env "PATH=$PATH" node benchmarks/auth-testing/bench.mjs agent
+          --workspace "$WORKSPACE" --run "$RUNNER_TEMP/run" --user dev
+          --model "$MODEL" --max-budget-usd "$BUDGET" --claude "$(command -v claude)"
+      - name: Replay the agent's tests against every app version
+        if: always()
+        run: >-
+          sudo -E env "PATH=$PATH" node benchmarks/auth-testing/bench.mjs score
+          --workspace "$WORKSPACE" --run "$RUNNER_TEMP/run" --user dev
+      - name: Remove harness credentials from the run record
+        if: always()
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+        run: |
+          sudo -E env "PATH=$PATH" node benchmarks/auth-testing/bench.mjs redact --run "$RUNNER_TEMP/run"
+          sudo chown -R "$USER" "$RUNNER_TEMP/run"
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        if: always()
+        with:
+          name: run-${{ matrix.id }}
+          path: ${{ runner.temp }}/run
+          retention-days: 30
+          if-no-files-found: ignore
+
+  summarize:
+    name: Summarize
+    needs: [validate, run]
+    if: always() && needs.validate.result == 'success'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 24
+      - uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
+        with:
+          pattern: run-*
+          path: runs
+      - name: Summarize
+        run: node benchmarks/auth-testing/bench.mjs summarize runs --out summary | tee -a "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: summary
+          path: summary
