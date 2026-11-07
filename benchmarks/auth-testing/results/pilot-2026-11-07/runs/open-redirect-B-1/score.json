@@ -1,0 +1,98 @@
+{
+  "id": "open-redirect-B-1",
+  "version": "open-redirect",
+  "condition": "B",
+  "repeat": 1,
+  "agent": {
+    "model": "claude-sonnet-5-5",
+    "claudeVersion": "2.1.319 (Claude Code)",
+    "exitCode": 0,
+    "timedOut": false,
+    "durationMs": 49346,
+    "startedAt": "2026-11-07T18:41:19.650Z",
+    "maxBudgetUsd": 3
+  },
+  "differential": {
+    "passesFixed": true,
+    "flaky": false,
+    "caught": {
+      "no-httponly": true,
+      "js-token": true,
+      "open-redirect": false
+    },
+    "caughtSeen": false,
+    "caughtCount": 2
+  },
+  "testRuns": [
+    {
+      "version": "fixed",
+      "exitCode": 0,
+      "timedOut": false,
+      "durationMs": 2517
+    },
+    {
+      "version": "no-httponly",
+      "exitCode": 1,
+      "timedOut": false,
+      "durationMs": 1148
+    },
+    {
+      "version": "js-token",
+      "exitCode": 1,
+      "timedOut": false,
+      "durationMs": 1123
+    },
+    {
+      "version": "open-redirect",
+      "exitCode": 0,
+      "timedOut": false,
+      "durationMs": 2392
+    },
+    {
+      "version": "fixed",
+      "exitCode": 0,
+      "timedOut": false,
+      "durationMs": 2502
+    }
+  ],
+  "transcript": {
+    "completed": true,
+    "resultSubtype": "success",
+    "numTurns": 5,
+    "toolCalls": 4,
+    "costUsd": 0.10924049999999999,
+    "durationMs": 47831,
+    "tokens": {
+      "input": 10,
+      "output": 6526,
+      "cacheRead": 71330,
+      "cacheWrite": 14731
+    },
+    "credentialsShownToModel": 0,
+    "credentialsEchoedByAgent": 0,
+    "toolNameSeen": {
+      "where": "result of Bash",
+      "snippet": ".claude/skills/cookieguard-browser-auth-security/LICENSE\n.claude/skills/cookieguard-browser-auth-security/README.md\n.claude/skills/cookieguard-browser-auth-securit"
+    },
+    "mcpCalls": 0,
+    "skillLoaded": false,
+    "finalText": "I added `test/auth.test.js` with 17 tests. They run in-process under `node --test`, so `npm test` picks them up. `npm test` passes: 13 tests pass, 4 are reported as `todo`, and the existing Playwright test also passes.\n\nThe 4 `todo` tests assert the correct behaviour for real bugs. Node lists them under \"failing tests\", but they don't fail the run. Remove each `todo` flag once the matching bug is fixed.\n\n**What the tests cover**\n- **Access control:** unauthenticated requests to `/notes`, `/api/notes` and `/api/token` are redirected or rejected.\n- **CSRF on login:** the login CSRF cookie is `Secure` and `SameSite=Strict`, and login is refused with a missing, wrong or empty token.\n- **Bad credentials:** wrong password, unknown user, empty or missing fields and `__proto__` as username all return 401 with a generic message and no session.\n- **Session cookie:** a successful login sets `sid` with `HttpOnly`, `Secure`, `SameSite=Lax`, `Path=/` and a one-hour `Max-Age`. A signed-in user is redirected away from `/login` and `/`.\n- **Session fixation and expiry:** login replaces an attacker-chosen `sid`, session ids are unique, forged ids are rejected, and sessions expire after the TTL (clock mocked).\n- **Logout:** it requires a CSRF token, kills the session on the server, clears the cookies, and the old `sid` and `api_token` stop working.\n- **API token and notes:** the token endpoint needs a session plus CSRF and sets a hardened `api_token` cookie. Note writes need CSRF and non-empty text.\n- **Escaping:** the `next` parameter is HTML-escaped on the login page.\n\n**What they found**\n1. **Open redirect on login** (`safeNext` in `app.js`): any `next` value is accepted, including `https://evil.example/` and `//evil.example/`. It should only allow same-site paths.\n2. **Malformed cookie returns a 500:** `parseCookies` calls `decodeURIComponent` without a guard, so a header like `sid=%E0%A4%A` makes the request fail. A bad cookie shouldn't be able to do that.\n3. **API tokens never expire on the server:** `apiTokens` has no expiry and isn't tied to the session. The 7-day limit is only the cookie's `Max-Age`, so a copied token keeps working after the session expires.\n4. **CSRF token isn't rotated at login:** the same `csrf_token` carries over from before sign-in. It's a minor hardening gap.\n\nLogout revoking the API token is covered by a normal passing test. I first wrote that test as a suspected bug, but it passed, so I made it a regular test.\n\nI didn't fix any of the bugs, since you asked only for tests.",
+    "heuristic": {
+      "unsupportedClaim": null,
+      "mentions": {
+        "no-httponly": true,
+        "js-token": true,
+        "open-redirect": true
+      }
+    }
+  },
+  "workspace": {
+    "appModified": [],
+    "changedFiles": 1,
+    "tool": {
+      "mentioned": false,
+      "playwright": false,
+      "cli": false
+    }
+  }
+}

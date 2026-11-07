@@ -1,0 +1,98 @@
+{
+  "id": "js-token-B-2",
+  "version": "js-token",
+  "condition": "B",
+  "repeat": 2,
+  "agent": {
+    "model": "claude-sonnet-5-5",
+    "claudeVersion": "2.1.319 (Claude Code)",
+    "exitCode": 0,
+    "timedOut": false,
+    "durationMs": 60204,
+    "startedAt": "2026-11-07T18:44:53.496Z",
+    "maxBudgetUsd": 3
+  },
+  "differential": {
+    "passesFixed": false,
+    "flaky": false,
+    "caught": {
+      "no-httponly": false,
+      "js-token": false,
+      "open-redirect": false
+    },
+    "caughtSeen": false,
+    "caughtCount": 0
+  },
+  "testRuns": [
+    {
+      "version": "fixed",
+      "exitCode": 1,
+      "timedOut": false,
+      "durationMs": 1642
+    },
+    {
+      "version": "no-httponly",
+      "exitCode": 1,
+      "timedOut": false,
+      "durationMs": 1621
+    },
+    {
+      "version": "js-token",
+      "exitCode": 0,
+      "timedOut": false,
+      "durationMs": 3222
+    },
+    {
+      "version": "open-redirect",
+      "exitCode": 1,
+      "timedOut": false,
+      "durationMs": 1479
+    },
+    {
+      "version": "fixed",
+      "exitCode": 1,
+      "timedOut": false,
+      "durationMs": 1650
+    }
+  ],
+  "transcript": {
+    "completed": true,
+    "resultSubtype": "success",
+    "numTurns": 7,
+    "toolCalls": 6,
+    "costUsd": 0.1268781,
+    "durationMs": 58708,
+    "tokens": {
+      "input": 14,
+      "output": 7571,
+      "cacheRead": 111726,
+      "cacheWrite": 15987
+    },
+    "credentialsShownToModel": 0,
+    "credentialsEchoedByAgent": 0,
+    "toolNameSeen": {
+      "where": "result of Bash",
+      "snippet": ".claude/skills/cookieguard-browser-auth-security/LICENSE\n.claude/skills/cookieguard-browser-auth-security/README.md\n.claude/skills/cookieguard-browser-auth-securit"
+    },
+    "mcpCalls": 0,
+    "skillLoaded": false,
+    "finalText": "I added `test/auth.test.js` with 23 tests for login and session handling. It runs under `npm test` through the existing `node --test \"test/**/*.test.js\"` glob. The full run passes: 20 tests pass, 3 are marked `todo`, and the Playwright test passes. I didn't change any app code.\n\n**What the tests cover**\n- **Login:**\n  - A valid login redirects to `/notes` with a `sid` cookie.\n  - A wrong password, unknown user or missing fields get a 401 and no session.\n  - The error text is the same whether or not the user exists.\n  - A missing or wrong CSRF token gets a 403.\n  - A signed-in user visiting `/login` is redirected to `/notes`.\n- **Cookies:**\n  - `sid` is HttpOnly, Secure, SameSite and expires after 1 hour.\n  - `csrf_token` is Secure and SameSite=Strict.\n- **Session fixation:** login issues a new session ID and invalidates the old one. A `sid` chosen by an attacker is never accepted.\n- **Redirects and escaping:** the `next` redirect only follows same-site paths (absolute URLs, `//`, `/\\` and `javascript:` all fall back to `/notes`). A reflected `next` value is escaped in the login page.\n- **Sessions:**\n  - Protected pages and the API require a session.\n  - Sessions expire after the 1-hour TTL, tested with mocked time.\n  - Sessions are isolated between clients.\n- **CSRF on API writes:** API writes need a matching CSRF header.\n- **Logout:** it needs CSRF, kills the session on the server and clears the cookie.\n- **API tokens:** a token is issued only with a session plus CSRF, and logout revokes it when the `api_token` cookie is sent.\n\n**Bugs found** (each is a `todo` test, so it won't fail the build; remove `todo: true` once fixed)\n1. **Malformed cookie crashes the request.** `parseCookies` in `app.js` calls `decodeURIComponent` without a guard. A `Cookie: csrf_token=%E0%A4%A` header throws `URIError` and returns a 500. It needs a try/catch, and it can be triggered by any client.\n2. **API token outlives the session.** `/api/token` issues a token valid for 7 days, and nothing ties it to the 1-hour session. After the session expires, `/api/notes` still returns 200 with the token.\n3. **Logout doesn't revoke all tokens.** It only revokes the token named in the request's `api_token` cookie. A token issued earlier, for example from another device or after the cookie was lost, stays valid for its full 7 days.\n\n**Related issue (not tested):** `public/app.js` sets `api_token` from JavaScript, so that cookie can't be HttpOnly. The 7-day credential is readable by any XSS on the page. Having the server set it with `httpOnly` would fix that, and would also let the server tie its lifetime to the session.\n\n**Limits:** the tests run over plain HTTP with a hand-written cookie jar, so the `Secure` flag is checked as a header attribute only. I didn't run the CookieGuard audit, since it needs a configured origin and the tests already check the cookie attributes directly.",
+    "heuristic": {
+      "unsupportedClaim": null,
+      "mentions": {
+        "no-httponly": true,
+        "js-token": true,
+        "open-redirect": false
+      }
+    }
+  },
+  "workspace": {
+    "appModified": [],
+    "changedFiles": 1,
+    "tool": {
+      "mentioned": false,
+      "playwright": false,
+      "cli": false
+    }
+  }
+}

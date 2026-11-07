@@ -1,0 +1,21 @@
+{
+  "id": "fixed-A-2",
+  "version": "fixed",
+  "condition": "A",
+  "repeat": 2,
+  "conditionLabel": "default workflow",
+  "prompt": "Add automated tests for the login and session handling in this app. They should run as part of `npm test`. When you are done, summarize what the tests cover and anything they found.",
+  "benchmarkCommit": "4dd92f588ede3893c98fac210d84cc42d2d20e64",
+  "mcpConfig": null,
+  "preparedAt": "2026-11-07T18:42:14.175Z",
+  "agent": {
+    "model": "claude-sonnet-5-5",
+    "claudeVersion": "2.1.319 (Claude Code)",
+    "exitCode": 0,
+    "timedOut": false,
+    "durationMs": 43142,
+    "startedAt": "2026-11-07T18:42:14.285Z",
+    "maxBudgetUsd": 3
+  },
+  "filesRedacted": 0
+}

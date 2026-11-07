@@ -1,0 +1,98 @@
+{
+  "id": "fixed-B-2",
+  "version": "fixed",
+  "condition": "B",
+  "repeat": 2,
+  "agent": {
+    "model": "claude-sonnet-5-5",
+    "claudeVersion": "2.1.319 (Claude Code)",
+    "exitCode": 0,
+    "timedOut": false,
+    "durationMs": 50745,
+    "startedAt": "2026-11-07T18:42:56.727Z",
+    "maxBudgetUsd": 3
+  },
+  "differential": {
+    "passesFixed": true,
+    "flaky": false,
+    "caught": {
+      "no-httponly": true,
+      "js-token": true,
+      "open-redirect": true
+    },
+    "caughtSeen": null,
+    "caughtCount": 3
+  },
+  "testRuns": [
+    {
+      "version": "fixed",
+      "exitCode": 0,
+      "timedOut": false,
+      "durationMs": 2566
+    },
+    {
+      "version": "no-httponly",
+      "exitCode": 1,
+      "timedOut": false,
+      "durationMs": 1163
+    },
+    {
+      "version": "js-token",
+      "exitCode": 1,
+      "timedOut": false,
+      "durationMs": 1172
+    },
+    {
+      "version": "open-redirect",
+      "exitCode": 1,
+      "timedOut": false,
+      "durationMs": 1008
+    },
+    {
+      "version": "fixed",
+      "exitCode": 0,
+      "timedOut": false,
+      "durationMs": 2566
+    }
+  ],
+  "transcript": {
+    "completed": true,
+    "resultSubtype": "success",
+    "numTurns": 5,
+    "toolCalls": 4,
+    "costUsd": 0.1169104,
+    "durationMs": 49008,
+    "tokens": {
+      "input": 10,
+      "output": 7079,
+      "cacheRead": 70879,
+      "cacheWrite": 15605
+    },
+    "credentialsShownToModel": 0,
+    "credentialsEchoedByAgent": 0,
+    "toolNameSeen": {
+      "where": "result of Bash",
+      "snippet": ".claude/skills/cookieguard-browser-auth-security/LICENSE\n.claude/skills/cookieguard-browser-auth-security/README.md\n.claude/skills/cookieguard-browser-auth-securit"
+    },
+    "mcpCalls": 0,
+    "skillLoaded": false,
+    "finalText": "I added `test/auth.test.js` with 17 tests (15 are new). It runs under the existing `node --test \"test/**/*.test.js\"` step of `npm test`. Everything passes, including the Playwright test. The two bugs below are recorded as `todo` tests, so they show as todo and don't turn the suite red.\n\n## What the tests cover\nEach test starts the app on a random port and uses a small cookie-jar client. I did this by hand because the cookies are `Secure` and plain-http `fetch` wouldn't store them.\n\n- **Access control:** unauthenticated requests to `/notes` and `/` redirect to `/login`, and `/api/notes` returns 401.\n- **Login form:** the login page sets a CSRF cookie and puts the matching token in the form.\n- **Successful login:**\n  - The session id has the expected format.\n  - The `sid` cookie is `HttpOnly`, `Secure`, `SameSite=Lax`, `Path=/` and has a max-age.\n  - The user lands on `/notes`.\n- **Failed login:**\n  - A wrong password, an unknown user and empty fields all return 401 and set no session.\n  - The error message is identical for an unknown user and a bad password.\n- **CSRF on login:** a missing, wrong or absent token returns 403.\n- **Session fixation:** logging in again issues a new session id, and the old id stops working.\n- **Forged session id:** an unknown `sid` is rejected.\n- **Post-login redirect:** `next` values such as `https://…`, `//…`, `/\\…`, `javascript:` and values with tab or newline never redirect off-site.\n- **Session expiry:** after the 1-hour TTL, the session no longer works.\n- **Logout:**\n  - It requires CSRF.\n  - The old session id is rejected on replay.\n  - The cookies are cleared.\n  - The API token is invalidated.\n- **API token and notes API:**\n  - Issuing a token needs a session and the CSRF header.\n  - The `api_token` cookie is `HttpOnly`, `Secure` and `SameSite=Strict`.\n  - Adding a note needs CSRF and valid input.\n\n## What they found\n1. **A malformed cookie causes a 500.** `parseCookies` in `app.js` calls `decodeURIComponent` with no guard. A request with a cookie like `sid=%E0%A4%A` throws a `URIError` before any route runs. It's a robustness bug, and a try/catch fixes it.\n2. **The API token outlives the session.** `api_token` lasts 7 days and isn't tied to the 1-hour `sid` session. After the session expires, `/api/notes` still returns data (and accepts writes with the CSRF header). Only an explicit logout revokes the token, and it only does so if the browser sends the cookie. The token's lifetime should match the session, or it should be tied to the session id.\n\nOther design notes, with no test added:\n- The CSRF cookie is the double-submit kind: it isn't signed, and it can be read by scripts by design.\n- It also persists across login.\n\nI didn't run the CookieGuard audit or change any app code.",
+    "heuristic": {
+      "unsupportedClaim": null,
+      "mentions": {
+        "no-httponly": true,
+        "js-token": true,
+        "open-redirect": false
+      }
+    }
+  },
+  "workspace": {
+    "appModified": [],
+    "changedFiles": 1,
+    "tool": {
+      "mentioned": false,
+      "playwright": false,
+      "cli": false
+    }
+  }
+}
