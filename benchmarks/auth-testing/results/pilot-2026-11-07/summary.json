@@ -1,0 +1,202 @@
+{
+  "schemaVersion": 1,
+  "versions": [
+    "fixed",
+    "no-httponly",
+    "js-token",
+    "open-redirect"
+  ],
+  "flawed": [
+    "no-httponly",
+    "js-token",
+    "open-redirect"
+  ],
+  "conditions": {
+    "A": {
+      "runs": 8,
+      "scored": 8,
+      "agentCompleted": 8,
+      "suitePassesFixed": {
+        "hits": 7,
+        "n": 8,
+        "ci95": [
+          0.529,
+          0.978
+        ]
+      },
+      "caughtSeenFlaw": {
+        "no-httponly": {
+          "hits": 0,
+          "n": 2,
+          "ci95": [
+            0,
+            0.658
+          ]
+        },
+        "js-token": {
+          "hits": 0,
+          "n": 2,
+          "ci95": [
+            0,
+            0.658
+          ]
+        },
+        "open-redirect": {
+          "hits": 0,
+          "n": 2,
+          "ci95": [
+            0,
+            0.658
+          ]
+        }
+      },
+      "catchesAnyVersion": {
+        "no-httponly": {
+          "hits": 5,
+          "n": 8,
+          "ci95": [
+            0.306,
+            0.863
+          ]
+        },
+        "js-token": {
+          "hits": 6,
+          "n": 8,
+          "ci95": [
+            0.409,
+            0.929
+          ]
+        },
+        "open-redirect": {
+          "hits": 5,
+          "n": 8,
+          "ci95": [
+            0.306,
+            0.863
+          ]
+        }
+      },
+      "credentialExposureRuns": {
+        "hits": 2,
+        "n": 8,
+        "ci95": [
+          0.071,
+          0.591
+        ]
+      },
+      "toolUsed": {
+        "hits": 0,
+        "n": 8,
+        "ci95": [
+          0,
+          0.324
+        ]
+      },
+      "toolEnforcedInTests": {
+        "hits": 0,
+        "n": 8,
+        "ci95": [
+          0,
+          0.324
+        ]
+      },
+      "contaminated": 0,
+      "appSourceModified": 0,
+      "costUsd": 0.96,
+      "agentMinutes": 7.21
+    },
+    "B": {
+      "runs": 8,
+      "scored": 8,
+      "agentCompleted": 8,
+      "suitePassesFixed": {
+        "hits": 7,
+        "n": 8,
+        "ci95": [
+          0.529,
+          0.978
+        ]
+      },
+      "caughtSeenFlaw": {
+        "no-httponly": {
+          "hits": 0,
+          "n": 2,
+          "ci95": [
+            0,
+            0.658
+          ]
+        },
+        "js-token": {
+          "hits": 0,
+          "n": 2,
+          "ci95": [
+            0,
+            0.658
+          ]
+        },
+        "open-redirect": {
+          "hits": 0,
+          "n": 2,
+          "ci95": [
+            0,
+            0.658
+          ]
+        }
+      },
+      "catchesAnyVersion": {
+        "no-httponly": {
+          "hits": 5,
+          "n": 8,
+          "ci95": [
+            0.306,
+            0.863
+          ]
+        },
+        "js-token": {
+          "hits": 6,
+          "n": 8,
+          "ci95": [
+            0.409,
+            0.929
+          ]
+        },
+        "open-redirect": {
+          "hits": 5,
+          "n": 8,
+          "ci95": [
+            0.306,
+            0.863
+          ]
+        }
+      },
+      "credentialExposureRuns": {
+        "hits": 2,
+        "n": 8,
+        "ci95": [
+          0.071,
+          0.591
+        ]
+      },
+      "toolUsed": {
+        "hits": 0,
+        "n": 8,
+        "ci95": [
+          0,
+          0.324
+        ]
+      },
+      "toolEnforcedInTests": {
+        "hits": 0,
+        "n": 8,
+        "ci95": [
+          0,
+          0.324
+        ]
+      },
+      "contaminated": null,
+      "appSourceModified": 0,
+      "costUsd": 0.94,
+      "agentMinutes": 6.62
+    }
+  }
+}

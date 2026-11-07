@@ -1,11 +1,20 @@
 # Runs real Claude Code sessions, so every dispatch costs API spend (ANTHROPIC_API_KEY)
-# or plan usage (CLAUDE_CODE_OAUTH_TOKEN). Manual only. Protocol:
-# benchmarks/auth-testing/PROTOCOL.md
+# or plan usage (CLAUDE_CODE_OAUTH_TOKEN), except `gate-comparison`, which runs no agent.
+# Manual only. Protocols: benchmarks/auth-testing/PROTOCOL.md (pilot) and
+# benchmarks/security-gate/PROTOCOL.md (gate-comparison, fix-retest).
 name: Auth testing benchmark
 
 on:
   workflow_dispatch:
     inputs:
+      study:
+        description: pilot (test writing), gate-comparison (no agent), or fix-retest
+        type: choice
+        options: [pilot, gate-comparison, fix-retest]
+        default: pilot
+      flaws:
+        description: fix-retest only, app versions, comma-separated
+        default: no-httponly,logout-kept,js-token
       model:
         description: Claude model for the agent
         default: claude-sonnet-5-5
@@ -13,7 +22,7 @@ on:
         description: App versions, comma-separated
         default: fixed,no-httponly,js-token,open-redirect
       conditions:
-        description: A = default workflow, B = plus the Agent Skill and MCP server
+        description: pilot A,B (default workflow, plus Skill and MCP); fix-retest N,C (native test, CookieGuard gate)
         default: A,B
       repeats:
         description: Runs per version and condition
@@ -40,6 +49,7 @@ env:
 jobs:
   validate:
     name: Validate the harness
+    if: inputs.study == 'pilot'
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     outputs:
@@ -183,4 +193,194 @@ jobs:
       - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: summary
+          path: summary
+
+  # ---- Security-gate comparison: deterministic, no agent and no secret. ----
+  gate-comparison:
+    name: Security-gate comparison
+    if: inputs.study == 'gate-comparison'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 24
+      - run: npm ci --no-audit --no-fund
+      - name: Install Chromium
+        run: |
+          sudo mkdir -p "$PLAYWRIGHT_BROWSERS_PATH"
+          sudo chown "$USER" "$PLAYWRIGHT_BROWSERS_PATH"
+          npx --yes "playwright@$PLAYWRIGHT_VERSION" install chromium
+          sudo env "HOME=/root" "PATH=$PATH" npx --yes "playwright@$PLAYWRIGHT_VERSION" install-deps chromium
+      - name: Detection matrix
+        run: node benchmarks/security-gate/run.mjs matrix --deps "$RUNNER_TEMP/deps" --out "$RUNNER_TEMP/gate" --repeats "$REPEATS"
+        env:
+          REPEATS: ${{ inputs.repeats }}
+      - name: Neutralized checks
+        run: node benchmarks/security-gate/run.mjs tamper --deps "$RUNNER_TEMP/deps" --out "$RUNNER_TEMP/gate"
+      - name: Native assertion idioms
+        run: node benchmarks/security-gate/run.mjs privacy --deps "$RUNNER_TEMP/deps" --out "$RUNNER_TEMP/gate"
+      - name: Summarize
+        run: node benchmarks/security-gate/run.mjs summarize --out "$RUNNER_TEMP/gate" | tee -a "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        if: always()
+        with:
+          name: gate-comparison
+          path: |
+            ${{ runner.temp }}/gate/*.jsonl
+            ${{ runner.temp }}/gate/SUMMARY.md
+          if-no-files-found: ignore
+
+  # ---- Fix-and-retest: agents fix a flawed app whose developer installed a security test. ----
+  fix-validate:
+    name: Validate the fix-retest harness
+    if: inputs.study == 'fix-retest'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 24
+      - name: Check that an agent credential is configured
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+        run: |
+          if [ -z "$ANTHROPIC_API_KEY" ] && [ -z "$CLAUDE_CODE_OAUTH_TOKEN" ]; then
+            echo "::error::Add the ANTHROPIC_API_KEY or CLAUDE_CODE_OAUTH_TOKEN repository secret."
+            exit 1
+          fi
+      - name: Build the run matrix
+        id: matrix
+        env:
+          FLAWS: ${{ inputs.flaws }}
+          CONDITIONS: ${{ inputs.conditions }}
+          REPEATS: ${{ inputs.repeats }}
+        run: echo "matrix=$(node benchmarks/security-gate/agent.mjs matrix --flaws "$FLAWS" --conditions "$CONDITIONS" --repeats "$REPEATS")" >> "$GITHUB_OUTPUT"
+      - run: npm ci --no-audit --no-fund
+      - name: Install Chromium
+        run: |
+          sudo mkdir -p "$PLAYWRIGHT_BROWSERS_PATH"
+          sudo chown "$USER" "$PLAYWRIGHT_BROWSERS_PATH"
+          npx --yes "playwright@$PLAYWRIGHT_VERSION" install chromium
+          sudo env "HOME=/root" "PATH=$PATH" npx --yes "playwright@$PLAYWRIGHT_VERSION" install-deps chromium
+      - name: Each condition's CI blocks every flaw and accepts the fixed app
+        run: |
+          node benchmarks/security-gate/agent.mjs pack --tools "$RUNNER_TEMP/tools"
+          node benchmarks/security-gate/agent.mjs validate --deps "$RUNNER_TEMP/deps" --tools "$RUNNER_TEMP/tools" --verify-dir "$RUNNER_TEMP/validate" --out "$RUNNER_TEMP/fix-validation.json"
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        if: always()
+        with:
+          name: fix-validation
+          path: ${{ runner.temp }}/fix-validation.json
+          if-no-files-found: ignore
+
+  fix-run:
+    name: ${{ matrix.id }}
+    needs: fix-validate
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix: ${{ fromJSON(needs.fix-validate.outputs.matrix) }}
+    env:
+      RUN_ID: ${{ matrix.id }}
+      FLAW: ${{ matrix.flaw }}
+      CONDITION: ${{ matrix.condition }}
+      REPEAT: ${{ matrix.repeat }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 24
+      - run: npm ci --no-audit --no-fund
+      - name: Install Claude Code and Chromium
+        run: |
+          npm install --global --no-audit --no-fund "@anthropic-ai/claude-code@$CLAUDE_CODE_VERSION"
+          sudo mkdir -p "$PLAYWRIGHT_BROWSERS_PATH"
+          sudo chown "$USER" "$PLAYWRIGHT_BROWSERS_PATH"
+          npx --yes "playwright@$PLAYWRIGHT_VERSION" install chromium
+          sudo env "HOME=/root" "PATH=$PATH" npx --yes "playwright@$PLAYWRIGHT_VERSION" install-deps chromium
+      # CookieGuard is packed from this checkout into a directory the agent's user can read.
+      - name: Pack CookieGuard and install the protected runner's dependencies
+        run: |
+          sudo mkdir -p "$TOOLS_DIR"
+          sudo chown "$USER" "$TOOLS_DIR"
+          node benchmarks/security-gate/agent.mjs pack --tools "$TOOLS_DIR"
+          node benchmarks/security-gate/agent.mjs deps --deps "$TOOLS_DIR/deps" --tools "$TOOLS_DIR"
+      - name: Create the agent's user
+        run: |
+          sudo useradd --create-home --shell /bin/bash dev
+          sudo chmod 700 "$HOME"
+          sudo chown -R dev:dev "$PLAYWRIGHT_BROWSERS_PATH"
+      - name: Prepare the workspace
+        run: >-
+          sudo -E env "PATH=$PATH" node benchmarks/security-gate/agent.mjs prepare
+          --id "$RUN_ID" --flaw "$FLAW" --condition "$CONDITION" --repeat "$REPEAT"
+          --workspace "$WORKSPACE" --run "$RUNNER_TEMP/run" --user dev --tools "$TOOLS_DIR"
+      - name: Run the agent
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          MODEL: ${{ inputs.model }}
+          BUDGET: ${{ inputs.max_budget_usd }}
+        run: >-
+          sudo -E env "PATH=$PATH" node benchmarks/security-gate/agent.mjs agent
+          --workspace "$WORKSPACE" --run "$RUNNER_TEMP/run" --user dev
+          --model "$MODEL" --max-budget-usd "$BUDGET" --claude "$(command -v claude)"
+      - name: Score with the protected runner
+        if: always()
+        run: >-
+          sudo -E env "PATH=$PATH" node benchmarks/security-gate/agent.mjs score
+          --workspace "$WORKSPACE" --run "$RUNNER_TEMP/run" --user dev
+          --deps "$TOOLS_DIR/deps" --verify-dir /home/dev/verify
+      - name: Remove harness credentials from the run record
+        if: always()
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+        run: |
+          sudo -E env "PATH=$PATH" node benchmarks/security-gate/agent.mjs redact --run "$RUNNER_TEMP/run"
+          sudo chown -R "$USER" "$RUNNER_TEMP/run"
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        if: always()
+        with:
+          name: fix-${{ matrix.id }}
+          path: ${{ runner.temp }}/run
+          retention-days: 30
+          if-no-files-found: ignore
+
+  fix-summarize:
+    name: Summarize fix-retest
+    needs: [fix-validate, fix-run]
+    if: always() && needs.fix-validate.result == 'success'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 24
+      - uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
+        with:
+          pattern: fix-*-*
+          path: runs
+      - name: Summarize
+        run: node benchmarks/security-gate/agent.mjs summarize runs --out summary | tee -a "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: fix-summary
           path: summary

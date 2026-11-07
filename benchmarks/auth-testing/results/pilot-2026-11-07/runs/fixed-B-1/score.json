@@ -1,0 +1,98 @@
+{
+  "id": "fixed-B-1",
+  "version": "fixed",
+  "condition": "B",
+  "repeat": 1,
+  "agent": {
+    "model": "claude-sonnet-5-5",
+    "claudeVersion": "2.1.319 (Claude Code)",
+    "exitCode": 0,
+    "timedOut": false,
+    "durationMs": 50609,
+    "startedAt": "2026-11-07T18:38:33.947Z",
+    "maxBudgetUsd": 3
+  },
+  "differential": {
+    "passesFixed": true,
+    "flaky": false,
+    "caught": {
+      "no-httponly": true,
+      "js-token": true,
+      "open-redirect": true
+    },
+    "caughtSeen": null,
+    "caughtCount": 3
+  },
+  "testRuns": [
+    {
+      "version": "fixed",
+      "exitCode": 0,
+      "timedOut": false,
+      "durationMs": 2471
+    },
+    {
+      "version": "no-httponly",
+      "exitCode": 1,
+      "timedOut": false,
+      "durationMs": 1100
+    },
+    {
+      "version": "js-token",
+      "exitCode": 1,
+      "timedOut": false,
+      "durationMs": 1128
+    },
+    {
+      "version": "open-redirect",
+      "exitCode": 1,
+      "timedOut": false,
+      "durationMs": 985
+    },
+    {
+      "version": "fixed",
+      "exitCode": 0,
+      "timedOut": false,
+      "durationMs": 2460
+    }
+  ],
+  "transcript": {
+    "completed": true,
+    "resultSubtype": "success",
+    "numTurns": 7,
+    "toolCalls": 6,
+    "costUsd": 0.1138724,
+    "durationMs": 49216,
+    "tokens": {
+      "input": 14,
+      "output": 6455,
+      "cacheRead": 115644,
+      "cacheWrite": 15092
+    },
+    "credentialsShownToModel": 0,
+    "credentialsEchoedByAgent": 0,
+    "toolNameSeen": {
+      "where": "result of Bash",
+      "snippet": ".claude/skills/cookieguard-browser-auth-security/LICENSE\n.claude/skills/cookieguard-browser-auth-security/README.md\n.claude/skills/cookieguard-browser-auth-securit"
+    },
+    "mcpCalls": 0,
+    "skillLoaded": false,
+    "finalText": "I added `test/auth.test.js` with 17 login and session tests. `npm test` runs them with the existing tests and exits 0 (15 pass, 2 are marked `todo`). The Playwright login-page test also passes.\n\n## What the tests cover\n- **Anonymous access:** `/notes` and `/api/notes` reject signed-out users.\n- **Login success:** a valid login redirects to `/notes` and sets an `sid` cookie that is HttpOnly, Secure and SameSite=Lax. The session then works for pages and the API.\n- **Login failure:** a wrong password, unknown user or empty credentials returns 401 and sets no session.\n- **CSRF:** login and logout need a valid CSRF token, and so do note creation and API token issuance.\n- **Redirect after login:** `next` only allows same-site relative paths. `//evil.com`, `/\\evil.com`, absolute URLs and empty values fall back to `/notes`.\n- **Output escaping:** the `next` value reflected in the login page is HTML-escaped.\n- **Session ids:** login issues a new session id and ignores one the client supplies (session fixation). Forged ids and `__proto__` are rejected.\n- **Expiry and logout:** a session expires after one hour, using a mocked clock. Logout destroys the session on the server, so replaying the old cookie fails.\n- **API token:** it is issued only with a session and CSRF token, and its cookie is hardened. It stops working after logout, including when the `sid` cookie has already expired.\n\n## What the tests found\nTwo real bugs. I marked them `todo`, so they run and show up in the report but don't fail `npm test`. I didn't change `app.js`.\n1. **A malformed cookie returns a 500.** A header like `Cookie: sid=%E0%A4%A` makes `decodeURIComponent` throw in `parseCookies` (`app.js:17`). Any client can trigger it. Fix it with a try/catch that falls back to the raw value.\n2. **The `api_token` outlives the login session.** It is valid for 7 days and isn't tied to the one-hour session. After the session expires, the token still grants API access to read notes (`apiUser`, `app.js`). Fix it by storing an expiry or the session id with the token, or by shortening its lifetime.\n\nOne thing to be aware of: the `csrf_token` cookie is not HttpOnly. The code comment says that is deliberate, because the page script reads it, so I didn't flag it.\n\nWhen you fix the bugs, remove the `todo` options so the tests enforce the fixes.\n\nI didn't run the CookieGuard scan. The tests assert the cookie flags directly.",
+    "heuristic": {
+      "unsupportedClaim": null,
+      "mentions": {
+        "no-httponly": true,
+        "js-token": true,
+        "open-redirect": false
+      }
+    }
+  },
+  "workspace": {
+    "appModified": [],
+    "changedFiles": 1,
+    "tool": {
+      "mentioned": false,
+      "playwright": false,
+      "cli": false
+    }
+  }
+}

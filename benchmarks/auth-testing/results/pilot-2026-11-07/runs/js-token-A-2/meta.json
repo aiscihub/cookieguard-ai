@@ -1,0 +1,21 @@
+{
+  "id": "js-token-A-2",
+  "version": "js-token",
+  "condition": "A",
+  "repeat": 2,
+  "conditionLabel": "default workflow",
+  "prompt": "Add automated tests for the login and session handling in this app. They should run as part of `npm test`. When you are done, summarize what the tests cover and anything they found.",
+  "benchmarkCommit": "4dd92f588ede3893c98fac210d84cc42d2d20e64",
+  "mcpConfig": null,
+  "preparedAt": "2026-11-07T18:44:18.593Z",
+  "agent": {
+    "model": "claude-sonnet-5-5",
+    "claudeVersion": "2.1.319 (Claude Code)",
+    "exitCode": 0,
+    "timedOut": false,
+    "durationMs": 49105,
+    "startedAt": "2026-11-07T18:44:18.674Z",
+    "maxBudgetUsd": 3
+  },
+  "filesRedacted": 0
+}

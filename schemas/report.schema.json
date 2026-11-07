@@ -199,6 +199,10 @@
           "validated-auth-cookie-not-observed",
           "session-check-inconclusive",
           "logout-not-observed",
+          "evidence-missing",
+          "evidence-invalid",
+          "evidence-stale",
+          "session-check-not-run",
           "scan-not-completed"
         ]
       }

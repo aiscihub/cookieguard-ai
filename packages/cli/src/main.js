@@ -1,17 +1,20 @@
 import { parseArgs } from 'node:util';
 import { constants } from 'node:fs';
-import { open, rename, unlink } from 'node:fs/promises';
+import { lstat, open, rename, unlink } from 'node:fs/promises';
+import { join } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { AuditError, safeError, normalizeCookies, normalizeLegacyResults, evaluateCookiePolicy,
   validatePolicy, formatText, formatJson, exitCode, explain, isEvidenceReport, readEvidence } from '@aiscihub/cookieguard-core';
 import { scanUrl } from './scan.js';
 import { capabilities } from './capabilities.js';
+import { evaluateCheck, formatGateText, gateCheckId, gateResult } from './gate.js';
 import manifest from '../package.json' with { type: 'json' };
 
 const HELP = `CookieGuard CI — Authentication Cookie Audit (${manifest.version})
 Usage:
   cookieguard-ci scan URL [options]
   cookieguard-ci scan --input FILE [options]
+  cookieguard-ci gate --evidence DIR --require CHECK [--require CHECK ...] [options]
   cookieguard-ci capabilities --json
   cookieguard-ci explain ID [--json]
 
@@ -33,9 +36,18 @@ Options:
   --help                      Show help
   --version                   Show version
 
+Gate options (with the policy options above):
+  --evidence DIR              Directory the Playwright cookieGuard fixture wrote to
+  --require CHECK             Test title (or its evidence id) that must have run
+                              and passed; repeatable. Missing evidence is INCOMPLETE
+  --run-id ID                 Require evidence written with COOKIEGUARD_RUN_ID=ID
+  --require-session           Require session-probe evidence (CG010/CG011)
+  --require-logout            Require that each test logged out (CG011 decided)
+
 Examples (from a built checkout):
   cookieguard-ci scan http://127.0.0.1:3000/secure --auth-cookie session_id
   cookieguard-ci scan http://127.0.0.1:3000/missing-httponly --auth-cookie session_id --format json
+  cookieguard-ci gate --evidence cookieguard-evidence --require "sign in and out" --auth-cookie sid
 
 Commands:
   capabilities                Machine-readable description of checks, inputs,
@@ -44,6 +56,7 @@ Commands:
                               code, or status without any cookie data
 
 Exit codes: 0 completed/pass; 1 confirmed policy failure; 2 incomplete/invalid.
+The gate decides from evidence with its own policy and ignores the test runner's result.
 HTTP scanning observes headers only; it does not execute scripts or log in.
 Unknown identity/evidence remains review. Loopback only unless explicitly authorized.
 Do not pass credentials, tokens, URL queries, or storage-state exports.
@@ -98,6 +111,41 @@ function explanationText(entry) {
   return lines.join('\n') + '\n';
 }
 
+function policyOf(values) {
+  return validatePolicy({ authCookies: values['auth-cookie'] ?? [], failOn: values['fail-on'],
+    allowedSameSite: values['allowed-samesite']?.split(','), maxLifetimeDays: values['max-lifetime-days'] === undefined ? undefined : Number(values['max-lifetime-days']),
+    requireExplicitSameSite: values['require-explicit-samesite'], requireHostOnly: values['require-host-only'] });
+}
+
+async function readEvidenceFile(path) {
+  try { await lstat(path); } catch (error) {
+    if (error?.code === 'ENOENT') return null;
+    return {};
+  }
+  try { return await readJson(path); } catch { return {}; }
+}
+
+async function runGate(values, positionals, format, io) {
+  if (positionals.length !== 1 || !values.evidence || !values.require?.length || values.require.length > 100
+    || ['input', 'baseline', 'allow-origin', 'timeout-ms'].some(key => values[key] !== undefined)) throw new AuditError('CONFIG');
+  const runId = values['run-id'];
+  if (runId !== undefined && !/^[A-Za-z0-9._-]{1,128}$/.test(runId)) throw new AuditError('CONFIG');
+  const policy = policyOf(values);
+  if (!policy.authCookies.length && !policy.authEvidence.length) throw new AuditError('CONFIG');
+  const ids = [...new Set(values.require.map(gateCheckId))];
+  const checks = [];
+  for (const id of ids) {
+    const input = await readEvidenceFile(join(values.evidence, `${id}.json`));
+    checks.push(evaluateCheck(id, input, { policy, runId: runId ?? null,
+      requireSession: values['require-session'] === true, requireLogout: values['require-logout'] === true }));
+  }
+  const result = gateResult(checks, policy);
+  const contents = format === 'json' ? JSON.stringify(result, null, 2) + '\n' : formatGateText(result);
+  if (values.output) await writeReport(values.output, contents);
+  io.stdout.write(contents);
+  return result.exitCode;
+}
+
 export async function runCli(args, io = { stdout: process.stdout, stderr: process.stderr }) {
   try {
     const { values, positionals } = parseArgs({ args, allowPositionals: true, strict: true, options: {
@@ -107,12 +155,17 @@ export async function runCli(args, io = { stdout: process.stdout, stderr: proces
       'allow-origin': { type: 'string', multiple: true }, 'timeout-ms': { type: 'string' },
       'allowed-samesite': { type: 'string' }, 'max-lifetime-days': { type: 'string' },
       'require-explicit-samesite': { type: 'boolean' }, 'require-host-only': { type: 'boolean' },
+      evidence: { type: 'string' }, require: { type: 'string', multiple: true }, 'run-id': { type: 'string' },
+      'require-session': { type: 'boolean' }, 'require-logout': { type: 'boolean' },
     } });
     if (values.help) { io.stdout.write(HELP); return 0; }
     if (values.version) { io.stdout.write(`${manifest.version}\n`); return 0; }
     if (values.json && values.format && values.format !== 'json') throw new AuditError('CONFIG');
     const format = values.json ? 'json' : values.format ?? 'text';
     if (!['json', 'text'].includes(format)) throw new AuditError('CONFIG');
+    const gateOnly = ['evidence', 'require', 'run-id', 'require-session', 'require-logout'];
+    if (positionals[0] !== 'gate' && gateOnly.some(key => values[key] !== undefined)) throw new AuditError('CONFIG');
+    if (positionals[0] === 'gate') return await runGate(values, positionals, format, io);
     const scanOnly = ['auth-cookie', 'fail-on', 'output', 'input', 'baseline', 'allow-origin', 'timeout-ms',
       'allowed-samesite', 'max-lifetime-days', 'require-explicit-samesite', 'require-host-only'];
     if (['capabilities', 'explain'].includes(positionals[0])) {
@@ -128,9 +181,7 @@ export async function runCli(args, io = { stdout: process.stdout, stderr: proces
       return 0;
     }
     if (positionals[0] !== 'scan' || positionals.length !== (values.input ? 1 : 2)) throw new AuditError('CONFIG');
-    const policy = validatePolicy({ authCookies: values['auth-cookie'] ?? [], failOn: values['fail-on'],
-      allowedSameSite: values['allowed-samesite']?.split(','), maxLifetimeDays: values['max-lifetime-days'] === undefined ? undefined : Number(values['max-lifetime-days']),
-      requireExplicitSameSite: values['require-explicit-samesite'], requireHostOnly: values['require-host-only'] });
+    const policy = policyOf(values);
     const timeoutMs = Number(values['timeout-ms'] ?? 10000);
     if (!Number.isInteger(timeoutMs) || timeoutMs < 100 || timeoutMs > 60000) throw new AuditError('CONFIG');
     const baseline = values.baseline ? await readJson(values.baseline) : undefined;

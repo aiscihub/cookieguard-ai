@@ -1,0 +1,225 @@
+diff --git a/test/auth.test.js b/test/auth.test.js
+new file mode 100644
+index 0000000..4d58c82
+--- /dev/null
++++ b/test/auth.test.js
+@@ -0,0 +1,219 @@
++import { test } from 'node:test';
++import assert from 'node:assert/strict';
++import { createApp, DEMO_USER } from '../app.js';
++
++async function start(t) {
++  const server = createApp().listen(0, '127.0.0.1');
++  t.after(() => server.close());
++  await new Promise(resolve => server.once('listening', resolve));
++  return `http://127.0.0.1:${server.address().port}`;
++}
++
++// Minimal cookie jar (ignores Secure so it works over plain http).
++class Client {
++  constructor(base) { this.base = base; this.jar = new Map(); }
++  store(res) {
++    for (const line of res.headers.getSetCookie()) {
++      const [pair, ...attrs] = line.split(';');
++      const i = pair.indexOf('=');
++      const name = pair.slice(0, i).trim(), value = pair.slice(i + 1).trim();
++      const expired = attrs.some(a => /^\s*(max-age=0|expires=thu, 01 jan 1970)/i.test(a));
++      if (expired || value === '') this.jar.delete(name); else this.jar.set(name, value);
++    }
++  }
++  async req(path, { method = 'GET', headers = {}, form, json } = {}) {
++    const h = { ...headers };
++    if (this.jar.size) h.cookie = [...this.jar].map(([k, v]) => `${k}=${v}`).join('; ');
++    let body;
++    if (form) { body = new URLSearchParams(form); }
++    if (json) { body = JSON.stringify(json); h['content-type'] = 'application/json'; }
++    const res = await fetch(this.base + path, { method, headers: h, body, redirect: 'manual' });
++    this.store(res);
++    return res;
++  }
++  async login(username = DEMO_USER.username, password = DEMO_USER.password, next) {
++    await this.req('/login');
++    return this.req('/login', { method: 'POST', form: { csrf: this.jar.get('csrf_token'), username, password, ...(next !== undefined && { next }) } });
++  }
++  csrfHeader() { return { 'X-CSRF-Token': this.jar.get('csrf_token') }; }
++}
++
++const setCookie = (res, name) => res.headers.getSetCookie().find(c => c.startsWith(name + '='));
++
++test('protected pages and API reject anonymous users', async t => {
++  const c = new Client(await start(t));
++  const notes = await c.req('/notes');
++  assert.equal(notes.status, 303);
++  assert.match(notes.headers.get('location'), /^\/login/);
++  assert.equal((await c.req('/api/notes')).status, 401);
++  assert.equal((await c.req('/')).headers.get('location'), '/login');
++});
++
++test('login succeeds with valid credentials and sets a hardened session cookie', async t => {
++  const c = new Client(await start(t));
++  const res = await c.login();
++  assert.equal(res.status, 303);
++  assert.equal(res.headers.get('location'), '/notes');
++  const sid = setCookie(res, 'sid');
++  assert.ok(sid, 'sid cookie set');
++  assert.match(sid, /HttpOnly/i);
++  assert.match(sid, /Secure/i);
++  assert.match(sid, /SameSite=Lax/i);
++  assert.equal((await c.req('/notes')).status, 200);
++  assert.equal((await c.req('/api/notes')).status, 200);
++  assert.equal((await c.req('/login')).headers.get('location'), '/notes');
++});
++
++test('login rejects bad password and unknown user without creating a session', async t => {
++  const base = await start(t);
++  for (const [u, p] of [[DEMO_USER.username, 'nope'], ['mallory', DEMO_USER.password], ['', ''], [DEMO_USER.username, null]]) {
++    const c = new Client(base);
++    const res = await c.login(u, p);
++    assert.equal(res.status, 401, `${u}/${p}`);
++    assert.equal(setCookie(res, 'sid'), undefined);
++    assert.equal((await c.req('/notes')).status, 303);
++  }
++});
++
++test('login requires a valid CSRF token', async t => {
++  const c = new Client(await start(t));
++  await c.req('/login');
++  const form = { username: DEMO_USER.username, password: DEMO_USER.password };
++  assert.equal((await c.req('/login', { method: 'POST', form })).status, 403);
++  assert.equal((await c.req('/login', { method: 'POST', form: { ...form, csrf: 'wrong' } })).status, 403);
++  const bare = new Client(c.base); // no csrf cookie at all
++  assert.equal((await bare.req('/login', { method: 'POST', form: { ...form, csrf: '' } })).status, 403);
++});
++
++test('post-login redirect only allows same-site relative paths', async t => {
++  const base = await start(t);
++  const cases = [['/notes', '/notes'], ['/other?x=1', '/other?x=1'], ['//evil.com', '/notes'], ['/\\evil.com', '/notes'],
++    ['https://evil.com', '/notes'], ['evil.com', '/notes'], ['', '/notes']];
++  for (const [next, expected] of cases) {
++    const res = await new Client(base).login(undefined, undefined, next);
++    assert.equal(res.headers.get('location'), expected, `next=${next}`);
++  }
++});
++
++test('login page escapes reflected next parameter', async t => {
++  const c = new Client(await start(t));
++  const html = await (await c.req('/login?next=' + encodeURIComponent('"><script>alert(1)</script>'))).text();
++  assert.ok(!html.includes('<script>alert(1)'));
++});
++
++test('login issues a fresh session id and invalidates the previous one', async t => {
++  const c = new Client(await start(t));
++  const first = await c.login();
++  const sid1 = setCookie(first, 'sid').split(';')[0];
++  const second = await c.req('/login'); // already signed in -> redirect
++  assert.equal(second.status, 303);
++  // Log in again from a new client while presenting the old sid (fixation attempt).
++  const attacker = new Client(c.base);
++  attacker.jar.set('sid', 'sess_attackerchosen');
++  const res = await attacker.login();
++  assert.notEqual(setCookie(res, 'sid').split(';')[0], 'sid=sess_attackerchosen');
++  assert.notEqual(setCookie(res, 'sid').split(';')[0], sid1);
++  assert.equal((await c.req('/notes')).status, 200, 'unrelated session still valid');
++});
++
++test('forged or garbage session cookies are not accepted', async t => {
++  const c = new Client(await start(t));
++  for (const sid of ['sess_deadbeef', '', 'alice', '__proto__', 'constructor']) {
++    c.jar.set('sid', sid);
++    assert.equal((await c.req('/notes')).status, 303, sid);
++  }
++});
++
++test('malformed cookie encoding does not crash the server', { todo: 'BUG: decodeURIComponent throws -> HTTP 500' }, async t => {
++  const base = await start(t);
++  const res = await fetch(base + '/notes', { headers: { cookie: 'sid=%E0%A4%A' }, redirect: 'manual' });
++  assert.ok(res.status < 500, `got ${res.status}`);
++});
++
++test('session expires after its TTL', async t => {
++  const c = new Client(await start(t));
++  await c.login();
++  const realNow = Date.now;
++  t.after(() => { Date.now = realNow; });
++  Date.now = () => realNow() + 61 * 60 * 1000;
++  const res = await c.req('/notes');
++  assert.equal(res.status, 303);
++  assert.match(res.headers.get('location'), /^\/login/);
++});
++
++test('logout requires CSRF, then destroys the session server-side', async t => {
++  const c = new Client(await start(t));
++  await c.login();
++  const sid = c.jar.get('sid');
++  assert.equal((await c.req('/logout', { method: 'POST', form: {} })).status, 403);
++  assert.equal((await c.req('/notes')).status, 200);
++  await c.req('/notes');
++  const out = await c.req('/logout', { method: 'POST', form: { csrf: c.jar.get('csrf_token') } });
++  assert.equal(out.status, 303);
++  assert.equal(out.headers.get('location'), '/login');
++  assert.ok(!c.jar.has('sid'));
++  // Replaying the old cookie must fail.
++  const replay = new Client(c.base);
++  replay.jar.set('sid', sid);
++  assert.equal((await replay.req('/notes')).status, 303);
++});
++
++test('notes API: CSRF required for writes and notes are per-user', async t => {
++  const c = new Client(await start(t));
++  await c.login();
++  assert.equal((await c.req('/api/notes', { method: 'POST', json: { text: 'x' } })).status, 403);
++  assert.equal((await c.req('/api/notes', { method: 'POST', headers: c.csrfHeader(), json: { text: '  ' } })).status, 400);
++  assert.equal((await c.req('/api/notes', { method: 'POST', headers: c.csrfHeader(), json: { text: 'hello' } })).status, 201);
++  const { notes } = await (await c.req('/api/notes')).json();
++  assert.ok(notes.some(n => n.text === 'hello'));
++});
++
++test('API token: issued only with session + CSRF, with hardened cookie', async t => {
++  const c = new Client(await start(t));
++  assert.equal((await c.req('/api/token', { method: 'POST' })).status, 401);
++  await c.login();
++  assert.equal((await c.req('/api/token', { method: 'POST' })).status, 403);
++  const res = await c.req('/api/token', { method: 'POST', headers: c.csrfHeader() });
++  assert.equal(res.status, 200);
++  const cookie = setCookie(res, 'api_token');
++  assert.match(cookie, /HttpOnly/i);
++  assert.match(cookie, /Secure/i);
++  assert.match(cookie, /SameSite=Strict/i);
++});
++
++test('API token stops working after logout', async t => {
++  const c = new Client(await start(t));
++  await c.login();
++  await c.req('/api/token', { method: 'POST', headers: c.csrfHeader() });
++  const token = c.jar.get('api_token');
++  await c.req('/logout', { method: 'POST', form: { csrf: c.jar.get('csrf_token') } });
++  const replay = new Client(c.base);
++  replay.jar.set('api_token', token);
++  assert.equal((await replay.req('/api/notes')).status, 401);
++});
++
++// Finding: the API token outlives the 1h session (7 days) and is not bound to it.
++test('API token does not outlive the login session', { todo: 'BUG: api_token valid 7 days, not tied to the 1h session' }, async t => {
++  const c = new Client(await start(t));
++  await c.login();
++  await c.req('/api/token', { method: 'POST', headers: c.csrfHeader() });
++  const token = c.jar.get('api_token');
++  const realNow = Date.now;
++  t.after(() => { Date.now = realNow; });
++  Date.now = () => realNow() + 2 * 60 * 60 * 1000; // session (1h) expired
++  const replay = new Client(c.base);
++  replay.jar.set('api_token', token);
++  assert.equal((await replay.req('/api/notes')).status, 401, 'expired session still grants API access via api_token');
++});
++
++test('logout revokes API token even if the session cookie has already expired', async t => {
++  const c = new Client(await start(t));
++  await c.login();
++  await c.req('/api/token', { method: 'POST', headers: c.csrfHeader() });
++  const token = c.jar.get('api_token');
++  c.jar.delete('sid'); // browser dropped the 1h session cookie
++  await c.req('/logout', { method: 'POST', form: { csrf: c.jar.get('csrf_token') } });
++  const replay = new Client(c.base);
++  replay.jar.set('api_token', token);
++  assert.equal((await replay.req('/api/notes')).status, 401);
++});

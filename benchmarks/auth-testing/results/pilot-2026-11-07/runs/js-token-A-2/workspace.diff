@@ -1,0 +1,268 @@
+diff --git a/test/auth.test.js b/test/auth.test.js
+new file mode 100644
+index 0000000..55d1c30
+--- /dev/null
++++ b/test/auth.test.js
+@@ -0,0 +1,262 @@
++import { test } from 'node:test';
++import assert from 'node:assert/strict';
++import { createApp, DEMO_USER } from '../app.js';
++
++// Starts an app instance and returns a client with a minimal cookie jar.
++// (Node's fetch has no jar, and the app sets `secure` cookies on plain http.)
++async function start(t) {
++  const server = createApp().listen(0, '127.0.0.1');
++  t.after(() => server.close());
++  await new Promise(resolve => server.once('listening', resolve));
++  const base = `http://127.0.0.1:${server.address().port}`;
++  return { base, client: () => makeClient(base) };
++}
++
++function makeClient(base) {
++  const jar = new Map();
++  const attrs = new Map();
++  async function request(path, { method = 'GET', headers = {}, form, json } = {}) {
++    const h = { ...headers };
++    if (jar.size) h.cookie = [...jar].map(([k, v]) => `${k}=${v}`).join('; ');
++    let body;
++    if (form) { body = new URLSearchParams(form).toString(); h['content-type'] = 'application/x-www-form-urlencoded'; }
++    if (json) { body = JSON.stringify(json); h['content-type'] = 'application/json'; }
++    const res = await fetch(base + path, { method, headers: h, body, redirect: 'manual' });
++    for (const line of res.headers.getSetCookie()) {
++      const [pair, ...flags] = line.split(';').map(s => s.trim());
++      const i = pair.indexOf('=');
++      const name = pair.slice(0, i), value = pair.slice(i + 1);
++      attrs.set(name, flags.map(f => f.toLowerCase()));
++      const expired = flags.some(f => /^expires=thu, 01 jan 1970/i.test(f) || /^max-age=0$/i.test(f));
++      if (expired) jar.delete(name); else jar.set(name, value);
++    }
++    res.text = await res.text();
++    return res;
++  }
++  return { request, jar, attrs, cookie: name => jar.get(name) };
++}
++
++async function loginPageCsrf(c) {
++  await c.request('/login');
++  return c.cookie('csrf_token');
++}
++
++async function signIn(c, overrides = {}) {
++  const csrf = await loginPageCsrf(c);
++  return c.request('/login', { method: 'POST', form: { csrf, ...DEMO_USER, next: '', ...overrides } });
++}
++
++// Signs in and returns the CSRF token for later API calls.
++async function signedIn(t) {
++  const { base, client } = await start(t);
++  const c = client();
++  const res = await signIn(c);
++  assert.equal(res.status, 303);
++  return { base, c, csrf: c.cookie('csrf_token') };
++}
++
++test('login: unauthenticated visitors are sent to the login page', async t => {
++  const { client } = await start(t);
++  const c = client();
++  const root = await c.request('/');
++  assert.equal(root.status, 303);
++  assert.equal(root.headers.get('location'), '/login');
++  const notes = await c.request('/notes');
++  assert.equal(notes.status, 303);
++  assert.match(notes.headers.get('location'), /^\/login/);
++  assert.equal((await c.request('/api/notes')).status, 401);
++});
++
++test('login: valid credentials create a session and reach /notes', async t => {
++  const { client } = await start(t);
++  const c = client();
++  const res = await signIn(c);
++  assert.equal(res.status, 303);
++  assert.equal(res.headers.get('location'), '/notes');
++  assert.match(c.cookie('sid'), /^sess_[0-9a-f]{32}$/);
++  const page = await c.request('/notes');
++  assert.equal(page.status, 200);
++  assert.match(page.text, /Notes for Alice/);
++  assert.equal((await c.request('/login')).headers.get('location'), '/notes');
++});
++
++test('login: session cookie has hardened attributes', async t => {
++  const { client } = await start(t);
++  const c = client();
++  await signIn(c);
++  const flags = c.attrs.get('sid');
++  assert.ok(flags.includes('httponly'));
++  assert.ok(flags.includes('secure'));
++  assert.ok(flags.includes('samesite=lax'));
++  assert.ok(flags.includes('max-age=3600'));
++});
++
++test('login: wrong password, unknown user and missing fields are rejected', async t => {
++  const { client } = await start(t);
++  for (const overrides of [{ password: 'nope' }, { username: 'mallory' }, { username: '', password: '' }, { password: undefined }]) {
++    const c = client();
++    const res = await signIn(c, overrides);
++    assert.equal(res.status, 401, JSON.stringify(overrides));
++    assert.match(res.text, /Invalid username or password/);
++    assert.equal(c.cookie('sid'), undefined);
++    assert.equal((await c.request('/notes')).status, 303);
++  }
++});
++
++test('login: error message is identical for unknown user and wrong password', async t => {
++  const { client } = await start(t);
++  const a = await signIn(client(), { password: 'nope' });
++  const b = await signIn(client(), { username: 'mallory' });
++  assert.equal(a.text.replace(/value="[^"]*"/g, ''), b.text.replace(/value="[^"]*"/g, ''));
++});
++
++test('login: CSRF token is required and must match the cookie', async t => {
++  const { client } = await start(t);
++  const c = client();
++  await loginPageCsrf(c);
++  assert.equal((await c.request('/login', { method: 'POST', form: { ...DEMO_USER } })).status, 403);
++  assert.equal((await c.request('/login', { method: 'POST', form: { ...DEMO_USER, csrf: 'forged' } })).status, 403);
++  // No csrf cookie at all, even with an empty form token.
++  assert.equal((await client().request('/login', { method: 'POST', form: { ...DEMO_USER, csrf: '' } })).status, 403);
++  assert.equal(c.cookie('sid'), undefined);
++});
++
++test('login: redirect target only allows same-site paths', async t => {
++  const { client } = await start(t);
++  const cases = [
++    ['/notes', '/notes'], ['/notes?x=1', '/notes?x=1'], ['', '/notes'],
++    ['https://evil.example', '/notes'], ['//evil.example', '/notes'], ['/\\evil.example', '/notes'],
++    ['javascript:alert(1)', '/notes'], ['evil.example', '/notes'],
++  ];
++  for (const [next, expected] of cases) {
++    const res = await signIn(client(), { next });
++    assert.equal(res.headers.get('location'), expected, `next=${next}`);
++  }
++});
++
++test('login: next and error output are HTML-escaped', async t => {
++  const { client } = await start(t);
++  const c = client();
++  const res = await c.request('/login?next=' + encodeURIComponent('"><script>alert(1)</script>'));
++  assert.ok(!res.text.includes('<script>alert(1)'));
++  const bad = await signIn(client(), { password: 'x', next: '"><img src=x onerror=alert(1)>' });
++  assert.ok(!bad.text.includes('<img src=x'));
++});
++
++test('session: a new session id is issued at login and the old one is discarded', async t => {
++  const { base, client } = await start(t);
++  const c = client();
++  await signIn(c);
++  const first = c.cookie('sid');
++  await signIn(c);
++  const second = c.cookie('sid');
++  assert.notEqual(first, second);
++  const old = client();
++  old.jar.set('sid', first);
++  assert.equal((await old.request('/api/notes')).status, 401);
++});
++
++test('session: a forged or fixated session id is not accepted', async t => {
++  const { client } = await start(t);
++  const c = client();
++  c.jar.set('sid', 'sess_' + '0'.repeat(32));
++  assert.equal((await c.request('/notes')).status, 303);
++  const res = await signIn(c);
++  assert.notEqual(c.cookie('sid'), 'sess_' + '0'.repeat(32));
++  assert.equal(res.status, 303);
++});
++
++test('session: expires after the one hour TTL', async t => {
++  const { client } = await start(t);
++  const c = client();
++  await signIn(c);
++  assert.equal((await c.request('/notes')).status, 200);
++  const realNow = Date.now;
++  t.after(() => { Date.now = realNow; });
++  Date.now = () => realNow() + 60 * 60 * 1000 + 1000;
++  assert.equal((await c.request('/notes')).status, 303);
++  assert.equal((await c.request('/api/notes')).status, 401);
++});
++
++test('logout: requires CSRF token and keeps the session if it is missing', async t => {
++  const { c } = await signedIn(t);
++  const res = await c.request('/logout', { method: 'POST', form: {} });
++  assert.equal(res.status, 403);
++  assert.equal((await c.request('/notes')).status, 200);
++});
++
++test('logout: ends the session server-side, not just in the browser', async t => {
++  const { base, c, csrf } = await signedIn(t);
++  const stolen = makeClient(base);
++  stolen.jar.set('sid', c.cookie('sid'));
++  const res = await c.request('/logout', { method: 'POST', form: { csrf } });
++  assert.equal(res.status, 303);
++  assert.equal(res.headers.get('location'), '/login');
++  assert.equal(c.cookie('sid'), undefined);
++  assert.equal((await stolen.request('/notes')).status, 303);
++});
++
++test('api: notes require a session; writes also require a CSRF header', async t => {
++  const { c, csrf } = await signedIn(t);
++  const list = await c.request('/api/notes');
++  assert.equal(list.status, 200);
++  assert.deepEqual(JSON.parse(list.text).notes, [{ text: 'Welcome to Acme Notes' }]);
++  assert.equal((await c.request('/api/notes', { method: 'POST', json: { text: 'x' } })).status, 403);
++  assert.equal((await c.request('/api/notes', { method: 'POST', json: { text: 'x' }, headers: { 'x-csrf-token': 'bad' } })).status, 403);
++  assert.equal((await c.request('/api/notes', { method: 'POST', json: { text: '  ' }, headers: { 'x-csrf-token': csrf } })).status, 400);
++  const ok = await c.request('/api/notes', { method: 'POST', json: { text: ' hello ' }, headers: { 'x-csrf-token': csrf } });
++  assert.equal(ok.status, 201);
++  assert.deepEqual(JSON.parse((await c.request('/api/notes')).text).notes.at(-1), { text: 'hello' });
++});
++
++test('api: token endpoint needs a session and CSRF header', async t => {
++  const { client } = await start(t);
++  assert.equal((await client().request('/api/token', { method: 'POST' })).status, 401);
++  const { c, csrf } = await signedIn(t);
++  assert.equal((await c.request('/api/token', { method: 'POST' })).status, 403);
++  const res = await c.request('/api/token', { method: 'POST', headers: { 'x-csrf-token': csrf } });
++  assert.equal(res.status, 200);
++  assert.match(JSON.parse(res.text).token, /^tok_[0-9a-f]{32}$/);
++});
++
++// ---- Known problems -------------------------------------------------------
++// These assert the SECURE behavior and currently fail, so they are marked `todo`:
++// they are reported but do not fail `npm test`. Remove `todo` once fixed.
++
++async function issueToken(c, csrf) {
++  const res = await c.request('/api/token', { method: 'POST', headers: { 'x-csrf-token': csrf } });
++  return JSON.parse(res.text).token;
++}
++
++test('logout revokes every API token issued to the session', { todo: 'tokens issued by /api/token are never revoked except the one in the caller\'s cookie' }, async t => {
++  const { base, c, csrf } = await signedIn(t);
++  const t1 = await issueToken(c, csrf); // e.g. issued on an earlier page load, or copied by an attacker
++  const t2 = await issueToken(c, csrf);
++  c.jar.set('api_token', t2); // the page keeps only the latest token
++  await c.request('/logout', { method: 'POST', form: { csrf } });
++  const attacker = makeClient(base);
++  attacker.jar.set('api_token', t1);
++  assert.equal((await attacker.request('/api/notes')).status, 401);
++});
++
++test('API tokens do not outlive the login session', { todo: 'token lives 7 days and is not tied to the 1 hour session' }, async t => {
++  const { base, c, csrf } = await signedIn(t);
++  const token = await issueToken(c, csrf);
++  const realNow = Date.now;
++  t.after(() => { Date.now = realNow; });
++  Date.now = () => realNow() + 2 * 60 * 60 * 1000;
++  const other = makeClient(base);
++  other.jar.set('api_token', token);
++  assert.equal((await other.request('/api/notes')).status, 401);
++});
++
++test('API tokens have an expiry enforced by the server', { todo: 'maxAge is only advertised to the client; apiTokens never expire server-side' }, async t => {
++  const { base, c, csrf } = await signedIn(t);
++  const token = await issueToken(c, csrf);
++  const realNow = Date.now;
++  t.after(() => { Date.now = realNow; });
++  Date.now = () => realNow() + 8 * 24 * 60 * 60 * 1000;
++  const other = makeClient(base);
++  other.jar.set('api_token', token);
++  assert.equal((await other.request('/api/notes')).status, 401);
++});

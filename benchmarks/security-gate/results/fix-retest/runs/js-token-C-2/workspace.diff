@@ -1,0 +1,33 @@
+diff --git a/app.js b/app.js
+index 6c3a3ec..7aaeefe 100644
+--- a/app.js
++++ b/app.js
+@@ -121,8 +121,10 @@ export function createApp() {
+     if (!req.user) return res.status(401).json({ error: 'Not signed in.' });
+     if (!validCsrf(req, req.get('X-CSRF-Token'))) return res.status(403).json({ error: 'Invalid CSRF token.' });
+     const token = 'tok_' + randomBytes(16).toString('hex');
++    apiTokens.delete(req.cookies.api_token);
+     apiTokens.set(token, req.user);
+-    res.json({ token, maxAge: API_TOKEN_TTL_MS / 1000 });
++    res.cookie('api_token', token, { httpOnly: true, secure: true, sameSite: 'strict', path: '/', maxAge: API_TOKEN_TTL_MS });
++    res.json({ ok: true });
+   });
+ 
+   app.get('/api/notes', (req, res) => {
+diff --git a/public/app.js b/public/app.js
+index 8f45244..35cabb0 100644
+--- a/public/app.js
++++ b/public/app.js
+@@ -7,10 +7,8 @@ function csrfToken() {
+ }
+ 
+ async function getApiToken() {
+-  const response = await fetch('/api/token', { method: 'POST', headers: { 'X-CSRF-Token': csrfToken() } });
+-  if (!response.ok) return;
+-  const { token, maxAge } = await response.json();
+-  document.cookie = `api_token=${token}; path=/; max-age=${maxAge}; samesite=strict; secure`;
++  await fetch('/api/token', { method: 'POST', headers: { 'X-CSRF-Token': csrfToken() } });
++  // The server sets the api_token cookie as HttpOnly; the page never sees the token.
+ }
+ 
+ async function load() {
