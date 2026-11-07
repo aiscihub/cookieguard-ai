@@ -192,9 +192,11 @@ export function startCookieAudit(context, options) {
           browserObservations.push(observation);
         }
       }
-      // Configured cookies seen earlier but gone now: evaluate their last store state.
+      // Configured cookies seen earlier but gone now, with no header that set them (for
+      // example, set by page script): evaluate their last store state.
       for (const [key, observation] of lastSeen) {
         if (browserObservations.some(c => JSON.stringify([c.origin, c.name, c.domain, c.path]) === key)) continue;
+        if (observations.some(h => !h.deleted && JSON.stringify([h.origin, h.name, h.domain, h.path]) === key)) continue;
         if (browserObservations.length + observations.length >= maxObservations) throw new AuditError('COLLECT');
         browserObservations.push(observation);
       }

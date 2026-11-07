@@ -203,12 +203,12 @@ function record(meta, cell) {
 
 async function appendJsonl(path, row) { await writeFile(path, JSON.stringify(row) + '\n', { flag: 'a' }); }
 
-async function matrix({ deps, out, repeats }) {
+async function matrix({ deps, out, repeats, approaches = Object.keys(APPROACHES) }) {
   await prepareDeps(deps);
   const path = join(out, 'matrix.jsonl');
   const work = join(out, 'work');
   for (let repeat = 1; repeat <= repeats; repeat++) {
-    for (const approach of Object.keys(APPROACHES)) {
+    for (const approach of approaches) {
       for (const variant of Object.keys(VARIANTS)) {
         const dir = join(work, `${approach}-${variant}`);
         await buildWorkspace({ dir, deps, variant, approach });
@@ -359,12 +359,12 @@ export async function summarize({ out }) {
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const { values, positionals } = parseArgs({ allowPositionals: true, options: {
-    deps: { type: 'string' }, out: { type: 'string' }, repeats: { type: 'string', default: '3' } } });
+    deps: { type: 'string' }, out: { type: 'string' }, repeats: { type: 'string', default: '3' }, approaches: { type: 'string' } } });
   const command = positionals[0];
   const out = values.out && resolve(values.out);
   if (out) await mkdir(out, { recursive: true });
   const deps = values.deps && resolve(values.deps);
-  if (command === 'matrix') await matrix({ deps, out, repeats: Number(values.repeats) });
+  if (command === 'matrix') await matrix({ deps, out, repeats: Number(values.repeats), ...(values.approaches ? { approaches: values.approaches.split(',') } : {}) });
   else if (command === 'tamper') await tamper({ deps, out });
   else if (command === 'privacy') await privacy({ deps, out });
   else if (command === 'summarize') process.stdout.write(await summarize({ out }));

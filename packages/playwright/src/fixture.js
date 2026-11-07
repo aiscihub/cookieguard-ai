@@ -51,7 +51,7 @@ export function failureMessage(id, report) {
   for (const issue of report.issues) lines.push(`  Incomplete: ${issue} — ${explain(issue)?.meaning ?? ''}`, `    Fix: ${explain(issue)?.fix ?? ''}`);
   for (const c of report.session?.cookies ?? []) lines.push(`  Session ${JSON.stringify(c.name)}: rotation ${c.rotation}; logout ${c.logout}`);
   const review = report.findings.filter(f => f.status === 'review').length;
-  if (review) lines.push(`  ${review} review item${review === 1 ? '' : 's'} not shown: they do not block and need no change to pass.`);
+  if (review) lines.push(`  Not shown: ${review} review item${review === 1 ? '' : 's'}, which do not block and need no change to pass.`);
   lines.push(`  Explain a rule: npx cookieguard-ci explain ${blocking[0]?.ruleId ?? report.issues[0] ?? 'CG001'}`);
   return lines.join('\n');
 }

@@ -44,7 +44,7 @@ test('the fixture writes value-free evidence and fails the test with only blocki
     assert.match(error.message, /CookieGuard FAIL for "sign-in-and-out"/);
     assert.match(error.message, /HIGH CG001 "sid": Missing HttpOnly/);
     assert.doesNotMatch(error.message, /"csrf"/, 'review items are counted, not listed');
-    assert.match(error.message, /review items? not shown/);
+    assert.match(error.message, /Not shown: \d+ review items?/);
     const evidence = await readFile(join(dir, files[0]), 'utf8');
     assert.equal(evidence.includes(TOKEN), false);
     assert.equal(error.message.includes(TOKEN), false);

@@ -185,4 +185,13 @@ not block SameSite=None (CG003 is medium); C0 measures this.
 
 ## Changes after registration
 
-None yet.
+- **2026-11-07, after the Part 1 measured runs (CI run 42420263420 and the macOS replication):**
+  - **Duplicate finding:** the store snapshot added in development item 1 could duplicate a
+    header finding for a cookie deleted at logout, so CG001 appeared twice in the message.
+    The collector now uses a snapshot only when no header set that cookie.
+  - **Verdicts unchanged:** C and C0 were rerun on all 11 versions after the change, and all
+    22 verdicts were identical ([`results/comparison-macos/recheck-after-dedupe.jsonl`](results/comparison-macos/recheck-after-dedupe.jsonl)).
+  - **Other edits:** the review-item wording in the fixture message, and an `--approaches`
+    option for the runner.
+  - **Not affected:** no metric, version, or approach changed. Part 2 runs use the branch
+    with this change.
