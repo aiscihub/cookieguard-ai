@@ -1,6 +1,6 @@
 {
-  "recordedAt": "2026-11-03T20:18:44Z",
-  "browser": "Chrome/156.0.8078.80",
+  "recordedAt": "2026-11-07T03:16:31Z",
+  "browser": "Chrome/156.0.8078.81",
   "model": "claude-opus-5-5 via browser_use.ChatAnthropic (adaptive thinking; server-side fallback to claude-opus-4-8)",
   "timing": "idle gaps over 2.0s (no page change or log line) keep 0.5s at each end; the rest is condensed to 0.6s and labelled fast-forward",
   "scenarios": [
@@ -9,76 +9,76 @@
       "status": "FAIL",
       "exitCode": 1,
       "serverLogins": 1,
-      "screencastFrames": 62,
-      "seconds": 29.6,
+      "screencastFrames": 69,
+      "seconds": 20.4,
       "panelLines": [
         {
-          "t": 0.23,
+          "t": 0.16,
           "lane": "guard",
           "text": "audit.start(session): observing the agent’s browser"
         },
         {
-          "t": 1.04,
+          "t": 1.24,
           "lane": "agent",
-          "text": "start   navigate: url: http://127.0.0.1:55648/login, new_tab: False"
+          "text": "start   navigate: url: http://127.0.0.1:62321/login, new_tab: False"
         },
         {
-          "t": 7.72,
+          "t": 5.38,
           "lane": "agent",
           "text": "step 1  input: index: 5, text: <secret>login_user</secret>, clear: True"
         },
         {
-          "t": 7.95,
+          "t": 5.61,
           "lane": "agent",
           "text": "step 1  input: index: 6, text: <secret>login_password</secret>, clear: True"
         },
         {
-          "t": 8.3,
+          "t": 5.97,
           "lane": "agent",
           "text": "step 1  click: index: 7"
         },
         {
-          "t": 8.52,
+          "t": 6.17,
           "lane": "guard",
           "text": "Set-Cookie observed: session_id=[value withheld]; Path=/; Secure; SameSite=Lax"
         },
         {
-          "t": 9.09,
+          "t": 6.77,
           "lane": "agent",
           "text": "        Clicked button \"Sign in\""
         },
         {
-          "t": 14.98,
+          "t": 10.29,
           "lane": "agent",
           "text": "step 2  cookieguard_audit: note: None"
         },
         {
-          "t": 14.99,
+          "t": 10.29,
           "lane": "agent",
           "text": "        tool result: CookieGuard provisional check (browser cookie store only; server declarations unknown). Status: FAIL."
         },
         {
-          "t": 25.47,
+          "t": 16.28,
           "lane": "agent",
-          "text": "        Final Result: I signed in to the local demo app at http://127.0.0.1:55648/login with the provided credentials. The account page confirmed the sign-in, showing: \"Login s…"
+          "text": "        Final Result: I signed in to the demo app. The account page (http://127.0.0.1:62321/account) said \"Login succeeded. The server accepted the session cookie.\" Then I ran…"
         },
         {
-          "t": 25.56,
+          "t": 16.37,
           "lane": "guard",
           "text": "audit.finish(): server login accepted (1); evaluating"
         },
         {
-          "t": 25.96,
+          "t": 16.77,
           "lane": "guard",
           "text": "CG001 high confirmed: Missing HttpOnly (session_id)"
         },
         {
-          "t": 26.36,
+          "t": 17.17,
           "lane": "guard",
           "text": "result.assert_policy(): CookiePolicyError"
         },
         {
-          "t": 26.76,
+          "t": 17.57,
           "lane": "verdict",
           "text": "FAIL · exit 1"
         }
@@ -89,71 +89,71 @@
       "status": "PASS",
       "exitCode": 0,
       "serverLogins": 1,
-      "screencastFrames": 45,
-      "seconds": 26.8,
+      "screencastFrames": 66,
+      "seconds": 20.3,
       "panelLines": [
         {
-          "t": 0.15,
+          "t": 0.16,
           "lane": "guard",
           "text": "audit.start(session): observing the agent’s browser"
         },
         {
-          "t": 0.26,
+          "t": 0.44,
           "lane": "agent",
-          "text": "start   navigate: url: http://127.0.0.1:55687/login, new_tab: False"
+          "text": "start   navigate: url: http://127.0.0.1:62351/login, new_tab: False"
         },
         {
-          "t": 7.22,
+          "t": 4.81,
           "lane": "agent",
-          "text": "step 1  input: index: 4, text: <secret>login_user</secret>, clear: True"
+          "text": "step 1  input: index: 5, text: <secret>login_user</secret>, clear: True"
         },
         {
-          "t": 7.45,
+          "t": 5.04,
           "lane": "agent",
-          "text": "step 1  input: index: 5, text: <secret>login_password</secret>, clear: True"
+          "text": "step 1  input: index: 6, text: <secret>login_password</secret>, clear: True"
         },
         {
-          "t": 7.79,
+          "t": 5.39,
           "lane": "agent",
-          "text": "step 1  click: index: 6"
+          "text": "step 1  click: index: 7"
         },
         {
-          "t": 8.0,
+          "t": 5.59,
           "lane": "guard",
           "text": "Set-Cookie observed: session_id=[value withheld]; Path=/; Secure; HttpOnly; SameSite=Lax"
         },
         {
-          "t": 8.59,
+          "t": 6.17,
           "lane": "agent",
           "text": "        Clicked button \"Sign in\""
         },
         {
-          "t": 14.88,
+          "t": 9.57,
           "lane": "agent",
           "text": "step 2  cookieguard_audit: note: None"
         },
         {
-          "t": 14.89,
+          "t": 9.57,
           "lane": "agent",
           "text": "        tool result: CookieGuard provisional check (browser cookie store only; server declarations unknown). Status: PASS."
         },
         {
-          "t": 22.75,
+          "t": 16.21,
           "lane": "agent",
-          "text": "        Final Result: Successfully signed in to the local demo app at http://127.0.0.1:55687/login. The account page confirmed the sign-in with the message \"Login succeeded — T…"
+          "text": "        Final Result: I signed in, and the account page at http://127.0.0.1:62351/account confirmed it: \"Login succeeded. The server accepted the session cookie.\" I then ran co…"
         },
         {
-          "t": 22.85,
+          "t": 16.3,
           "lane": "guard",
           "text": "audit.finish(): server login accepted (1); evaluating"
         },
         {
-          "t": 23.65,
+          "t": 17.1,
           "lane": "guard",
           "text": "result.assert_policy(): passed"
         },
         {
-          "t": 24.05,
+          "t": 17.5,
           "lane": "verdict",
           "text": "PASS · exit 0"
         }
@@ -161,18 +161,8 @@
     }
   ],
   "outputs": {
-    "cookieguard-browser-use-demo.mp4": "01c42d910011e44419c448afcfe28aa3352e8f1d7a16ced970fa16aa35dc7ede",
-    "cookieguard-browser-use-demo.gif": "f837f2ec5761b51ea18e0e082bcf394dc29720bc33edc59d512917274223ee9f"
+    "cookieguard-browser-use-demo.mp4": "019411b73f6872d1925576d48581929ad7606c00879d78e9735b85522306e059",
+    "cookieguard-browser-use-demo.gif": "cd2d5deda9ed3e4e38e3a17e1596bab97a8c33b9deb33ea1a5aee63bb3005b9c"
   },
-  "compositeFrames": 349,
-  "revisions": [
-    {
-      "date": "2026-11-04",
-      "change": "End-card install command changed from `pip install ./integrations/browser-use` to `pip install cookieguard-browser-use` after the 0.1.0 PyPI release. Only the last 42 frames (the end card) were redrawn, with record_demo.end_card(); the recorded run, results, panel lines, and timing are unchanged. Re-encoded with the same ffmpeg settings.",
-      "previousOutputs": {
-        "cookieguard-browser-use-demo.mp4": "72b402c1ff587358e5a20da5ac7c94554336b6fcf650636484c4decc679e03fc",
-        "cookieguard-browser-use-demo.gif": "5ec08037eec0450f49a97429eaa0288959e4c648748837ff3383e0d7b43704c1"
-      }
-    }
-  ]
+  "compositeFrames": 354
 }

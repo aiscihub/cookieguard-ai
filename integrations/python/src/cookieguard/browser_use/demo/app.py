@@ -23,14 +23,29 @@ SESSION_COOKIE = 'session_id'
 MODES = ('insecure', 'secure')
 _LOOPBACK = ('127.0.0.1', 'localhost', '::1')
 
-_STYLE = ('body{font-family:system-ui,sans-serif;max-width:32rem;margin:4rem auto;padding:0 1rem;color:#1d2433}'
-	'label{display:block;margin:.75rem 0 .25rem}input{width:100%;padding:.5rem;font-size:1rem;box-sizing:border-box}'
-	'button{margin-top:1rem;padding:.6rem 1.2rem;font-size:1rem}.note{color:#5b6475;font-size:.9rem}')
+# Paper and ink, matching the README demo. Styling only: the markup is what the agent reads.
+_STYLE = ('html{background:#f6f2ea}'
+	'body{font-family:ui-sans-serif,system-ui,sans-serif;max-width:28rem;margin:4.5rem auto;padding:1.9rem 2.2rem 2.2rem;'
+	'color:#1e1915;background:#fffcf6;border:1.5px solid #1e1915;border-radius:12px;'
+	'box-shadow:6px 6px 0 -1.5px #fffcf6,6px 6px 0 0 #1e1915}'
+	'body::before{content:"LOCAL COOKIEGUARD DEMO";display:block;margin-bottom:1.1rem;padding-left:16px;'
+	'font:500 .72rem ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.08em;color:#54473c;'
+	'background:linear-gradient(#2f6bd0,#2f6bd0) 0 50%/8px 8px no-repeat}'
+	'h1{margin:0 0 .5rem;font-size:2.1rem;font-weight:500;letter-spacing:-.035em}p{color:#54473c;margin:0}'
+	'.note{font-size:.9rem;margin-bottom:.5rem;padding-bottom:1.1rem;border-bottom:1.5px dashed #c1b29c}'
+	'label{display:block;margin:1rem 0 .35rem;font-size:.9rem;font-weight:500}'
+	'input{width:100%;padding:.6rem .75rem;font:inherit;font-size:1rem;box-sizing:border-box;color:#1e1915;'
+	'background:#fff;border:1px solid #c1b29c;border-radius:8px}input:focus{outline:2px solid #2f6bd0;border-color:#2f6bd0}'
+	'button{margin-top:1.5rem;padding:.65rem 1.5rem;font:inherit;font-size:.95rem;font-weight:500;color:#fffaf0;'
+	'background:#2f6bd0;border:0;border-radius:999px}a{color:#2f6bd0}'
+	'.ok h1::before{content:"\\2713";display:inline-grid;place-items:center;width:2.2rem;height:2.2rem;margin-right:.7rem;'
+	'border-radius:50%;background:#2b7d52;color:#fff;font-size:1.25rem;vertical-align:.25rem}')
 
 
-def _page(title: str, body: str) -> bytes:
+def _page(title: str, body: str, tone: str = '') -> bytes:
+	body_tag = f'<body class="{tone}">' if tone else '<body>'
 	return (f'<!doctype html><html lang="en"><head><meta charset="utf-8"><title>{html.escape(title)}</title>'
-		f'<style>{_STYLE}</style></head><body>{body}</body></html>').encode()
+		f'<style>{_STYLE}</style></head>{body_tag}{body}</body></html>').encode()
 
 
 def set_cookie_header(mode: str, token: str) -> str:
@@ -127,7 +142,7 @@ class DemoApp:
 						self._send(303, headers={'Location': '/login'})
 					else:
 						self._send(200, _page('Account — CookieGuard demo',
-							'<h1>Login succeeded</h1><p>The server accepted the session cookie.</p>'))
+							'<h1>Login succeeded</h1><p>The server accepted the session cookie.</p>', 'ok'))
 				else:
 					self._send(404, _page('Not found', '<h1>Not found</h1>'))
 

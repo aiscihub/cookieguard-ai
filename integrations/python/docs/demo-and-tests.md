@@ -18,9 +18,10 @@ It was recorded by [`scripts/record_demo.py`](../scripts/record_demo.py) from a 
 with Claude (`claude-opus-5-5`) driving the agent. Waits for the model longer than two
 seconds are condensed and labelled *fast-forward*; everything else plays in real time.
 To re-record, run `scripts/record_demo.py --provider anthropic` with `ANTHROPIC_API_KEY` set,
-or omit `--provider` to use the scripted stand-in model, which needs no key.
-After the 0.1.0 release, only the end card's install command was updated to the PyPI
-package; the recorded run is unchanged, as the provenance records.
+or omit `--provider` to use the scripted stand-in model, which needs no key. The script
+keeps the raw capture under `artifacts/`, so `--recompose` restyles the last run without
+running the agent again. Frames use the Geist and Geist Mono fonts (SIL Open Font
+License), which the script fetches once with `npm pack geist@1.5.1`.
 [MP4](cookieguard-browser-use-demo.mp4) · [provenance](demo-provenance.json).
 
 ## Run the demonstration

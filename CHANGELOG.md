@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+- Restyle the README demo, the demo app's pages, and the social preview in a
+  paper-and-ink style after browser-use.com, with a blue accent. The demo was
+  re-recorded from a real `claude-opus-5-5` run; its end card and the social preview now
+  show `pip install cookieguard`. `scripts/record_demo.py` keeps the raw capture so
+  `--recompose` can restyle a run without repeating it.
+
 ## cookieguard 0.2.0 (Python) — 2026-11-06
 
 Published on PyPI with `cookieguard-browser-use` 0.2.0; see
