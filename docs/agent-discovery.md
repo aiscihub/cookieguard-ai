@@ -101,6 +101,7 @@ is installed, or through a directory that the agent searches.
 | npm (`cookieguard-ci`, `@aiscihub/cookieguard-core`, `-playwright`, `-mcp`) | 0.2.0 published under `latest` (2026-11-06) | Publishing a new version |
 | PyPI (`cookieguard-browser-use`) | 0.2.0 published (2026-11-06) as the compatibility package for `cookieguard` | Publishing a new version |
 | PyPI (`cookieguard`) | 0.2.0 published (2026-11-06): the Python package, with `cookieguard.browser_use` | Publishing a new version |
+| MCPRush | Listed as `cookieguard-mcp` (0.2.0, security grade A, 5 tools); its card is in the README and the MCP README (2026-11-07) | Changes to the listing |
 | Anthropic's Claude Code plugin directory | Not submitted; the marketplace file validates | Submission |
 | Agensi skill marketplace | ZIP built by `npm run package:skill` and checked by a pre-submission scan; not submitted | Submission |
 | OpenAI curated skills (`openai/skills`) | Not submitted | External pull request |
