@@ -51,6 +51,12 @@
             "type": "string"
           }
         },
+        "authStorageKeys": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
         "failOn": {
           "type": "string",
           "enum": [
@@ -116,6 +122,7 @@
       },
       "required": [
         "authCookies",
+        "authStorageKeys",
         "failOn",
         "allowedSameSite",
         "maxLifetimeDays",
@@ -190,6 +197,8 @@
           "no-cookies-observed",
           "expected-auth-cookie-not-observed",
           "validated-auth-cookie-not-observed",
+          "session-check-inconclusive",
+          "logout-not-observed",
           "scan-not-completed"
         ]
       }
@@ -222,6 +231,177 @@
         "comparedCookies"
       ],
       "additionalProperties": false
+    },
+    "session": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "probe": {
+              "type": "object",
+              "properties": {
+                "url": {
+                  "type": "string"
+                },
+                "anonymousStatus": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "minimum": -9007199254740991,
+                      "maximum": 9007199254740991
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "ok",
+                    "inconclusive"
+                  ]
+                },
+                "reason": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "enum": [
+                        "probe-error",
+                        "unprotected-url",
+                        "probe-limit",
+                        "no-authenticated-state"
+                      ]
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "probes": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "requireLogout": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "url",
+                "anonymousStatus",
+                "status",
+                "reason",
+                "probes",
+                "requireLogout"
+              ],
+              "additionalProperties": false
+            },
+            "cookies": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "domain": {
+                    "type": "string"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "origin": {
+                    "type": "string"
+                  },
+                  "rotation": {
+                    "type": "string",
+                    "enum": [
+                      "rotated",
+                      "not-rotated",
+                      "inconclusive"
+                    ]
+                  },
+                  "logout": {
+                    "type": "string",
+                    "enum": [
+                      "not-observed",
+                      "revoked",
+                      "still-valid",
+                      "inconclusive"
+                    ]
+                  }
+                },
+                "required": [
+                  "name",
+                  "domain",
+                  "path",
+                  "origin",
+                  "rotation",
+                  "logout"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "probe",
+            "cookies"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Session replay against the configured probe URL; null when no probe was configured"
+    },
+    "storage": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "schemaVersion": {
+            "type": "number",
+            "const": 1
+          },
+          "origin": {
+            "type": "string"
+          },
+          "area": {
+            "type": "string",
+            "enum": [
+              "local",
+              "session"
+            ]
+          },
+          "key": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string",
+            "enum": [
+              "jwt",
+              "token-in-json",
+              "token-key",
+              "configured"
+            ]
+          },
+          "configured": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "origin",
+          "area",
+          "key",
+          "token",
+          "configured"
+        ],
+        "additionalProperties": false
+      },
+      "description": "Token-like Web Storage entries, value-free"
     },
     "cookies": {
       "type": "array",
@@ -494,7 +674,10 @@
               "CG006",
               "CG007",
               "CG008",
-              "CG009"
+              "CG009",
+              "CG010",
+              "CG011",
+              "CG012"
             ]
           },
           "severity": {
@@ -559,7 +742,9 @@
                   "header",
                   "browser",
                   "fixture",
-                  "legacy"
+                  "legacy",
+                  "probe",
+                  "storage"
                 ]
               },
               "identityBasis": {
@@ -684,6 +869,8 @@
     "issues",
     "limitations",
     "comparison",
+    "session",
+    "storage",
     "cookies",
     "findings"
   ],

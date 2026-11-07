@@ -221,11 +221,16 @@ class LocalEngine:
 		self._next_id += 1
 		return await self._request(self._next_id, {'type': 'snapshot', 'id': self._next_id, 'cookies': cookies}, timeout=30)
 
-	async def finish(self, cookies: list[dict[str, Any]] | None, baseline: dict[str, Any] | None = None) -> dict[str, Any]:
+	async def finish(self, cookies: list[dict[str, Any]] | None, baseline: dict[str, Any] | None = None, *,
+			session: dict[str, Any] | None = None, storage: list[dict[str, Any]] | None = None) -> dict[str, Any]:
 		self._next_id += 1
 		message: dict[str, Any] = {'type': 'finish', 'id': self._next_id, 'cookies': cookies}
 		if baseline is not None:
 			message['baseline'] = baseline
+		if session is not None:
+			message['session'] = session  # Value-free timeline; the core summarizes it.
+		if storage is not None:
+			message['storage'] = storage  # Classified by the core, then dropped.
 		return await self._request(self._next_id, message, timeout=30)
 
 	async def close(self) -> None:

@@ -15,7 +15,8 @@ from ._errors import CookieGuardError, CookiePolicyError
 Status = Literal['PASS', 'FAIL', 'INCOMPLETE']
 _STATUS = {'passed': 'PASS', 'failed': 'FAIL', 'incomplete': 'INCOMPLETE'}
 _EXIT = {'PASS': 0, 'FAIL': 1, 'INCOMPLETE': 2}
-_EVIDENCE = {'header': 'server-declaration', 'browser': 'browser-observation', 'fixture': 'fixture', 'legacy': 'legacy-import'}
+_EVIDENCE = {'header': 'server-declaration', 'browser': 'browser-observation', 'fixture': 'fixture', 'legacy': 'legacy-import',
+	'probe': 'session-probe', 'storage': 'web-storage'}
 
 
 def _freeze(value: Any) -> Any:
@@ -57,7 +58,8 @@ class Finding:
 
 	@property
 	def evidence_category(self) -> str:
-		"""``server-declaration`` (observed Set-Cookie) or ``browser-observation`` (cookie store state)."""
+		"""``server-declaration`` (Set-Cookie), ``browser-observation`` (cookie store), ``session-probe`` (CG010, CG011),
+		or ``web-storage`` (CG012, where ``cookie_name`` is the storage key)."""
 		return _EVIDENCE.get(self.evidence_source, 'unknown')
 
 	def to_dict(self) -> dict[str, Any]:

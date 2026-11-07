@@ -51,8 +51,10 @@ function project(report, code, config, provenance, limitations) {
     if (!ids.has(key)) ids.set(key, `cookie-${ids.size + 1}`);
     // Remote metadata can itself contain secrets or prompt instructions. Return
     // only names explicitly supplied by the maintainer, never arbitrary names.
+    // A Web Storage finding (CG012) carries the storage key in cookie.name.
+    const configured = finding.evidence.source === 'storage' ? config.policy.authStorageKeys : config.policy.authCookies;
     return { cookieId: ids.get(key),
-      cookieName: config.policy.authCookies.includes(finding.cookie.name) ? finding.cookie.name : null,
+      cookieName: configured.includes(finding.cookie.name) ? finding.cookie.name : null,
       ruleId: finding.ruleId, severity: finding.severity, status: finding.status,
       title: finding.title, why: finding.why, fix: finding.fix,
       evidenceSource: finding.evidence.source, identityBasis: finding.evidence.identityBasis };
@@ -115,7 +117,9 @@ export function createCookieGuardServer(options) {
   const auditEvidence = name => guarded(async () => {
     const evidence = readEvidence(await readEvidenceFile(config.evidenceDir, name));
     // Evidence stays within the same authorization scope as live scans.
-    const origins = [evidence.target, ...evidence.observations.map(observation => observation.origin)].filter(Boolean);
+    const origins = [evidence.target, ...evidence.observations.map(observation => observation.origin),
+      ...(evidence.session ? [new URL(evidence.session.probe.url).origin, ...evidence.session.cookies.map(cookie => cookie.origin)] : []),
+      ...evidence.storage.map(item => item.origin)].filter(Boolean);
     if (origins.some(origin => !config.allowedOrigins.includes(origin))) throw new AuditError('TARGET');
     const report = evaluateCookiePolicy(evidence.observations, config.policy, evidence);
     return result(project(JSON.parse(formatJson(report)), exitCode(report), config,

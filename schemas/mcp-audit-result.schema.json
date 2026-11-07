@@ -110,13 +110,15 @@
             "type": "string"
           },
           "evidenceSource": {
-            "description": "header = server Set-Cookie declaration; browser = cookie-store observation",
+            "description": "header = server Set-Cookie declaration; browser = cookie-store observation; probe = session replay; storage = Web Storage entry",
             "type": "string",
             "enum": [
               "header",
               "browser",
               "fixture",
-              "legacy"
+              "legacy",
+              "probe",
+              "storage"
             ]
           },
           "identityBasis": {

@@ -8,6 +8,7 @@ from collections.abc import Iterable, Mapping
 from typing import Any
 
 from ._collector import CdpEvidenceCollector
+from ._session import SessionProbe, probe_url
 from .._engine import LocalEngine
 from .._errors import CookieGuardError
 from .._origins import validate_origins
@@ -68,6 +69,10 @@ class CookieGuardAudit:
 		require_host_only: bool = False,
 		max_lifetime_days: float = 30,
 		auth_evidence: Iterable[Mapping[str, str]] | None = None,
+		auth_storage_keys: Iterable[str] | None = None,
+		session_probe_url: str | None = None,
+		require_logout: bool = False,
+		collect_storage: bool = True,
 		capture_headers: bool = True,
 		require_header_evidence: bool | None = None,
 		allow_nonlocal_origins: bool = False,
@@ -79,7 +84,7 @@ class CookieGuardAudit:
 		self.origins = validate_origins(list(allowed_origins), allow_nonlocal_origins)
 		if fail_on not in _SEVERITIES or isinstance(allowed_same_site, str):
 			raise CookieGuardError('CONFIG')
-		for flag in (require_explicit_same_site, require_host_only, capture_headers):
+		for flag in (require_explicit_same_site, require_host_only, capture_headers, require_logout, collect_storage):
 			if not isinstance(flag, bool):
 				raise CookieGuardError('CONFIG')
 		if require_header_evidence is None:
@@ -100,8 +105,21 @@ class CookieGuardAudit:
 		self.policy: dict[str, Any] = {
 			'authCookies': _names(auth_cookies), 'failOn': fail_on, 'allowedSameSite': list(allowed_same_site),
 			'requireExplicitSameSite': require_explicit_same_site, 'requireHostOnly': require_host_only,
-			'maxLifetimeDays': max_lifetime_days, 'authEvidence': evidence,
+			'maxLifetimeDays': max_lifetime_days, 'authEvidence': evidence, 'authStorageKeys': _names(auth_storage_keys),
 		}
+		# Opt-in session probe (CG010, CG011): replays the configured authentication
+		# cookies to one protected URL on an allowed origin. It needs exact cookie
+		# names, and Set-Cookie headers to learn the values it replays.
+		self.session_probe_url: str | None = None
+		if session_probe_url is not None:
+			if not isinstance(session_probe_url, str) or not self.policy['authCookies'] or not capture_headers:
+				raise CookieGuardError('CONFIG')
+			self.session_probe_url = probe_url(session_probe_url, self.origins)
+		elif require_logout:
+			raise CookieGuardError('CONFIG')
+		self.require_logout = require_logout
+		self.collect_storage = collect_storage
+		self._probe: SessionProbe | None = None
 		self.capture_headers = capture_headers
 		self.require_header_evidence = require_header_evidence
 		self._timeout_ms = int(timeout_seconds * 1000)
@@ -193,7 +211,9 @@ class CookieGuardAudit:
 			if root is None or not getattr(root, 'url', None):
 				raise CookieGuardError('SESSION')
 			engine = LocalEngine(self._node_path)
-			collector = CdpEvidenceCollector(self.origins, engine, capture_headers=self.capture_headers)
+			probe = (SessionProbe(self.session_probe_url, self.policy['authCookies'], require_logout=self.require_logout)
+				if self.session_probe_url else None)
+			collector = CdpEvidenceCollector(self.origins, engine, capture_headers=self.capture_headers, session_probe=probe)
 			error: CookieGuardError | None = None
 			try:
 				await engine.start({'origins': list(self.origins), 'policy': self.policy, 'timeoutMs': self._timeout_ms,
@@ -212,7 +232,7 @@ class CookieGuardAudit:
 				await engine.close()
 				self._state = 'closed'
 				raise error
-			self._session, self._engine, self._collector = browser_session, engine, collector
+			self._session, self._engine, self._collector, self._probe = browser_session, engine, collector, probe
 			self._state = 'running'
 
 	async def check(self) -> AuditResult:
@@ -249,12 +269,23 @@ class CookieGuardAudit:
 					reasons.add('observer-disconnected')
 				if cookies is None:
 					reasons.add('cookie-store-unavailable')
+				storage: list[dict[str, Any]] | None = None
+				if self.collect_storage and healthy:
+					storage, storage_values = await collector.storage_entries()
+					values = [*values, *storage_values]
+					if storage is None:
+						reasons.add('web-storage-unavailable')
+				session_timeline = None
+				if self._probe is not None:
+					session_timeline = await self._probe.finish()
+					values = [*values, *self._probe.values()]
 				stats = collector.stats()
 				await collector.stop()
 				if reasons:
 					await engine.mark_incomplete()
-				reply = await engine.finish(cookies, None if baseline is None else dict(baseline))
-				del cookies
+				reply = await engine.finish(cookies, None if baseline is None else dict(baseline),
+					session=session_timeline, storage=storage)
+				del cookies, storage
 				missing = reply.get('headerEvidenceMissing') or []
 				if missing:
 					reasons.add('auth-cookie-declaration-not-observed')
@@ -274,8 +305,10 @@ class CookieGuardAudit:
 				self._state = 'closed'
 
 	async def _release(self) -> None:
-		collector, engine = self._collector, self._engine
-		self._collector = self._engine = None
+		collector, engine, probe = self._collector, self._engine, self._probe
+		self._collector = self._engine = self._probe = None
+		if probe is not None:
+			probe.clear()
 		self._session = None
 		if collector is not None:
 			await collector.stop()

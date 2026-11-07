@@ -5,7 +5,7 @@ export default [{
   languageOptions: { ecmaVersion: 'latest', sourceType: 'module', globals: {
     process: 'readonly', Buffer: 'readonly', console: 'readonly', URL: 'readonly',
     setTimeout: 'readonly', clearTimeout: 'readonly', AbortController: 'readonly',
-    structuredClone: 'readonly',
+    structuredClone: 'readonly', AbortSignal: 'readonly', URLSearchParams: 'readonly',
   } },
   rules: {
     'no-unused-vars': ['error', { argsIgnorePattern: '^_', caughtErrors: 'none' }],

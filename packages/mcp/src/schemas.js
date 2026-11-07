@@ -10,6 +10,8 @@ const status = z.enum(['passed', 'failed', 'incomplete']);
 const exitCode = z.union([z.literal(0), z.literal(1), z.literal(2)]);
 const ruleId = z.enum(Object.keys(RULES));
 const evidenceSource = z.enum(['header', 'browser', 'fixture', 'legacy']);
+// Findings also come from session replay (CG010, CG011) and Web Storage (CG012).
+const findingSource = z.enum(['header', 'browser', 'fixture', 'legacy', 'probe', 'storage']);
 const identityBasis = z.enum(['developer-name', 'validated-auth-flow', 'extension-rule-heuristic', 'extension-onnx-uncalibrated']);
 const count = z.number().int().nonnegative();
 const error = z.strictObject({ code: z.string(), message: z.string() });
@@ -31,7 +33,7 @@ export const reportSchema = z.strictObject({
   schemaVersion: z.literal(1), toolVersion: z.string(), mode: z.enum(['http', 'browser', 'fixture']),
   target: z.string().nullable(), status, classificationModes: z.array(z.enum(['rule', 'onnx'])),
   policy: z.strictObject({
-    authCookies: z.array(z.string()), failOn: severity, allowedSameSite: z.array(sameSite), maxLifetimeDays: z.number(),
+    authCookies: z.array(z.string()), authStorageKeys: z.array(z.string()), failOn: severity, allowedSameSite: z.array(sameSite), maxLifetimeDays: z.number(),
     requireExplicitSameSite: z.boolean(), requireHostOnly: z.boolean(),
     authEvidence: z.array(z.strictObject({ name: z.string(), domain: z.string(), path: z.string(), origin: z.string(),
       validation: z.literal('server-session-validated') })),
@@ -40,12 +42,23 @@ export const reportSchema = z.strictObject({
     unknownIdentity: count, confirmedViolations: count, failures: count, reviewItems: count }),
   issues: z.array(z.enum(ISSUE_CODES)), limitations: z.array(z.string()),
   comparison: z.strictObject({ status: z.enum(['not-requested', 'not-comparable', 'comparable']), comparedCookies: count }),
+  session: z.strictObject({
+    probe: z.strictObject({ url: z.string(), anonymousStatus: z.number().int().nullable(), status: z.enum(['ok', 'inconclusive']),
+      reason: z.enum(['probe-error', 'unprotected-url', 'probe-limit', 'no-authenticated-state']).nullable(),
+      probes: count, requireLogout: z.boolean() }),
+    cookies: z.array(z.strictObject({ name: z.string(), domain: z.string(), path: z.string(), origin: z.string(),
+      rotation: z.enum(['rotated', 'not-rotated', 'inconclusive']),
+      logout: z.enum(['not-observed', 'revoked', 'still-valid', 'inconclusive']) })),
+  }).nullable().describe('Session replay against the configured probe URL; null when no probe was configured'),
+  storage: z.array(z.strictObject({ schemaVersion: z.literal(1), origin: z.string(), area: z.enum(['local', 'session']),
+    key: z.string(), token: z.enum(['jwt', 'token-in-json', 'token-key', 'configured']), configured: z.boolean() }))
+    .describe('Token-like Web Storage entries, value-free'),
   cookies: z.array(z.strictObject({ observation, identity: z.strictObject({
     status: z.enum(['confirmed', 'candidate', 'unknown', 'non-auth-candidate']), basis: identityBasis }) })),
   findings: z.array(z.strictObject({
     ruleId, severity, status: z.enum(['confirmed', 'review']), title: z.string(), why: z.string(), fix: z.string(),
     cookie: z.strictObject({ name: z.string(), domain: z.string(), path: z.string(), origin: z.string().nullable() }),
-    evidence: z.strictObject({ source: evidenceSource, identityBasis, secure: z.boolean().nullable(), httpOnly: z.boolean().nullable(),
+    evidence: z.strictObject({ source: findingSource, identityBasis, secure: z.boolean().nullable(), httpOnly: z.boolean().nullable(),
       hostOnly: z.boolean().nullable(), declaredSameSite: z.enum(['strict', 'lax', 'none', 'absent', 'invalid', 'unknown']),
       effectiveSameSite: sameSite.nullable(), remainingLifetimeDays: z.number().nullable(),
       storeStatus: z.enum(['present', 'not-observed', 'unverified']), headerWarnings: z.array(z.string()), changes: z.array(z.string()) }),
@@ -57,7 +70,7 @@ export const mcpFindingSchema = z.object({
   cookieId: z.string(), cookieName: z.string().nullable(), ruleId: z.string(), severity,
   status: z.enum(['confirmed', 'review']).describe('confirmed: observed policy violation; review: heuristic or uncertain, never fails'),
   title: z.string(), why: z.string(), fix: z.string(),
-  evidenceSource: evidenceSource.optional().describe('header = server Set-Cookie declaration; browser = cookie-store observation'),
+  evidenceSource: findingSource.optional().describe('header = server Set-Cookie declaration; browser = cookie-store observation; probe = session replay; storage = Web Storage entry'),
   identityBasis: identityBasis.optional().describe('Why the cookie is treated as authentication: developer evidence or uncalibrated heuristics'),
 });
 

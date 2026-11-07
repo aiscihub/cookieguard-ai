@@ -217,10 +217,39 @@ and [API details](../packages/playwright/README.md).
 
 The collector observes only configured origins but does not restrict the test's
 network access. Use a controlled browser test with service workers blocked where
-possible. It does not enable tracing, HAR, screenshots, or storage-state exports.
+possible. It does not enable tracing, HAR, screenshots, or storage-state exports; Web
+Storage is read in memory only to classify tokens.
 
 Try the [opt-in fail/pass demonstrations](#watch-the-playwright-demo) to see the
 real policy assertion fail after a successful login, then pass with HttpOnly.
+
+### Session and Web Storage checks
+
+These are on the main branch and arrive in the next release. Name a protected URL
+that answers anonymous requests with 401, 403, or a redirect and signed-in requests
+with 2xx, and include the logout in the workflow:
+
+```js
+const audit = startCookieAudit(context, {
+  origins: ['http://127.0.0.1:3000'],
+  policy: { authCookies: ['session_id'], authStorageKeys: ['access_token'] },
+  sessionProbe: { url: 'http://127.0.0.1:3000/account', requireLogout: true },
+});
+// ...sign in, then sign out...
+assertCookiePolicy(await audit.evaluate());
+```
+
+- **CG010:** the session id a GET issued before login (unauthenticated at the probe URL)
+  later became authenticated without a new id being issued.
+- **CG011:** after logout deleted the session cookie, replaying the old id to the probe
+  URL was still authenticated.
+- **CG012:** a token-like value in `localStorage` or `sessionStorage` on an allowed origin.
+  It is a review item unless the key is listed in `authStorageKeys`. Disable with `storage: false`.
+
+The probe sends GET requests carrying only the configured authentication cookies, only
+to that URL, from the test process; values never appear in results. Undecidable probes
+make the audit INCOMPLETE, never PASS. Web Storage values are classified in memory and
+discarded.
 
 ## Quick start: GitHub Actions
 
@@ -261,6 +290,9 @@ have passed; see the [validation evidence](CI_VALIDATION.md).
 | CG007 | Comparable protection regression | High; baseline is opt-in |
 | CG008 | Candidate/unknown authentication role | Review only |
 | CG009 | Missing/ambiguous evidence | Review only |
+| CG010 | Session identifier not rotated at login | High; needs the opt-in session probe (next release) |
+| CG011 | Session still valid after logout | High; needs the opt-in session probe and a logout in the workflow (next release) |
+| CG012 | Token in localStorage or sessionStorage | Review; high for a configured `authStorageKeys` entry (next release) |
 
 Use `--fail-on medium` to enforce medium policies. Missing flags on unconfirmed
 cookies are review, never confirmed failures. Domain scope alone does not prove

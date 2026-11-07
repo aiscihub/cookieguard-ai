@@ -152,9 +152,14 @@ below is reported. Only cookies you name in `auth_cookies` can be confirmed.
 | CG007 | A protection regressed since a baseline | high | `finish(baseline=…)` |
 | CG008 | Authentication role not confirmed | review | name it in `auth_cookies` |
 | CG009 | Evidence needs review | review | — |
+| CG010 | Session id not rotated at login | high | opt-in `session_probe_url` (next release) |
+| CG011 | Session still valid after logout | high | opt-in `session_probe_url` (next release) |
+| CG012 | Token in `localStorage` or `sessionStorage` | high | review; confirmed with `auth_storage_keys` (next release) |
 
-These are configuration checks. PASS means the configured checks passed, not that the
-application is secure.
+CG001–CG009 check cookie configuration. CG010 and CG011 replay the observed session
+against one protected URL you name, and CG012 reads Web Storage in the audited browser;
+these three are on the main branch and arrive in the next release. PASS means the
+configured checks passed, not that the application is secure.
 [Full rule table](docs/CI_GUIDE.md#supported-checks) · [Limits & privacy](integrations/python/docs/limits-and-privacy.md)
 
 ## More ways to use CookieGuard

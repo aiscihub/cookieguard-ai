@@ -25,6 +25,12 @@ const RULE_DETAILS = Object.freeze({
     reviewWhen: 'A cookie looks like authentication to the uncalibrated classifier, or its role is unknown, and it was not configured.' },
   CG009: { checks: 'Evidence quality', confirmedWhen: 'Never; this is always a review item.',
     reviewWhen: 'Attributes, the SameSite declaration, or browser acceptance are unknown or ambiguous.' },
+  CG010: { checks: 'Session rotation at login (session probe)', confirmedWhen: 'With a session probe configured, a configured authentication cookie value issued by a GET response was unauthenticated at the probe URL and later authenticated, without a new value being issued.',
+    reviewWhen: 'The same evidence for a cookie that is not a configured authentication cookie.' },
+  CG011: { checks: 'Session revocation at logout (session probe)', confirmedWhen: 'With a session probe configured, a configured authentication cookie that was authenticated was deleted (logout), and replaying its previous value to the probe URL was still authenticated.',
+    reviewWhen: 'The same evidence for a cookie that is not a configured authentication cookie.' },
+  CG012: { checks: 'Tokens in localStorage or sessionStorage', confirmedWhen: 'A configured authStorageKeys entry was present in Web Storage on an allowed origin.',
+    reviewWhen: 'A Web Storage value looks like a token (a JWT, a token field in JSON, or a token-like value under a token-like key) and its key is not configured.' },
 });
 
 const ISSUES = Object.freeze({
@@ -40,6 +46,12 @@ const ISSUES = Object.freeze({
   'validated-auth-cookie-not-observed': { title: 'Validated authentication cookie not observed',
     meaning: 'A cookie listed in authEvidence was not observed with the same name, domain, path, and origin.',
     fix: 'Update authEvidence or audit the workflow that issues that scoped cookie.' },
+  'session-check-inconclusive': { title: 'Session checks could not decide',
+    meaning: 'A session probe was configured, but rotation or logout could not be determined: the probe URL answered anonymous requests with 2xx, probes failed, the limit was reached, or a configured authentication cookie was never observed authenticated.',
+    fix: 'Use a probe URL that answers anonymous requests with 401, 403, or a redirect and authenticated ones with 2xx, start collection before the first visit, and let the login finish before evaluating.' },
+  'logout-not-observed': { title: 'Logout was required but not observed',
+    meaning: 'requireLogout was set, but no configured authentication cookie was deleted after being authenticated.',
+    fix: 'Include the logout step in the audited workflow, or drop requireLogout when the workflow does not log out.' },
   'scan-not-completed': { title: 'Audit did not complete',
     meaning: 'An error stopped the audit before a decision; see error.code.',
     fix: 'Explain the error code, correct the cause, and rerun. Do not treat the run as passed.' },

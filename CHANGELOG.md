@@ -2,6 +2,18 @@
 
 ## Unreleased
 
+- Add three runtime session checks to the core, the Playwright adapter, and the Browser Use
+  integration. CG010 (session id not rotated at login) and CG011 (session still valid
+  after logout) use an opt-in session probe that replays the configured authentication
+  cookies to one protected URL you name; undecidable probes are INCOMPLETE. CG012 reports
+  tokens kept in `localStorage` or `sessionStorage`, confirmed for configured
+  `authStorageKeys`. Values stay in the local process and never appear in results.
+  Reports gain `session` and `storage` sections, which evidence files and the MCP server
+  re-evaluate. The capabilities document marks both operations `unreleased`, and the
+  release gate refuses a release until they are published.
+- Fix `vendor_engine.mjs` workspace mode, which required the pinned published version.
+  The Python CI job now vendors the engine from this repository.
+
 - Restyle the README demo, the demo app's pages, and the social preview in a
   paper-and-ink style after browser-use.com, with a blue accent. The demo was
   re-recorded from a real `claude-opus-5-5` run; its end card and the social preview now

@@ -1,5 +1,7 @@
 import { AuditError, limitArray, originOf } from './safety.js';
 import { cleanObservation } from './normalize.js';
+import { cleanSession } from './session.js';
+import { cleanStorage } from './storage.js';
 
 const modes = ['http', 'browser', 'fixture'];
 
@@ -28,6 +30,9 @@ export function readEvidence(input) {
     const observations = limitArray(report.cookies).map(entry => cleanObservation(entry?.observation));
     const target = report.target === null || report.target === undefined ? null : originOf(report.target);
     const complete = !provisional && !report.issues.includes('collection-incomplete');
-    return { observations, mode: report.mode, target, complete, supplied: true, producer };
+    // Session and storage evidence are value-free summaries; rebuild them the same way.
+    const session = cleanSession(report.session ?? null);
+    const storage = cleanStorage(report.storage ?? []);
+    return { observations, mode: report.mode, target, complete, supplied: true, producer, session, storage };
   } catch { throw new AuditError('INPUT'); }
 }

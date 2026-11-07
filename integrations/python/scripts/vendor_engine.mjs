@@ -81,7 +81,11 @@ try {
   await rm(modules, { recursive: true, force: true });
   for (const pkg of packages) {
     const result = packed.find(entry => entry.name === pkg.name);
-    if (!result || result.version !== ENGINE_VERSION) throw new Error('Unexpected package version.');
+    // The pin applies to the published engine. Workspace packs carry the workspace
+    // version, which may be ahead of the pin while new engine features are developed.
+    const expected = published ? ENGINE_VERSION
+      : JSON.parse(await readFile(join(root, 'packages', pkg.dir.replace(/^cookieguard-/, ''), 'package.json'), 'utf8')).version;
+    if (!result || result.version !== expected) throw new Error('Unexpected package version.');
     const contents = await unpack(join(temporary, 'workspace', result.filename), join(temporary, 'workspace', pkg.dir));
     const fileHashes = await hashes(contents);
     let registryIntegrity = published ? result.integrity : null;
