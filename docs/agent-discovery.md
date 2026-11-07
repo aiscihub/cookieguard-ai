@@ -102,6 +102,8 @@ is installed, or through a directory that the agent searches.
 | PyPI (`cookieguard-browser-use`) | 0.2.0 published (2026-11-06) as the compatibility package for `cookieguard` | Publishing a new version |
 | PyPI (`cookieguard`) | 0.2.0 published (2026-11-06): the Python package, with `cookieguard.browser_use` | Publishing a new version |
 | MCPRush | Listed as `cookieguard-mcp` (0.2.0, security grade A, 5 tools); its card is in the README and the MCP README (2026-11-07) | Changes to the listing |
+| Glama | Listed as `aiscihub/cookieguard-ai` (license A, maintenance B, quality not yet scored); its card is next to MCPRush's (2026-11-07) | Changes to the listing |
+| `punkpeye/awesome-mcp-servers` | Security entry submitted in [PR #18843](https://github.com/punkpeye/awesome-mcp-servers/pull/18843) (2026-11-07), awaiting review | Changes to the pull request |
 | Anthropic's Claude Code plugin directory | Not submitted; the marketplace file validates | Submission |
 | Agensi skill marketplace | ZIP built by `npm run package:skill` and checked by a pre-submission scan; not submitted | Submission |
 | OpenAI curated skills (`openai/skills`) | Not submitted | External pull request |
@@ -110,8 +112,8 @@ is installed, or through a directory that the agent searches.
 
 ## Recommended next steps (each needs approval)
 
-1. Submit the plugin to Anthropic's directory, the skill to `openai/skills`, and the
-   server to MCP directories that agents' searches surfaced, such as Glama.
+1. Submit the plugin to Anthropic's directory and the skill to `openai/skills`. The
+   server is now on MCPRush and Glama, and submitted to `awesome-mcp-servers`.
 2. Add GitHub topics for Agent Skills, MCP, and Claude Code plugins.
 3. Re-run BU1-BU4 and AG1-AG4 in condition C with the fixed harness. The skill now tells
    agents to use Python 3.11+; in the partial re-run all 4 agents did, but pip could not

@@ -193,7 +193,7 @@ origins and policy; the client can only choose which URL or evidence file to aud
 > 0.2.0 is on npm and in the official MCP Registry as `io.github.aiscihub/cookieguard`.
 > It needs Node.js 24+.
 
-[![CookieGuard MCP server](https://mcprush.com/badge/cookieguard-mcp/card.svg)](https://mcprush.com/to/cookieguard-mcp?ref=badge)
+[![CookieGuard MCP server](https://mcprush.com/badge/cookieguard-mcp/card.svg)](https://mcprush.com/to/cookieguard-mcp?ref=badge) [![CookieGuard AI MCP server – quality and maintenance score on Glama](https://glama.ai/mcp/servers/aiscihub/cookieguard-ai/badges/card.svg)](https://glama.ai/mcp/servers/aiscihub/cookieguard-ai)
 
 Try it from a clone of this repository, with no API key or browser. The demo connects a
 real MCP client to the server:
