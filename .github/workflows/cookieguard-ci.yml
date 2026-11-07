@@ -116,8 +116,10 @@ jobs:
           python-version: ${{ matrix.python }}
       - run: npm ci
       - run: npx --no-install playwright install --with-deps chromium
-      - name: Vendor the published CookieGuard engine into the Python package
-        run: node integrations/python/scripts/vendor_engine.mjs --published
+      - name: Vendor this repository's CookieGuard engine into the Python package
+        # The Python bridge tracks the engine on main. Releases vendor the published
+        # npm engine instead (publish-cookieguard.yml, vendor_engine.mjs --published).
+        run: node integrations/python/scripts/vendor_engine.mjs
       - name: Install cookieguard and the cookieguard-browser-use compatibility package
         working-directory: integrations/python
         run: |
@@ -149,7 +151,7 @@ jobs:
         env:
           PYTHONUNBUFFERED: '1'
         # faulthandler dumps every thread's stack if one test runs longer than 90s.
-        run: .venv/bin/python -m pytest -v -p no:cacheprovider -o faulthandler_timeout=90 --maxfail=3 tests/test_browser.py tests/test_agent.py
+        run: .venv/bin/python -m pytest -v -p no:cacheprovider -o faulthandler_timeout=90 --maxfail=3 tests/test_browser.py tests/test_agent.py tests/test_session_checks.py
       - name: Check the Agent Skill's Python examples against the installed API
         working-directory: integrations/python
         run: .venv/bin/python scripts/check_skill_examples.py

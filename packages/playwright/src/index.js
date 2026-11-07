@@ -1,4 +1,8 @@
-import { AuditError, normalizeCookie, parseSetCookie, evaluateCookiePolicy, validatePolicy } from '@aiscihub/cookieguard-core';
+import { AuditError, normalizeCookie, parseSetCookie, evaluateCookiePolicy, validatePolicy, storageObservation } from '@aiscihub/cookieguard-core';
+import { sessionProbeConfig, createSessionProbe } from './session.js';
+
+const STORAGE_TIMEOUT_MS = 5000;
+const MAX_STORAGE_ENTRIES = 1000;
 
 function allowedOrigins(values) {
   if (!Array.isArray(values) || !values.length || values.length > 20) throw new AuditError('CONFIG');
@@ -26,6 +30,9 @@ export function startCookieAudit(context, options) {
   if (!Number.isInteger(timeoutMs) || timeoutMs < 100 || timeoutMs > 600000
     || !Number.isInteger(maxObservations) || maxObservations < 1 || maxObservations > 1000) throw new AuditError('CONFIG');
   if (options.classifier && (options.classifier.mode !== 'onnx' || typeof options.classifier.classify !== 'function')) throw new AuditError('CONFIG');
+  if (options.storage !== undefined && typeof options.storage !== 'boolean') throw new AuditError('CONFIG');
+  const sessionConfig = sessionProbeConfig(options.sessionProbe, origins, policy);
+  const session = sessionConfig ? createSessionProbe(sessionConfig) : null;
   const observations = [];
   const pending = new Set();
   let complete = true, disposed = false, responseCount = 0, collectionPromise;
@@ -39,12 +46,23 @@ export function startCookieAudit(context, options) {
     const work = (async () => {
       try {
         if (response.fromServiceWorker?.()) complete = false;
+        let method = null, navigation = false;
+        try {
+          const request = response.request?.();
+          method = request?.method?.() ?? null;
+          navigation = request?.isNavigationRequest?.() === true;
+        } catch { /* a request the adapter cannot inspect is treated as unknown */ }
         const headers = await response.headersArray();
         if (headers.length > 1000) throw new AuditError('COLLECT');
         for (const header of headers) {
           if (header.name.toLowerCase() !== 'set-cookie') continue;
           if (observations.length >= maxObservations) throw new AuditError('COLLECT');
           const observation = parseSetCookie(header.value, url.href);
+          if (session) {
+            // The value stays in the session probe's memory; the observation itself is value-free.
+            const pair = header.value.split(';', 1)[0];
+            session.setCookie(observation, pair.slice(pair.indexOf('=') + 1).trim(), method);
+          }
           if (options.classifier) {
             // The value exists only for this awaited inference. It is never retained.
             const pair = header.value.split(';', 1)[0];
@@ -56,6 +74,7 @@ export function startCookieAudit(context, options) {
           }
           observations.push(observation);
         }
+        if (session && navigation) session.navigation();
       } catch { complete = false; }
     })();
     pending.add(work);
@@ -72,7 +91,43 @@ export function startCookieAudit(context, options) {
   context.on('response', onResponse);
   context.on('close', onClose);
 
-  async function collectOnce() {
+  async function readStorage(storagePolicy) {
+    const entries = [];
+    const bounded = promise => {
+      let timer;
+      return Promise.race([promise, new Promise((_, reject) => { timer = setTimeout(() => reject(new AuditError('COLLECT')), STORAGE_TIMEOUT_MS); })])
+        .finally(() => clearTimeout(timer));
+    };
+    const state = await bounded(context.storageState());
+    for (const item of state?.origins ?? []) {
+      if (!origins.includes(item.origin)) continue;
+      for (const { name, value } of item.localStorage ?? []) entries.push({ origin: item.origin, area: 'local', key: name, value });
+    }
+    for (const page of context.pages()) {
+      let origin;
+      try { origin = new URL(page.url()).origin; } catch { continue; }
+      if (!origins.includes(origin)) continue;
+      const items = await bounded(page.evaluate(limit => {
+        // Runs in the page: Web Storage is only reachable from page script.
+        const { sessionStorage } = globalThis;
+        const out = [];
+        for (let i = 0; i < sessionStorage.length && i < limit; i++) { const key = sessionStorage.key(i); out.push([key, sessionStorage.getItem(key)]); }
+        return out;
+      }, MAX_STORAGE_ENTRIES));
+      for (const [key, value] of items) entries.push({ origin, area: 'session', key: String(key), value: String(value ?? '') });
+    }
+    if (entries.length > MAX_STORAGE_ENTRIES) throw new AuditError('COLLECT');
+    // Values are classified here and dropped; only value-free observations remain.
+    const result = new Map();
+    for (const entry of entries) {
+      const observation = storageObservation(entry, storagePolicy);
+      if (observation) result.set(JSON.stringify([observation.origin, observation.area, observation.key]), observation);
+    }
+    entries.length = 0;
+    return [...result.values()];
+  }
+
+  async function collectOnce(storagePolicy) {
     detach();
     let waitTimer;
     try {
@@ -119,19 +174,28 @@ export function startCookieAudit(context, options) {
       if (!result.some(header => header.origin === cookie.origin && header.storeStatus === 'present' && agrees(header, cookie))) result.push(cookie);
     }
     observations.length = 0;
-    return { observations: result, complete, mode: 'browser', target: origins.length === 1 ? origins[0] : undefined };
+    let sessionSummary = null;
+    if (session) {
+      try { sessionSummary = await session.finish(); } catch { complete = false; session.clear(); }
+    }
+    let storage = [];
+    if (options.storage !== false && typeof context.pages === 'function' && typeof context.storageState === 'function') {
+      try { storage = await readStorage(storagePolicy); } catch { complete = false; }
+    }
+    return { observations: result, complete, mode: 'browser', target: origins.length === 1 ? origins[0] : undefined,
+      session: sessionSummary, storage };
   }
-  function collect() {
-    collectionPromise ??= collectOnce();
+  function collect(storagePolicy = policy) {
+    collectionPromise ??= collectOnce(validatePolicy(storagePolicy));
     return collectionPromise;
   }
   return {
     collect,
     async evaluate(overridePolicy = policy, evaluationOptions = {}) {
-      const collection = await collect();
+      const collection = await collect(overridePolicy);
       return evaluateCookiePolicy(collection.observations, overridePolicy, { ...evaluationOptions, ...collection });
     },
-    dispose() { complete = false; detach(); observations.length = 0; },
+    dispose() { complete = false; detach(); observations.length = 0; session?.clear(); },
   };
 }
 

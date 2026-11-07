@@ -9,6 +9,7 @@ const steps = [
   ['source-credentials', process.execPath, ['scripts/check-source-secrets.js']],
   ['dependency-licenses', process.execPath, ['scripts/check-licenses.js']],
   ['dependency-advisories', 'npm', ['audit', '--audit-level=low', '--json']],
+  ['released-operations', process.execPath, ['scripts/check-released.js']],
   ['toolkit-tests', 'npm', ['run', 'check']],
   ['installed-tarballs', process.execPath, ['scripts/verify-packages.js']],
   ['installed-mcp-tarball', process.execPath, ['scripts/verify-mcp-package.js']],

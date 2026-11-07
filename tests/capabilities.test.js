@@ -48,7 +48,10 @@ test('capability document is schema-valid, stable, and identical to the publishe
   for (const integration of document.integrations.filter(i => i.registry)) {
     assert.match(integration.version, /^\d+\.\d+\.\d+$/);
   }
-  assert.ok(document.operations.every(o => o.availability === 'released'));
+  // Operations that exist only on main stay "unreleased" until their packages are
+  // published; scripts/release-gate.js refuses a release while any remain.
+  assert.deepEqual(document.operations.filter(o => o.availability !== 'released').map(o => [o.id, o.availability]),
+    [['check-session-lifecycle', 'unreleased'], ['check-web-storage', 'unreleased']]);
 });
 
 test('every explainable identifier has a schema-valid explanation; unknown identifiers are not reflected', async () => {

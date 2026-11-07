@@ -15,6 +15,12 @@ export function formatText(report) {
     lines.push(`  Fix: ${f.fix}`);
   }
   if (!r.findings.length) lines.push('No observed policy violations.');
+  if (r.session) {
+    const probe = r.session.probe;
+    lines.push('', `Session checks: probe ${probe.status}${probe.reason ? ` (${probe.reason})` : ''}, ${probe.probes} requests`);
+    for (const c of r.session.cookies) lines.push(`  ${JSON.stringify(c.name)}: rotation ${c.rotation}; logout ${c.logout}`);
+  }
+  if (r.storage.length) lines.push('', `Web Storage: ${r.storage.length} token-like entr${r.storage.length === 1 ? 'y' : 'ies'}`);
   lines.push('', `Result: ${r.status.toUpperCase()} — ${r.summary.failures} confirmed violations at or above ${r.policy.failOn}`);
   for (const issue of r.issues) lines.push(`Incomplete: ${issue}`);
   for (const limitation of r.limitations) lines.push(`Scope: ${limitation}`);

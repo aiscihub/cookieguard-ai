@@ -77,12 +77,41 @@ A `review` finding is heuristic or uncertain and never fails a run.
 - Why: Some attributes, declarations, or browser acceptance are unknown or ambiguous.
 - Fix: Start collection before login and inspect the server cookie configuration. Do not infer declarations from browser defaults.
 
+## CG010 Session identifier not rotated at login (high)
+
+- Availability: not in the published packages yet; on the main branch for the next release.
+- Checks: Session rotation at login (session probe)
+- Confirmed when: With a session probe configured, a configured authentication cookie value issued by a GET response was unauthenticated at the probe URL and later authenticated, without a new value being issued.
+- Review when: The same evidence for a cookie that is not a configured authentication cookie.
+- Why: The same session identifier was observed unauthenticated before login and authenticated after it. Anyone who planted or learned the pre-login identifier can use the authenticated session (session fixation).
+- Fix: Issue a new session identifier when authentication succeeds and invalidate the pre-login one, for example with your framework's session regeneration call.
+
+## CG011 Session still valid after logout (high)
+
+- Availability: not in the published packages yet; on the main branch for the next release.
+- Checks: Session revocation at logout (session probe)
+- Confirmed when: With a session probe configured, a configured authentication cookie that was authenticated was deleted (logout), and replaying its previous value to the probe URL was still authenticated.
+- Review when: The same evidence for a cookie that is not a configured authentication cookie.
+- Why: After logout deleted the session cookie, replaying the previous session identifier was still accepted by the protected URL. A copied or stolen cookie keeps working after the user signs out.
+- Fix: Invalidate the session on the server at logout, not only by clearing the browser cookie.
+
+## CG012 Authentication token in Web Storage (high)
+
+- Availability: not in the published packages yet; on the main branch for the next release.
+- Checks: Tokens in localStorage or sessionStorage
+- Confirmed when: A configured authStorageKeys entry was present in Web Storage on an allowed origin.
+- Review when: A Web Storage value looks like a token (a JWT, a token field in JSON, or a token-like value under a token-like key) and its key is not configured.
+- Why: localStorage and sessionStorage are readable by every script on the origin, so a token kept there is exposed to XSS the way a cookie without HttpOnly is.
+- Fix: Keep session and access tokens out of Web Storage; use a Secure, HttpOnly, SameSite cookie, or hold short-lived tokens only in memory.
+
 ## Incomplete reasons
 
 - `collection-incomplete`: The collector stopped early, hit a limit, or produced provisional evidence. Start collection before the login, let the workflow finish, then evaluate once. Provisional agent checks never satisfy policy.
 - `no-cookies-observed`: The audited response or workflow set no cookies. Audit the endpoint or login workflow that creates the session, and start collection before it runs.
 - `expected-auth-cookie-not-observed`: At least one configured authCookies name was not set during the audit. Check the exact cookie name and audit the response or workflow that issues the session cookie.
 - `validated-auth-cookie-not-observed`: A cookie listed in authEvidence was not observed with the same name, domain, path, and origin. Update authEvidence or audit the workflow that issues that scoped cookie.
+- `session-check-inconclusive`: A session probe was configured, but rotation or logout could not be determined: the probe URL answered anonymous requests with 2xx, probes failed, the limit was reached, or a configured authentication cookie was never observed authenticated. Use a probe URL that answers anonymous requests with 401, 403, or a redirect and authenticated ones with 2xx, start collection before the first visit, and let the login finish before evaluating.
+- `logout-not-observed`: requireLogout was set, but no configured authentication cookie was deleted after being authenticated. Include the logout step in the audited workflow, or drop requireLogout when the workflow does not log out.
 - `scan-not-completed`: An error stopped the audit before a decision; see error.code. Explain the error code, correct the cause, and rerun. Do not treat the run as passed.
 
 Secure example: `Set-Cookie: session_id=<opaque>; Path=/; Secure; HttpOnly; SameSite=Lax`

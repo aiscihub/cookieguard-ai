@@ -207,7 +207,11 @@ def test_explicit_validated_auth_evidence_confirms_identity(token):
 
 
 def test_vendored_engine_matches_manifest_and_published_versions():
-	assert verify_engine_files() == {'@aiscihub/cookieguard-core': '0.1.0', '@aiscihub/cookieguard-playwright': '0.1.0'}
+	# Releases vendor the pinned npm engine; development builds vendor the workspace packages.
+	# The suite also runs from a copy outside the repository, so read versions from the manifest.
+	manifest = json.loads((engine_dir() / 'manifest.json').read_text())
+	expected = '0.1.0' if manifest['source'] == 'npm-registry' else manifest['packages'][0]['version']
+	assert verify_engine_files() == {'@aiscihub/cookieguard-core': expected, '@aiscihub/cookieguard-playwright': expected}
 
 
 def test_tampered_engine_is_refused(tmp_path):
@@ -356,4 +360,4 @@ def test_audit_options_map_to_the_core_policy():
 	audit = CookieGuardAudit(allowed_origins=[ORIGIN], auth_cookies=['s'], fail_on='medium', allowed_same_site=('strict',),
 		require_explicit_same_site=True, require_host_only=True, max_lifetime_days=7)
 	assert audit.policy == {'authCookies': ['s'], 'failOn': 'medium', 'allowedSameSite': ['strict'],
-		'requireExplicitSameSite': True, 'requireHostOnly': True, 'maxLifetimeDays': 7, 'authEvidence': []}
+		'requireExplicitSameSite': True, 'requireHostOnly': True, 'maxLifetimeDays': 7, 'authEvidence': [], 'authStorageKeys': []}

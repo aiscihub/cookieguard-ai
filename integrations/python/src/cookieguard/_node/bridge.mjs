@@ -9,13 +9,14 @@
 import { EventEmitter } from 'node:events';
 import { setImmediate as tick } from 'node:timers/promises';
 import { startCookieAudit } from '@aiscihub/cookieguard-playwright';
-import { AuditError, safeError, evaluateCookiePolicy, formatJson, formatText, exitCode } from '@aiscihub/cookieguard-core';
+import { AuditError, safeError, evaluateCookiePolicy, formatJson, formatText, exitCode, summarizeSession, storageObservation } from '@aiscihub/cookieguard-core';
 
 const PROTOCOL = 1;
 const MAX_LINE = 4 * 1024 * 1024;
 const MAX_MESSAGES = 20000;
 const MAX_LINES_PER_RESPONSE = 200;
 const MAX_STORE_COOKIES = 1000;
+const MAX_STORAGE_ENTRIES = 1000;
 const SAME_SITE = Object.freeze({ strict: 'Strict', lax: 'Lax', none: 'None' });
 
 // Structural stand-in for a Playwright BrowserContext. The collector only uses
@@ -57,6 +58,20 @@ function storeOf(cookies) {
       ...(sameSite ? { sameSite } : {}), ...(cookie.partitioned === true ? { partitionKey: 'partitioned' } : {}),
     };
   });
+}
+
+// Web Storage entries arrive with values; only value-free observations leave.
+function storageOf(entries, policy, origins) {
+  if (entries === undefined || entries === null) return [];
+  if (!Array.isArray(entries) || entries.length > MAX_STORAGE_ENTRIES) throw new AuditError('INPUT');
+  const result = new Map();
+  for (const entry of entries) {
+    if (!entry || typeof entry !== 'object' || !isText(entry.origin, 2048) || !origins.includes(entry.origin)
+      || !isText(entry.key, 1024) || !isText(entry.value, 65536)) throw new AuditError('INPUT');
+    const observation = storageObservation({ origin: entry.origin, area: entry.area, key: entry.key, value: entry.value }, policy);
+    if (observation) result.set(JSON.stringify([observation.origin, observation.area, observation.key]), observation);
+  }
+  return [...result.values()];
 }
 
 function reportMessage(id, report, extra = {}) {
@@ -126,7 +141,12 @@ async function handle(message) {
       started();
       state.context.setStore(storeOf(message.cookies));
       const collection = await state.collector.collect();
-      const options = { ...collection, ...(message.baseline === undefined ? {} : { baseline: message.baseline }) };
+      // The Python probe and storage reader report here; the stand-in context has neither.
+      const session = message.session === undefined || message.session === null ? null : summarizeSession(message.session);
+      if (session && [new URL(session.probe.url).origin, ...session.cookies.map(cookie => cookie.origin)]
+        .some(origin => !state.config.origins.includes(origin))) throw new AuditError('INPUT');
+      const storage = storageOf(message.storage, state.config.policy, state.config.origins);
+      const options = { ...collection, session, storage, ...(message.baseline === undefined ? {} : { baseline: message.baseline }) };
       let report = evaluateCookiePolicy(collection.observations, state.config.policy, options);
       let headerEvidenceMissing = [];
       if (state.requireHeaderEvidence && report.status === 'passed') {
