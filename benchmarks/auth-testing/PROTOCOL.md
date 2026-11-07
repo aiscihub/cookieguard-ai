@@ -166,4 +166,9 @@ workflow stops if any differs from its design:
 
 ## Changes after registration
 
-None yet.
+- **2026-11-07, before any agent run:** the fixture's `npm test` script changed from
+  `node --test test/` to `node --test "test/**/*.test.js"`. On Node 24, the version CI
+  uses, a directory argument is treated as a file, so the original script failed before
+  running any test. The protocol was validated on Node 26, where it works. Validation
+  caught the problem in CI and passes on Node 24 after the change. Metrics, versions and
+  conditions are unchanged.

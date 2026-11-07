@@ -67,8 +67,14 @@ jobs:
           CONDITIONS: ${{ inputs.conditions }}
           REPEATS: ${{ inputs.repeats }}
         run: echo "matrix=$(node benchmarks/auth-testing/bench.mjs matrix --versions "$VERSIONS" --conditions "$CONDITIONS" --repeats "$REPEATS")" >> "$GITHUB_OUTPUT"
+      # The browser download runs as the runner user; only the system libraries need root,
+      # with root's own HOME so no root-owned files land in the runner's npm cache.
       - name: Install Chromium
-        run: sudo -E env "PATH=$PATH" npx --yes "playwright@$PLAYWRIGHT_VERSION" install --with-deps chromium
+        run: |
+          sudo mkdir -p "$PLAYWRIGHT_BROWSERS_PATH"
+          sudo chown "$USER" "$PLAYWRIGHT_BROWSERS_PATH"
+          npx --yes "playwright@$PLAYWRIGHT_VERSION" install chromium
+          sudo env "HOME=/root" "PATH=$PATH" npx --yes "playwright@$PLAYWRIGHT_VERSION" install-deps chromium
       - name: Score reference suites with known results
         run: node benchmarks/auth-testing/validate.mjs --dir "$RUNNER_TEMP/validate" --out "$RUNNER_TEMP/validation.json"
       - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
@@ -102,7 +108,10 @@ jobs:
       - name: Install Claude Code and Chromium
         run: |
           npm install --global --no-audit --no-fund "@anthropic-ai/claude-code@$CLAUDE_CODE_VERSION"
-          sudo -E env "PATH=$PATH" npx --yes "playwright@$PLAYWRIGHT_VERSION" install --with-deps chromium
+          sudo mkdir -p "$PLAYWRIGHT_BROWSERS_PATH"
+          sudo chown "$USER" "$PLAYWRIGHT_BROWSERS_PATH"
+          npx --yes "playwright@$PLAYWRIGHT_VERSION" install chromium
+          sudo env "HOME=/root" "PATH=$PATH" npx --yes "playwright@$PLAYWRIGHT_VERSION" install-deps chromium
       # The agent and its tests run as `dev`, who cannot read the checkout, the runner's
       # home, or the run record. The browsers stay writable so the agent can manage them.
       - name: Create the agent's user
