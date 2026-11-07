@@ -201,9 +201,6 @@ jobs:
     if: inputs.study == 'gate-comparison'
     runs-on: ubuntu-24.04
     timeout-minutes: 60
-    env:
-      OUT: ${{ runner.temp }}/gate
-      DEPS: ${{ runner.temp }}/deps
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
@@ -219,15 +216,15 @@ jobs:
           npx --yes "playwright@$PLAYWRIGHT_VERSION" install chromium
           sudo env "HOME=/root" "PATH=$PATH" npx --yes "playwright@$PLAYWRIGHT_VERSION" install-deps chromium
       - name: Detection matrix
-        run: node benchmarks/security-gate/run.mjs matrix --deps "$DEPS" --out "$OUT" --repeats "$REPEATS"
+        run: node benchmarks/security-gate/run.mjs matrix --deps "$RUNNER_TEMP/deps" --out "$RUNNER_TEMP/gate" --repeats "$REPEATS"
         env:
           REPEATS: ${{ inputs.repeats }}
       - name: Neutralized checks
-        run: node benchmarks/security-gate/run.mjs tamper --deps "$DEPS" --out "$OUT"
+        run: node benchmarks/security-gate/run.mjs tamper --deps "$RUNNER_TEMP/deps" --out "$RUNNER_TEMP/gate"
       - name: Native assertion idioms
-        run: node benchmarks/security-gate/run.mjs privacy --deps "$DEPS" --out "$OUT"
+        run: node benchmarks/security-gate/run.mjs privacy --deps "$RUNNER_TEMP/deps" --out "$RUNNER_TEMP/gate"
       - name: Summarize
-        run: node benchmarks/security-gate/run.mjs summarize --out "$OUT" | tee -a "$GITHUB_STEP_SUMMARY"
+        run: node benchmarks/security-gate/run.mjs summarize --out "$RUNNER_TEMP/gate" | tee -a "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         if: always()
         with:
