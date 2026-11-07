@@ -87,7 +87,9 @@ export function startCookieAudit(context, options) {
           observations.push(observation);
         }
         if (session && navigation) session.navigation();
-        await snapshotStore(url.origin);
+        // Supplementary evidence: a store that cannot be read mid-workflow (for example
+        // a replayed CDP context) leaves completeness to the final read.
+        try { await snapshotStore(url.origin); } catch { /* best effort */ }
       } catch { complete = false; }
     })();
     pending.add(work);
