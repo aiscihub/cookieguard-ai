@@ -1,0 +1,16 @@
+{
+  "name": "acme-notes",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test test/ && playwright test"
+  },
+  "dependencies": {
+    "express": "5.2.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1"
+  }
+}
