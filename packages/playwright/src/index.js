@@ -15,6 +15,12 @@ function allowedOrigins(values) {
   }))];
 }
 
+const COOKIE_NAME = /^\s*[!#$%&'*+.^_`|~0-9a-z-]+\s*=/i;
+function namelessSetCookie(value) {
+  return typeof value === 'string' && value.length <= 16384 && !/[\r\n\0]/.test(value) && !/,\s*[^;,\s=]+\s*=/.test(value)
+    && !COOKIE_NAME.test(value.split(';', 1)[0]);
+}
+
 function sameScope(a, b) { return a.name === b.name && a.domain === b.domain && a.path === b.path; }
 function agrees(header, cookie) {
   return sameScope(header, cookie) && header.secure === cookie.secure && header.httpOnly === cookie.httpOnly
@@ -57,7 +63,13 @@ export function startCookieAudit(context, options) {
         for (const header of headers) {
           if (header.name.toLowerCase() !== 'set-cookie') continue;
           if (observations.length >= maxObservations) throw new AuditError('COLLECT');
-          const observation = parseSetCookie(header.value, url.href);
+          let observation;
+          try { observation = parseSetCookie(header.value, url.href); } catch (error) {
+            // A line without a valid cookie name cannot set a configured authentication
+            // cookie; skip it instead of discarding the rest of the evidence.
+            if (namelessSetCookie(header.value)) continue;
+            throw error;
+          }
           if (session) {
             // The value stays in the session probe's memory; the observation itself is value-free.
             const pair = header.value.split(';', 1)[0];
@@ -75,11 +87,30 @@ export function startCookieAudit(context, options) {
           observations.push(observation);
         }
         if (session && navigation) session.navigation();
+        await snapshotStore(url.origin);
       } catch { complete = false; }
     })();
     pending.add(work);
     void work.finally(() => pending.delete(work));
   };
+  // Configured authentication cookies can leave the store before collection (logout)
+  // or never appear in a header (set by page script). Keep the last value-free store
+  // observation of each one, taken after every response on an allowed origin.
+  const lastSeen = new Map();
+  async function snapshotStore(origin) {
+    if (!policy.authCookies.length || typeof context.cookies !== 'function') return;
+    const cookies = await context.cookies(origin);
+    if (!Array.isArray(cookies)) return;
+    const host = new URL(origin).hostname;
+    for (const cookie of cookies) {
+      if (!policy.authCookies.includes(cookie.name)) continue;
+      const domain = cookie.domain.replace(/^\./, '').toLowerCase();
+      if (!(host === domain || (cookie.domain.startsWith('.') && host.endsWith(`.${domain}`)))) continue;
+      const observation = normalizeCookie(cookie, { source: 'browser', origin });
+      if (cookie.partitionKey) observation.confidence = 'uncertain';
+      if (lastSeen.size < maxObservations) lastSeen.set(JSON.stringify([origin, observation.name, observation.domain, observation.path]), observation);
+    }
+  }
   const timer = setTimeout(() => { complete = false; detach(); }, timeoutMs);
   timer.unref?.();
   function detach() {
@@ -146,6 +177,8 @@ export function startCookieAudit(context, options) {
       ]);
       if (!Array.isArray(cookies) || cookies.length > maxObservations) throw new AuditError('COLLECT');
       for (const cookie of cookies) {
+        // Browsers store a nameless line as a cookie with an empty name; it cannot be a configured one.
+        if (cookie.name === '') continue;
         const domain = cookie.domain.replace(/^\./, '').toLowerCase();
         const matchingOrigins = origins.filter(origin => {
           const host = new URL(origin).hostname;
@@ -159,8 +192,15 @@ export function startCookieAudit(context, options) {
           browserObservations.push(observation);
         }
       }
+      // Configured cookies seen earlier but gone now: evaluate their last store state.
+      for (const [key, observation] of lastSeen) {
+        if (browserObservations.some(c => JSON.stringify([c.origin, c.name, c.domain, c.path]) === key)) continue;
+        if (browserObservations.length + observations.length >= maxObservations) throw new AuditError('COLLECT');
+        browserObservations.push(observation);
+      }
     } catch { complete = false; }
     finally { clearTimeout(waitTimer); }
+    lastSeen.clear();
     const result = observations.map(header => {
       const matches = browserObservations.filter(cookie => cookie.origin === header.origin && agrees(header, cookie));
       // Multiple header instructions or partitioned scopes cannot prove which
@@ -195,7 +235,7 @@ export function startCookieAudit(context, options) {
       const collection = await collect(overridePolicy);
       return evaluateCookiePolicy(collection.observations, overridePolicy, { ...evaluationOptions, ...collection });
     },
-    dispose() { complete = false; detach(); observations.length = 0; session?.clear(); },
+    dispose() { complete = false; detach(); observations.length = 0; lastSeen.clear(); session?.clear(); },
   };
 }
 
@@ -207,3 +247,4 @@ export async function auditPage(page, options = {}) {
 }
 
 export { evaluateCookiePolicy, assertCookiePolicy } from '@aiscihub/cookieguard-core';
+export { cookieGuardFixtures, checkId, EVIDENCE_INTEGRATION } from './fixture.js';

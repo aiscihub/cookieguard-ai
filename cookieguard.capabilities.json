@@ -246,6 +246,28 @@
       "network": "None."
     },
     {
+      "id": "enforce-login-checks",
+      "availability": "unreleased",
+      "surfaces": [
+        "playwright",
+        "cli"
+      ],
+      "description": "Fail closed in CI: the Playwright cookieGuard fixture writes value-free evidence for each login test, and cookieguard-ci gate re-evaluates it under the gate's own policy. A required check that was skipped, filtered out, or deleted has no evidence and is INCOMPLETE.",
+      "inputs": [
+        "cookieGuardFixtures({ origins, policy }) passed to test.extend()",
+        "cookieguard-ci gate --evidence DIR --require \"TEST TITLE\" --auth-cookie NAME"
+      ],
+      "permissions": [
+        "Reads only the evidence directory; the fixture writes one JSON file per test"
+      ],
+      "evidence": [
+        "server-declaration",
+        "browser-observation",
+        "supplied-evidence"
+      ],
+      "network": "None beyond the login workflow and an optional session probe."
+    },
+    {
       "id": "explain",
       "availability": "released",
       "surfaces": [
@@ -462,6 +484,10 @@
       "validated-auth-cookie-not-observed",
       "session-check-inconclusive",
       "logout-not-observed",
+      "evidence-missing",
+      "evidence-invalid",
+      "evidence-stale",
+      "session-check-not-run",
       "scan-not-completed"
     ],
     "errorCodes": [

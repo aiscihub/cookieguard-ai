@@ -29,4 +29,22 @@ export interface CookieAuditCollector {
 export function startCookieAudit(context: BrowserContext, options: AuditOptions): CookieAuditCollector;
 /** Store-only audit of an already authenticated page; declaration evidence remains unknown. */
 export function auditPage(page: Page, options?: Partial<AuditOptions>): Promise<Report>;
+export interface GateOptions extends AuditOptions {
+  /** Where evidence files are written. Default: $COOKIEGUARD_EVIDENCE_DIR, else ./cookieguard-evidence. */
+  evidenceDir?: string;
+  /** Fail the test unless the verdict is PASS. Default true. The gate enforces the verdict either way. */
+  enforce?: boolean;
+}
+export interface CookieGuardCheck {
+  /** The evidence id: the test title in lower case, other characters as `-`. */
+  id: string;
+  /** Stops collection and evaluates now; the fixture otherwise evaluates when the test ends. */
+  evaluate(): Promise<Report>;
+}
+/** Fixtures for `test.extend()`: a test that takes `cookieGuard` is audited and writes evidence for `cookieguard-ci gate`. */
+export function cookieGuardFixtures(options: GateOptions): {
+  cookieGuard: (args: { context: BrowserContext }, use: (check: CookieGuardCheck) => Promise<void>, testInfo: { title: string }) => Promise<void>;
+};
+export function checkId(title: string): string;
+export const EVIDENCE_INTEGRATION: 'cookieguard-playwright-check';
 export { evaluateCookiePolicy, assertCookiePolicy } from '@aiscihub/cookieguard-core';
