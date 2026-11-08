@@ -1,6 +1,9 @@
 # Changelog
 
-## cookieguard 0.3.0 (Python) — prepared, not yet published
+## cookieguard 0.3.0 (Python) — 2026-11-08
+
+Published on PyPI with `cookieguard-browser-use` 0.3.0 from tag `cookieguard-v0.3.0`; see
+[the publication record](integrations/python/VALIDATION.md#cookieguard-030-and-cookieguard-browser-use-030-publication--2026-11-08).
 
 `cookieguard` and the compatibility package `cookieguard-browser-use` move to 0.3.0 in
 lockstep. The vendored engine moves from the published npm 0.1.0 to the published 0.3.0

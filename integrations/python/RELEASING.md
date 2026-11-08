@@ -8,7 +8,7 @@ and publishes both distributions from this folder, always at the same version:
 | `cookieguard` | The package: core (`cookieguard`) and integrations (`cookieguard.browser_use`) |
 | `cookieguard-browser-use` | Compatibility package in `compat/cookieguard-browser-use`; depends on `cookieguard==<version>` and re-exports it |
 
-## Checklist (used for 0.2.0, published 2026-11-06)
+## Checklist (used for 0.3.0, published 2026-11-08, and 0.2.0, published 2026-11-06)
 
 1. Merge with CI green, including the upgrade-path step on Python 3.12.
 2. On pypi.org, make sure both projects trust the same publisher: owner `aiscihub`,
@@ -16,7 +16,7 @@ and publishes both distributions from this folder, always at the same version:
    The entries must be identical, environment included. When they differ, PyPI mints a token
    for only one project and the upload fails with `OIDC scoped token is not valid for project`,
    as attempt 1 of the 0.2.0 release did.
-3. Tag `main` with an annotated `cookieguard-v0.2.0` and push the tag. The `pypi`
+3. Tag `main` with an annotated `cookieguard-v<version>` and push the tag. The `pypi`
    environment deploys only `browser-use-v*` and `cookieguard-v*` tags.
 4. Run the workflow from the tag with `target: pypi`. The build job runs
    `verify_external.py` (clean consumer, tests, demo, sdist), `twine check`,

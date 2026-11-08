@@ -99,8 +99,8 @@ is installed, or through a directory that the agent searches.
 | --- | --- | --- |
 | Official MCP Registry | `io.github.aiscihub/cookieguard` 0.2.0 is active and latest (2026-11-06); npm 0.3.0 not yet submitted | Publishing a new version |
 | npm (`cookieguard-ci`, `@aiscihub/cookieguard-core`, `-playwright`, `-mcp`) | 0.3.0 published under `latest` (2026-11-08) | Publishing a new version |
-| PyPI (`cookieguard-browser-use`) | 0.2.0 published (2026-11-06) as the compatibility package for `cookieguard` | Publishing a new version |
-| PyPI (`cookieguard`) | 0.2.0 published (2026-11-06): the Python package, with `cookieguard.browser_use` | Publishing a new version |
+| PyPI (`cookieguard-browser-use`) | 0.3.0 published (2026-11-08) as the compatibility package for `cookieguard` | Publishing a new version |
+| PyPI (`cookieguard`) | 0.3.0 published (2026-11-08): the Python package, with `cookieguard.browser_use` | Publishing a new version |
 | MCPRush | Listed as `cookieguard-mcp` (0.2.0, security grade A, 5 tools); its card is in the README and the MCP README (2026-11-07) | Changes to the listing |
 | Glama | Listed as `aiscihub/cookieguard-ai` (license A, maintenance B, quality not yet scored); its card is next to MCPRush's (2026-11-07) | Changes to the listing |
 | `punkpeye/awesome-mcp-servers` | Security entry submitted in [PR #18843](https://github.com/punkpeye/awesome-mcp-servers/pull/18843) (2026-11-07), awaiting review | Changes to the pull request |
