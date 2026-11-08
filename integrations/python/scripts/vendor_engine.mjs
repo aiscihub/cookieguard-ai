@@ -26,7 +26,7 @@ const packages = [
   { name: '@aiscihub/cookieguard-playwright', dir: 'cookieguard-playwright' },
 ];
 // The engine version this Browser Use release pins. Workspaces may be ahead of it.
-const ENGINE_VERSION = '0.1.0';
+const ENGINE_VERSION = '0.3.0';
 const args = process.argv.slice(2);
 if (args.length > 1 || args.some(arg => !['--registry', '--published'].includes(arg))) {
   throw new Error('Usage: node scripts/vendor_engine.mjs [--registry | --published]');

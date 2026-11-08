@@ -1,5 +1,28 @@
 # Changelog
 
+## cookieguard 0.3.0 (Python) — prepared, not yet published
+
+`cookieguard` and the compatibility package `cookieguard-browser-use` move to 0.3.0 in
+lockstep. The vendored engine moves from the published npm 0.1.0 to the published 0.3.0
+(`@aiscihub/cookieguard-core` and `@aiscihub/cookieguard-playwright`). Code written for
+0.2.0 keeps working; anyone pinned to `cookieguard==0.2.0` stays on it.
+
+- **Session checks for Browser Use.** New `CookieGuardAudit` options, all opt-in:
+  `session_probe_url` (CG010, session id not rotated at login; CG011, session still valid
+  after logout), `require_logout`, `auth_storage_keys` (CG012, token in Web Storage), and
+  `collect_storage`. Undecidable probes are INCOMPLETE. Values stay in the local process.
+- **Engine 0.3.0.** A configured credential that page script set and logout deleted is
+  judged from its last store observation, and `Set-Cookie` lines without a cookie name no
+  longer make a collection INCOMPLETE. Explanations cover CG010–CG012.
+- **Demo.** The demo app's pages are restyled in the paper-and-ink style of the README demo,
+  which was re-recorded from a real `claude-opus-5-5` run. `scripts/record_demo.py` keeps
+  the raw capture so `--recompose` can restyle a run without repeating it.
+- `vendor_engine.mjs` workspace mode no longer requires the pinned published version, so
+  CI vendors the engine from this repository. `verify_upgrade.py` reads the version from
+  `pyproject.toml` and also checks the upgrade from 0.2.0.
+- The capability document lists `cookieguard` 0.3.0, with Browser Use as a surface of the
+  session and Web Storage checks.
+
 ## CookieGuard 0.3.0 — fail-closed Playwright gate — 2026-11-08
 
 Published on npm on 2026-11-08 (UTC) under `latest`, byte-identical to the tarballs packed
@@ -34,17 +57,6 @@ of this release and keeps its pinned engine. Users pinned to `^0.2.0` stay on 0.
 - **MCP server.** Tools are unchanged; it uses the 0.3.0 engine, so `cookieguard_explain`
   covers CG010–CG012 and the gate's reasons. `server.json` is 0.3.0.
 - The capability document lists 0.3.0 and marks every operation released.
-
-## Unreleased
-
-- Fix `vendor_engine.mjs` workspace mode, which required the pinned published version.
-  The Python CI job now vendors the engine from this repository.
-
-- Restyle the README demo, the demo app's pages, and the social preview in a
-  paper-and-ink style after browser-use.com, with a blue accent. The demo was
-  re-recorded from a real `claude-opus-5-5` run; its end card and the social preview now
-  show `pip install cookieguard`. `scripts/record_demo.py` keeps the raw capture so
-  `--recompose` can restyle a run without repeating it.
 
 ## cookieguard 0.2.0 (Python) — 2026-11-06
 

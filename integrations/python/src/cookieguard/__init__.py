@@ -13,7 +13,7 @@ from typing import Any
 from ._errors import CookieGuardError, CookiePolicyError
 from ._result import AuditResult, Finding
 
-__version__ = '0.2.0'
+__version__ = '0.3.0'
 
 # Integration names, imported only when first used so the core never requires an
 # integration's dependencies.

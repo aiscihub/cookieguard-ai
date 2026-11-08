@@ -16,7 +16,7 @@ from cookieguard.browser_use import (
 	Finding,
 )
 
-__version__ = '0.2.0'
+__version__ = '0.3.0'
 __all__ = [
 	'ACTION_DESCRIPTION',
 	'AuditResult',

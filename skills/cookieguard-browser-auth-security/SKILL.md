@@ -6,7 +6,7 @@ compatibility: Needs Node.js 24+. Browser Use also needs Python 3.11-3.13, brows
 metadata:
   title: CookieGuard AI — Browser Agent Authentication Security Audit
   project: https://github.com/aiscihub/cookieguard-ai
-  packages: cookieguard 0.2.0 (PyPI); cookieguard-ci, @aiscihub/cookieguard-playwright, @aiscihub/cookieguard-mcp 0.3.0 (npm)
+  packages: cookieguard 0.3.0 (PyPI); cookieguard-ci, @aiscihub/cookieguard-playwright, @aiscihub/cookieguard-mcp 0.3.0 (npm)
 ---
 
 # CookieGuard AI — Browser Agent Authentication Security Audit
@@ -78,7 +78,7 @@ development dependency: Python packages in a virtualenv, npm packages with `--sa
 Do not install globally or change unrelated dependencies.
 
 ```bash
-python3.12 -m venv .venv && .venv/bin/pip install cookieguard==0.2.0
+python3.12 -m venv .venv && .venv/bin/pip install cookieguard==0.3.0
 npm install --save-dev @aiscihub/cookieguard-playwright@0.3.0
 npx --yes cookieguard-ci@0.3.0 --version
 ```
@@ -180,7 +180,7 @@ Use this structure; [findings](references/findings.md) has the full template and
 ## Troubleshooting
 
 - `node` missing or older than 24: install Node.js 24+; the engine runs as a local Node process.
-- `pip` cannot find `cookieguard` 0.2.0 or `browser-use`: the interpreter is older
+- `pip` cannot find `cookieguard` 0.3.0 or `browser-use`: the interpreter is older
   than 3.11; create the virtualenv with `python3.11`, `python3.12`, or `python3.13`.
 - `TARGET` error: remove query strings and credentials from the URL; allow nonlocal origins explicitly.
 - Browser Use closes the browser before `finish()`: set `keep_alive=True`.

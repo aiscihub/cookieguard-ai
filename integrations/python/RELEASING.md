@@ -21,7 +21,7 @@ and publishes both distributions from this folder, always at the same version:
 4. Run the workflow from the tag with `target: pypi`. The build job runs
    `verify_external.py` (clean consumer, tests, demo, sdist), `twine check`,
    `verify_metadata.py` (links pinned to the tag), the version-lockstep check, and
-   `verify_upgrade.py` (fresh install and upgrades from both 0.1.0 releases). Approve
+   `verify_upgrade.py` (fresh install, and upgrades from 0.2.0 and both 0.1.0 releases). Approve
    the `pypi` deployment.
 5. Verify the uploads against the workflow artifact, install from PyPI in clean venvs on
    Python 3.11-3.13, and record the publication in [VALIDATION.md](VALIDATION.md).

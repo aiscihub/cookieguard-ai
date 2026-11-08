@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "cookieguard-browser-use"
-version = "0.2.0"
+version = "0.3.0"
 description = "Compatibility package: installs cookieguard and keeps `import cookieguard_browser_use` working"
 readme = "README.md"
 license = "MIT"
@@ -23,7 +23,7 @@ classifiers = [
   "Typing :: Typed",
 ]
 # Released in lockstep with cookieguard; this package only re-exports it.
-dependencies = ["cookieguard==0.2.0"]
+dependencies = ["cookieguard==0.3.0"]
 
 [project.urls]
 Homepage = "https://github.com/aiscihub/cookieguard-ai/tree/main/integrations/python"

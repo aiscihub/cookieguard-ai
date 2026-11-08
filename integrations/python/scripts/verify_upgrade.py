@@ -1,9 +1,9 @@
-"""Verify install and upgrade paths between the published 0.1 packages and local 0.2 wheels.
+"""Verify install and upgrade paths from the published packages to the local wheels.
 
     python scripts/verify_upgrade.py DIST_DIR [--python /path/to/python3.11+]
 
-DIST_DIR must contain the cookieguard and cookieguard-browser-use 0.2 wheels. The 0.1
-releases come from PyPI. Each scenario uses a fresh virtualenv outside the repository and
+DIST_DIR must contain the cookieguard and cookieguard-browser-use wheels at the version in
+pyproject.toml. Earlier releases come from PyPI. Each scenario uses a fresh virtualenv outside the repository and
 checks that `pip check` passes, that `cookieguard_browser_use` and `cookieguard` expose the
 same objects, that no 0.1 implementation files survive under `cookieguard_browser_use/`,
 and that the vendored engine verifies.
@@ -16,7 +16,10 @@ import os
 import subprocess
 import sys
 import tempfile
+import tomllib
 from pathlib import Path
+
+VERSION = tomllib.loads((Path(__file__).resolve().parents[1] / 'pyproject.toml').read_text())['project']['version']
 
 PROBE = r'''
 import importlib.metadata as m, pathlib, cookieguard, cookieguard.browser_use as bu, cookieguard_browser_use as compat
@@ -32,9 +35,11 @@ print(m.version('cookieguard'), m.version('cookieguard-browser-use'))
 '''
 
 SCENARIOS = {
-	'fresh install of cookieguard-browser-use 0.2': [['cookieguard-browser-use==0.2.0']],
-	'upgrade from cookieguard-browser-use 0.1.0': [['cookieguard-browser-use==0.1.0'], ['-U', 'cookieguard-browser-use==0.2.0']],
-	'upgrade from cookieguard 0.1.0': [['cookieguard==0.1.0'], ['-U', 'cookieguard==0.2.0'], ['-U', 'cookieguard-browser-use==0.2.0']],
+	f'fresh install of cookieguard-browser-use {VERSION}': [[f'cookieguard-browser-use=={VERSION}']],
+	'upgrade from cookieguard and cookieguard-browser-use 0.2.0': [['cookieguard==0.2.0', 'cookieguard-browser-use==0.2.0'],
+		['-U', f'cookieguard=={VERSION}', f'cookieguard-browser-use=={VERSION}']],
+	'upgrade from cookieguard-browser-use 0.1.0': [['cookieguard-browser-use==0.1.0'], ['-U', f'cookieguard-browser-use=={VERSION}']],
+	'upgrade from cookieguard 0.1.0': [['cookieguard==0.1.0'], ['-U', f'cookieguard=={VERSION}'], ['-U', f'cookieguard-browser-use=={VERSION}']],
 }
 
 

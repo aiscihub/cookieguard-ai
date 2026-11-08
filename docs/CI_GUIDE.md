@@ -225,8 +225,8 @@ real policy assertion fail after a successful login, then pass with HttpOnly.
 
 ### Session and Web Storage checks
 
-Released for Playwright in 0.3.0; the Python package for Browser Use has them in source
-only. Name a protected URL
+Released in 0.3.0 for Playwright and for Browser Use (Python package `cookieguard`).
+Name a protected URL
 that answers anonymous requests with 401, 403, or a redirect and signed-in requests
 with 2xx, and include the logout in the workflow:
 
@@ -300,9 +300,9 @@ have passed; see the [validation evidence](CI_VALIDATION.md).
 | CG007 | Comparable protection regression | High; baseline is opt-in |
 | CG008 | Candidate/unknown authentication role | Review only |
 | CG009 | Missing/ambiguous evidence | Review only |
-| CG010 | Session identifier not rotated at login | High; needs the opt-in session probe (next release) |
-| CG011 | Session still valid after logout | High; needs the opt-in session probe and a logout in the workflow (next release) |
-| CG012 | Token in localStorage or sessionStorage | Review; high for a configured `authStorageKeys` entry (next release) |
+| CG010 | Session identifier not rotated at login | High; needs the opt-in session probe |
+| CG011 | Session still valid after logout | High; needs the opt-in session probe and a logout in the workflow |
+| CG012 | Token in localStorage or sessionStorage | Review; high for a configured `authStorageKeys` entry |
 
 Use `--fail-on medium` to enforce medium policies. Missing flags on unconfirmed
 cookies are review, never confirmed failures. Domain scope alone does not prove

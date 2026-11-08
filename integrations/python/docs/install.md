@@ -14,12 +14,12 @@
 
 ## From PyPI
 
-Install [version 0.2.0](https://pypi.org/project/cookieguard/) with:
+Install [version 0.3.0](https://pypi.org/project/cookieguard/) with:
 
 ```bash
 pip install cookieguard
 # Or pin this release:
-pip install cookieguard==0.2.0
+pip install cookieguard==0.3.0
 ```
 
 Code that uses `cookieguard-browser-use` or `import cookieguard_browser_use` keeps working:
