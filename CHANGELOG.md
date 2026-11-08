@@ -1,6 +1,11 @@
 # Changelog
 
-## CookieGuard 0.3.0 — fail-closed Playwright gate — prepared, not yet published
+## CookieGuard 0.3.0 — fail-closed Playwright gate — 2026-11-08
+
+Published on npm on 2026-11-08 (UTC) under `latest`, byte-identical to the tarballs packed
+from `99e83ba` (#44); see
+[the publication record](packages/mcp/VALIDATION.md#030-publication--2026-11-08). The MCP
+Registry still lists 0.2.0.
 
 npm packages `@aiscihub/cookieguard-core`, `cookieguard-ci`,
 `@aiscihub/cookieguard-playwright`, and `@aiscihub/cookieguard-mcp` move to 0.3.0 with
