@@ -473,3 +473,44 @@ passed on that commit before tagging.
   upgrades from `cookieguard-browser-use` 0.1.0 and `cookieguard` 0.1.0. Each gave the same objects
   under both names, no stale 0.1 files, engine verification, a clean `pip check`, and a working
   `python -m cookieguard_browser_use.demo`.
+
+## cookieguard 0.3.0 and cookieguard-browser-use 0.3.0 publication — 2026-11-08
+
+Published together by `publish-cookieguard.yml` from tag `cookieguard-v0.3.0` (`88bdd8a`, #48),
+run [42435779702](https://github.com/aiscihub/cookieguard-ai/actions/runs/42435779702), after
+maintainer approval of the `pypi` environment. The tag's tree is identical to PR head
+`547e738`, whose required CI passed: toolkit, and Browser Use on Python 3.11, 3.12, and 3.13.
+
+- **Build job:** these checks passed:
+  - `verify_external.py` (clean consumer, tests, real-browser demo, sdist);
+  - `twine check --strict`;
+  - `verify_metadata.py` (links pinned to the tag);
+  - the version-lockstep check;
+  - `verify_upgrade.py` (fresh install, and upgrades from 0.2.0 and both 0.1.0 releases).
+- **Engine:** the vendored engine is the published npm `@aiscihub/cookieguard-core` and
+  `@aiscihub/cookieguard-playwright` 0.3.0 (`vendor_engine.mjs --published`).
+- **Files:** the four PyPI files are byte-identical to the workflow artifact, and PyPI has
+  provenance attestations for them.
+
+| File | SHA-256 |
+| --- | --- |
+| `cookieguard-0.3.0-py3-none-any.whl` | `15bb660621bfbc0dcb5b1a167f7c7184b28e6eef5cbc1a590f753ceac983fff6` |
+| `cookieguard-0.3.0.tar.gz` | `6cff7b4f931696eb4df8067e0e955162374b49b42cabc38df49b349df6be9f31` |
+| `cookieguard_browser_use-0.3.0-py3-none-any.whl` | `d9488184535fe2dac0eda0147f8adb2015f26e26e52b4b190276d72871b5a3ff` |
+| `cookieguard_browser_use-0.3.0.tar.gz` | `71cfa1fc2318048b82a1b130a29761787a0e4696c0455328bc56b0e1f640519d` |
+
+- **Fresh install from PyPI on macOS arm64, Python 3.12.16:** `pip install --no-cache-dir
+  cookieguard==0.3.0`, then `pip check` was clean.
+  - The engine verified as 0.3.0.
+  - `CookieGuardAudit` resolved from `cookieguard.browser_use` and accepts
+    `session_probe_url`, `require_logout`, `auth_storage_keys`, and `collect_storage`.
+  - `python -m cookieguard.browser_use.demo` returned FAIL (exit 1, CG001) for the insecure
+    login and PASS (exit 0) for the secure one, in a real browser.
+- **Python 3.11 and 3.13:** covered by CI on the release tree, not by a PyPI install; no
+  such interpreter was available locally.
+- **`verify_upgrade.py` with PyPI packages only:** a fresh `cookieguard-browser-use` 0.3.0
+  install, and upgrades from 0.2.0, `cookieguard-browser-use` 0.1.0, and `cookieguard` 0.1.0.
+  Each gave:
+  - the same objects under both names, with no stale 0.1 files;
+  - engine verification and a clean `pip check`;
+  - a working `python -m cookieguard_browser_use.demo`.
