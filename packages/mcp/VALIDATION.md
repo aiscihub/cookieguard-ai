@@ -307,3 +307,70 @@ after GitHub login. The registry then returned:
 
 The first `publish` attempt ran in a directory without `server.json` and stopped with
 `server.json not found`; nothing was submitted.
+
+## 0.3.0 publication — 2026-11-08
+
+The maintainer published the four npm packages from a fresh clone of `main` at `99e83ba`
+(#44), after `npm ci` built `packages/core/vendor/engine.cjs`, with browser 2FA, in
+dependency order. `main` CI passed on that commit (run 42431003051: toolkit and Browser Use
+on Python 3.11-3.13). Reference tarballs were packed from the same commit with npm 11.19.1.
+
+### npm
+
+| Package | Published (UTC) | Published shasum | Same as reference |
+| --- | --- | --- | --- |
+| `@aiscihub/cookieguard-core@0.3.0` | 2026-11-08T00:55:09Z | `8b064c9ccf27104a8875cdb8ea106e4d35c39e97` | yes |
+| `cookieguard-ci@0.3.0` | 2026-11-08T00:55:31Z | `267958fd9c5813fce16c718fb8f99ed675cf33a4` | yes |
+| `@aiscihub/cookieguard-playwright@0.3.0` | 2026-11-08T00:55:33Z | `157635451cf5ebf59786cf458770995c5b0caa30` | yes |
+| `@aiscihub/cookieguard-mcp@0.3.0` | 2026-11-08T00:55:34Z | `2d77e6aa7c833b338af36701710e179249ac43a2` | yes |
+
+`latest` points to 0.3.0 for all four; `beta` is unchanged (0.1.0, and 0.1.0-beta.1 for
+MCP). Internal dependencies are exact (`0.3.0`).
+
+**Failed attempts.** Nothing was uploaded by either.
+
+1. The first attempt ran from a local checkout still at `1f0ede1` (0.2.0), and npm refused
+   to publish over 0.2.0.
+2. The second ran from the fresh clone, but the saved npm login had expired, so the upload
+   was rejected with `E404` on `PUT`. `npm whoami` returned 401 until `npm login`.
+
+A fresh install of `cookieguard-ci`, `@aiscihub/cookieguard-playwright`, and
+`@aiscihub/cookieguard-mcp` at 0.3.0, with `@playwright/test` 1.64.1, in an empty
+directory:
+
+- **Install:** `npm install` found 0 vulnerabilities. `npm audit signatures` verified
+  registry signatures for 10 packages, and verified attestations for 6 third-party
+  dependencies. These packages were published locally, without provenance.
+- **Versions and catalog:**
+  - `cookieguard-ci --version` and `cookieguard-mcp --version` both print `0.3.0`;
+  - `capabilities --json` shows tool 0.3.0, 12 checks, and every operation released;
+  - `explain CG011` prints `CG011 — Session still valid after logout (high)`;
+  - the installed core contains `vendor/engine.cjs`.
+- **[`examples/playwright-gate`](../../examples/playwright-gate), against the installed
+  packages:**
+
+  | Run | Playwright | Gate |
+  | --- | --- | --- |
+  | Secure | exit 0 | exit 0, PASS |
+  | `FLAW=httponly` | exit 1 | exit 1, FAIL (CG001) |
+  | `FLAW=logout` | exit 1 | exit 1, FAIL (CG011) |
+  | Login test changed to `test.skip` | exit 0 | exit 2, INCOMPLETE (`evidence-missing`) |
+
+  No session value appeared in the Playwright output, the gate output, or the evidence files.
+- **MCP:** `runMcpDemo` against the npm-installed `cookieguard-mcp` binary:
+
+```text
+MCP tools: cookieguard_audit, cookieguard_capabilities, cookieguard_explain, cookieguard_policy, cookieguard_scan
+Capabilities: 12 checks; allowed origins: 1; evidence files: enabled
+secure: PASSED (exitCode 0)
+missing-httponly: FAILED (exitCode 1) — CG001 Missing HttpOnly
+preference: INCOMPLETE (exitCode 2) — expected-auth-cookie-not-observed
+Explain CG001: Set HttpOnly on the authentication cookie at the server.
+Evidence login-report.json: FAILED (exitCode 1); observed by server: no
+MCP demo passed; cookie-value canary absent from results and diagnostics.
+```
+
+### MCP Registry
+
+Not updated. `io.github.aiscihub/cookieguard` 0.2.0 remains active and latest, and it
+still installs and works. `packages/mcp/server.json` is 0.3.0, ready for `mcp-publisher`.
