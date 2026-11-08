@@ -172,6 +172,7 @@ The same published policy engine powers every tool:
 | **MCP server** | Letting an AI client scan your app's `Set-Cookie` headers | [Use it from an MCP client](#use-it-from-an-mcp-client) |
 | **Agent Skill** | Teaching coding agents when and how to add these checks | [Use it from a coding agent](#use-it-from-a-coding-agent) |
 | **Playwright** | Cookies created during login in your existing tests | [Playwright quickstart](docs/CI_GUIDE.md#quick-start-playwright) |
+| **Playwright gate** | Failing CI unless the login check ran and passed, even if a test was skipped | [Gate example](examples/playwright-gate) |
 | **CLI** | `Set-Cookie` headers from a running test app | [CLI quickstart](docs/CI_GUIDE.md#quick-start-cli) |
 | **GitHub Action** | Header checks, a build summary, and a sanitized report | [Action quickstart](docs/CI_GUIDE.md#quick-start-github-actions) |
 | **Browser extension** | Inspecting cookies interactively in Chrome | [See below](#browser-extension) |
@@ -179,7 +180,7 @@ The same published policy engine powers every tool:
 With **Node.js 24+**, scan a local endpoint that sets your authentication cookie:
 
 ```bash
-npx cookieguard-ci@0.2.0 scan http://localhost:3000 --auth-cookie session_id
+npx cookieguard-ci@0.3.0 scan http://localhost:3000 --auth-cookie session_id
 ```
 
 The CLI, Action, and MCP server do not log in or execute JavaScript. Use Browser Use or
@@ -195,7 +196,7 @@ origins and policy; the client can only choose which URL or evidence file to aud
 
 > [!NOTE]
 > [`@aiscihub/cookieguard-mcp`](https://www.npmjs.com/package/@aiscihub/cookieguard-mcp)
-> 0.2.0 is on npm and in the official MCP Registry as `io.github.aiscihub/cookieguard`.
+> is on npm (0.3.0) and in the official MCP Registry as `io.github.aiscihub/cookieguard`.
 > It needs Node.js 24+.
 
 [![CookieGuard MCP server](https://mcprush.com/badge/cookieguard-mcp/card.svg)](https://mcprush.com/to/cookieguard-mcp?ref=badge) [![CookieGuard AI MCP server – quality and maintenance score on Glama](https://glama.ai/mcp/servers/aiscihub/cookieguard-ai/badges/card.svg)](https://glama.ai/mcp/servers/aiscihub/cookieguard-ai)
@@ -226,7 +227,7 @@ session cookie names. Then add the server to your client's MCP settings:
   "mcpServers": {
     "cookieguard": {
       "command": "npx",
-      "args": ["--yes", "@aiscihub/cookieguard-mcp@0.2.0",
+      "args": ["--yes", "@aiscihub/cookieguard-mcp@0.3.0",
                "--config", "/absolute/path/cookieguard.json"]
     }
   }
@@ -264,7 +265,7 @@ folder, and `npm run package:skill` builds a ZIP of it for skill marketplaces.
 Automated tools can read [`cookieguard.capabilities.json`](cookieguard.capabilities.json):
 a versioned, machine-readable description of every check, input, output schema, exit
 code, privacy property, and limitation. Output schemas are in [`schemas/`](schemas).
-`npx cookieguard-ci@0.2.0 capabilities --json` and `npx cookieguard-ci@0.2.0 explain CG001`
+`npx cookieguard-ci@0.3.0 capabilities --json` and `npx cookieguard-ci@0.3.0 explain CG001`
 print the same information.
 [Agent discovery details](docs/agent-discovery.md)
 

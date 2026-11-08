@@ -8,11 +8,11 @@
     "source": "github",
     "subfolder": "packages/mcp"
   },
-  "version": "0.2.0",
+  "version": "0.3.0",
   "packages": [{
     "registryType": "npm",
     "identifier": "@aiscihub/cookieguard-mcp",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "transport": { "type": "stdio" },
     "packageArguments": [{
       "type": "named",

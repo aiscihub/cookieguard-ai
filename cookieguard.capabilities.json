@@ -4,7 +4,7 @@
   "tool": {
     "id": "cookieguard",
     "name": "CookieGuard",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "license": "MIT",
     "repository": "https://github.com/aiscihub/cookieguard-ai",
     "documentation": "https://github.com/aiscihub/cookieguard-ai#readme",
@@ -47,8 +47,8 @@
       "kind": "npm-package",
       "registry": "npm",
       "package": "@aiscihub/cookieguard-playwright",
-      "version": "0.2.0",
-      "install": "npm install --save-dev @aiscihub/cookieguard-playwright@0.2.0",
+      "version": "0.3.0",
+      "install": "npm install --save-dev @aiscihub/cookieguard-playwright@0.3.0",
       "entryPoint": "startCookieAudit",
       "requires": [
         "Node.js 24+",
@@ -64,8 +64,8 @@
       "kind": "npm-package",
       "registry": "npm",
       "package": "cookieguard-ci",
-      "version": "0.2.0",
-      "install": "npx --yes cookieguard-ci@0.2.0 scan http://127.0.0.1:3000/ --auth-cookie session_id --format json",
+      "version": "0.3.0",
+      "install": "npx --yes cookieguard-ci@0.3.0 scan http://127.0.0.1:3000/ --auth-cookie session_id --format json",
       "entryPoint": "cookieguard-ci",
       "requires": [
         "Node.js 24+"
@@ -95,10 +95,10 @@
       "kind": "mcp-server",
       "registry": "npm",
       "package": "@aiscihub/cookieguard-mcp",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "mcpRegistryName": "io.github.aiscihub/cookieguard",
       "transport": "stdio",
-      "install": "npx --yes @aiscihub/cookieguard-mcp@0.2.0 --config /absolute/path/cookieguard.json",
+      "install": "npx --yes @aiscihub/cookieguard-mcp@0.3.0 --config /absolute/path/cookieguard.json",
       "entryPoint": "cookieguard-mcp",
       "requires": [
         "Node.js 24+",
@@ -208,12 +208,11 @@
     },
     {
       "id": "check-session-lifecycle",
-      "availability": "unreleased",
+      "availability": "released",
       "surfaces": [
-        "playwright",
-        "browser-use"
+        "playwright"
       ],
-      "description": "Opt-in: replay the observed session against one protected URL to check rotation at login (CG010) and revocation at logout (CG011).",
+      "description": "Opt-in: replay the observed session against one protected URL to check rotation at login (CG010) and revocation at logout (CG011). Released for Playwright; the Python package (Browser Use) has it only in source.",
       "inputs": [
         "A probe URL on an allowed origin that answers anonymous requests with 401, 403, or a redirect",
         "Authentication-cookie names"
@@ -228,12 +227,11 @@
     },
     {
       "id": "check-web-storage",
-      "availability": "unreleased",
+      "availability": "released",
       "surfaces": [
-        "playwright",
-        "browser-use"
+        "playwright"
       ],
-      "description": "Report token-like localStorage and sessionStorage entries on allowed origins (CG012); configured authStorageKeys can fail the run.",
+      "description": "Report token-like localStorage and sessionStorage entries on allowed origins (CG012); configured authStorageKeys can fail the run. Released for Playwright; the Python package (Browser Use) has it only in source.",
       "inputs": [
         "Optional authStorageKeys policy entries"
       ],
@@ -247,7 +245,7 @@
     },
     {
       "id": "enforce-login-checks",
-      "availability": "unreleased",
+      "availability": "released",
       "surfaces": [
         "playwright",
         "cli"

@@ -4,8 +4,7 @@ This example adds a CookieGuard check to an existing Playwright login test, and 
 that blocks the merge unless that check ran and passed. The check runs whether or not a
 coding agent decides to use CookieGuard: it is part of your test setup.
 
-> Unreleased: `cookieGuardFixtures` and `cookieguard-ci gate` are on the
-> `eval/value-validation` branch, not in the published 0.2.0 packages.
+> Needs `@aiscihub/cookieguard-playwright` and `cookieguard-ci` 0.3.0 or later.
 
 ## Run it
 
@@ -36,7 +35,7 @@ CookiePolicyError: CookieGuard FAIL for "sign-in-and-out" (http://127.0.0.1:3100
 
 ## Add it to your app
 
-1. Install `@aiscihub/cookieguard-playwright` and `cookieguard-ci` as dev dependencies.
+1. Install: `npm install --save-dev @aiscihub/cookieguard-playwright@0.3.0 cookieguard-ci@0.3.0`.
 2. Extend your Playwright `test` once, as in [`login.spec.js`](login.spec.js):
    - `origins`: your test app's origin;
    - `policy.authCookies`: the exact session cookie names;

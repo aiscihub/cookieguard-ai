@@ -79,7 +79,6 @@ A `review` finding is heuristic or uncertain and never fails a run.
 
 ## CG010 Session identifier not rotated at login (high)
 
-- Availability: not in the published packages yet; on the main branch for the next release.
 - Checks: Session rotation at login (session probe)
 - Confirmed when: With a session probe configured, a configured authentication cookie value issued by a GET response was unauthenticated at the probe URL and later authenticated, without a new value being issued.
 - Review when: The same evidence for a cookie that is not a configured authentication cookie.
@@ -88,7 +87,6 @@ A `review` finding is heuristic or uncertain and never fails a run.
 
 ## CG011 Session still valid after logout (high)
 
-- Availability: not in the published packages yet; on the main branch for the next release.
 - Checks: Session revocation at logout (session probe)
 - Confirmed when: With a session probe configured, a configured authentication cookie that was authenticated was deleted (logout), and replaying its previous value to the probe URL was still authenticated.
 - Review when: The same evidence for a cookie that is not a configured authentication cookie.
@@ -97,7 +95,6 @@ A `review` finding is heuristic or uncertain and never fails a run.
 
 ## CG012 Authentication token in Web Storage (high)
 
-- Availability: not in the published packages yet; on the main branch for the next release.
 - Checks: Tokens in localStorage or sessionStorage
 - Confirmed when: A configured authStorageKeys entry was present in Web Storage on an allowed origin.
 - Review when: A Web Storage value looks like a token (a JWT, a token field in JSON, or a token-like value under a token-like key) and its key is not configured.

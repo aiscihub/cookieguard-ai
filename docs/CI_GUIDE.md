@@ -59,7 +59,7 @@ from this repository, using the same security engine. Published npm packages:
 [`cookieguard-ci`](https://www.npmjs.com/package/cookieguard-ci),
 [`@aiscihub/cookieguard-core`](https://www.npmjs.com/package/@aiscihub/cookieguard-core),
 and [`@aiscihub/cookieguard-playwright`](https://www.npmjs.com/package/@aiscihub/cookieguard-playwright).
-All three are version `0.2.0` under the default `latest` dist-tag (0.1.0 was the
+All three are version `0.3.0` under the default `latest` dist-tag (0.1.0 was the
 public beta), published
 by [`aiscihub`](https://www.npmjs.com/~aiscihub). Package names, versions, and
 maintainer ownership have been checked against the public npm registry.
@@ -90,7 +90,7 @@ Requirements: **Node 24 or newer** and npm. Against your running local test
 application, using its authentication-cookie name:
 
 ```bash
-npx cookieguard-ci@0.2.0 scan http://localhost:3000 --auth-cookie session_id
+npx cookieguard-ci@0.3.0 scan http://localhost:3000 --auth-cookie session_id
 ```
 
 The version pin keeps CI reproducible. The CLI itself needs no browser,
@@ -172,7 +172,7 @@ printed. No public website is visited by the demo or tests.
 In an existing Playwright project using Node 24 or newer:
 
 ```bash
-npm install --save-dev @aiscihub/cookieguard-playwright@0.2.0
+npm install --save-dev @aiscihub/cookieguard-playwright@0.3.0
 ```
 
 To run this repository's demo tests from a full contributor installation:
@@ -225,7 +225,8 @@ real policy assertion fail after a successful login, then pass with HttpOnly.
 
 ### Session and Web Storage checks
 
-These are on the main branch and arrive in the next release. Name a protected URL
+Released for Playwright in 0.3.0; the Python package for Browser Use has them in source
+only. Name a protected URL
 that answers anonymous requests with 401, 403, or a redirect and signed-in requests
 with 2xx, and include the logout in the workflow:
 
@@ -250,6 +251,15 @@ The probe sends GET requests carrying only the configured authentication cookies
 to that URL, from the test process; values never appear in results. Undecidable probes
 make the audit INCOMPLETE, never PASS. Web Storage values are classified in memory and
 discarded.
+
+### Fail-closed gate in CI
+
+`cookieGuardFixtures()` (0.3.0) runs this audit for every login test that takes the
+`cookieGuard` fixture and writes value-free evidence; `cookieguard-ci gate` then blocks
+the build unless each required test ran and passed, under the policy on the gate's own
+command line. A skipped, filtered, or deleted test is INCOMPLETE. See the
+[gate example](../examples/playwright-gate), including the repository protections it
+needs (CODEOWNERS for the spec and workflow, a required status check, and a run ID).
 
 ## Quick start: GitHub Actions
 

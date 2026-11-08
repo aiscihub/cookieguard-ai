@@ -6,7 +6,7 @@ compatibility: Needs Node.js 24+. Browser Use also needs Python 3.11-3.13, brows
 metadata:
   title: CookieGuard AI — Browser Agent Authentication Security Audit
   project: https://github.com/aiscihub/cookieguard-ai
-  packages: cookieguard 0.2.0 (PyPI); cookieguard-ci, @aiscihub/cookieguard-playwright, @aiscihub/cookieguard-mcp 0.2.0 (npm)
+  packages: cookieguard 0.2.0 (PyPI); cookieguard-ci, @aiscihub/cookieguard-playwright, @aiscihub/cookieguard-mcp 0.3.0 (npm)
 ---
 
 # CookieGuard AI — Browser Agent Authentication Security Audit
@@ -79,8 +79,8 @@ Do not install globally or change unrelated dependencies.
 
 ```bash
 python3.12 -m venv .venv && .venv/bin/pip install cookieguard==0.2.0
-npm install --save-dev @aiscihub/cookieguard-playwright@0.2.0
-npx --yes cookieguard-ci@0.2.0 --version
+npm install --save-dev @aiscihub/cookieguard-playwright@0.3.0
+npx --yes cookieguard-ci@0.3.0 --version
 ```
 
 Version requirements and verification: [installation](references/installation.md).
@@ -132,7 +132,7 @@ try {
 **CLI** (the running app must set the cookie on a GET):
 
 ```bash
-npx --yes cookieguard-ci@0.2.0 scan http://127.0.0.1:3000/ --auth-cookie session_id --format json
+npx --yes cookieguard-ci@0.3.0 scan http://127.0.0.1:3000/ --auth-cookie session_id --format json
 ```
 
 ### D. Interpret the result
@@ -184,4 +184,4 @@ Use this structure; [findings](references/findings.md) has the full template and
   than 3.11; create the virtualenv with `python3.11`, `python3.12`, or `python3.13`.
 - `TARGET` error: remove query strings and credentials from the URL; allow nonlocal origins explicitly.
 - Browser Use closes the browser before `finish()`: set `keep_alive=True`.
-- Any rule, issue, or error code: `npx --yes cookieguard-ci@0.2.0 explain ID`.
+- Any rule, issue, or error code: `npx --yes cookieguard-ci@0.3.0 explain ID`.

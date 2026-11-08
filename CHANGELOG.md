@@ -1,16 +1,37 @@
 # Changelog
 
+## CookieGuard 0.3.0 — fail-closed Playwright gate — prepared, not yet published
+
+npm packages `@aiscihub/cookieguard-core`, `cookieguard-ci`,
+`@aiscihub/cookieguard-playwright`, and `@aiscihub/cookieguard-mcp` move to 0.3.0 with
+exact internal dependencies. The Python package (`cookieguard` 0.2.0 on PyPI) is not part
+of this release and keeps its pinned engine. Users pinned to `^0.2.0` stay on 0.2.x.
+
+- **Fail-closed login gate.** `cookieGuardFixtures()` in `@aiscihub/cookieguard-playwright`
+  adds a `cookieGuard` fixture: a login test that takes it is audited end to end, writes
+  value-free evidence, and fails with only the blocking findings. `cookieguard-ci gate`
+  re-evaluates that evidence under its own policy and ignores the test runner's exit code.
+  A required check with no fresh, valid evidence is INCOMPLETE (`evidence-missing`,
+  `evidence-invalid`, `evidence-stale`, `session-check-not-run`), so a skipped, filtered,
+  or deleted test cannot pass. A confirmed violation is FAIL even when another check was
+  inconclusive. See `examples/playwright-gate` and `benchmarks/security-gate`.
+- **Session checks, released for Playwright.** CG010 (session id not rotated at login) and
+  CG011 (session still valid after logout) use an opt-in session probe that replays the
+  configured authentication cookies to one protected URL you name; undecidable probes are
+  INCOMPLETE. CG012 reports tokens kept in `localStorage` or `sessionStorage`, confirmed
+  for configured `authStorageKeys`. Values stay in the local process and never appear in
+  results. Reports gain `session` and `storage` sections, which evidence files and the MCP
+  server re-evaluate. The Browser Use integration has these checks in source only.
+- **Collector fixes.** A configured credential that page script set and logout deleted is
+  now judged from its last store observation instead of being reported as not observed.
+  A `Set-Cookie` line without a cookie name, which cannot set a configured cookie, is
+  skipped instead of making the whole collection INCOMPLETE.
+- **MCP server.** Tools are unchanged; it uses the 0.3.0 engine, so `cookieguard_explain`
+  covers CG010–CG012 and the gate's reasons. `server.json` is 0.3.0.
+- The capability document lists 0.3.0 and marks every operation released.
+
 ## Unreleased
 
-- Add three runtime session checks to the core, the Playwright adapter, and the Browser Use
-  integration. CG010 (session id not rotated at login) and CG011 (session still valid
-  after logout) use an opt-in session probe that replays the configured authentication
-  cookies to one protected URL you name; undecidable probes are INCOMPLETE. CG012 reports
-  tokens kept in `localStorage` or `sessionStorage`, confirmed for configured
-  `authStorageKeys`. Values stay in the local process and never appear in results.
-  Reports gain `session` and `storage` sections, which evidence files and the MCP server
-  re-evaluate. The capabilities document marks both operations `unreleased`, and the
-  release gate refuses a release until they are published.
 - Fix `vendor_engine.mjs` workspace mode, which required the pinned published version.
   The Python CI job now vendors the engine from this repository.
 
