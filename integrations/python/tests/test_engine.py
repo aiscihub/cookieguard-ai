@@ -210,7 +210,8 @@ def test_vendored_engine_matches_manifest_and_published_versions():
 	# Releases vendor the pinned npm engine; development builds vendor the workspace packages.
 	# The suite also runs from a copy outside the repository, so read versions from the manifest.
 	manifest = json.loads((engine_dir() / 'manifest.json').read_text())
-	expected = '0.1.0' if manifest['source'] == 'npm-registry' else manifest['packages'][0]['version']
+	# Keep in step with ENGINE_VERSION in scripts/vendor_engine.mjs.
+	expected = '0.3.0' if manifest['source'] == 'npm-registry' else manifest['packages'][0]['version']
 	assert verify_engine_files() == {'@aiscihub/cookieguard-core': expected, '@aiscihub/cookieguard-playwright': expected}
 
 

@@ -27,7 +27,7 @@
       "kind": "python-package",
       "registry": "pypi",
       "package": "cookieguard",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "install": "pip install cookieguard",
       "entryPoint": "cookieguard.CookieGuardAudit",
       "requires": [
@@ -210,9 +210,10 @@
       "id": "check-session-lifecycle",
       "availability": "released",
       "surfaces": [
-        "playwright"
+        "playwright",
+        "browser-use"
       ],
-      "description": "Opt-in: replay the observed session against one protected URL to check rotation at login (CG010) and revocation at logout (CG011). Released for Playwright; the Python package (Browser Use) has it only in source.",
+      "description": "Opt-in: replay the observed session against one protected URL to check rotation at login (CG010) and revocation at logout (CG011).",
       "inputs": [
         "A probe URL on an allowed origin that answers anonymous requests with 401, 403, or a redirect",
         "Authentication-cookie names"
@@ -229,9 +230,10 @@
       "id": "check-web-storage",
       "availability": "released",
       "surfaces": [
-        "playwright"
+        "playwright",
+        "browser-use"
       ],
-      "description": "Report token-like localStorage and sessionStorage entries on allowed origins (CG012); configured authStorageKeys can fail the run. Released for Playwright; the Python package (Browser Use) has it only in source.",
+      "description": "Report token-like localStorage and sessionStorage entries on allowed origins (CG012); configured authStorageKeys can fail the run.",
       "inputs": [
         "Optional authStorageKeys policy entries"
       ],

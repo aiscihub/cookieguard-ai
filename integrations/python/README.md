@@ -69,7 +69,7 @@ collection without a result. One instance audits one workflow.
 
 Needs Python 3.11+, Node.js 24+, and Chrome or Chromium: **[Install](docs/install.md)**.
 
-Install [version 0.2.0 from PyPI](https://pypi.org/project/cookieguard/):
+Install [version 0.3.0 from PyPI](https://pypi.org/project/cookieguard/):
 
 ```bash
 pip install cookieguard
@@ -78,6 +78,6 @@ pip install cookieguard
 Code that uses `cookieguard-browser-use` or `import cookieguard_browser_use` keeps working:
 that package now installs `cookieguard` and re-exports it.
 
-Status: `0.2.0`, tested with browser-use 0.13.14 on Linux (Python 3.11–3.13) and macOS (Python 3.12).
+Status: `0.3.0`, tested with browser-use 0.13.14 on Linux (Python 3.11–3.13) and macOS (Python 3.12).
 See [tested environments](docs/limits-and-privacy.md#tested-environments-and-dependencies).
 This is a community integration, not an official Browser Use package.

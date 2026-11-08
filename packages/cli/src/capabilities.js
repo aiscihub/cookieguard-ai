@@ -5,7 +5,7 @@ const REPO = 'https://github.com/aiscihub/cookieguard-ai';
 const RAW = 'https://raw.githubusercontent.com/aiscihub/cookieguard-ai/main';
 // Versions that are actually published. Mark an operation "unreleased" while it
 // exists only on the main branch; it then needs a source checkout.
-const PUBLISHED = Object.freeze({ cli: '0.3.0', core: '0.3.0', playwright: '0.3.0', mcp: '0.3.0', python: '0.2.0' });
+const PUBLISHED = Object.freeze({ cli: '0.3.0', core: '0.3.0', playwright: '0.3.0', mcp: '0.3.0', python: '0.3.0' });
 
 /** The stable, versioned description of what CookieGuard can do. Static data only. */
 export function capabilities() {
@@ -74,13 +74,13 @@ export function capabilities() {
         description: 'Optional read-only cookieguard_audit action an agent can call mid-run. Provisional; it cannot satisfy policy.',
         inputs: ['None from the agent'], permissions: ['Registered by developer code with audit.register_tools(tools)'],
         evidence: ['browser-observation'], network: 'None.' },
-      { id: 'check-session-lifecycle', availability: 'released', surfaces: ['playwright'],
-        description: 'Opt-in: replay the observed session against one protected URL to check rotation at login (CG010) and revocation at logout (CG011). Released for Playwright; the Python package (Browser Use) has it only in source.',
+      { id: 'check-session-lifecycle', availability: 'released', surfaces: ['playwright', 'browser-use'],
+        description: 'Opt-in: replay the observed session against one protected URL to check rotation at login (CG010) and revocation at logout (CG011).',
         inputs: ['A probe URL on an allowed origin that answers anonymous requests with 401, 403, or a redirect', 'Authentication-cookie names'],
         permissions: ['Sends GET requests carrying the configured authentication cookies, only to the probe URL; values stay in the local process'],
         evidence: ['session-probe'], network: 'One anonymous GET, one GET per issued value and page navigation, and one replay per logout, to the probe URL only.' },
-      { id: 'check-web-storage', availability: 'released', surfaces: ['playwright'],
-        description: 'Report token-like localStorage and sessionStorage entries on allowed origins (CG012); configured authStorageKeys can fail the run. Released for Playwright; the Python package (Browser Use) has it only in source.',
+      { id: 'check-web-storage', availability: 'released', surfaces: ['playwright', 'browser-use'],
+        description: 'Report token-like localStorage and sessionStorage entries on allowed origins (CG012); configured authStorageKeys can fail the run.',
         inputs: ['Optional authStorageKeys policy entries'], permissions: ['Reads Web Storage of allowed origins in the audited browser'],
         evidence: ['browser-observation'], network: 'None.' },
       { id: 'enforce-login-checks', availability: 'released', surfaces: ['playwright', 'cli'],

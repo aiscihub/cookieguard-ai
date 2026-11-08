@@ -60,7 +60,7 @@ logs, or reports.
 
 ### Install
 
-Needs **Python 3.11+, Node.js 24+, and Chrome or Chromium**. Install version 0.2.0:
+Needs **Python 3.11+, Node.js 24+, and Chrome or Chromium**. Install version 0.3.0:
 
 ```bash
 pip install cookieguard
@@ -152,13 +152,13 @@ below is reported. Only cookies you name in `auth_cookies` can be confirmed.
 | CG007 | A protection regressed since a baseline | high | `finish(baseline=…)` |
 | CG008 | Authentication role not confirmed | review | name it in `auth_cookies` |
 | CG009 | Evidence needs review | review | — |
-| CG010 | Session id not rotated at login | high | opt-in `session_probe_url` (next release) |
-| CG011 | Session still valid after logout | high | opt-in `session_probe_url` (next release) |
-| CG012 | Token in `localStorage` or `sessionStorage` | high | review; confirmed with `auth_storage_keys` (next release) |
+| CG010 | Session id not rotated at login | high | opt-in `session_probe_url` |
+| CG011 | Session still valid after logout | high | opt-in `session_probe_url` |
+| CG012 | Token in `localStorage` or `sessionStorage` | high | review; confirmed with `auth_storage_keys` |
 
 CG001–CG009 check cookie configuration. CG010 and CG011 replay the observed session
-against one protected URL you name, and CG012 reads Web Storage in the audited browser;
-these three are on the main branch and arrive in the next release. PASS means the
+against one protected URL you name, and CG012 reads Web Storage in the audited browser
+(Python 0.3.0 and Playwright 0.3.0). PASS means the
 configured checks passed, not that the application is secure.
 [Full rule table](docs/CI_GUIDE.md#supported-checks) · [Limits & privacy](integrations/python/docs/limits-and-privacy.md)
 

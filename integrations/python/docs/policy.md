@@ -41,10 +41,10 @@ audit = CookieGuardAudit(
 | `capture_headers` | `True` | `False` = browser-observation-only mode (declarations stay unknown). |
 | `require_header_evidence` | `= capture_headers` | An otherwise passing audit without a `Set-Cookie` for each expected cookie is INCOMPLETE. Never hides a FAIL. |
 | `timeout_seconds` | 600 | Collection window (max 600); expiry makes the audit INCOMPLETE. |
-| `session_probe_url` | none | *Next release.* Opt-in: a protected URL on an allowed origin (401, 403, or a redirect when anonymous; 2xx when signed in). CookieGuard replays the `auth_cookies` there to check rotation at login (CG010) and revocation at logout (CG011). Needs `auth_cookies` and `capture_headers=True`. |
-| `require_logout` | `False` | *Next release.* With a session probe, an audit whose workflow never logs out is INCOMPLETE. |
-| `auth_storage_keys` | `[]` | *Next release.* Exact `localStorage`/`sessionStorage` keys that hold your auth token; their presence is a confirmed CG012. Other token-like entries are review items. |
-| `collect_storage` | `True` | *Next release.* `False` skips reading Web Storage at `finish()`. |
+| `session_probe_url` | none | Opt-in: a protected URL on an allowed origin (401, 403, or a redirect when anonymous; 2xx when signed in). CookieGuard replays the `auth_cookies` there to check rotation at login (CG010) and revocation at logout (CG011). Needs `auth_cookies` and `capture_headers=True`. |
+| `require_logout` | `False` | With a session probe, an audit whose workflow never logs out is INCOMPLETE. |
+| `auth_storage_keys` | `[]` | Exact `localStorage`/`sessionStorage` keys that hold your auth token; their presence is a confirmed CG012. Other token-like entries are review items. |
+| `collect_storage` | `True` | `False` skips reading Web Storage at `finish()`. |
 
 Rule severities are fixed. Custom rules, per-rule switches, per-cookie policies, and policy
 files are not supported. Details of every rule: [rule reference](../../../docs/CI_GUIDE.md#supported-checks).
