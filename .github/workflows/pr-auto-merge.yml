@@ -19,8 +19,9 @@ permissions:
   pull-requests: write
 
 concurrency:
-  group: pr-auto-merge-${{ github.event.pull_request.number || inputs.pull_number }}
-  # Finish a label cancellation even if a read-only manual run arrives.
+  # Dry runs get separate groups so they cannot replace a pending cancellation.
+  group: pr-auto-merge-${{ github.event.pull_request.number || inputs.pull_number }}-${{ github.event_name == 'workflow_dispatch' && inputs.dry_run && github.run_id || 'write' }}
+  # Finish each active label transition before starting the next one.
   cancel-in-progress: false
 
 jobs:
