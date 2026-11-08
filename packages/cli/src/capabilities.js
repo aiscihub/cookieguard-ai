@@ -5,7 +5,7 @@ const REPO = 'https://github.com/aiscihub/cookieguard-ai';
 const RAW = 'https://raw.githubusercontent.com/aiscihub/cookieguard-ai/main';
 // Versions that are actually published. Mark an operation "unreleased" while it
 // exists only on the main branch; it then needs a source checkout.
-const PUBLISHED = Object.freeze({ cli: '0.2.0', core: '0.2.0', playwright: '0.2.0', mcp: '0.2.0', python: '0.2.0' });
+const PUBLISHED = Object.freeze({ cli: '0.3.0', core: '0.3.0', playwright: '0.3.0', mcp: '0.3.0', python: '0.2.0' });
 
 /** The stable, versioned description of what CookieGuard can do. Static data only. */
 export function capabilities() {
@@ -32,11 +32,11 @@ export function capabilities() {
         tested: ['Linux, Python 3.11-3.13, Chromium 156', 'macOS, Python 3.12, Chrome 156'],
         documentation: `${REPO}/tree/main/integrations/python` },
       { id: 'playwright', kind: 'npm-package', registry: 'npm', package: '@aiscihub/cookieguard-playwright', version: PUBLISHED.playwright,
-        install: 'npm install --save-dev @aiscihub/cookieguard-playwright@0.2.0', entryPoint: 'startCookieAudit',
+        install: 'npm install --save-dev @aiscihub/cookieguard-playwright@0.3.0', entryPoint: 'startCookieAudit',
         requires: ['Node.js 24+', '@playwright/test'], tested: ['Linux (CI) and macOS arm64 (local), Node.js 24, Chromium'],
         documentation: `${REPO}/blob/main/docs/CI_GUIDE.md#quick-start-playwright` },
       { id: 'cli', kind: 'npm-package', registry: 'npm', package: 'cookieguard-ci', version: PUBLISHED.cli,
-        install: 'npx --yes cookieguard-ci@0.2.0 scan http://127.0.0.1:3000/ --auth-cookie session_id --format json',
+        install: 'npx --yes cookieguard-ci@0.3.0 scan http://127.0.0.1:3000/ --auth-cookie session_id --format json',
         entryPoint: 'cookieguard-ci', requires: ['Node.js 24+'], tested: ['Linux (CI) and macOS arm64 (local), Node.js 24'],
         documentation: `${REPO}/blob/main/docs/CI_GUIDE.md#quick-start-cli` },
       { id: 'github-action', kind: 'github-action', package: 'aiscihub/cookieguard-ai/action', version: 'ci-v0.1.0',
@@ -45,7 +45,7 @@ export function capabilities() {
         tested: ['ubuntu-latest'], documentation: `${REPO}/blob/main/docs/CI_GUIDE.md#quick-start-github-actions` },
       { id: 'mcp', kind: 'mcp-server', registry: 'npm', package: '@aiscihub/cookieguard-mcp', version: PUBLISHED.mcp,
         mcpRegistryName: 'io.github.aiscihub/cookieguard', transport: 'stdio',
-        install: 'npx --yes @aiscihub/cookieguard-mcp@0.2.0 --config /absolute/path/cookieguard.json',
+        install: 'npx --yes @aiscihub/cookieguard-mcp@0.3.0 --config /absolute/path/cookieguard.json',
         entryPoint: 'cookieguard-mcp', requires: ['Node.js 24+', 'A startup JSON configuration with allowedOrigins'],
         tested: ['Official MCP SDK client on Linux (Node.js 24) and macOS (Node.js 26)'],
         documentation: `${REPO}/tree/main/packages/mcp` },
@@ -74,16 +74,16 @@ export function capabilities() {
         description: 'Optional read-only cookieguard_audit action an agent can call mid-run. Provisional; it cannot satisfy policy.',
         inputs: ['None from the agent'], permissions: ['Registered by developer code with audit.register_tools(tools)'],
         evidence: ['browser-observation'], network: 'None.' },
-      { id: 'check-session-lifecycle', availability: 'unreleased', surfaces: ['playwright', 'browser-use'],
-        description: 'Opt-in: replay the observed session against one protected URL to check rotation at login (CG010) and revocation at logout (CG011).',
+      { id: 'check-session-lifecycle', availability: 'released', surfaces: ['playwright'],
+        description: 'Opt-in: replay the observed session against one protected URL to check rotation at login (CG010) and revocation at logout (CG011). Released for Playwright; the Python package (Browser Use) has it only in source.',
         inputs: ['A probe URL on an allowed origin that answers anonymous requests with 401, 403, or a redirect', 'Authentication-cookie names'],
         permissions: ['Sends GET requests carrying the configured authentication cookies, only to the probe URL; values stay in the local process'],
         evidence: ['session-probe'], network: 'One anonymous GET, one GET per issued value and page navigation, and one replay per logout, to the probe URL only.' },
-      { id: 'check-web-storage', availability: 'unreleased', surfaces: ['playwright', 'browser-use'],
-        description: 'Report token-like localStorage and sessionStorage entries on allowed origins (CG012); configured authStorageKeys can fail the run.',
+      { id: 'check-web-storage', availability: 'released', surfaces: ['playwright'],
+        description: 'Report token-like localStorage and sessionStorage entries on allowed origins (CG012); configured authStorageKeys can fail the run. Released for Playwright; the Python package (Browser Use) has it only in source.',
         inputs: ['Optional authStorageKeys policy entries'], permissions: ['Reads Web Storage of allowed origins in the audited browser'],
         evidence: ['browser-observation'], network: 'None.' },
-      { id: 'enforce-login-checks', availability: 'unreleased', surfaces: ['playwright', 'cli'],
+      { id: 'enforce-login-checks', availability: 'released', surfaces: ['playwright', 'cli'],
         description: 'Fail closed in CI: the Playwright cookieGuard fixture writes value-free evidence for each login test, and cookieguard-ci gate re-evaluates it under the gate\'s own policy. A required check that was skipped, filtered out, or deleted has no evidence and is INCOMPLETE.',
         inputs: ['cookieGuardFixtures({ origins, policy }) passed to test.extend()', 'cookieguard-ci gate --evidence DIR --require "TEST TITLE" --auth-cookie NAME'],
         permissions: ['Reads only the evidence directory; the fixture writes one JSON file per test'],

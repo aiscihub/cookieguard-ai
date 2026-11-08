@@ -1,11 +1,39 @@
 # @aiscihub/cookieguard-playwright
 
-Passive cookie auditing for an existing Playwright BrowserContext. Version 0.2.0
-uses `@aiscihub/cookieguard-core` 0.2.0. In an existing Playwright project, install:
+Passive cookie auditing for an existing Playwright BrowserContext. Version 0.3.0
+uses `@aiscihub/cookieguard-core` 0.3.0. In an existing Playwright project, install:
 
 ```bash
-npm install --save-dev @aiscihub/cookieguard-playwright@0.2.0
+npm install --save-dev @aiscihub/cookieguard-playwright@0.3.0
 ```
+
+## Fail-closed login gate (0.3.0)
+
+`cookieGuardFixtures()` adds a `cookieGuard` fixture to your `test`. A login test that
+takes it is audited from its first navigation to its end, writes value-free evidence to
+`cookieguard-evidence/<test-title>.json`, and fails with only the blocking findings.
+`cookieguard-ci gate` then decides in CI from that evidence and its own policy; a skipped,
+filtered, or deleted test has no evidence and is INCOMPLETE.
+
+```js
+import { test as base } from '@playwright/test';
+import { cookieGuardFixtures } from '@aiscihub/cookieguard-playwright';
+
+const test = base.extend(cookieGuardFixtures({
+  origins: ['http://127.0.0.1:3000'],
+  policy: { authCookies: ['sid'], failOn: 'medium' },
+  sessionProbe: { url: 'http://127.0.0.1:3000/api/me', requireLogout: true },
+}));
+
+test('sign in and out', async ({ page, cookieGuard: _audited }) => {
+  // your existing login and logout steps
+});
+```
+
+See the [runnable gate example](https://github.com/aiscihub/cookieguard-ai/tree/main/examples/playwright-gate)
+for the CI step and the repository protections it needs.
+
+## Direct use
 
 See the runnable [Playwright example](https://github.com/aiscihub/cookieguard-ai/tree/main/examples/playwright).
 The adapter does not import or

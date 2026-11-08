@@ -51,7 +51,7 @@ test('capability document is schema-valid, stable, and identical to the publishe
   // Operations that exist only on main stay "unreleased" until their packages are
   // published; scripts/release-gate.js refuses a release while any remain.
   assert.deepEqual(document.operations.filter(o => o.availability !== 'released').map(o => [o.id, o.availability]),
-    [['check-session-lifecycle', 'unreleased'], ['check-web-storage', 'unreleased'], ['enforce-login-checks', 'unreleased']]);
+    []);
 });
 
 test('every explainable identifier has a schema-valid explanation; unknown identifiers are not reflected', async () => {

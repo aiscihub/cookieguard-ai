@@ -1,6 +1,6 @@
 # MCP server
 
-`@aiscihub/cookieguard-mcp` 0.2.0 is a local stdio server (registry name
+`@aiscihub/cookieguard-mcp` 0.3.0 is a local stdio server (registry name
 `io.github.aiscihub/cookieguard`). It needs Node.js 24+ and a startup JSON file
 that fixes the allowed origins and policy; tool calls cannot change them.
 
@@ -15,13 +15,13 @@ Save the configuration outside directories the agent can edit, for example
 }
 ```
 
-Claude Code: `claude mcp add cookieguard -- npx --yes @aiscihub/cookieguard-mcp@0.2.0 --config /absolute/path/cookieguard.json`
+Claude Code: `claude mcp add cookieguard -- npx --yes @aiscihub/cookieguard-mcp@0.3.0 --config /absolute/path/cookieguard.json`
 
 Clients using an `mcpServers` object:
 
 ```json
 { "mcpServers": { "cookieguard": { "command": "npx",
-  "args": ["--yes", "@aiscihub/cookieguard-mcp@0.2.0", "--config", "/absolute/path/cookieguard.json"] } } }
+  "args": ["--yes", "@aiscihub/cookieguard-mcp@0.3.0", "--config", "/absolute/path/cookieguard.json"] } } }
 ```
 
 Codex (`~/.codex/config.toml`):
@@ -29,7 +29,7 @@ Codex (`~/.codex/config.toml`):
 ```toml
 [mcp_servers.cookieguard]
 command = "npx"
-args = ["--yes", "@aiscihub/cookieguard-mcp@0.2.0", "--config", "/absolute/path/cookieguard.json"]
+args = ["--yes", "@aiscihub/cookieguard-mcp@0.3.0", "--config", "/absolute/path/cookieguard.json"]
 ```
 
 Tools: `cookieguard_capabilities` (checks, fixed configuration, result meanings),

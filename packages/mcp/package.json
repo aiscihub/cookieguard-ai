@@ -1,6 +1,6 @@
 {
   "name": "@aiscihub/cookieguard-mcp",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Local MCP server for authentication-cookie security audits: PASS/FAIL/INCOMPLETE findings without cookie values",
   "keywords": ["mcp", "mcp-server", "model-context-protocol", "ai-agents", "cookie", "session-cookie", "authentication", "security", "httponly", "samesite"],
   "homepage": "https://github.com/aiscihub/cookieguard-ai/tree/main/packages/mcp",
@@ -14,8 +14,8 @@
   "files": ["bin", "src", "LICENSE", "README.md", "server.json"],
   "publishConfig": { "access": "public", "registry": "https://registry.npmjs.org" },
   "dependencies": {
-    "@aiscihub/cookieguard-core": "0.2.0",
-    "cookieguard-ci": "0.2.0",
+    "@aiscihub/cookieguard-core": "0.3.0",
+    "cookieguard-ci": "0.3.0",
     "@modelcontextprotocol/server": "2.4.0",
     "zod": "4.6.7"
   },

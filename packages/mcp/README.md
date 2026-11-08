@@ -4,8 +4,10 @@ Let an MCP client check HTTP cookie configuration against your local policy.
 CookieGuard returns **PASS / FAIL / INCOMPLETE**, rule IDs, explanations, and fixes.
 Cookie values never appear in tool results.
 
-Version **0.2.0** on npm, listed in the official MCP Registry as
-`io.github.aiscihub/cookieguard`. Requires **Node.js 24+**. Version 0.2.0 adds
+Version **0.3.0** on npm, listed in the official MCP Registry as
+`io.github.aiscihub/cookieguard`. Requires **Node.js 24+**. Version 0.3.0 updates the
+engine (explanations for CG010–CG012, and session and Web Storage evidence in
+`cookieguard_audit` evidence files); its tools are unchanged. Version 0.2.0 added
 `cookieguard_capabilities`, `cookieguard_audit` (including sanitized evidence files), and
 `cookieguard_explain`. See [Tools and results](#tools-and-results).
 
@@ -93,7 +95,7 @@ For clients that use an `mcpServers` JSON object:
       "command": "npx",
       "args": [
         "--yes",
-        "@aiscihub/cookieguard-mcp@0.2.0",
+        "@aiscihub/cookieguard-mcp@0.3.0",
         "--config",
         "/absolute/path/cookieguard.json"
       ]
