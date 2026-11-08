@@ -74,3 +74,5 @@ Remove `auto-merge` to cancel the pending request. Cancellation takes effect
 when the label workflow runs; use the PR's **Disable auto-merge** control for
 immediate cancellation. Check **Merge labeled PRs after CI** in Actions for
 the eligibility result. Its manual **Run workflow** option defaults to a dry run.
+See [Automatic PR merging](docs/PR_AUTO_MERGE.md) for required checks,
+cancellation details, and troubleshooting.
