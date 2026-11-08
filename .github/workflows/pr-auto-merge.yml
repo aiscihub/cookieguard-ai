@@ -20,7 +20,8 @@ permissions:
 
 concurrency:
   group: pr-auto-merge-${{ github.event.pull_request.number || inputs.pull_number }}
-  cancel-in-progress: true
+  # Finish a label cancellation even if a read-only manual run arrives.
+  cancel-in-progress: false
 
 jobs:
   auto-merge:

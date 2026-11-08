@@ -55,6 +55,19 @@ export async function reconcile({ api, merge, repository, number, cancelRequeste
     && candidate.base?.ref === repo.default_branch && candidate.base?.repo?.full_name === repository
     && hasLabel(candidate);
 
+  async function block(reason, optIn) {
+    // A rapid remove/reapply by a non-maintainer must also cancel an earlier
+    // bot request. Refuse to cancel based on an obsolete label event.
+    if (!isBotQueue(pr)) return result('blocked', reason);
+    const current = await api(`${route}/pulls/${number}`);
+    const currentOptIn = await latestOptIn(api, repository, number);
+    if (currentOptIn?.id !== optIn?.id) return result('skip', 'Label changed; retry on the next event.');
+    if (current.state !== 'open' || !isBotQueue(current)) return result('blocked', reason);
+    if (dryRun) return result('blocked', `${reason} Dry run: the existing bot request would be canceled.`);
+    await merge(['pr', 'merge', String(number), '--repo', repository, '--disable-auto']);
+    return result('blocked', `${reason} Canceled the existing bot request.`);
+  }
+
   async function disable(reason) {
     // Re-read to avoid acting on an old unlabeled/draft event after a new opt-in.
     const current = await api(`${route}/pulls/${number}`);
@@ -70,18 +83,18 @@ export async function reconcile({ api, merge, repository, number, cancelRequeste
     }
     return result('skip', 'Requires the auto-merge label, a ready PR, and the default target branch.');
   }
+  const optIn = await latestOptIn(api, repository, number);
+  if (!optIn?.actor?.login) return block('No current label authorization found.', optIn);
+  const permission = await api(`${route}/collaborators/${encodeURIComponent(optIn.actor.login)}/permission`);
+  if (!['write', 'maintain', 'admin'].includes(permission.permission)) {
+    return block('The auto-merge label must be applied by a maintainer with write access.', optIn);
+  }
   if (!repo.allow_auto_merge || !repo.allow_squash_merge) {
-    return result('blocked', 'Enable repository auto-merge and squash merging first.');
+    return block('Enable repository auto-merge and squash merging first.', optIn);
   }
   const rules = await api(`${route}/rules/branches/${encodeURIComponent(repo.default_branch)}?per_page=100`);
   if (!Array.isArray(rules) || !requiredChecksProtected(rules)) {
-    return result('blocked', 'All four CI checks must be required from GitHub Actions, with an up-to-date branch.');
-  }
-  const optIn = await latestOptIn(api, repository, number);
-  if (!optIn?.actor?.login) return result('blocked', 'No current label authorization found.');
-  const permission = await api(`${route}/collaborators/${encodeURIComponent(optIn.actor.login)}/permission`);
-  if (!['write', 'maintain', 'admin'].includes(permission.permission)) {
-    return result('blocked', 'The auto-merge label must be applied by a maintainer with write access.');
+    return block('All four CI checks must be required from GitHub Actions, with an up-to-date branch.', optIn);
   }
   const head = pr.head?.sha;
   if (!/^[a-f0-9]{40}$/.test(head || '')) throw new Error('Unexpected pull-request head.');

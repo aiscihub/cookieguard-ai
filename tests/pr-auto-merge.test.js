@@ -125,13 +125,31 @@ test('GitHub read failures never fall through to a merge', async () => {
   for (const failAt of [1, 2, 3, 4, 5, 6, 7]) {
     const h = harness();
     let reads = 0;
-    const responses = [pull(), h.state.repo, protections(), [label()], { permission: 'write' }, pull(), [label()]];
+    const responses = [pull(), h.state.repo, [label()], { permission: 'write' }, protections(), pull(), [label()]];
     await assert.rejects(h.run({ api: async () => {
       if (++reads === failAt) throw new Error('GitHub unavailable');
       return structuredClone(responses[reads - 1]);
     } }), /GitHub unavailable/);
     assert.deepEqual(h.state.merges, []);
   }
+});
+
+test('revoked authorization or CI protection cancels a pending bot request', async () => {
+  for (const options of [{ permission: 'triage' }, { events: [] }, { rules: [] }]) {
+    const h = harness({ ...options, pr: { ...pull(), auto_merge: { enabled_by: { login: 'github-actions[bot]' } } } });
+    assert.equal((await h.run()).action, 'blocked');
+    assert.deepEqual(h.state.merges, [['pr', 'merge', '7', '--repo', repository, '--disable-auto']]);
+  }
+});
+
+test('revocation dry run and obsolete label events never cancel a current request', async () => {
+  const options = { permission: 'triage', pr: { ...pull(), auto_merge: { enabled_by: { login: 'github-actions[bot]' } } } };
+  const dry = harness(options);
+  assert.equal((await dry.run({ dryRun: true })).action, 'blocked');
+  assert.deepEqual(dry.state.merges, []);
+  const newer = harness({ ...options, nextEvents: [{ ...label(), id: 20 }] });
+  assert.equal((await newer.run()).action, 'skip');
+  assert.deepEqual(newer.state.merges, []);
 });
 
 test('label history is paginated, and its latest removal wins', async () => {
@@ -154,6 +172,7 @@ test('privileged workflow uses trusted main code and no dependency install or AI
   const workflow = await readFile(new URL('../.github/workflows/pr-auto-merge.yml', import.meta.url), 'utf8');
   assert.match(workflow, /ref: \$\{\{ github\.event\.repository\.default_branch \}\}/);
   assert.match(workflow, /persist-credentials: false/);
+  assert.match(workflow, /cancel-in-progress: false/);
   assert.match(workflow, /GH_TOKEN: \$\{\{ github\.token \}\}/);
   assert.doesNotMatch(workflow, /secrets\.|ANTHROPIC|npm (?:ci|install)|pull_request\.head/);
   assert.equal(REQUIRED_CHECKS.length, 4);
