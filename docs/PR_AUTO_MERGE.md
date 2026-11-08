@@ -58,13 +58,14 @@ authorization; this workflow does not assess code quality beyond CI.
 - **`blocked` job summary:** check label-author permissions, repository
   auto-merge/squash settings, and required-check rules.
 - **No workflow run after a bot added the label:** `GITHUB_TOKEN`-generated label
-  events do not trigger another workflow. Apply the label as a maintainer or
-  use the manual dispatch below.
+  events do not trigger another workflow. Have a maintainer reapply the label.
+  Manual dispatch can reconcile an existing maintainer-applied label.
 
 For a read-only eligibility check, open **Actions → Merge labeled PRs after CI
 → Run workflow**, select `main`, enter the PR number, and leave **dry_run**
 enabled. Disable **dry_run** to reconcile the current label with auto-merge.
 Manual runs still enforce the same label, permission, and branch requirements.
+Dry runs run separately so they cannot replace a pending cancellation job.
 
 ## Implementation and permissions
 

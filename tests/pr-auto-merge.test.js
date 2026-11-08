@@ -173,6 +173,7 @@ test('privileged workflow uses trusted main code and no dependency install or AI
   assert.match(workflow, /ref: \$\{\{ github\.event\.repository\.default_branch \}\}/);
   assert.match(workflow, /persist-credentials: false/);
   assert.match(workflow, /cancel-in-progress: false/);
+  assert.match(workflow, /inputs\.dry_run && github\.run_id \|\| 'write'/);
   assert.match(workflow, /GH_TOKEN: \$\{\{ github\.token \}\}/);
   assert.doesNotMatch(workflow, /secrets\.|ANTHROPIC|npm (?:ci|install)|pull_request\.head/);
   assert.equal(REQUIRED_CHECKS.length, 4);
