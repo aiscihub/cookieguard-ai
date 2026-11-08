@@ -63,3 +63,16 @@ source changes focused. Use the repository's private reporting process for
 security issues (SECURITY.md); public issues must use sanitized reproductions.
 See `docs/CI_RELEASE.md` for package verification and the explicit release gates.
 Do not publish packages, tags, or announcements as part of routine development.
+
+A maintainer can add the `auto-merge` label to a ready PR targeting `main` to
+request an automatic squash merge. GitHub waits for the Node 24 job and all
+three Python jobs (3.11, 3.12, 3.13), with the branch up to date. Failing or
+unfinished required checks block the merge. This uses GitHub's built-in token;
+it does not use AI review, Anthropic, or an external API key.
+
+Remove `auto-merge` to cancel the pending request. Cancellation takes effect
+when the label workflow runs; use the PR's **Disable auto-merge** control for
+immediate cancellation. Check **Merge labeled PRs after CI** in Actions for
+the eligibility result. Its manual **Run workflow** option defaults to a dry run.
+See [Automatic PR merging](docs/PR_AUTO_MERGE.md) for required checks,
+cancellation details, and troubleshooting.
