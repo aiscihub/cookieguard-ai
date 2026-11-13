@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CookieGuard AI | For AI browser agents</title>
+<meta name="description" content="CookieGuard AI checks the authentication cookies an AI browser agent receives, locally, and returns PASS, FAIL or INCOMPLETE with rule IDs and fixes. For Browser Use agents, MCP clients, tests and CI.">
+<meta property="og:title" content="CookieGuard AI">
+<meta property="og:description" content="A successful agent login is not a secure session cookie. Local cookie security checks for AI browser agents, MCP clients, tests and CI.">
+<meta property="og:image" content="https://aiscihub.github.io/cookieguard-ai/resource/social-preview.png">
+<link rel="icon" type="image/png" sizes="48x48" href="extension-standalone/icons/icon48.png">
+<link rel="icon" type="image/png" sizes="128x128" href="extension-standalone/icons/icon128.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg: #f8f9fa;
+    --bg-white: #ffffff;
+    --bg-light: #f1f3f5;
+    --bg-code: #1a1f2e;
+    --border: #e1e5eb;
+    --border-dark: #d0d5dd;
+    --text: #1a1f2e;
+    --text-muted: #5c6370;
+    --text-dim: #8b919d;
+    --accent: #2563eb;
+    --accent-dark: #1d4ed8;
+    --accent-soft: #e8efff;
+    --green: #059669;
+    --green-soft: #e6f6ef;
+    --red: #dc2626;
+    --red-soft: #fdeaea;
+    --yellow: #b45309;
+    --yellow-soft: #fdf3e2;
+    --purple: #7c3aed;
+    --shadow: 0 1px 2px rgba(26,31,46,.06), 0 8px 24px rgba(26,31,46,.06);
+}
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --bg: #0f131b; --bg-white: #161b26; --bg-light: #1d2330; --bg-code: #0b0e14;
+        --border: #262d3b; --border-dark: #343d4e;
+        --text: #eef1f6; --text-muted: #a4acbb; --text-dim: #7b8494;
+        --accent: #7da2ff; --accent-dark: #a3bdff; --accent-soft: #1b2440;
+        --green: #34d399; --green-soft: #12291f; --red: #f87171; --red-soft: #33191b;
+        --yellow: #fbbf24; --yellow-soft: #2d2412; --purple: #a78bfa;
+        --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+    }
+}
+:root[data-theme="dark"] {
+    --bg: #0f131b; --bg-white: #161b26; --bg-light: #1d2330; --bg-code: #0b0e14;
+    --border: #262d3b; --border-dark: #343d4e;
+    --text: #eef1f6; --text-muted: #a4acbb; --text-dim: #7b8494;
+    --accent: #7da2ff; --accent-dark: #a3bdff; --accent-soft: #1b2440;
+    --green: #34d399; --green-soft: #12291f; --red: #f87171; --red-soft: #33191b;
+    --yellow: #fbbf24; --yellow-soft: #2d2412; --purple: #a78bfa;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 15px;
+    overflow-x: hidden;
+}
+a { color: var(--accent); text-decoration: none; transition: color .2s; }
+a:hover { color: var(--accent-dark); }
+code, pre, .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+code { background: var(--bg-light); border: 1px solid var(--border); border-radius: 4px; padding: 1px 6px; font-size: 13px; }
+pre { background: var(--bg-code); color: #e6edf3; border-radius: 8px; padding: 16px 18px; font-size: 13px; line-height: 1.55; overflow-x: auto; }
+pre code { background: none; border: 0; padding: 0; font-size: inherit; color: inherit; }
+pre .c { color: #8b949e; }
+img, picture { max-width: 100%; height: auto; display: block; }
+.container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+
+/* Navigation */
+nav {
+    background: color-mix(in srgb, var(--bg-white) 92%, transparent);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+}
+.nav-inner { max-width: 1140px; margin: 0 auto; padding: 0 24px; height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); white-space: nowrap; }
+.logo-icon { width: 32px; height: 32px; display: block; }
+.nav-links { display: flex; align-items: center; gap: 2px; }
+.nav-links a { color: var(--text-muted); padding: 8px 12px; border-radius: 6px; font-size: 14px; font-weight: 500; }
+.nav-links a:hover { color: var(--text); background: var(--bg-light); }
+.nav-links .branch { color: var(--accent); font-weight: 600; }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 6px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; transition: all .2s; white-space: nowrap; }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { background: var(--accent-dark); color: #fff; }
+:root[data-theme="dark"] .btn-primary, :root[data-theme="dark"] .btn-primary:hover { color: #0b0e14; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .btn-primary { color: #0b0e14; } }
+.btn-outline { background: transparent; border: 1px solid var(--border-dark); color: var(--text); }
+.btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+/* Hero */
+.hero { padding: 128px 0 56px; text-align: center; }
+.hero-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--accent-soft); color: var(--accent); border-radius: 999px; padding: 6px 14px; font-size: 13px; font-weight: 600; margin-bottom: 22px; }
+.hero h1 { font-size: 52px; line-height: 1.1; font-weight: 800; letter-spacing: -0.03em; max-width: 880px; margin: 0 auto 18px; }
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero-desc { font-size: 18px; color: var(--text-muted); max-width: 720px; margin: 0 auto 28px; }
+.hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+.hero-buttons .btn { padding: 13px 24px; font-size: 15px; }
+.hero-meta { display: flex; gap: 8px 22px; justify-content: center; flex-wrap: wrap; color: var(--text-dim); font-size: 13px; }
+.hero-meta span::before { content: "✓ "; color: var(--green); }
+.install { display: inline-flex; align-items: center; gap: 12px; margin-top: 26px; background: var(--bg-code); color: #e6edf3; border-radius: 8px; padding: 10px 16px; font-size: 14px; }
+.install .c { color: #8b949e; }
+
+/* Demo */
+.demo-frame { margin: 36px auto 0; max-width: 1000px; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: var(--bg-white); box-shadow: var(--shadow); }
+.demo-frame img { width: 100%; }
+.demo-caption { font-size: 13.5px; color: var(--text-muted); padding: 12px 18px; border-top: 1px solid var(--border); text-align: left; }
+.demo-caption b { color: var(--text); }
+.verdict { display: inline-block; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-weight: 700; font-size: 12px; padding: 2px 8px; border-radius: 4px; }
+.verdict.fail { background: var(--red-soft); color: var(--red); }
+.verdict.pass { background: var(--green-soft); color: var(--green); }
+.verdict.inc { background: var(--yellow-soft); color: var(--yellow); }
+
+/* Stats bar */
+.stats-bar { background: var(--bg-white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 28px 0; margin-top: 56px; }
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.stat-item { text-align: center; }
+.stat-value { font-size: 30px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+.stat-value.success { color: var(--green); }
+.stat-value.accent { color: var(--accent); }
+.stat-label { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+
+/* Sections */
+.section { padding: 80px 0; }
+.section-alt { background: var(--bg-white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.section-header { text-align: center; max-width: 720px; margin: 0 auto 44px; }
+.section-header h2 { font-size: 34px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 12px; line-height: 1.2; }
+.section-header p { color: var(--text-muted); font-size: 16px; }
+.eyebrow { display: block; font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+
+/* Use-case cards */
+.features-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.feature-card { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 26px; transition: transform .2s, box-shadow .2s; display: flex; flex-direction: column; }
+.section:not(.section-alt) .feature-card { background: var(--bg-white); }
+.feature-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+.feature-icon { font-size: 24px; margin-bottom: 12px; }
+.feature-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+.feature-card p { color: var(--text-muted); font-size: 14.5px; flex: 1; }
+.feature-card .links { margin-top: 14px; font-size: 14px; font-weight: 600; display: flex; gap: 14px; flex-wrap: wrap; }
+.feature-card pre { margin-top: 14px; }
+.tag { display: inline-block; font-size: 11.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text-dim); border: 1px solid var(--border); border-radius: 999px; padding: 2px 9px; margin-left: 8px; vertical-align: middle; }
+
+/* How it works */
+.diagram { border: 1px solid var(--border); border-radius: 12px; padding: 12px; background: #F9F9F8; margin-bottom: 36px; }
+.diagram iframe { display: block; width: 100%; aspect-ratio: 1200 / 660; border: 0; background: #F9F9F8; }
+.dive { margin-bottom: 28px; }
+.dive h3 { font-size: 22px; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 4px; }
+.dive > p { color: var(--text-muted); font-size: 15px; margin-bottom: 14px; }
+.dive .diagram { margin-bottom: 0; }
+.step { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 24px; position: relative; }
+.step .n { width: 30px; height: 30px; border-radius: 50%; background: var(--accent); color: #fff; font-weight: 700; display: flex; align-items: center; justify-content: center; font-size: 14px; margin-bottom: 12px; }
+.step h4 { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+.step p { color: var(--text-muted); font-size: 14.5px; }
+.step .who { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 10px; }
+.step.ai { border-top: 3px solid var(--purple); }
+.step.you { border-top: 3px solid var(--yellow); }
+.step.rules { border-top: 3px solid var(--green); }
+.callout { margin-top: 28px; background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: 8px; padding: 16px 20px; font-size: 14.5px; color: var(--text); }
+
+/* Risks */
+.risk-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.risk-card { background: var(--bg-white); border: 1px solid var(--border); border-radius: 12px; padding: 26px; }
+.risk-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+.risk-card > p { color: var(--text-muted); font-size: 14.5px; margin-bottom: 12px; }
+.risk-card ul { list-style: none; }
+.risk-card li { font-size: 14px; color: var(--text-muted); padding: 4px 0 4px 18px; position: relative; }
+.risk-card li::before { content: "→"; position: absolute; left: 0; color: var(--accent); }
+.risk-card .rule { margin-top: 14px; font-size: 13px; color: var(--text-dim); }
+.risk-card .rule code { color: var(--text); }
+
+/* Rules table */
+.table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 12px; background: var(--bg-white); }
+table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 640px; }
+th, td { text-align: left; padding: 11px 16px; border-bottom: 1px solid var(--border); vertical-align: top; }
+th { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--text-dim); background: var(--bg-light); }
+tr:last-child td { border-bottom: 0; }
+td.id { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-weight: 700; white-space: nowrap; }
+.sev { font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 4px; white-space: nowrap; }
+.sev.high { background: var(--red-soft); color: var(--red); }
+.sev.medium { background: var(--yellow-soft); color: var(--yellow); }
+.sev.review { background: var(--bg-light); color: var(--text-muted); }
+.table-note { font-size: 13.5px; color: var(--text-muted); margin-top: 14px; }
+
+/* Showcase */
+.showcase-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.shot { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: var(--bg-white); box-shadow: var(--shadow); }
+.shot img { width: 100%; }
+.shot .cap { padding: 14px 18px; border-top: 1px solid var(--border); }
+.shot .cap h4 { font-size: 15.5px; font-weight: 700; margin-bottom: 4px; }
+.shot .cap p { font-size: 13.5px; color: var(--text-muted); }
+.showcase-run { margin-top: 28px; display: grid; grid-template-columns: 1.1fr 1fr; gap: 24px; align-items: start; }
+.showcase-run p { color: var(--text-muted); font-size: 14.5px; margin-bottom: 10px; }
+
+/* Get started */
+.start-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.start-card { background: var(--bg-white); border: 1px solid var(--border); border-radius: 12px; padding: 22px; }
+.start-card h4 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+.start-card .sub { color: var(--text-muted); font-size: 13.5px; margin-bottom: 14px; }
+.start-card pre { font-size: 12.5px; }
+.start-card .more { margin-top: 12px; font-size: 13.5px; font-weight: 600; }
+
+/* Report */
+.report-card { background: var(--bg-white); border: 1px solid var(--border); border-radius: 12px; padding: 32px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 28px; align-items: center; }
+.report-card h3 { font-size: 22px; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.01em; }
+.report-card p { color: var(--text-muted); font-size: 14.5px; margin-bottom: 16px; }
+.report-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+.report-stat { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 14px; text-align: center; }
+.report-stat .val { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; }
+.report-stat .val.danger { color: var(--red); }
+.report-stat .lbl { font-size: 12.5px; color: var(--text-muted); }
+
+/* Footer */
+footer { background: var(--bg-white); border-top: 1px solid var(--border); padding: 48px 0 28px; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 32px; margin-bottom: 32px; }
+.footer-brand p { color: var(--text-muted); font-size: 14px; margin-top: 12px; max-width: 360px; }
+.footer-col h4 { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 12px; }
+.footer-col a { display: block; color: var(--text-muted); font-size: 14px; padding: 4px 0; }
+.footer-col a:hover { color: var(--accent); }
+.footer-bottom { border-top: 1px solid var(--border); padding-top: 20px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; font-size: 13px; color: var(--text-dim); }
+.theme-toggle { display: inline-flex; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+.theme-toggle button { background: transparent; border: 0; color: var(--text-dim); font: inherit; font-size: 11px; font-weight: 700; letter-spacing: .08em; padding: 6px 12px; cursor: pointer; }
+.theme-toggle button.active { background: var(--bg-light); color: var(--text); }
+
+.features-grid > *, .start-grid > *, .showcase-run > *, .showcase-grid > *, .steps > *, .risk-grid > *, .report-card > * { min-width: 0; }
+.reveal { opacity: 0; transform: translateY(16px); transition: opacity .5s ease, transform .5s ease; }
+.reveal.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } html { scroll-behavior: auto; } }
+
+@media (max-width: 900px) {
+    .nav-links a:not(.btn) { display: none; }
+    .hero h1 { font-size: 38px; }
+    .stats-grid, .steps, .risk-grid, .start-grid { grid-template-columns: repeat(2, 1fr); }
+    .showcase-grid, .showcase-run, .report-card { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 600px) {
+    .container { padding: 0 16px; }
+    .hero { padding-top: 104px; }
+    .hero h1 { font-size: 31px; }
+    .hero-desc { font-size: 16px; }
+    .section { padding: 56px 0; }
+    .section-header h2 { font-size: 27px; }
+    .stats-grid, .features-grid, .steps, .risk-grid, .start-grid, .footer-grid { grid-template-columns: 1fr; }
+    .install { width: 100%; justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <a href="./" class="logo"><img class="logo-icon" src="extension-standalone/icons/icon128.png" width="32" height="32" alt=""> CookieGuard AI</a>
+        <div class="nav-links">
+            <a href="./">Home</a>
+            <a href="#use-cases">Use cases</a>
+            <a href="#how-it-works">How it works</a>
+            <a href="#checks">Checks</a>
+            <a href="#showcase">Showcase</a>
+            <a href="extension.html" class="branch">Extension →</a>
+            <a href="https://github.com/aiscihub/cookieguard-ai" target="_blank" rel="noopener">GitHub</a>
+            <a href="#get-started" class="btn btn-outline">Get started</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-badge">🔒 100% local · Open source · MIT</div>
+        <h1>A successful agent login is <em>not</em> a secure session cookie.</h1>
+        <p class="hero-desc">
+            CookieGuard AI watches the browser your AI agent drives, checks the authentication cookies it
+            receives against your policy, and returns <b>PASS / FAIL / INCOMPLETE</b> with rule IDs,
+            explanations and fixes. For Browser Use agents, MCP clients, tests and CI.
+        </p>
+        <div class="hero-buttons">
+            <a href="#get-started" class="btn btn-primary">Get started</a>
+            <a href="#showcase" class="btn btn-outline">See the showcase</a>
+        </div>
+        <div class="hero-meta">
+            <span>Runs on your machine</span>
+            <span>Cookie values never reach the model, logs or reports</span>
+            <span>Your code enforces the result, never the AI</span>
+        </div>
+        <div class="install mono"><span class="c">$</span> pip install cookieguard-browser-use</div>
+
+        <div class="demo-frame reveal">
+            <img src="integrations/python/docs/cookieguard-browser-use-demo.gif" width="1000" height="600" loading="lazy"
+                 alt="A Browser Use agent driven by Claude logs in to two local apps. Both logins succeed. CookieGuard fails the first with CG001 Missing HttpOnly (exit 1) and passes the second (exit 0).">
+            <div class="demo-caption">
+                <b>Real run.</b> Claude drives a Browser Use agent through the same login twice. Both logins
+                succeed. The first app's session cookie lacks <code>HttpOnly</code>, so CookieGuard returns
+                <span class="verdict fail">FAIL · CG001</span> (exit 1). The fixed app gets
+                <span class="verdict pass">PASS</span> (exit 0).
+                <a href="https://github.com/aiscihub/cookieguard-ai/blob/main/integrations/python/docs/demo-and-tests.md" target="_blank" rel="noopener">Recording and test evidence →</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats bar -->
+<section class="stats-bar">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-item reveal"><div class="stat-value accent">12</div><div class="stat-label">Checks, CG001–CG012, with a fix for each</div></div>
+            <div class="stat-item reveal"><div class="stat-value">3</div><div class="stat-label">Results: PASS, FAIL or INCOMPLETE, never a silent pass</div></div>
+            <div class="stat-item reveal"><div class="stat-value success">0</div><div class="stat-label">Cookie values sent anywhere, or written to any report</div></div>
+            <div class="stat-item reveal"><div class="stat-value">38</div><div class="stat-label">Cookie features read by the local AI model, no API key</div></div>
+        </div>
+    </div>
+</section>
+
+<!-- Use cases -->
+<section class="section" id="use-cases">
+    <div class="container">
+        <div class="section-header">
+            <span class="eyebrow">Use cases</span>
+            <h2>One local policy engine. Four ways to use it.</h2>
+            <p>Agents log in to apps all day. CookieGuard makes sure the session they get is worth trusting, wherever the login happens.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card reveal">
+                <div class="feature-icon">🤖</div>
+                <h3>AI browser agents <span class="tag">Browser Use</span></h3>
+                <p>Add one audit to your Browser Use agent. CookieGuard reads the agent's browser over its own connection, sees both what the server declared and what the browser stored, and gates the next step on your policy. Works with any model; the demo needs no API key.</p>
+<pre><code>audit = CookieGuardAudit(allowed_origins=['http://127.0.0.1:3000'],
+                        auth_cookies=['session_id'])
+result = await audit.finish()
+result.assert_policy()   <span class="c"># raises on FAIL or INCOMPLETE</span></code></pre>
+                <div class="links"><a href="https://github.com/aiscihub/cookieguard-ai/blob/main/integrations/python/README.md" target="_blank" rel="noopener">Integration guide →</a><a href="https://pypi.org/project/cookieguard-browser-use/" target="_blank" rel="noopener">PyPI</a></div>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon">🔌</div>
+                <h3>Coding agents and MCP clients <span class="tag">MCP server</span></h3>
+                <p>Let Claude Code, Codex or any MCP client scan the <code>Set-Cookie</code> headers your app sets, explain a rule, or audit a sanitized report. Runs locally over stdio. Your config fixes the allowed origins and the policy; the client only picks what to audit.</p>
+<pre><code>"cookieguard": { "command": "npx",
+  "args": ["--yes", "@aiscihub/cookieguard-mcp@0.2.0",
+           "--config", "/absolute/path/cookieguard.json"] }</code></pre>
+                <div class="links"><a href="https://github.com/aiscihub/cookieguard-ai/blob/main/packages/mcp/README.md" target="_blank" rel="noopener">MCP guide →</a><a href="https://github.com/aiscihub/cookieguard-ai/blob/main/skills/cookieguard/SKILL.md" target="_blank" rel="noopener">Agent Skill</a></div>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon">✅</div>
+                <h3>Tests and CI <span class="tag">Playwright · CLI · Action</span></h3>
+                <p>Check cookies created during login in your existing Playwright tests, scan a running test app from the CLI, or add the GitHub Action for a build summary and a sanitized report. Exit code 0 passes, 1 is a confirmed failure, 2 is incomplete evidence.</p>
+<pre><code>npx cookieguard-ci@0.2.0 scan http://localhost:3000 --auth-cookie session_id</code></pre>
+                <div class="links"><a href="https://github.com/aiscihub/cookieguard-ai/blob/main/docs/CI_GUIDE.md" target="_blank" rel="noopener">CI guide →</a><a href="https://www.npmjs.com/package/cookieguard-ci" target="_blank" rel="noopener">npm</a></div>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon">🧩</div>
+                <h3>Interactive inspection <span class="tag">Chrome extension</span></h3>
+                <p>The original CookieGuard AI extension. Open a site you are authorized to inspect, click Scan, and see which cookies the on-device model thinks are login cookies, which trackers are present, and what each risk means. No backend, nothing leaves the browser.</p>
+                <div class="links"><a href="extension.html">Extension page →</a><a href="https://github.com/aiscihub/cookieguard-ai/blob/main/PRIVACY.md" target="_blank" rel="noopener">Privacy</a></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How it works -->
+<section class="section section-alt" id="how-it-works">
+    <div class="container">
+        <div class="section-header">
+            <span class="eyebrow">How it works</span>
+            <h2>The AI guesses. The rules decide.</h2>
+            <p>Two layers on your own computer. The AI layer finds the "signed-in" cookie; the decision layer proves it and checks that it is safe. A guess never opens the gate.</p>
+        </div>
+        <div class="diagram reveal">
+            <img src="resource/site/architecture.svg" width="1200" height="440" alt="How CookieGuard works. When an AI assistant signs in to a website, the site hands the browser a small signed-in note, a cookie; anyone who copies it can act as you. The AI layer asks which cookie is the signed-in note: known names are looked up, unknown names are guessed by a model. The decision layer asks whether that note is safe: double-check the guess, prove it with a real test, check its protections. Verdict: Safe, Not safe with a fix, or Can't tell; the assistant waits until it is safe. Original description: CookieGuard reads it over its own connection. The AI layer labels known cookie names from a dictionary and scores unknown names with a local Random Forest, producing a role for every cookie and ranked login-cookie candidates. The decision layer cross-checks each AI label against rule signals (Agree or Verify first), proves the login cookie with a delete-reload-restore test and session probes, and decides with the policy checks CG001 to CG011. The result is PASS, FAIL or INCOMPLETE with rule IDs and fixes, enforced by your code. Everything runs locally and no cookie value leaves the machine.">
+        </div>
+        <div class="dive reveal">
+            <h3>Inside the AI layer</h3>
+            <p>A lookup table for known cookie names, and a model for the rest: what it reads, how it was trained, how good it is.</p>
+            <div class="diagram"><img src="resource/site/architecture-ai-layer.svg" width="1200" height="400" loading="lazy" alt="Inside the AI layer. 1, a known-name lookup: a table of cookie names we have labels for, from our own data and the Open Cookie Database; exact match only, instant, and it answers most cookies on real websites. 2, the model: a Random Forest of 150 decision trees that reads 38 clues about a cookie (protection flags, lifetime, where it is sent, name shape, contents shape, login behaviour, summary scores), never its contents, and gives a score per role. Trained on 304,422 cookies from 28,089 websites labeled by their consent banners, split by cookie name. 3, how good: right 4 times in 5 on real websites, November 2026 (lookup plus model 81% balanced accuracy on 11,160 cookies from 359 sites; model alone 76%; names it has never seen 66%; cloud AI a tie on the same cookies, 76% vs 75%, but 100,000 times slower and the data leaves). 0.04 ms per cookie on your computer."></div>
+        </div>
+        <div class="dive reveal">
+            <h3>Where the numbers come from</h3>
+            <p>Nine short scenes: 20,000 real websites, the cookies they set, the site's own labels, a sealed test, and the privacy check. Press Play, or step through. <a href="resource/site/data-pipeline.html" target="_blank" rel="noopener">Open full screen →</a></p>
+            <div class="diagram"><iframe src="resource/site/data-pipeline.html?autoplay=0" title="How the data was collected: an animated walkthrough" loading="lazy"></iframe></div>
+        </div>
+        <div class="dive reveal">
+            <h3>Inside the decision layer</h3>
+            <p>Why a guess must never decide, and the three steps that turn it into a verdict.</p>
+            <div class="diagram"><img src="resource/site/architecture-decision-layer.svg" width="1200" height="380" loading="lazy" alt="Inside the decision layer. Why: the AI is right about 4 in 5 times on real sites and 2 in 3 on unseen names, so it must not decide alone; when model and simple rules agree, 74% are right, when they disagree about 50%, a coin flip. How: 1, double-check the guess with simple rules, agree or verify first; 2, prove it with a real test: take the cookie away, reload, still signed in? no means that was the login cookie; put it back; also check for a new session at login and that logout really ends it; 3, check the proven cookie's protections: can page scripts read it, sent without encryption, sent by other websites, shared with every subdomain, same session ID after login, still valid after logout. Verdict: Safe, Not safe with the fix, or Can't tell, which is never treated as safe."></div>
+        </div>
+        <div class="callout reveal">
+            <b>INCOMPLETE is not a pass.</b> If the expected cookie never appears, the observer disconnects, or an agent claims it logged in without doing so, CookieGuard returns exit code 2. In testing, an agent that falsely reported success still got INCOMPLETE.
+        </div>
+    </div>
+</section>
+
+<!-- Risks -->
+<section class="section" id="risks">
+    <div class="container">
+        <div class="section-header">
+            <span class="eyebrow">Why it matters</span>
+            <h2>How a stolen session happens</h2>
+            <p>If a login cookie is stolen or misconfigured, an attacker can use the account without a password. Agents make it worse: they log in to many apps, fast, and nobody is watching the cookies.</p>
+        </div>
+        <div class="risk-grid">
+            <div class="risk-card reveal">
+                <h3><span>🔓</span> Token exposure</h3>
+                <p>Without <code>HttpOnly</code>, any script on the page can read the session cookie through an XSS flaw.</p>
+                <ul><li>Script reads the token</li><li>Attacker is you instantly</li><li>No password needed</li></ul>
+                <div class="rule">Caught by <code>CG001</code> HttpOnly · <code>CG002</code> Secure · <code>CG012</code> tokens in web storage</div>
+            </div>
+            <div class="risk-card reveal">
+                <h3><span>🌐</span> Cross-site execution</h3>
+                <p>Weak <code>SameSite</code> settings let another site trigger authenticated requests in your name.</p>
+                <ul><li>Browser attaches the cookie</li><li>CSRF acts as you</li><li>Settings changed, money moved</li></ul>
+                <div class="rule">Caught by <code>CG003</code> SameSite outside policy</div>
+            </div>
+            <div class="risk-card reveal">
+                <h3><span>🎯</span> Domain scope and session reuse</h3>
+                <p>A cookie scoped to the parent domain is shared with every subdomain. A session that survives logout stays usable.</p>
+                <ul><li>One weak subdomain exposes all</li><li>Logout that doesn't log out</li><li>Guest session becomes the login</li></ul>
+                <div class="rule">Caught by <code>CG004</code> domain sharing · <code>CG010</code> rotation · <code>CG011</code> logout</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Checks -->
+<section class="section section-alt" id="checks">
+    <div class="container">
+        <div class="section-header">
+            <span class="eyebrow">What it checks</span>
+            <h2>Twelve checks, each with a fix</h2>
+            <p>Your policy's <code>fail_on</code> line decides which severities fail the run. Everything below it is still reported.</p>
+        </div>
+        <div class="table-wrap reveal">
+            <table>
+                <thead><tr><th>Rule</th><th>Checks</th><th>Severity</th><th>How it is confirmed</th></tr></thead>
+                <tbody>
+                    <tr><td class="id">CG001</td><td>Authentication cookie missing <code>HttpOnly</code></td><td><span class="sev high">high</span></td><td>Always on</td></tr>
+                    <tr><td class="id">CG002</td><td>Authentication cookie missing <code>Secure</code></td><td><span class="sev high">high</span></td><td>Always on</td></tr>
+                    <tr><td class="id">CG003</td><td>Declared <code>SameSite</code> outside the policy</td><td><span class="sev medium">medium</span></td><td><code>allowed_same_site</code>, <code>require_explicit_same_site</code></td></tr>
+                    <tr><td class="id">CG004</td><td><code>Domain=</code> shares the cookie with subdomains</td><td><span class="sev medium">medium</span></td><td>Review unless <code>require_host_only</code></td></tr>
+                    <tr><td class="id">CG005</td><td>Remaining lifetime above the limit</td><td><span class="sev medium">medium</span></td><td><code>max_lifetime_days</code></td></tr>
+                    <tr><td class="id">CG006</td><td>Invalid <code>__Host-</code> / <code>__Secure-</code> prefix</td><td><span class="sev high">high</span></td><td>Always on</td></tr>
+                    <tr><td class="id">CG007</td><td>A protection regressed since a baseline</td><td><span class="sev high">high</span></td><td><code>finish(baseline=…)</code></td></tr>
+                    <tr><td class="id">CG008</td><td>Authentication role not confirmed</td><td><span class="sev review">review</span></td><td>Name the cookie in <code>auth_cookies</code></td></tr>
+                    <tr><td class="id">CG009</td><td>Evidence missing or ambiguous</td><td><span class="sev review">review</span></td><td>—</td></tr>
+                    <tr><td class="id">CG010</td><td>Session identifier not rotated at login</td><td><span class="sev high">high</span></td><td>Session probe, engine 0.3.0</td></tr>
+                    <tr><td class="id">CG011</td><td>Session still valid after logout</td><td><span class="sev high">high</span></td><td>Session probe, engine 0.3.0</td></tr>
+                    <tr><td class="id">CG012</td><td>Authentication token in <code>localStorage</code> or <code>sessionStorage</code></td><td><span class="sev high">high</span></td><td><code>authStorageKeys</code>, engine 0.3.0</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="table-note">These are configuration and session checks. PASS means the configured checks passed, not that the application is secure. <a href="https://github.com/aiscihub/cookieguard-ai/blob/main/docs/CI_GUIDE.md#supported-checks" target="_blank" rel="noopener">Full rule table</a> · <a href="https://github.com/aiscihub/cookieguard-ai/blob/main/integrations/python/docs/limits-and-privacy.md" target="_blank" rel="noopener">Limits and privacy</a></p>
+    </div>
+</section>
+
+<!-- Showcase -->
+<section class="section" id="showcase">
+    <div class="container">
+        <div class="section-header">
+            <span class="eyebrow">Showcase</span>
+            <h2>Campus Market: watch an agent get stopped</h2>
+            <p>A fictional student marketplace, a real Chromium browser, the real local model and the real policy engine. Two stories, each with a broken server and a fixed one.</p>
+        </div>
+        <div class="showcase-grid">
+            <div class="shot reveal">
+                <img src="resource/site/campus-market-shopping.png" width="1200" height="1042" loading="lazy" alt="The Campus Market shopping showcase. The browser runner found a $42 calculator and signed in. CookieGuard shows FAIL, CG001 Missing HttpOnly, and the checkout stayed paused with zero checkout requests.">
+                <div class="cap">
+                    <h4>The shopping checkpoint</h4>
+                    <p>The agent finds a $42 calculator and signs in. Login works. The session cookie is missing <code>HttpOnly</code>, so CookieGuard returns <span class="verdict fail">FAIL · CG001</span> and checkout never opens: zero checkout requests, zero purchases.</p>
+                </div>
+            </div>
+            <div class="shot reveal">
+                <img src="resource/site/campus-market-chat.png" width="1200" height="1042" loading="lazy" alt="The Campus Market private-chat showcase with a protected session, in the light design. The browser shows the signed-out screen with the draft saved. CookieGuard shows PASS: the previous session was rejected after logout, one private chat request, zero messages sent.">
+                <div class="cap">
+                    <h4>The chat that stays private</h4>
+                    <p>Signing out should end access. In the broken version the old session is still accepted after logout: <span class="verdict fail">FAIL · CG011</span>. Fix the server, run the same policy again: <span class="verdict pass">PASS</span>. The table shows the local model's real prediction for every cookie, including its mistakes.</p>
+                </div>
+            </div>
+        </div>
+        <div class="showcase-run reveal">
+            <div>
+                <p>Every run uses real browser requests and real ONNX predictions. No LLM service, no API key, no payment endpoint; the task stops at order review. Cookie values are excluded from every report and the run evidence can be downloaded.</p>
+                <p>The showcase deliberately uses an opaque cookie name, <code>cm</code>, that name-based rules cannot classify. The model proposes it; the person confirms it; the policy and the session probes do the rest.</p>
+            </div>
+<pre><code>git clone https://github.com/aiscihub/cookieguard-ai
+cd cookieguard-ai/examples/campus-market
+npm ci --ignore-scripts
+npx --no-install playwright install chromium
+npm start        <span class="c"># open http://127.0.0.1:8767</span></code></pre>
+        </div>
+    </div>
+</section>
+
+<!-- Get started -->
+<section class="section section-alt" id="get-started">
+    <div class="container">
+        <div class="section-header">
+            <span class="eyebrow">Get started</span>
+            <h2>Pick your entry point</h2>
+            <p>Everything is open source under MIT. Audit only applications you are authorized to test.</p>
+        </div>
+        <div class="start-grid">
+            <div class="start-card reveal">
+                <h4>Browser Use agents</h4>
+                <div class="sub">Python 3.11+, Node.js 24+, Chrome or Chromium</div>
+<pre><code>pip install cookieguard-browser-use
+python -m cookieguard_browser_use.demo
+<span class="c"># insecure app: FAIL CG001 (exit 1)
+# secure app:   PASS (exit 0)</span></code></pre>
+                <div class="more"><a href="https://github.com/aiscihub/cookieguard-ai/blob/main/integrations/python/docs/install.md" target="_blank" rel="noopener">Install guide →</a></div>
+            </div>
+            <div class="start-card reveal">
+                <h4>MCP server</h4>
+                <div class="sub">Node.js 24+. In the official MCP Registry as <code>io.github.aiscihub/cookieguard</code></div>
+<pre><code>git clone https://github.com/aiscihub/cookieguard-ai
+cd cookieguard-ai && npm ci
+npm run demo:mcp
+<span class="c"># connects a real MCP client, no API key</span></code></pre>
+                <div class="more"><a href="https://github.com/aiscihub/cookieguard-ai/blob/main/packages/mcp/README.md" target="_blank" rel="noopener">MCP guide →</a></div>
+            </div>
+            <div class="start-card reveal">
+                <h4>Tests and CI</h4>
+                <div class="sub">Node.js 24+. Scan a running test app</div>
+<pre><code>npx cookieguard-ci@0.2.0 scan \
+  http://localhost:3000 \
+  --auth-cookie session_id
+npx cookieguard-ci@0.2.0 explain CG001</code></pre>
+                <div class="more"><a href="https://github.com/aiscihub/cookieguard-ai/blob/main/docs/CI_GUIDE.md" target="_blank" rel="noopener">CI guide →</a></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Research -->
+<section class="section" id="research">
+    <div class="container">
+        <div class="report-card reveal">
+            <div>
+                <span class="eyebrow">Research</span>
+                <h3>Where CookieGuard started: 3,000 websites, 150,000 cookies</h3>
+                <p>Before it guarded agents, CookieGuard AI was a Chrome extension and a study of real-world cookie security. The on-device model that ranks login cookies grew out of that work, and the report is still here.</p>
+                <a href="report.html" class="btn btn-primary">Read the security report →</a>
+            </div>
+            <div class="report-stats">
+                <div class="report-stat"><div class="val">3,000</div><div class="lbl">Sites analyzed</div></div>
+                <div class="report-stat"><div class="val">150K+</div><div class="lbl">Cookies collected</div></div>
+                <div class="report-stat"><div class="val danger">97%</div><div class="lbl">Sites with trackers</div></div>
+                <div class="report-stat"><div class="val danger">67%</div><div class="lbl">High-risk auth cookies</div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="logo"><img class="logo-icon" src="extension-standalone/icons/icon128.png" width="32" height="32" alt=""> CookieGuard AI</div>
+                <p>Cookie security checks for AI browser agents, MCP clients, tests and CI. Local, value-free, and enforced by your code.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Product</h4>
+                <a href="#use-cases">Use cases</a>
+                <a href="#how-it-works">How it works</a>
+                <a href="#checks">Checks</a>
+                <a href="#showcase">Showcase</a>
+            </div>
+            <div class="footer-col">
+                <h4>Install</h4>
+                <a href="https://pypi.org/project/cookieguard-browser-use/" target="_blank" rel="noopener">PyPI: cookieguard-browser-use</a>
+                <a href="https://www.npmjs.com/package/cookieguard-ci" target="_blank" rel="noopener">npm: cookieguard-ci</a>
+                <a href="https://www.npmjs.com/package/@aiscihub/cookieguard-mcp" target="_blank" rel="noopener">npm: cookieguard-mcp</a>
+                <a href="https://github.com/aiscihub/cookieguard-ai#browser-extension" target="_blank" rel="noopener">Chrome extension</a>
+            </div>
+            <div class="footer-col">
+                <h4>Project</h4>
+                <a href="./">Home</a>
+                <a href="extension.html">Browser extension</a>
+                <a href="https://github.com/aiscihub/cookieguard-ai" target="_blank" rel="noopener">GitHub</a>
+                <a href="https://github.com/aiscihub/cookieguard-ai/issues" target="_blank" rel="noopener">Report a bug</a>
+                <a href="https://github.com/aiscihub/cookieguard-ai/blob/main/PRIVACY.md" target="_blank" rel="noopener">Privacy</a>
+                <a href="report.html">Research report</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 CookieGuard AI · Open source under the MIT License · Community integration, not an official Browser Use package</span>
+            <div class="theme-toggle" role="group" aria-label="Color theme">
+                <button data-theme="light">LIGHT</button>
+                <button data-theme="dark">DARK</button>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+(function () {
+    var root = document.documentElement;
+    var buttons = document.querySelectorAll('.theme-toggle button');
+    function current() {
+        var saved = null;
+        try { saved = localStorage.getItem('cg-theme'); } catch (e) {}
+        if (saved === 'light' || saved === 'dark') return saved;
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    function apply(theme, persist) {
+        root.setAttribute('data-theme', theme);
+        buttons.forEach(function (b) { b.classList.toggle('active', b.dataset.theme === theme); });
+        if (persist) { try { localStorage.setItem('cg-theme', theme); } catch (e) {} }
+    }
+    apply(current(), false);
+    buttons.forEach(function (b) { b.addEventListener('click', function () { apply(b.dataset.theme, true); }); });
+
+    var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            if (entry.isIntersecting) { entry.target.classList.add('in'); observer.unobserve(entry.target); }
+        });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(function (el) { observer.observe(el); });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+{
+ "generated": "2026-11-13",
+ "knownNames": {
+  "raw": 12481,
+  "normalized": 7835,
+  "ocd": 2261,
+  "sourceRows": 246505
+ },
+ "cookies2026": {
+  "rows": 16571,
+  "sites": 788,
+  "normalizedNames": 2781,
+  "byCrawl": {
+   "tune": 4043,
+   "unseen-test": 1368,
+   "mix-test": 11160
+  },
+  "trackers": 12479
+ },
+ "crawls": [
+  {
+   "id": "tune",
+   "note": "ranks 1-3,300; used to tune thresholds"
+  },
+  {
+   "id": "unseen-test",
+   "note": "ranks 3,401-12,560; only names never seen in training or tuning"
+  },
+  {
+   "id": "mix-test",
+   "note": "ranks 12,561-20,000; every matched cookie kept"
+  }
+ ],
+ "featureNames": [
+  "has_secure",
+  "has_httponly",
+  "has_samesite",
+  "samesite_level",
+  "is_session_cookie",
+  "expiry_days",
+  "lifetime_category",
+  "domain_is_wildcard",
+  "domain_depth",
+  "etld_match",
+  "path_is_root",
+  "path_depth",
+  "cross_site_sendable",
+  "exposure_score",
+  "name_matches_auth",
+  "name_matches_tracking",
+  "name_matches_preference",
+  "has_host_prefix",
+  "has_secure_prefix",
+  "name_entropy",
+  "name_length",
+  "name_has_underscore",
+  "value_length",
+  "value_entropy_bucket",
+  "value_looks_like_jwt",
+  "value_looks_like_hex",
+  "value_looks_base64",
+  "value_has_padding",
+  "value_is_numeric",
+  "value_length_bucket",
+  "f_changed_during_login",
+  "f_new_after_login",
+  "f_rotated_after_login",
+  "f_persistent_days_bucket",
+  "f_subdomain_shared",
+  "f_third_party_context",
+  "f_login_behavior_score",
+  "f_security_posture_score"
+ ],
+ "files": {
+  "known-cookie-names.json": 2604261,
+  "known-cookie-names.csv": 1328039,
+  "cookies-2026.jsonl": 9086667,
+  "cookies-2026.csv": 4344152
+ }
+}

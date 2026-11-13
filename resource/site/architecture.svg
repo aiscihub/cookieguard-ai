@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 440" width="1200" height="440" role="img" aria-labelledby="t d">
+<title id="t">How CookieGuard works</title>
+<desc id="d">An AI assistant signs in to a website. The site hands the browser a signed-in note, a cookie; whoever copies it can be you. CookieGuard's AI layer asks which cookie is the note: known names are looked up, unknown names are guessed by a model. The decision layer asks whether the note is safe: it double-checks the guess, proves it with a real test, and checks its protections. Verdict: safe, not safe, or can't tell. Your code holds the gate. Runs on your computer; the note's contents never leave.</desc>
+<style>
+  .s{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;fill:#18181B}
+  .h{font-family:"Playfair Display",Georgia,"Times New Roman",serif;font-weight:500;fill:#18181B}
+  .m{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;fill:#18181B}
+  .mu{fill:#71717A}
+  .lab{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:11px;letter-spacing:.12em;fill:#52525B}
+  .card{fill:#FFFFFF;stroke:#18181B;stroke-width:1.5}
+  .shadow{fill:#18181B}
+  .edge{stroke:#52525B;stroke-width:1.5;fill:none;stroke-dasharray:4 4}
+  .hair{stroke:#E4E4E7;stroke-width:1}
+  .chip{fill:#F4F3EF;stroke:#1E3A8A;stroke-width:1}
+</style>
+<rect width="1200" height="440" fill="#F9F9F8"/>
+
+<!-- situation -->
+<text class="lab" x="24" y="128">THE SITUATION</text>
+<rect class="shadow" x="27" y="143" width="222" height="196" rx="10"/>
+<rect class="card" x="24" y="140" width="222" height="196" rx="10"/>
+<rect x="40" y="156" width="190" height="70" rx="7" fill="#FFFFFF" stroke="#18181B" stroke-width="1.2"/>
+<line x1="40" y1="180" x2="230" y2="180" stroke="#18181B" stroke-width="1.2"/>
+<circle cx="52" cy="168" r="3.2" fill="#18181B"/><circle cx="62" cy="168" r="3.2" fill="none" stroke="#18181B" stroke-width="1.2"/><circle cx="72" cy="168" r="3.2" fill="none" stroke="#18181B" stroke-width="1.2"/>
+<rect x="84" y="161" width="138" height="14" rx="7" fill="none" stroke="#18181B" stroke-width="1"/>
+<text class="s" x="52" y="208" font-size="13" font-weight="600">AI assistant signed in ✓</text>
+<text class="s" x="40" y="252" font-size="12.5">The site hands the browser</text>
+<text class="s" x="40" y="270" font-size="12.5">a “signed-in” note: a <tspan font-weight="600">cookie</tspan>.</text>
+<text class="s mu" x="40" y="300" font-size="12">Copy the note = become you.</text>
+
+<path class="edge" d="M248,238 L268,238"/><polygon points="270,238 262,234 262,242" fill="#52525B"/>
+
+<!-- container -->
+<rect x="272" y="96" width="672" height="286" rx="14" fill="none" stroke="#1E3A8A" stroke-width="1.5" stroke-dasharray="6 5"/>
+<rect x="536" y="84" width="144" height="24" rx="12" fill="#FFFFFF" stroke="#18181B" stroke-width="1.2"/>
+<rect x="552" y="92" width="8" height="8" rx="1.5" fill="#1E3A8A"/>
+<text class="m" x="568" y="100" font-size="11" letter-spacing=".1em">COOKIEGUARD</text>
+
+<!-- AI layer -->
+<rect x="294" y="130" width="8" height="8" rx="1.5" fill="#1E3A8A"/>
+<text class="lab" x="308" y="138">AI LAYER</text>
+<rect class="shadow" x="297" y="151" width="298" height="200" rx="10"/>
+<rect class="card" x="294" y="148" width="298" height="200" rx="10"/>
+<text class="h" x="312" y="182" font-size="17">Which cookie is the note?</text>
+<line class="hair" x1="312" y1="200" x2="574" y2="200"/>
+<text class="s" x="312" y="230" font-size="12.5">Known name</text>
+<rect class="chip" x="420" y="216" width="88" height="20" rx="10"/><text class="m" x="430" y="230" font-size="10" fill="#1E3A8A">look it up</text>
+<text class="s" x="312" y="264" font-size="12.5">Unknown name</text>
+<rect class="chip" x="420" y="250" width="128" height="20" rx="10"/><text class="m" x="430" y="264" font-size="10" fill="#1E3A8A">the model guesses</text>
+<line class="hair" x1="312" y1="290" x2="574" y2="290"/>
+<text class="m" x="312" y="318" font-size="10.5" fill="#1E3A8A">a guess, never a verdict</text>
+
+<path class="edge" d="M596,248 L618,248"/><polygon points="620,248 612,244 612,252" fill="#52525B"/>
+
+<!-- decision layer -->
+<rect x="628" y="130" width="8" height="8" rx="1.5" fill="#18181B"/>
+<text class="lab" x="642" y="138">DECISION LAYER · NO AI</text>
+<rect class="shadow" x="631" y="151" width="298" height="200" rx="10"/>
+<rect class="card" x="628" y="148" width="298" height="200" rx="10"/>
+<text class="h" x="646" y="182" font-size="17">Is the note safe?</text>
+<line class="hair" x1="646" y1="200" x2="908" y2="200"/>
+<circle cx="656" cy="226" r="8" fill="#18181B"/><text class="m" x="656" y="229.5" font-size="9.5" style="fill:#FFFFFF" text-anchor="middle" font-weight="700">1</text>
+<text class="s" x="672" y="230" font-size="12.5">Double-check the guess</text>
+<circle cx="656" cy="258" r="8" fill="#18181B"/><text class="m" x="656" y="261.5" font-size="9.5" style="fill:#FFFFFF" text-anchor="middle" font-weight="700">2</text>
+<text class="s" x="672" y="262" font-size="12.5">Prove it with a real test</text>
+<circle cx="656" cy="290" r="8" fill="#18181B"/><text class="m" x="656" y="293.5" font-size="9.5" style="fill:#FFFFFF" text-anchor="middle" font-weight="700">3</text>
+<text class="s" x="672" y="294" font-size="12.5">Check its protections</text>
+<line class="hair" x1="646" y1="312" x2="908" y2="312"/>
+<text class="m" x="646" y="336" font-size="10.5" fill="#1E3A8A">fixed rules · same answer every time</text>
+
+<path class="edge" d="M946,238 L982,238"/><polygon points="984,238 976,234 976,242" fill="#52525B"/>
+
+<!-- verdict -->
+<text class="lab" x="992" y="128">VERDICT</text>
+<rect class="shadow" x="995" y="143" width="184" height="196" rx="10"/>
+<rect class="card" x="992" y="140" width="184" height="196" rx="10"/>
+<rect x="1008" y="164" width="46" height="20" rx="10" fill="#F0FDF4" stroke="#15803D" stroke-width="1"/><text class="m" x="1017" y="178" font-size="10" fill="#15803D">Safe</text>
+<rect x="1008" y="196" width="68" height="20" rx="10" fill="#FEF2F2" stroke="#B91C1C" stroke-width="1"/><text class="m" x="1017" y="210" font-size="10" fill="#B91C1C">Not safe</text>
+<text class="s mu" x="1084" y="210" font-size="11">+ the fix</text>
+<rect x="1008" y="228" width="76" height="20" rx="10" fill="#F4F3EF" stroke="#71717A" stroke-width="1"/><text class="m" x="1017" y="242" font-size="10" fill="#52525B">Can't tell</text>
+<line class="hair" x1="1008" y1="266" x2="1160" y2="266"/>
+<text class="s" x="1008" y="292" font-size="12.5">Your code holds</text>
+<text class="s" x="1008" y="310" font-size="12.5">the gate, not the AI.</text>
+
+<!-- footer -->
+<text class="m" x="24" y="412" font-size="11" fill="#1E3A8A">✓ runs on your computer</text>
+<text class="m" x="300" y="412" font-size="11" fill="#1E3A8A">✓ the note's contents never leave</text>
+</svg>

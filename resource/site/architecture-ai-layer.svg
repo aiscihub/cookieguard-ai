@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400" role="img" aria-labelledby="t d">
+<title id="t">Inside the AI layer</title>
+<desc id="d">1, a lookup table of known cookie names. 2, the model: a Random Forest of 150 trees reading 38 clues in 7 groups, never the cookie's contents, trained on 304,422 cookies from 28,089 websites. 3, how good: right 4 times in 5 on real websites in November 2026; lookup plus model 81 percent balanced accuracy on 11,160 cookies from 359 sites, model alone 76, names it has never seen 66, cloud AI a tie on the same cookies; 0.04 milliseconds per cookie versus 5.5 seconds in the cloud.</desc>
+<style>
+  .s{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;fill:#18181B}
+  .h{font-family:"Playfair Display",Georgia,"Times New Roman",serif;font-weight:500;fill:#18181B}
+  .m{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;fill:#18181B}
+  .mu{fill:#71717A}
+  .lab{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:11px;letter-spacing:.12em;fill:#52525B}
+  .card{fill:#FFFFFF;stroke:#18181B;stroke-width:1.5}
+  .shadow{fill:#18181B}
+  .hair{stroke:#E4E4E7;stroke-width:1}
+  .chip{fill:#F4F3EF;stroke:#1E3A8A;stroke-width:1}
+  .bar{fill:#1E3A8A}
+  .barbg{fill:#EDECE8}
+</style>
+<rect width="1200" height="400" fill="#F9F9F8"/>
+
+<!-- 1 lookup -->
+<rect x="24" y="30" width="8" height="8" rx="1.5" fill="#1E3A8A"/>
+<text class="lab" x="38" y="38">1 · KNOWN NAMES</text>
+<rect class="shadow" x="27" y="51" width="330" height="310" rx="10"/>
+<rect class="card" x="24" y="48" width="330" height="310" rx="10"/>
+<text class="h" x="42" y="84" font-size="18">A lookup table</text>
+<text class="s mu" x="42" y="106" font-size="12.5">Not AI. Names we already know.</text>
+<rect class="chip" x="42" y="128" width="294" height="24" rx="12"/>
+<text class="m" x="54" y="144" font-size="11" fill="#1E3A8A">_ga  →  tracking</text>
+<rect class="chip" x="42" y="160" width="294" height="24" rx="12"/>
+<text class="m" x="54" y="176" font-size="11" fill="#1E3A8A">PHPSESSID  →  signed-in note</text>
+<rect class="chip" x="42" y="192" width="294" height="24" rx="12"/>
+<text class="m" x="54" y="208" font-size="11" fill="#1E3A8A">lang  →  preference</text>
+<line class="hair" x1="42" y1="238" x2="336" y2="238"/>
+<text class="s" x="42" y="266" font-size="13">Most cookies on real sites are known.</text>
+<text class="s" x="42" y="300" font-size="13">Not listed? <tspan fill="#1E3A8A">→ the model</tspan></text>
+
+<!-- 2 model -->
+<rect x="386" y="30" width="8" height="8" rx="1.5" fill="#1E3A8A"/>
+<text class="lab" x="400" y="38">2 · THE MODEL</text>
+<rect class="shadow" x="389" y="51" width="420" height="310" rx="10"/>
+<rect class="card" x="386" y="48" width="420" height="310" rx="10"/>
+<text class="h" x="404" y="84" font-size="18">Random Forest · 150 trees</text>
+<text class="s mu" x="404" y="106" font-size="12.5">Reads 38 clues. Never the cookie's contents.</text>
+<text class="m" x="404" y="138" font-size="11.5">protection flags <tspan fill="#1E3A8A">4</tspan></text>
+<text class="m" x="610" y="138" font-size="11.5">name shape <tspan fill="#1E3A8A">8</tspan></text>
+<text class="m" x="404" y="158" font-size="11.5">lifetime <tspan fill="#1E3A8A">4</tspan></text>
+<text class="m" x="610" y="158" font-size="11.5">contents shape <tspan fill="#1E3A8A">8</tspan></text>
+<text class="m" x="404" y="178" font-size="11.5">where it is sent <tspan fill="#1E3A8A">8</tspan></text>
+<text class="m" x="610" y="178" font-size="11.5">login behaviour <tspan fill="#1E3A8A">4</tspan></text>
+<text class="m" x="404" y="198" font-size="11.5">summary scores <tspan fill="#1E3A8A">2</tspan></text>
+<line class="hair" x1="404" y1="220" x2="788" y2="220"/>
+<text class="s" x="404" y="248" font-size="13">150 trees vote → a score per role</text>
+<line class="hair" x1="404" y1="268" x2="788" y2="268"/>
+<text class="h" x="404" y="302" font-size="22">304,422 cookies</text>
+<text class="s mu" x="404" y="324" font-size="12.5">from 28,089 websites · tested only on names it never saw</text>
+
+<!-- 3 how good -->
+<rect x="838" y="30" width="8" height="8" rx="1.5" fill="#1E3A8A"/>
+<text class="lab" x="852" y="38">3 · HOW GOOD</text>
+<rect class="shadow" x="841" y="51" width="338" height="310" rx="10"/>
+<rect class="card" x="838" y="48" width="338" height="310" rx="10"/>
+<text class="h" x="856" y="84" font-size="18">Right 4 times in 5</text>
+<text class="s mu" x="856" y="106" font-size="12.5">on real websites, November 2026</text>
+<text class="s" x="856" y="136" font-size="12">Lookup + model · 359 sites</text>
+<rect class="barbg" x="856" y="142" width="240" height="10" rx="5"/><rect class="bar" x="856" y="142" width="194" height="10" rx="5"/>
+<text class="m" x="1104" y="151" font-size="11">81%</text>
+<text class="s" x="856" y="174" font-size="12">Model alone</text>
+<rect class="barbg" x="856" y="180" width="240" height="10" rx="5"/><rect x="856" y="180" width="182" height="10" rx="5" fill="#A1A1AA"/>
+<text class="m" x="1104" y="189" font-size="11">76%</text>
+<text class="s" x="856" y="212" font-size="12">Names it has never seen</text>
+<rect class="barbg" x="856" y="218" width="240" height="10" rx="5"/><rect x="856" y="218" width="158" height="10" rx="5" fill="#A1A1AA"/>
+<text class="m" x="1104" y="227" font-size="11">66%</text>
+<text class="s" x="856" y="250" font-size="12">Cloud AI (GPT-6) · same cookies</text>
+<rect class="barbg" x="856" y="256" width="240" height="10" rx="5"/><rect x="856" y="256" width="182" height="10" rx="5" fill="#A1A1AA"/>
+<text class="m" x="1104" y="265" font-size="11">a tie</text>
+<line class="hair" x1="856" y1="284" x2="1160" y2="284"/>
+<text class="h" x="856" y="316" font-size="22">0.04 ms</text>
+<text class="s mu" x="950" y="316" font-size="12.5">per cookie · cloud: 5.5 s</text>
+<text class="s mu" x="856" y="342" font-size="11.5">50% = coin flip</text>
+
+<text class="s mu" x="24" y="388" font-size="11">Balanced accuracy, 11,160 cookies from 359 sites. Cloud: 300 identical cookies, 76% vs 75%. Unseen names: 1,368 cookies, 66%.</text>
+</svg>
