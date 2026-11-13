@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 380" width="1200" height="380" role="img" aria-labelledby="t d">
+<title id="t">Inside the decision layer</title>
+<desc id="d">Why: a guess must never decide. When the model and simple rules agree, 74 percent are right; when they disagree, a coin flip. How: 1 double-check the guess with rules, agree or verify first. 2 prove it: remove the cookie, reload, still signed in? No means that was the note; put it back. 3 check its protections with six fixed questions. Verdict: safe, not safe, can't tell.</desc>
+<style>
+  .s{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;fill:#18181B}
+  .h{font-family:"Playfair Display",Georgia,"Times New Roman",serif;font-weight:500;fill:#18181B}
+  .m{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;fill:#18181B}
+  .mu{fill:#71717A}
+  .lab{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:11px;letter-spacing:.12em;fill:#52525B}
+  .card{fill:#FFFFFF;stroke:#18181B;stroke-width:1.5}
+  .shadow{fill:#18181B}
+  .hair{stroke:#E4E4E7;stroke-width:1}
+  .chip{fill:#F4F3EF;stroke:#1E3A8A;stroke-width:1}
+  .edge{stroke:#52525B;stroke-width:1.5;fill:none;stroke-dasharray:4 4}
+</style>
+<rect width="1200" height="380" fill="#F9F9F8"/>
+
+<!-- why -->
+<rect x="24" y="30" width="8" height="8" rx="1.5" fill="#18181B"/>
+<text class="lab" x="38" y="38">WHY</text>
+<rect class="shadow" x="27" y="51" width="300" height="300" rx="10"/>
+<rect class="card" x="24" y="48" width="300" height="300" rx="10"/>
+<text class="h" x="42" y="84" font-size="18">A guess must never decide</text>
+<line class="hair" x1="42" y1="104" x2="306" y2="104"/>
+<text class="s" x="42" y="134" font-size="13">Model and rules agree</text>
+<text class="h" x="42" y="166" font-size="26">74% right</text>
+<text class="s" x="42" y="208" font-size="13">Model and rules disagree</text>
+<text class="h" x="42" y="240" font-size="26">coin flip</text>
+<line class="hair" x1="42" y1="266" x2="306" y2="266"/>
+<text class="s" x="42" y="294" font-size="13">So: check, prove, then judge.</text>
+<text class="m" x="42" y="322" font-size="10.5" fill="#1E3A8A">no AI in this layer</text>
+
+<!-- 1 -->
+<rect x="356" y="30" width="8" height="8" rx="1.5" fill="#18181B"/>
+<text class="lab" x="370" y="38">HOW</text>
+<rect class="shadow" x="359" y="51" width="252" height="300" rx="10"/>
+<rect class="card" x="356" y="48" width="252" height="300" rx="10"/>
+<circle cx="376" cy="78" r="9" fill="#18181B"/><text class="m" x="376" y="82" font-size="10" style="fill:#FFFFFF" text-anchor="middle" font-weight="700">1</text>
+<text class="h" x="392" y="84" font-size="18">Double-check</text>
+<text class="s mu" x="374" y="110" font-size="12.5">Simple rules check the guess.</text>
+<line class="hair" x1="374" y1="130" x2="590" y2="130"/>
+<rect class="chip" x="374" y="150" width="58" height="22" rx="11" style="stroke:#52525B"/><text class="m" x="384" y="165" font-size="10.5" fill="#52525B">Agree</text>
+<text class="s" x="442" y="165" font-size="12.5">→ probably right</text>
+<rect class="chip" x="374" y="186" width="94" height="22" rx="11"/><text class="m" x="384" y="201" font-size="10.5" fill="#1E3A8A">Verify first</text>
+<text class="s" x="478" y="201" font-size="12.5">→ test it first</text>
+
+<path class="edge" d="M612,198 L634,198"/><polygon points="636,198 628,194 628,202" fill="#52525B"/>
+
+<!-- 2 -->
+<rect class="shadow" x="643" y="51" width="252" height="300" rx="10"/>
+<rect class="card" x="640" y="48" width="252" height="300" rx="10"/>
+<circle cx="660" cy="78" r="9" fill="#18181B"/><text class="m" x="660" y="82" font-size="10" style="fill:#FFFFFF" text-anchor="middle" font-weight="700">2</text>
+<text class="h" x="676" y="84" font-size="18">Prove it</text>
+<text class="s mu" x="658" y="110" font-size="12.5">A real test in the real browser.</text>
+<line class="hair" x1="658" y1="130" x2="874" y2="130"/>
+<text class="s" x="658" y="160" font-size="13">Remove the cookie</text>
+<text class="s" x="658" y="186" font-size="13">Reload</text>
+<text class="s" x="658" y="212" font-size="13">Still signed in?</text>
+<text class="s" x="676" y="238" font-size="13"><tspan font-weight="600">No</tspan> → that's the note</text>
+<text class="s" x="658" y="268" font-size="13">Put it back</text>
+<text class="m" x="658" y="300" font-size="10.5" fill="#1E3A8A">proof, not a prediction</text>
+
+<path class="edge" d="M896,198 L918,198"/><polygon points="920,198 912,194 912,202" fill="#52525B"/>
+
+<!-- 3 -->
+<rect class="shadow" x="927" y="51" width="252" height="300" rx="10"/>
+<rect class="card" x="924" y="48" width="252" height="300" rx="10"/>
+<circle cx="944" cy="78" r="9" fill="#18181B"/><text class="m" x="944" y="82" font-size="10" style="fill:#FFFFFF" text-anchor="middle" font-weight="700">3</text>
+<text class="h" x="960" y="84" font-size="18">Check protections</text>
+<text class="s mu" x="942" y="110" font-size="12.5">Six fixed questions.</text>
+<line class="hair" x1="942" y1="130" x2="1158" y2="130"/>
+<text class="s" x="942" y="154" font-size="12.5">Readable by page scripts?</text>
+<text class="s" x="942" y="176" font-size="12.5">Sent unencrypted?</text>
+<text class="s" x="942" y="198" font-size="12.5">Sent by other websites?</text>
+<text class="s" x="942" y="220" font-size="12.5">Shared with subdomains?</text>
+<text class="s" x="942" y="242" font-size="12.5">Same ID after login?</text>
+<text class="s" x="942" y="264" font-size="12.5">Still valid after logout?</text>
+<line class="hair" x1="942" y1="282" x2="1158" y2="282"/>
+<rect x="942" y="298" width="46" height="20" rx="10" fill="#F0FDF4" stroke="#15803D" stroke-width="1"/><text class="m" x="951" y="312" font-size="10" fill="#15803D">Safe</text>
+<rect x="994" y="298" width="68" height="20" rx="10" fill="#FEF2F2" stroke="#B91C1C" stroke-width="1"/><text class="m" x="1003" y="312" font-size="10" fill="#B91C1C">Not safe</text>
+<rect x="1068" y="298" width="76" height="20" rx="10" fill="#F4F3EF" stroke="#71717A" stroke-width="1"/><text class="m" x="1077" y="312" font-size="10" fill="#52525B">Can't tell</text>
+</svg>

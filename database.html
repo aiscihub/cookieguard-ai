@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cookie database | CookieGuard AI</title>
+<meta name="description" content="Open data: 12,481 labeled cookie names and 16,571 cookies from 788 real websites, collected in November 2026. Search it, download it, CC BY 4.0.">
+<meta property="og:title" content="The CookieGuard cookie database">
+<meta property="og:description" content="12,481 labeled cookie names and 16,571 cookies from 788 real websites. Open data, no cookie values.">
+<meta property="og:image" content="https://aiscihub.github.io/cookieguard-ai/resource/social-preview.png">
+<link rel="icon" type="image/png" sizes="48x48" href="extension-standalone/icons/icon48.png">
+<link rel="icon" type="image/png" sizes="128x128" href="extension-standalone/icons/icon128.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=Public+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="resource/site/alexandria.css">
+<style>
+.hero { padding: 56px 0 24px; }
+.hero h1 { margin: 14px 0 12px; max-width: 760px; }
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 28px 0 0; }
+.stat { padding: 18px 20px; }
+.stat .n { font-family: var(--headline); font-size: 30px; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.stat .t { margin-top: 4px; font-size: 13px; color: var(--on-surface-variant); }
+@media (max-width: 760px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+
+.search { padding: 40px 0 16px; }
+.searchbox { display: flex; align-items: center; gap: 10px; padding: 6px 6px 6px 18px; border-radius: var(--r-xl); background: var(--surface-lowest); box-shadow: 0 1px 2px rgba(0,0,0,.05), 0 0 0 1px var(--ghost); max-width: 720px; }
+.searchbox svg { width: 20px; height: 20px; color: var(--on-surface-variant); flex-shrink: 0; }
+.searchbox input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; font: 500 16px var(--body); color: var(--on-surface); padding: 10px 0; }
+.searchbox input::placeholder { color: var(--outline); }
+.searchbox .hint { font-family: var(--label); font-size: 11px; color: var(--secondary); padding: 0 10px; white-space: nowrap; }
+.examples { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 13px; color: var(--on-surface-variant); }
+.examples button { font: 500 12px var(--mono); padding: 4px 10px; border-radius: var(--r-pill); border: 0; background: var(--surface-container); color: var(--primary); cursor: pointer; }
+.examples button:hover { background: var(--surface-high); }
+.results { margin-top: 20px; max-width: 720px; display: flex; flex-direction: column; gap: 8px; }
+.hit { display: grid; grid-template-columns: 1fr auto; gap: 6px 16px; padding: 14px 18px; border-radius: var(--r-xl); background: var(--surface-lowest); box-shadow: 0 1px 2px rgba(0,0,0,.04); align-items: center; }
+.hit .name { font-family: var(--mono); font-size: 14px; font-weight: 500; word-break: break-all; }
+.hit .meta { grid-column: 1 / -1; font-size: 12.5px; color: var(--on-surface-variant); display: flex; flex-wrap: wrap; gap: 6px 14px; }
+.hit .meta b { font-weight: 600; color: var(--on-surface); }
+.hit.first { box-shadow: 0 0 0 2px var(--primary-fixed), 0 1px 2px rgba(0,0,0,.04); }
+.empty { padding: 18px; border-radius: var(--r-xl); background: var(--surface-low); color: var(--on-surface-variant); font-size: 14px; max-width: 720px; }
+.status { font-family: var(--label); font-size: 12px; color: var(--secondary); margin-top: 10px; }
+
+.downloads { padding: 32px 0 48px; }
+.dl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.dl { padding: 24px 26px; display: flex; flex-direction: column; gap: 10px; }
+.dl h3 { margin-top: 4px; }
+.dl p { color: var(--on-surface-variant); font-size: 14px; }
+.dl .files { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+.dl .files a { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: var(--r-xl); background: var(--surface-high); font-family: var(--label); font-size: 13px; font-weight: 600; }
+.dl .files a:hover { text-decoration: none; background: var(--surface-highest); }
+.dl .files a span { font-weight: 500; color: var(--secondary); font-size: 11px; }
+@media (max-width: 760px) { .dl-grid { grid-template-columns: 1fr; } }
+
+.about { padding: 40px 0; background: var(--surface-low); }
+.about-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.about-grid h3 { margin-bottom: 8px; }
+.about-grid p { font-size: 14px; color: var(--on-surface-variant); }
+@media (max-width: 760px) { .about-grid { grid-template-columns: 1fr; } }
+
+.walk iframe { display: block; width: 100%; aspect-ratio: 1200 / 660; border: 0; border-radius: var(--r-xl); background: #F9F9F8; }
+.schema table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.schema th { text-align: left; font-family: var(--label); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--on-surface-variant); padding: 10px 12px; background: var(--surface-low); }
+.schema td { padding: 10px 12px; vertical-align: top; }
+.schema tr:nth-child(even) td { background: var(--surface-low); }
+.schema td:first-child { font-family: var(--mono); font-size: 12.5px; white-space: nowrap; }
+.schema .wrap { border-radius: var(--r-xl); overflow-x: auto; background: var(--surface-lowest); }
+.schema table { min-width: 560px; }
+@media (max-width: 600px) { .walk iframe { display: none; } }
+.schema details { margin-top: 10px; }
+.schema summary { cursor: pointer; font-family: var(--label); font-weight: 600; font-size: 13px; color: var(--primary); padding: 8px 0; }
+.license { padding: 40px 0 56px; }
+.license .card { padding: 24px 26px; font-size: 14px; }
+.license p + p { margin-top: 10px; }
+.license code { background: var(--surface-container); padding: 1px 6px; border-radius: var(--r-sm); font-size: 12.5px; }
+</style>
+</head>
+<body>
+<header class="site-header"><div class="container bar">
+  <a href="./" class="brand"><img src="extension-standalone/icons/icon128.png" alt=""> CookieGuard AI</a>
+  <nav class="site-nav">
+    <a href="extension.html">Extension</a>
+    <a href="agents.html#get-started">Dev tools</a>
+    <a href="agents.html">Browser agents</a>
+    <a href="database.html" aria-current="page" class="keep">Database</a>
+    <a href="report.html">Research</a>
+    <a href="https://github.com/aiscihub/cookieguard-ai" target="_blank" rel="noopener" class="keep">GitHub</a>
+  </nav>
+</div></header>
+
+<section class="hero"><div class="container">
+  <span class="badge"><span class="dot"></span> Open data · CC BY 4.0 · No cookie values</span>
+  <h1>The cookie database. <em>Every name we have labeled.</em></h1>
+  <p class="lede">The lookup table CookieGuard checks before its model guesses, and the cookies we observed on real websites in November 2026 to test it. Search it here, or download it.</p>
+  <div class="stats" id="stats">
+    <div class="card stat"><div class="n" data-stat="names">12,481</div><div class="t">labeled cookie names</div></div>
+    <div class="card stat"><div class="n" data-stat="rows">16,571</div><div class="t">cookies observed in 2026</div></div>
+    <div class="card stat"><div class="n" data-stat="sites">788</div><div class="t">real websites</div></div>
+    <div class="card stat"><div class="n">0</div><div class="t">cookie values stored</div></div>
+  </div>
+</div></section>
+
+<section class="search"><div class="container">
+  <span class="label">Look up a cookie</span>
+  <div class="searchbox" style="margin-top:10px">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    <input id="q" type="search" placeholder="Type a cookie name, e.g. _ga" autocomplete="off" spellcheck="false" aria-label="Cookie name">
+    <span class="hint" id="hint">loading…</span>
+  </div>
+  <div class="examples">Try: <button data-q="_ga">_ga</button><button data-q="PHPSESSID">PHPSESSID</button><button data-q="__cf_bm">__cf_bm</button><button data-q="_ga_ABC123XYZ">_ga_ABC123XYZ</button><button data-q="MUID">MUID</button><button data-q="csrftoken">csrftoken</button></div>
+  <div class="results" id="results"></div>
+  <div class="status" id="status"></div>
+</div></section>
+
+<section class="downloads"><div class="container">
+  <div class="section-head"><span class="label">Download</span><h2>Two files, both open</h2></div>
+  <div class="dl-grid">
+    <div class="card dl">
+      <span class="chip blue">Lookup table</span>
+      <h3>Known cookie names</h3>
+      <p>12,481 exact names and 7,835 normalized names from 246,505 labeled cookies, each with its majority label and the votes behind it, plus 2,261 Open Cookie Database entries. The order CookieGuard consults them in is in the file.</p>
+      <div class="files"><a href="data/known-cookie-names.json" download>JSON <span>2.6 MB</span></a><a href="data/known-cookie-names.csv" download>CSV <span>1.3 MB</span></a></div>
+    </div>
+    <div class="card dl">
+      <span class="chip blue">Observations</span>
+      <h3>Cookies observed in 2026</h3>
+      <p>16,571 cookies set by 788 real websites after "Accept all", each matched to the site's own declared category. Flags, lifetime, scope, value shape, the 38 model inputs, and which crawl it came from. Never the value.</p>
+      <div class="files"><a href="data/cookies-2026.csv" download>CSV <span>4.3 MB</span></a><a href="data/cookies-2026.jsonl" download>JSONL <span>9.1 MB</span></a><a href="data/README.md">README</a></div>
+    </div>
+  </div>
+</div></section>
+
+<section class="about"><div class="container">
+  <div class="about-grid">
+    <div><h3>Where the names come from</h3><p>A 2021 crawl of 28,089 websites (the CookieBlock dataset) and our own 2026 crawls of the Tranco top 20,000. Every labeled cookie casts one vote for its name; the majority wins and ties are dropped.</p></div>
+    <div><h3>Where the labels come from</h3><p>The website itself. Sites running Cookiebot or OneTrust publish what each cookie is for. Analytics and Advertising count as <b>tracker</b>; Necessary and Functional as <b>not a tracker</b>. Sites sometimes disagree, so the votes are kept.</p></div>
+    <div><h3>What is not here</h3><p>Cookie values. The crawler held them in memory only to scan every saved file for leaks, 1,860 times, and every scan passed. Also absent: anything from a login, a real account, or a site that blocked the visit.</p></div>
+  </div>
+</div></section>
+
+<section class="walk"><div class="container">
+  <div class="section-head"><span class="label">How it was collected</span><h2>Nine scenes, sixty seconds</h2><p class="muted">From the 20,000-site list to the sealed test. Press Play, or step through. <a href="resource/site/data-pipeline.html" target="_blank" rel="noopener">Open full screen →</a></p></div>
+  <iframe src="resource/site/data-pipeline.html?autoplay=0" title="How the data was collected: an animated walkthrough" loading="lazy"></iframe>
+</div></section>
+
+<section class="schema"><div class="container">
+  <div class="section-head"><span class="label">Schema</span><h2>What each row holds</h2></div>
+  <div class="wrap"><table>
+    <tr><th>Known names</th><th>Meaning</th></tr>
+    <tr><td>name</td><td>The cookie name, exact and case-sensitive in <code>cookieguard.raw</code>; normalized in <code>cookieguard.normalized</code> (lowercase; a long mixed or hex piece becomes <code>#</code>; digits become <code>0</code>)</td></tr>
+    <tr><td>label</td><td><code>tracker</code> or <code>not-tracker</code>, the majority of the votes</td></tr>
+    <tr><td>trackerVotes · notTrackerVotes</td><td>One vote per labeled cookie with this name</td></tr>
+    <tr><td>rows2021 · rows2026</td><td>How many votes came from the 2021 dataset and from our 2026 tuning crawl</td></tr>
+    <tr><td>ocd[].match · platform · category · ocdIds</td><td>Open Cookie Database entries: exact or prefix match, the vendor, the source category, the source record IDs</td></tr>
+  </table></div>
+  <details><summary>Cookies observed in 2026: columns</summary>
+  <div class="wrap" style="margin-top:8px"><table>
+    <tr><th>Column</th><th>Meaning</th></tr>
+    <tr><td>crawl</td><td><code>tune</code> (ranks 1–3,300), <code>unseen-test</code> (3,401–12,560), <code>mix-test</code> (12,561–20,000)</td></tr>
+    <tr><td>rank</td><td>Tranco rank of the site visited (list 947N2, November 9, 2026)</td></tr>
+    <tr><td>cmp · declaredCategory · declaredGroup</td><td>Which banner system, and the site's own category for this cookie</td></tr>
+    <tr><td>name · normalizedName · domain · path</td><td>The cookie as set</td></tr>
+    <tr><td>label</td><td><code>tracker</code> for Analytics/Statistics/Advertising, else <code>not-tracker</code></td></tr>
+    <tr><td>secure · httpOnly · sameSite · hostOnly · session · lifetimeSeconds</td><td>Protection flags, scope, and lifetime (null for session cookies)</td></tr>
+    <tr><td>valueLength · valueCharacterSet</td><td>The value's shape only: length and whether it was digits, hex, alphanumeric, base64, other, or empty</td></tr>
+    <tr><td>seenInTraining · seenInTuning</td><td>mix-test rows only: whether the normalized name occurs in the 2021 training data or the tune crawl</td></tr>
+    <tr><td>features</td><td>The 38 CookieGuard model inputs, in the order listed in <code>stats.json</code></td></tr>
+  </table></div></details>
+</div></section>
+
+<section class="license"><div class="container">
+  <div class="section-head"><span class="label">License and citation</span><h2>Use it, cite it</h2></div>
+  <div class="card">
+    <p><b>CookieGuard tables and 2026 rows:</b> CC BY 4.0. Cite as <i>Avelyn Jing, CookieGuard AI cookie database, November 2026, https://aiscihub.github.io/cookieguard-ai/database.html</i>.</p>
+    <p><b>2021 votes</b> derive from the CookieBlock dataset: Bollinger, Kubicek, Cotrini, Basin, "Automating Cookie Consent and GDPR Violation Detection," USENIX Security 2022; Zenodo 5838646; CC BY 4.0.</p>
+    <p><b>Open Cookie Database</b> entries are redistributed under Apache-2.0 (commit <code>7786335</code>), unchanged apart from the binary label mapping. <b>Site ranks</b> are from the Tranco list (Le Pochat et al., NDSS 2019).</p>
+    <p>Built by <code>data/build.py</code> in the <a href="https://github.com/aiscihub/cookieguard-ai" target="_blank" rel="noopener">repository</a> from the frozen study files, which contain no cookie values.</p>
+  </div>
+</div></section>
+
+<footer><div class="container">
+  <div class="trust"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg> 100% Local · Zero telemetry · Open data</div>
+  <div class="fine">CookieGuard AI is open source under the MIT license. The database is CC BY 4.0.</div>
+  <div class="links"><a href="./">Home</a><a href="extension.html">Extension</a><a href="agents.html">Browser agents</a><a href="report.html">Research</a><a href="https://github.com/aiscihub/cookieguard-ai/blob/main/PRIVACY.md" target="_blank" rel="noopener">Privacy</a></div>
+</div></footer>
+
+<script>
+(function () {
+  var q = document.getElementById('q'), out = document.getElementById('results'), status = document.getElementById('status'), hint = document.getElementById('hint');
+  var db = null, rawIdx = null, normIdx = null, ocdExact = null, ocdPrefix = null;
+  function normalize(value) {
+    return String(value).trim().toLowerCase().split(/([_.-])/).map(function (piece) {
+      if (/^[_.-]$/.test(piece)) return piece;
+      var mixed = piece.length >= 6 && /[a-z]/.test(piece) && /[0-9]/.test(piece), hex = piece.length >= 8 && /^[0-9a-f]+$/.test(piece) && /[a-f]/.test(piece);
+      return mixed || hex ? '#' : piece;
+    }).join('').replace(/\d+/g, '0');
+  }
+  function chip(label) { return label === 'tracker' ? '<span class="chip tracker">tracker</span>' : '<span class="chip ok">not a tracker</span>'; }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function votes(e) { var n = e.trackerVotes + e.notTrackerVotes; return '<span><b>' + n.toLocaleString() + '</b> vote' + (n === 1 ? '' : 's') + ' · ' + e.trackerVotes.toLocaleString() + ' tracker / ' + e.notTrackerVotes.toLocaleString() + ' not</span><span>' + (e.rows2021 ? '2021: ' + e.rows2021.toLocaleString() : '') + (e.rows2021 && e.rows2026 ? ' · ' : '') + (e.rows2026 ? '2026: ' + e.rows2026.toLocaleString() : '') + '</span>'; }
+  function render(name) {
+    out.innerHTML = ''; status.textContent = '';
+    if (!db) return;
+    name = name.trim(); if (!name) return;
+    var hits = [], raw = rawIdx[name], norm = normIdx[normalize(name)], oe = ocdExact[name];
+    if (raw) hits.push({ how: 'exact name', e: raw, html: votes(raw) });
+    if (norm) hits.push({ how: 'normalized to <b>' + esc(normalize(name)) + '</b>', e: norm, html: votes(norm) });
+    if (oe) hits.push({ how: 'Open Cookie Database, exact', e: oe, html: '<span>' + esc(oe.platform.join(', ')) + '</span><span>' + esc(oe.category.join(', ')) + '</span>' });
+    for (var i = 0; i < ocdPrefix.length; i++) if (name.indexOf(ocdPrefix[i].name) === 0) { var p = ocdPrefix[i]; hits.push({ how: 'Open Cookie Database, prefix <b>' + esc(p.name) + '</b>', e: p, html: '<span>' + esc(p.platform.join(', ')) + '</span><span>' + esc(p.category.join(', ')) + '</span>' }); break; }
+    if (!hits.length) {
+      var partial = Object.keys(rawIdx).filter(function (k) { return k.toLowerCase().indexOf(name.toLowerCase()) >= 0; }).slice(0, 8);
+      if (!partial.length) { out.innerHTML = '<div class="empty">Not in the table. CookieGuard would hand this name to the model, which reads how the cookie looks, never its name alone.</div>'; return; }
+      status.textContent = 'No exact match. Names containing "' + name + '":';
+      partial.forEach(function (k) { var e = rawIdx[k]; out.insertAdjacentHTML('beforeend', '<div class="hit"><span class="name">' + esc(k) + '</span>' + chip(e.label) + '<div class="meta">' + votes(e) + '</div></div>'); });
+      return;
+    }
+    hits.forEach(function (h, i) { out.insertAdjacentHTML('beforeend', '<div class="hit' + (i === 0 ? ' first' : '') + '"><span class="name">' + esc(h.e.name) + '</span>' + chip(h.e.label) + '<div class="meta"><span>' + h.how + '</span>' + h.html + '</div></div>'); });
+    status.textContent = i18nFirst(hits.length);
+  }
+  function i18nFirst(n) { return n === 1 ? 'One match. CookieGuard uses it.' : n + ' matches, in lookup order. CookieGuard uses the first.'; }
+  fetch('data/known-cookie-names.json').then(function (r) { return r.json(); }).then(function (d) {
+    db = d; rawIdx = {}; normIdx = {}; ocdExact = {}; ocdPrefix = [];
+    d.cookieguard.raw.forEach(function (e) { rawIdx[e.name] = e; });
+    d.cookieguard.normalized.forEach(function (e) { normIdx[e.name] = e; });
+    d.ocd.forEach(function (e) { if (e.match === 'exact') ocdExact[e.name] = e; else ocdPrefix.push(e); });
+    hint.textContent = d.counts.cookieguardRaw.toLocaleString() + ' names';
+    if (q.value) render(q.value);
+  }).catch(function () { hint.textContent = 'offline'; status.textContent = 'The table could not be loaded. Download the files above instead.'; });
+  q.addEventListener('input', function () { render(q.value); });
+  document.querySelectorAll('.examples button').forEach(function (b) { b.addEventListener('click', function () { q.value = b.getAttribute('data-q'); render(q.value); q.focus(); }); });
+  fetch('data/stats.json').then(function (r) { return r.json(); }).then(function (s) {
+    document.querySelector('[data-stat=names]').textContent = s.knownNames.raw.toLocaleString();
+    document.querySelector('[data-stat=rows]').textContent = s.cookies2026.rows.toLocaleString();
+    document.querySelector('[data-stat=sites]').textContent = s.cookies2026.sites.toLocaleString();
+  }).catch(function () {});
+})();
+</script>
+</body>
+</html>
