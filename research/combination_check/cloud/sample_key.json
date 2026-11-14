@@ -1,0 +1,2108 @@
+{
+  "schemaVersion": 1,
+  "sampleSeed": 2026111109,
+  "idSeed": 2026111110,
+  "testManifestSha256": "322f638a2972e9d13f766fef46eec12ba0579eb834f295ef0521c92a51dff711",
+  "items": {
+    "C208": {
+      "rowIndex": 524,
+      "normalizedName": "ttc_c0",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.21924226760864263
+    },
+    "C281": {
+      "rowIndex": 159,
+      "normalizedName": "fl_last_page_view_id",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.2344034087657928
+    },
+    "C179": {
+      "rowIndex": 75,
+      "normalizedName": "gig_bootstrap_0_l-#-ossrojvz-#_tjevi",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.24640128731727595
+    },
+    "C247": {
+      "rowIndex": 797,
+      "normalizedName": "cjsession",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.3061119389533996
+    },
+    "C280": {
+      "rowIndex": 122,
+      "normalizedName": "basessionb",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.5339653675258159
+    },
+    "C102": {
+      "rowIndex": 354,
+      "normalizedName": "zdbb_swap_ew_id",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.10691458702087397
+    },
+    "C151": {
+      "rowIndex": 1134,
+      "normalizedName": "browserlocale",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.5050378364324569
+    },
+    "C091": {
+      "rowIndex": 545,
+      "normalizedName": "jganalytics",
+      "truth": false,
+      "cookieguard": true,
+      "cookieguardScore": 0.06723755836486817
+    },
+    "C176": {
+      "rowIndex": 844,
+      "normalizedName": "make_session_id",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.1547474634647369
+    },
+    "C220": {
+      "rowIndex": 1160,
+      "normalizedName": "first_url",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.3279608559608459
+    },
+    "C008": {
+      "rowIndex": 904,
+      "normalizedName": "lo-visits",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.20665986061096187
+    },
+    "C209": {
+      "rowIndex": 1044,
+      "normalizedName": "cjuser",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.0939263772964477
+    },
+    "C041": {
+      "rowIndex": 676,
+      "normalizedName": "s_fsh_sess",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.07174908399581914
+    },
+    "C226": {
+      "rowIndex": 1307,
+      "normalizedName": "_dlmcmi",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.1676894354820252
+    },
+    "C090": {
+      "rowIndex": 618,
+      "normalizedName": "novasig",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.27276276826858525
+    },
+    "C014": {
+      "rowIndex": 725,
+      "normalizedName": "_cls_cfgver",
+      "truth": false,
+      "cookieguard": true,
+      "cookieguardScore": 0.11637240886688233
+    },
+    "C203": {
+      "rowIndex": 100,
+      "normalizedName": "geodata",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.01699782133102412
+    },
+    "C070": {
+      "rowIndex": 148,
+      "normalizedName": "rtbh",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.6185303950309753
+    },
+    "C142": {
+      "rowIndex": 597,
+      "normalizedName": "__lmi_ma",
+      "truth": false,
+      "cookieguard": true,
+      "cookieguardScore": 0.4344947957992554
+    },
+    "C236": {
+      "rowIndex": 332,
+      "normalizedName": "x-coxauto-aka-data",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.2987182807922363
+    },
+    "C249": {
+      "rowIndex": 739,
+      "normalizedName": "itx-audience-id",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.4113731753826141
+    },
+    "C204": {
+      "rowIndex": 263,
+      "normalizedName": "vix_user_id",
+      "truth": false,
+      "cookieguard": true,
+      "cookieguardScore": 0.08990287065505986
+    },
+    "C034": {
+      "rowIndex": 794,
+      "normalizedName": "preferredstoreid_hottopic",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.16863954782485957
+    },
+    "C181": {
+      "rowIndex": 350,
+      "normalizedName": "geocity",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.31987861514091487
+    },
+    "C253": {
+      "rowIndex": 922,
+      "normalizedName": "lastfpvisit",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.3237707835435867
+    },
+    "C268": {
+      "rowIndex": 861,
+      "normalizedName": "exp_#_identity",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.24339968681335444
+    },
+    "C257": {
+      "rowIndex": 331,
+      "normalizedName": "data-ilm",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.5400399589538574
+    },
+    "C196": {
+      "rowIndex": 95,
+      "normalizedName": "p_route",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.41330996870994563
+    },
+    "C230": {
+      "rowIndex": 1190,
+      "normalizedName": "on_uuid",
+      "truth": false,
+      "cookieguard": true,
+      "cookieguardScore": 0.2384030151367188
+    },
+    "C227": {
+      "rowIndex": 560,
+      "normalizedName": "isgenaienabled",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.36913069307804103
+    },
+    "C296": {
+      "rowIndex": 5,
+      "normalizedName": "keystoredataversion",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.22225145220756526
+    },
+    "C051": {
+      "rowIndex": 1101,
+      "normalizedName": "omgsession",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.16901982545852656
+    },
+    "C139": {
+      "rowIndex": 1262,
+      "normalizedName": "datid",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.015116937160491895
+    },
+    "C078": {
+      "rowIndex": 104,
+      "normalizedName": "optconsentgroups",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.3992610049247741
+    },
+    "C194": {
+      "rowIndex": 233,
+      "normalizedName": "ravelindeviceid",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.18731952428817744
+    },
+    "C182": {
+      "rowIndex": 800,
+      "normalizedName": "__attentive_cco",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.13614759564399714
+    },
+    "C250": {
+      "rowIndex": 505,
+      "normalizedName": "gaconnector_fc_campaign",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.04918182611465449
+    },
+    "C161": {
+      "rowIndex": 850,
+      "normalizedName": "0_u",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.5449995422363281
+    },
+    "C198": {
+      "rowIndex": 1346,
+      "normalizedName": "iiqprimiscookiesync",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.39556241273880005
+    },
+    "C222": {
+      "rowIndex": 1304,
+      "normalizedName": "ak_long",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.0809479427337646
+    },
+    "C264": {
+      "rowIndex": 300,
+      "normalizedName": "cars_trip_id",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.05435950279235835
+    },
+    "C275": {
+      "rowIndex": 1032,
+      "normalizedName": "quark",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.4514133629202842
+    },
+    "C058": {
+      "rowIndex": 553,
+      "normalizedName": "lpisstoreaisleflagenabled",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.43011445522308345
+    },
+    "C131": {
+      "rowIndex": 29,
+      "normalizedName": "hmaccount_bfess",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.40228277683258057
+    },
+    "C218": {
+      "rowIndex": 192,
+      "normalizedName": "_hly_vid",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.3253718042373657
+    },
+    "C213": {
+      "rowIndex": 682,
+      "normalizedName": "hdm_privacy_disclosure",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.0971823406219482
+    },
+    "C165": {
+      "rowIndex": 517,
+      "normalizedName": "fs_sweetwater",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.08624786853790278
+    },
+    "C290": {
+      "rowIndex": 62,
+      "normalizedName": "tglr_ref",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.17231941938400264
+    },
+    "C243": {
+      "rowIndex": 261,
+      "normalizedName": "data-c-ts",
+      "truth": false,
+      "cookieguard": true,
+      "cookieguardScore": 0.48782843589782715
+    },
+    "C061": {
+      "rowIndex": 61,
+      "normalizedName": "cc",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.09826237678527827
+    },
+    "C185": {
+      "rowIndex": 580,
+      "normalizedName": "akacd_apim_pr_rtm",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.22335202217102046
+    },
+    "C046": {
+      "rowIndex": 184,
+      "normalizedName": "dcep.prefillinginfo",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.07888633728027339
+    },
+    "C239": {
+      "rowIndex": 175,
+      "normalizedName": "barracuda_web_visitor_id",
+      "truth": false,
+      "cookieguard": true,
+      "cookieguardScore": 0.024874799251556445
+    },
+    "C286": {
+      "rowIndex": 940,
+      "normalizedName": "g_geooverlay",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.29611784934997554
+    },
+    "C112": {
+      "rowIndex": 1058,
+      "normalizedName": "originalreferralurl",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.0493915057182312
+    },
+    "C278": {
+      "rowIndex": 1036,
+      "normalizedName": "dcpapp",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.4537273642420768
+    },
+    "C038": {
+      "rowIndex": 114,
+      "normalizedName": "x-next-realm-entrypoint",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.3745892864465713
+    },
+    "C052": {
+      "rowIndex": 644,
+      "normalizedName": "s_cor_id",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.3976163041591644
+    },
+    "C214": {
+      "rowIndex": 401,
+      "normalizedName": "akaalb_shop_alb_#",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.5337049101293087
+    },
+    "C050": {
+      "rowIndex": 344,
+      "normalizedName": "search_lbcookie",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.42269112884998317
+    },
+    "C044": {
+      "rowIndex": 1212,
+      "normalizedName": "urbn_channel",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.39548503577709193
+    },
+    "C085": {
+      "rowIndex": 934,
+      "normalizedName": "user_attributes",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.34760729193687434
+    },
+    "C109": {
+      "rowIndex": 1079,
+      "normalizedName": "ups_id",
+      "truth": false,
+      "cookieguard": true,
+      "cookieguardScore": 0.19008218526840215
+    },
+    "C049": {
+      "rowIndex": 158,
+      "normalizedName": "ldir_loc",
+      "truth": false,
+      "cookieguard": true,
+      "cookieguardScore": 0.045429043769836475
+    },
+    "C147": {
+      "rowIndex": 11,
+      "normalizedName": "storecode",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.46019756764173503
+    },
+    "C074": {
+      "rowIndex": 876,
+      "normalizedName": "bigsc",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.4115104299783706
+    },
+    "C269": {
+      "rowIndex": 987,
+      "normalizedName": "sat_cv",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.36824519157409663
+    },
+    "C060": {
+      "rowIndex": 60,
+      "normalizedName": "gpv_p0",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.24616312265396123
+    },
+    "C104": {
+      "rowIndex": 1285,
+      "normalizedName": "adobe_page_type",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.07897735357284541
+    },
+    "C232": {
+      "rowIndex": 1042,
+      "normalizedName": "user_id",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.27275971293449397
+    },
+    "C077": {
+      "rowIndex": 504,
+      "normalizedName": "gaconnector_fc_referrer",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.03881014108657832
+    },
+    "C011": {
+      "rowIndex": 1069,
+      "normalizedName": "__io_cid",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.5474828505516052
+    },
+    "C043": {
+      "rowIndex": 21,
+      "normalizedName": "avcid-apn-uid",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.444938542842865
+    },
+    "C200": {
+      "rowIndex": 1097,
+      "normalizedName": "reftrackgroup",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.26880026578903193
+    },
+    "C192": {
+      "rowIndex": 1191,
+      "normalizedName": "rxvtpqjbvfkp",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.23125604510307307
+    },
+    "C098": {
+      "rowIndex": 243,
+      "normalizedName": "x_ulta_visitor_id",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.2979744744300842
+    },
+    "C053": {
+      "rowIndex": 407,
+      "normalizedName": "ek0_guest",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.3803236705064773
+    },
+    "C191": {
+      "rowIndex": 731,
+      "normalizedName": "inactivityck",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.10277087211608882
+    },
+    "C270": {
+      "rowIndex": 604,
+      "normalizedName": "pili_red",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.3128964328765869
+    },
+    "C291": {
+      "rowIndex": 1015,
+      "normalizedName": "ssessid",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.06114215373992915
+    },
+    "C189": {
+      "rowIndex": 607,
+      "normalizedName": "regioncookie",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.4447283071279525
+    },
+    "C288": {
+      "rowIndex": 592,
+      "normalizedName": "cybercat-auth",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.4092250835895538
+    },
+    "C210": {
+      "rowIndex": 975,
+      "normalizedName": "gcdc_session",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.0859571766853332
+    },
+    "C256": {
+      "rowIndex": 1300,
+      "normalizedName": "ncl_region",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.22720507502555842
+    },
+    "C028": {
+      "rowIndex": 177,
+      "normalizedName": "dpm_uid",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.16710943698883052
+    },
+    "C025": {
+      "rowIndex": 1243,
+      "normalizedName": "ttduc",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.6428803825378417
+    },
+    "C201": {
+      "rowIndex": 931,
+      "normalizedName": "swi_entryurl",
+      "truth": false,
+      "cookieguard": true,
+      "cookieguardScore": 0.29946428775787354
+    },
+    "C166": {
+      "rowIndex": 96,
+      "normalizedName": "pcisgeofenced",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.3857453536987304
+    },
+    "C153": {
+      "rowIndex": 12,
+      "normalizedName": "asos",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.0042589378356933105
+    },
+    "C254": {
+      "rowIndex": 1187,
+      "normalizedName": "pe_session",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.430934630036354
+    },
+    "C089": {
+      "rowIndex": 1245,
+      "normalizedName": "plpousercookie",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.4099321985244751
+    },
+    "C035": {
+      "rowIndex": 600,
+      "normalizedName": "did_compat",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.27909988880157466
+    },
+    "C093": {
+      "rowIndex": 814,
+      "normalizedName": "susecom-cookie",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.48289529204368586
+    },
+    "C106": {
+      "rowIndex": 455,
+      "normalizedName": "chsn_cnsnt",
+      "truth": false,
+      "cookieguard": true,
+      "cookieguardScore": 0.1403718519210816
+    },
+    "C103": {
+      "rowIndex": 1074,
+      "normalizedName": "rubiconuid",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.07630151271820068
+    },
+    "C143": {
+      "rowIndex": 826,
+      "normalizedName": "cookiebot-consent--necessary",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.5396530997753143
+    },
+    "C030": {
+      "rowIndex": 189,
+      "normalizedName": "gadex",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.6319366717338561
+    },
+    "C071": {
+      "rowIndex": 399,
+      "normalizedName": "akacd_shop_pr_alpine_uf",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.36447066783905024
+    },
+    "C223": {
+      "rowIndex": 353,
+      "normalizedName": "compass_uid",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.128675467967987
+    },
+    "C081": {
+      "rowIndex": 606,
+      "normalizedName": "g0",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.5953738713264465
+    },
+    "C271": {
+      "rowIndex": 1061,
+      "normalizedName": "viv_trid",
+      "truth": false,
+      "cookieguard": true,
+      "cookieguardScore": 0.4340822124481201
+    },
+    "C101": {
+      "rowIndex": 773,
+      "normalizedName": "lark-cart",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.1307545971870422
+    },
+    "C105": {
+      "rowIndex": 1216,
+      "normalizedName": "urbn_country",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.39363718748092646
+    },
+    "C027": {
+      "rowIndex": 236,
+      "normalizedName": "ab.storage.sessionid.#-f0e0-0-bf0c-#",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.4014004093408584
+    },
+    "C212": {
+      "rowIndex": 48,
+      "normalizedName": "_shop_app_essential",
+      "truth": false,
+      "cookieguard": true,
+      "cookieguardScore": 0.03256719589233403
+    },
+    "C160": {
+      "rowIndex": 412,
+      "normalizedName": "smskongproxy",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.15791723847389216
+    },
+    "C150": {
+      "rowIndex": 351,
+      "normalizedName": "geodma",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.21954370260238643
+    },
+    "C152": {
+      "rowIndex": 1189,
+      "normalizedName": "registerlocale",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.46705496281385417
+    },
+    "C123": {
+      "rowIndex": 174,
+      "normalizedName": "barracuda_user_location",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.334773353934288
+    },
+    "C149": {
+      "rowIndex": 1094,
+      "normalizedName": "features-user-id",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.2095243108272552
+    },
+    "C036": {
+      "rowIndex": 1365,
+      "normalizedName": "amplitude_idundefinedudacity.com",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.22938257694244385
+    },
+    "C229": {
+      "rowIndex": 240,
+      "normalizedName": "geotargetchosenlocale",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.41925746917724604
+    },
+    "C188": {
+      "rowIndex": 830,
+      "normalizedName": "first_utm_campaign",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.31764558672904963
+    },
+    "C083": {
+      "rowIndex": 642,
+      "normalizedName": "epistatemarker",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.46150974154472346
+    },
+    "C019": {
+      "rowIndex": 736,
+      "normalizedName": "stdsession",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.34783709764480586
+    },
+    "C095": {
+      "rowIndex": 1214,
+      "normalizedName": "urbn_clear",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.31371138215065
+    },
+    "C263": {
+      "rowIndex": 611,
+      "normalizedName": "bnc-uuid",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.09072870731353755
+    },
+    "C285": {
+      "rowIndex": 1358,
+      "normalizedName": "viewer_region",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.4330606830120086
+    },
+    "C238": {
+      "rowIndex": 437,
+      "normalizedName": "_cc-x",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.03831244230270381
+    },
+    "C004": {
+      "rowIndex": 764,
+      "normalizedName": "#-b0b-0-aaf0-#",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.19599515914916987
+    },
+    "C107": {
+      "rowIndex": 890,
+      "normalizedName": "__secure-next-auth.callback-url",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.5255091746151447
+    },
+    "C128": {
+      "rowIndex": 1128,
+      "normalizedName": "last_utm_content",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.3172954392433166
+    },
+    "C141": {
+      "rowIndex": 700,
+      "normalizedName": "igodigitalst_0",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.2670804286003113
+    },
+    "C115": {
+      "rowIndex": 265,
+      "normalizedName": "af_default_measurement_status",
+      "truth": false,
+      "cookieguard": true,
+      "cookieguardScore": 0.037751667499542285
+    },
+    "C272": {
+      "rowIndex": 1016,
+      "normalizedName": "geo_lat",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.1299238276481628
+    },
+    "C031": {
+      "rowIndex": 685,
+      "normalizedName": "bh",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.6320634508132934
+    },
+    "C114": {
+      "rowIndex": 1028,
+      "normalizedName": "x_country_code",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.09657616138458247
+    },
+    "C207": {
+      "rowIndex": 672,
+      "normalizedName": "_aa_channel_c",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.03365271568298345
+    },
+    "C202": {
+      "rowIndex": 1336,
+      "normalizedName": "iqappnexuscookiesync",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.3584798002243042
+    },
+    "C033": {
+      "rowIndex": 853,
+      "normalizedName": "0_ut",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.37422621488571167
+    },
+    "C110": {
+      "rowIndex": 337,
+      "normalizedName": "cdlprivacy",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.13012257933616633
+    },
+    "C111": {
+      "rowIndex": 1038,
+      "normalizedName": "currentzipcode",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.3168459606170654
+    },
+    "C148": {
+      "rowIndex": 843,
+      "normalizedName": "ailandingpage",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.3496673774719238
+    },
+    "C297": {
+      "rowIndex": 687,
+      "normalizedName": "yashr",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.5924589657783508
+    },
+    "C273": {
+      "rowIndex": 917,
+      "normalizedName": "fpstyle",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.25944460153579707
+    },
+    "C127": {
+      "rowIndex": 514,
+      "normalizedName": "sws-device-token",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.23951185464859004
+    },
+    "C206": {
+      "rowIndex": 569,
+      "normalizedName": "__attentive_pv",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.12325993895530696
+    },
+    "C157": {
+      "rowIndex": 668,
+      "normalizedName": "dwoptanonconsentcookie",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.499611325263977
+    },
+    "C300": {
+      "rowIndex": 767,
+      "normalizedName": "giosg_sgid_0",
+      "truth": false,
+      "cookieguard": true,
+      "cookieguardScore": 0.045876803398132326
+    },
+    "C178": {
+      "rowIndex": 911,
+      "normalizedName": "pd_language_selection",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.32868736207485194
+    },
+    "C096": {
+      "rowIndex": 369,
+      "normalizedName": "mlcwc",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.28676140546798706
+    },
+    "C154": {
+      "rowIndex": 1059,
+      "normalizedName": "randomten",
+      "truth": false,
+      "cookieguard": true,
+      "cookieguardScore": 0.06558114528656006
+    },
+    "C183": {
+      "rowIndex": 152,
+      "normalizedName": "_evga_0",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.16663390636444092
+    },
+    "C258": {
+      "rowIndex": 1164,
+      "normalizedName": "tcs.google_error",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.22943430423736577
+    },
+    "C197": {
+      "rowIndex": 705,
+      "normalizedName": "p_attr",
+      "truth": false,
+      "cookieguard": true,
+      "cookieguardScore": 0.4592374587059021
+    },
+    "C047": {
+      "rowIndex": 665,
+      "normalizedName": "is_in_dma",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.34534019947051997
+    },
+    "C262": {
+      "rowIndex": 1003,
+      "normalizedName": "__attentive_dv",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.22720533847808838
+    },
+    "C032": {
+      "rowIndex": 458,
+      "normalizedName": "hashid",
+      "truth": false,
+      "cookieguard": true,
+      "cookieguardScore": 0.04767369508743291
+    },
+    "C211": {
+      "rowIndex": 608,
+      "normalizedName": "js-enabled",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.07427761673927302
+    },
+    "C017": {
+      "rowIndex": 777,
+      "normalizedName": "vlz_uid",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.05607039451599116
+    },
+    "C079": {
+      "rowIndex": 1340,
+      "normalizedName": "iqsmartadservercookiesync",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.2538277530670166
+    },
+    "C164": {
+      "rowIndex": 924,
+      "normalizedName": "dpm_sid",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.18594355106353755
+    },
+    "C172": {
+      "rowIndex": 837,
+      "normalizedName": "first_touch_landing_page_query",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.2565039467811584
+    },
+    "C006": {
+      "rowIndex": 902,
+      "normalizedName": "externalreferrerhostname",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.29253131866455073
+    },
+    "C162": {
+      "rowIndex": 1313,
+      "normalizedName": "ddmsessionid",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.15774209022521968
+    },
+    "C125": {
+      "rowIndex": 1351,
+      "normalizedName": "iqsmaatocookiesync",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.4532846236228943
+    },
+    "C221": {
+      "rowIndex": 485,
+      "normalizedName": "golvi",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.01117932081222539
+    },
+    "C001": {
+      "rowIndex": 1080,
+      "normalizedName": "user_target_id",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.13368166208267207
+    },
+    "C024": {
+      "rowIndex": 780,
+      "normalizedName": "#-test",
+      "truth": false,
+      "cookieguard": true,
+      "cookieguardScore": 0.027786793708801272
+    },
+    "C199": {
+      "rowIndex": 547,
+      "normalizedName": "akacd_hp_pr",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.130501217842102
+    },
+    "C146": {
+      "rowIndex": 522,
+      "normalizedName": "profiletagid",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.4105941575765609
+    },
+    "C266": {
+      "rowIndex": 1348,
+      "normalizedName": "iqtremorcookiesync",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.4532846236228943
+    },
+    "C217": {
+      "rowIndex": 481,
+      "normalizedName": "akaas_gol_random",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.20576275110244746
+    },
+    "C170": {
+      "rowIndex": 585,
+      "normalizedName": "at_sdk_uab",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.21812624454498286
+    },
+    "C244": {
+      "rowIndex": 515,
+      "normalizedName": "sws-device-id",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.27921063423156733
+    },
+    "C064": {
+      "rowIndex": 840,
+      "normalizedName": "referral_url",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.24518717050552363
+    },
+    "C155": {
+      "rowIndex": 310,
+      "normalizedName": "aamc_cbsi_0",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.03295969247817998
+    },
+    "C184": {
+      "rowIndex": 1161,
+      "normalizedName": "iberiacom_cookies_alert",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.43182732880115504
+    },
+    "C138": {
+      "rowIndex": 499,
+      "normalizedName": "clanalyticsid",
+      "truth": false,
+      "cookieguard": true,
+      "cookieguardScore": 0.021158995628356936
+    },
+    "C015": {
+      "rowIndex": 241,
+      "normalizedName": "dce_sessionstart",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.4007133615016937
+    },
+    "C124": {
+      "rowIndex": 1162,
+      "normalizedName": "iberiacom_personalization",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.42049097239971156
+    },
+    "C126": {
+      "rowIndex": 750,
+      "normalizedName": "__ps_did",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.5549125099182128
+    },
+    "C265": {
+      "rowIndex": 460,
+      "normalizedName": "leady_session_id",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.3934438300132751
+    },
+    "C171": {
+      "rowIndex": 1039,
+      "normalizedName": "salespod",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.45510376214981074
+    },
+    "C205": {
+      "rowIndex": 1149,
+      "normalizedName": "gpv_entry",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.11640400409698481
+    },
+    "C069": {
+      "rowIndex": 1168,
+      "normalizedName": "anfsession",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.4816192460060119
+    },
+    "C092": {
+      "rowIndex": 1029,
+      "normalizedName": "x_language",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.2705483508110046
+    },
+    "C292": {
+      "rowIndex": 546,
+      "normalizedName": "iseqtraffic",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.402984909415245
+    },
+    "C132": {
+      "rowIndex": 1171,
+      "normalizedName": "_fs_cd_cp_#",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.41512378275394435
+    },
+    "C169": {
+      "rowIndex": 929,
+      "normalizedName": "adobeecid",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.45310214877128596
+    },
+    "C055": {
+      "rowIndex": 1274,
+      "normalizedName": "xxuid",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.653864266872406
+    },
+    "C063": {
+      "rowIndex": 242,
+      "normalizedName": "activecookieconsentcategories",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.3196232986450195
+    },
+    "C075": {
+      "rowIndex": 614,
+      "normalizedName": "bnc_fv_key_expire",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.07290977954864497
+    },
+    "C016": {
+      "rowIndex": 91,
+      "normalizedName": "et_uvi",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.23907095909118647
+    },
+    "C180": {
+      "rowIndex": 1251,
+      "normalizedName": "epusercookie",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.4633261585235596
+    },
+    "C235": {
+      "rowIndex": 1335,
+      "normalizedName": "multitouch_landing",
+      "truth": false,
+      "cookieguard": true,
+      "cookieguardScore": 0.015421154499053957
+    },
+    "C163": {
+      "rowIndex": 137,
+      "normalizedName": "pagenamecookie",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.40189637959003444
+    },
+    "C097": {
+      "rowIndex": 356,
+      "normalizedName": "__pianoparams",
+      "truth": false,
+      "cookieguard": true,
+      "cookieguardScore": 0.02661179780960088
+    },
+    "C242": {
+      "rowIndex": 576,
+      "normalizedName": "deliveryzipstate",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.3667230677604675
+    },
+    "C042": {
+      "rowIndex": 941,
+      "normalizedName": "_mfb_",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.03399532318115239
+    },
+    "C076": {
+      "rowIndex": 206,
+      "normalizedName": "_evga_dc0c",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.012510247230529736
+    },
+    "C116": {
+      "rowIndex": 301,
+      "normalizedName": "_cars_web_key",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.40272615075111384
+    },
+    "C018": {
+      "rowIndex": 142,
+      "normalizedName": "__stidv",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.5517371916770935
+    },
+    "C246": {
+      "rowIndex": 1305,
+      "normalizedName": "ak_lat",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.008756465911865186
+    },
+    "C167": {
+      "rowIndex": 128,
+      "normalizedName": "ens_adobewebsdk",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.04474901437759404
+    },
+    "C190": {
+      "rowIndex": 3,
+      "normalizedName": "cp-sess",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.23353720426559443
+    },
+    "C224": {
+      "rowIndex": 683,
+      "normalizedName": "ctc",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.037117011547088574
+    },
+    "C003": {
+      "rowIndex": 896,
+      "normalizedName": "iiqthetradedeskcookiesync",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.23652398824691773
+    },
+    "C066": {
+      "rowIndex": 1111,
+      "normalizedName": "journalist_profile_visits",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.24340928316116328
+    },
+    "C295": {
+      "rowIndex": 532,
+      "normalizedName": "data-pba-r",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.3662898564338684
+    },
+    "C099": {
+      "rowIndex": 838,
+      "normalizedName": "last_touch_referral_url",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.31314945936203
+    },
+    "C120": {
+      "rowIndex": 1240,
+      "normalizedName": "imdusercookie",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.21620707988739019
+    },
+    "C228": {
+      "rowIndex": 56,
+      "normalizedName": "_scida",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.15838723659515386
+    },
+    "C252": {
+      "rowIndex": 1337,
+      "normalizedName": "iiqyahooprimiscookiesync",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.27274269104003906
+    },
+    "C284": {
+      "rowIndex": 833,
+      "normalizedName": "first_touch_gclid",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.3171731901168823
+    },
+    "C122": {
+      "rowIndex": 935,
+      "normalizedName": "geolocation_country",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.43306639015674586
+    },
+    "C056": {
+      "rowIndex": 59,
+      "normalizedName": "first_anonymous_id",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.07680369138717646
+    },
+    "C021": {
+      "rowIndex": 919,
+      "normalizedName": "auuid",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.16753881454467778
+    },
+    "C231": {
+      "rowIndex": 778,
+      "normalizedName": "mics_vlz-au-0",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.25732073903083796
+    },
+    "C118": {
+      "rowIndex": 14,
+      "normalizedName": "asos-b-#",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.2123748135566711
+    },
+    "C177": {
+      "rowIndex": 8,
+      "normalizedName": "browsecurrency",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.5451867651939392
+    },
+    "C225": {
+      "rowIndex": 1049,
+      "normalizedName": "dotomiconsent",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.014096565246581982
+    },
+    "C022": {
+      "rowIndex": 46,
+      "normalizedName": "__pp_sid",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.34007204294204707
+    },
+    "C282": {
+      "rowIndex": 701,
+      "normalizedName": "igodigitalstdomain",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.26174867391586304
+    },
+    "C087": {
+      "rowIndex": 841,
+      "normalizedName": "previous_page_referrer_url",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.28969363093376155
+    },
+    "C082": {
+      "rowIndex": 490,
+      "normalizedName": "checkout_test_group_0",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.1205633950233459
+    },
+    "C173": {
+      "rowIndex": 908,
+      "normalizedName": "fronius#lang",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.4322677028179168
+    },
+    "C287": {
+      "rowIndex": 718,
+      "normalizedName": "mcookie",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.6273598098754882
+    },
+    "C012": {
+      "rowIndex": 641,
+      "normalizedName": "episerver_commerce_anonymousid",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.3125955235958099
+    },
+    "C062": {
+      "rowIndex": 272,
+      "normalizedName": "akzip",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.05341614007949824
+    },
+    "C133": {
+      "rowIndex": 20,
+      "normalizedName": "otp",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.660693826675415
+    },
+    "C140": {
+      "rowIndex": 708,
+      "normalizedName": "__secure-authjs.callback-url",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.48694401949644084
+    },
+    "C234": {
+      "rowIndex": 1249,
+      "normalizedName": "e",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.3606767678260803
+    },
+    "C186": {
+      "rowIndex": 923,
+      "normalizedName": "sd_a",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.25386589050292974
+    },
+    "C156": {
+      "rowIndex": 1324,
+      "normalizedName": "smartdash",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.13625974178314204
+    },
+    "C216": {
+      "rowIndex": 478,
+      "normalizedName": "cf-ipcountry",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.4557699111104011
+    },
+    "C113": {
+      "rowIndex": 84,
+      "normalizedName": "__gcl_au",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.250252537727356
+    },
+    "C215": {
+      "rowIndex": 1185,
+      "normalizedName": "smc_spv",
+      "truth": false,
+      "cookieguard": true,
+      "cookieguardScore": 0.3193874287605286
+    },
+    "C293": {
+      "rowIndex": 874,
+      "normalizedName": "mdt",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.23391289234161372
+    },
+    "C068": {
+      "rowIndex": 1129,
+      "normalizedName": "first_gclid",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.26516545534133906
+    },
+    "C159": {
+      "rowIndex": 566,
+      "normalizedName": "_attn_",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.013259537220001172
+    },
+    "C240": {
+      "rowIndex": 208,
+      "normalizedName": "gatamid",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.08546178817749028
+    },
+    "C137": {
+      "rowIndex": 127,
+      "normalizedName": "ba_language_choice_cookie",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.486791521012783
+    },
+    "C073": {
+      "rowIndex": 464,
+      "normalizedName": "_tracker",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.5462642335891723
+    },
+    "C026": {
+      "rowIndex": 827,
+      "normalizedName": "cookiebot-consent--marketing",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.5398909595608711
+    },
+    "C283": {
+      "rowIndex": 408,
+      "normalizedName": "ngckongproxy",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.16631398320198054
+    },
+    "C129": {
+      "rowIndex": 810,
+      "normalizedName": "herbalife-spa",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.3462190997600555
+    },
+    "C267": {
+      "rowIndex": 976,
+      "normalizedName": "faas_session_id",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.4397966784238815
+    },
+    "C195": {
+      "rowIndex": 1359,
+      "normalizedName": "viewer_currency",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.39230195403099055
+    },
+    "C277": {
+      "rowIndex": 1,
+      "normalizedName": "sat_ppv",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.3100623416900635
+    },
+    "C007": {
+      "rowIndex": 824,
+      "normalizedName": "tml",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.3687847030162811
+    },
+    "C251": {
+      "rowIndex": 558,
+      "normalizedName": "akacd_prod_www_pr",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.19438896298408503
+    },
+    "C237": {
+      "rowIndex": 1057,
+      "normalizedName": "ctid",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.5794081115722656
+    },
+    "C059": {
+      "rowIndex": 139,
+      "normalizedName": "arc-id",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.30395889997482295
+    },
+    "C136": {
+      "rowIndex": 541,
+      "normalizedName": "wem-profile-id",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.1909525892138481
+    },
+    "C119": {
+      "rowIndex": 415,
+      "normalizedName": "express",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.47026521682739253
+    },
+    "C259": {
+      "rowIndex": 290,
+      "normalizedName": "lastfundsout",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.4454898533225059
+    },
+    "C023": {
+      "rowIndex": 748,
+      "normalizedName": "wl-device-id",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.08744878292083735
+    },
+    "C289": {
+      "rowIndex": 537,
+      "normalizedName": "algolia_website_original_location",
+      "truth": false,
+      "cookieguard": true,
+      "cookieguardScore": 0.29248082876205445
+    },
+    "C094": {
+      "rowIndex": 920,
+      "normalizedName": "sd_s",
+      "truth": false,
+      "cookieguard": true,
+      "cookieguardScore": 0.11052840232849126
+    },
+    "C010": {
+      "rowIndex": 788,
+      "normalizedName": "__attentive_ss_referrer",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.2367905747890472
+    },
+    "C245": {
+      "rowIndex": 1312,
+      "normalizedName": "ksl-ab-test-titles",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.22299820899963374
+    },
+    "C029": {
+      "rowIndex": 635,
+      "normalizedName": "uws_session",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.1112436723709106
+    },
+    "C067": {
+      "rowIndex": 1110,
+      "normalizedName": "ab.storage.deviceid.#-0ed-0ad-0e-#",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.14758706808090205
+    },
+    "C084": {
+      "rowIndex": 30,
+      "normalizedName": "hmaccount",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.3183451068401336
+    },
+    "C168": {
+      "rowIndex": 160,
+      "normalizedName": "_bamls_usid",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.1332324469089508
+    },
+    "C108": {
+      "rowIndex": 572,
+      "normalizedName": "_blka_uab",
+      "truth": false,
+      "cookieguard": true,
+      "cookieguardScore": 0.036759846210479785
+    },
+    "C255": {
+      "rowIndex": 1125,
+      "normalizedName": "first_utm_term",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.2889557254314422
+    },
+    "C080": {
+      "rowIndex": 338,
+      "normalizedName": "_cl",
+      "truth": false,
+      "cookieguard": true,
+      "cookieguardScore": 0.33325833320617676
+    },
+    "C037": {
+      "rowIndex": 727,
+      "normalizedName": "gemini",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.013270504474639844
+    },
+    "C065": {
+      "rowIndex": 15,
+      "normalizedName": "asos-ts0",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.5081053000688552
+    },
+    "C248": {
+      "rowIndex": 245,
+      "normalizedName": "user-agent",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.5097591240704059
+    },
+    "C005": {
+      "rowIndex": 552,
+      "normalizedName": "lpisbopis",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.4484020617604255
+    },
+    "C009": {
+      "rowIndex": 698,
+      "normalizedName": "flags_emailpopupfired",
+      "truth": false,
+      "cookieguard": true,
+      "cookieguardScore": 0.14928155422210698
+    },
+    "C279": {
+      "rowIndex": 586,
+      "normalizedName": "__ipcan_#.",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.018975563049316357
+    },
+    "C045": {
+      "rowIndex": 707,
+      "normalizedName": "__host-authjs.csrf-token",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.5306749303638935
+    },
+    "C054": {
+      "rowIndex": 133,
+      "normalizedName": "sessioninfo",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.41111240506172175
+    },
+    "C020": {
+      "rowIndex": 1030,
+      "normalizedName": "pagesessionid",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.3993644189834594
+    },
+    "C233": {
+      "rowIndex": 368,
+      "normalizedName": "ktpcacookie",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.3068549060821533
+    },
+    "C274": {
+      "rowIndex": 489,
+      "normalizedName": "search_redirect_flag",
+      "truth": false,
+      "cookieguard": true,
+      "cookieguardScore": 0.15945082187652593
+    },
+    "C219": {
+      "rowIndex": 130,
+      "normalizedName": "rcid0",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.6067612791061401
+    },
+    "C294": {
+      "rowIndex": 411,
+      "normalizedName": "coskongproxy",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.16075099229812617
+    },
+    "C260": {
+      "rowIndex": 1113,
+      "normalizedName": "session_utm_source",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.42543560981750483
+    },
+    "C086": {
+      "rowIndex": 487,
+      "normalizedName": "last_button_track",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.19634569406509395
+    },
+    "C187": {
+      "rowIndex": 33,
+      "normalizedName": "check",
+      "truth": false,
+      "cookieguard": true,
+      "cookieguardScore": 0.08823829174041753
+    },
+    "C175": {
+      "rowIndex": 901,
+      "normalizedName": "externalreferrerfullurl",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.2607715499401092
+    },
+    "C117": {
+      "rowIndex": 1183,
+      "normalizedName": "ee_mobile_lantern",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.48569751024246216
+    },
+    "C276": {
+      "rowIndex": 1237,
+      "normalizedName": "infolink",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.21309894561767578
+    },
+    "C158": {
+      "rowIndex": 1046,
+      "normalizedName": "ab.storage.deviceid.#-a0-0-b0b-#",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.15933368325233455
+    },
+    "C261": {
+      "rowIndex": 68,
+      "normalizedName": "__attentive_session_id",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.1438584995269775
+    },
+    "C130": {
+      "rowIndex": 316,
+      "normalizedName": "avcid-crt-uid",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.2730002927780152
+    },
+    "C121": {
+      "rowIndex": 825,
+      "normalizedName": "fireonce",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.4437866282463073
+    },
+    "C013": {
+      "rowIndex": 24,
+      "normalizedName": "is",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.0454068255424499
+    },
+    "C002": {
+      "rowIndex": 1008,
+      "normalizedName": "zps-tgr-dts",
+      "truth": false,
+      "cookieguard": true,
+      "cookieguardScore": 0.026181273460388232
+    },
+    "C135": {
+      "rowIndex": 782,
+      "normalizedName": "bc_tstgrp_akc",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.08035180687904353
+    },
+    "C057": {
+      "rowIndex": 54,
+      "normalizedName": "cf_0_first_touch",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.05245191574096675
+    },
+    "C039": {
+      "rowIndex": 985,
+      "normalizedName": "auth_token",
+      "truth": false,
+      "cookieguard": true,
+      "cookieguardScore": 0.08456885099411016
+    },
+    "C298": {
+      "rowIndex": 275,
+      "normalizedName": "is_mobile",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.2056885731220245
+    },
+    "C134": {
+      "rowIndex": 315,
+      "normalizedName": "avcid-opx-uid",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.5034056329727172
+    },
+    "C088": {
+      "rowIndex": 1252,
+      "normalizedName": "instuc",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.5082970881462097
+    },
+    "C241": {
+      "rowIndex": 906,
+      "normalizedName": "s_cmpchl",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.1140741634368897
+    },
+    "C193": {
+      "rowIndex": 1095,
+      "normalizedName": "_compare_products",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.3380892646312713
+    },
+    "C100": {
+      "rowIndex": 834,
+      "normalizedName": "last_touch_landing_page",
+      "truth": true,
+      "cookieguard": false,
+      "cookieguardScore": -0.32634115934371943
+    },
+    "C040": {
+      "rowIndex": 1062,
+      "normalizedName": "viv_trid_exp",
+      "truth": false,
+      "cookieguard": true,
+      "cookieguardScore": 0.4789476418495178
+    },
+    "C048": {
+      "rowIndex": 724,
+      "normalizedName": "rto",
+      "truth": false,
+      "cookieguard": true,
+      "cookieguardScore": 0.12066588044166565
+    },
+    "C072": {
+      "rowIndex": 360,
+      "normalizedName": "cs_fpid",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.1002579259872437
+    },
+    "C174": {
+      "rowIndex": 1339,
+      "normalizedName": "iqrisecookiesync",
+      "truth": true,
+      "cookieguard": true,
+      "cookieguardScore": 0.4162258529663086
+    },
+    "C145": {
+      "rowIndex": 612,
+      "normalizedName": "bnc_fv_key",
+      "truth": false,
+      "cookieguard": true,
+      "cookieguardScore": 0.01990669250488286
+    },
+    "C144": {
+      "rowIndex": 1141,
+      "normalizedName": "utag_main_vapi_domain",
+      "truth": false,
+      "cookieguard": true,
+      "cookieguardScore": 0.08551829338073735
+    },
+    "C299": {
+      "rowIndex": 808,
+      "normalizedName": "herbalifeuser",
+      "truth": false,
+      "cookieguard": false,
+      "cookieguardScore": -0.15840537071228022
+    }
+  }
+}

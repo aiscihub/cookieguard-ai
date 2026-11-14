@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "passed": true,
+  "basis": "incremental value scans for crawl and local analysis; cloud artifacts admitted structurally",
+  "valuesHeldSinceRestart": 4008,
+  "artifactsScanned": 4068,
+  "allowedMatches": 107,
+  "forbiddenMatches": 0,
+  "restarts": 1,
+  "cloudPromptAdmission": "structural A1",
+  "cloudReplyAdmission": "structural A2"
+}

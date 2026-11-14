@@ -1,0 +1,1305 @@
+{
+  "schemaVersion": 1,
+  "runDate": "2026-11-10T07:37:14.952979+00:00",
+  "versions": {
+    "python": "3.9.6",
+    "numpy": "1.26.4",
+    "scikitLearn": "1.5.2",
+    "skl2onnx": "1.17.0",
+    "onnx": "1.16.2",
+    "onnxruntime": "1.19.2"
+  },
+  "hashes": {
+    "split": "d1dc80459727466bfd4c9128395c6c823b6802c4d5a61e94bcca73a92b34b4c5",
+    "m1": "3d3d46206da96d6cc8f32527a92b408c310aef872f471dc4ee15d064d1fc6cdd",
+    "m2": "fda09e27d4b5de367d21305aaa30f3ffd7d0b8288d962d34d4fbdc87ce84a661",
+    "shipped": "6820daa4cb8df4e56d96c6fbf92252b4591d73f6edc1645077ff74f1a54191c2"
+  },
+  "counts": {
+    "trainNames": 7173,
+    "testNames": 1794,
+    "trainCookies": 242394,
+    "testCookies": 62028,
+    "trainClassCounts": {
+      "0": 75890,
+      "1": 14216,
+      "2": 72685,
+      "3": 79603
+    },
+    "testClassCounts": {
+      "0": 9823,
+      "1": 4567,
+      "2": 15627,
+      "3": 32011
+    }
+  },
+  "runtimeSeconds": 829.953206,
+  "analysisSeconds": 8.332497119903564,
+  "trackerDetection": {
+    "views": {
+      "T-B": {
+        "records": 1794,
+        "clusters": 1794,
+        "methods": {
+          "m1": {
+            "precision": {
+              "value": 0.6837416481069042,
+              "ci95": [
+                0.6426942779883956,
+                0.7255133185349611
+              ]
+            },
+            "recall": {
+              "value": 0.47449768160741884,
+              "ci95": [
+                0.43846615131877326,
+                0.5142056860169981
+              ]
+            },
+            "f1": {
+              "value": 0.5602189781021898,
+              "ci95": [
+                0.5268020082566512,
+                0.5954450654307525
+              ]
+            },
+            "balancedAccuracy": {
+              "value": 0.6753482305160023,
+              "ci95": [
+                0.65506316097556,
+                0.6972621500550649
+              ]
+            }
+          },
+          "m2": {
+            "precision": {
+              "value": 0.6929133858267716,
+              "ci95": [
+                0.6484363654265074,
+                0.736604513720882
+              ]
+            },
+            "recall": {
+              "value": 0.4080370942812983,
+              "ci95": [
+                0.37461336341453444,
+                0.4444444444444444
+              ]
+            },
+            "f1": {
+              "value": 0.5136186770428016,
+              "ci95": [
+                0.47907730037621743,
+                0.5502458842870976
+              ]
+            },
+            "balancedAccuracy": {
+              "value": 0.6530159316219046,
+              "ci95": [
+                0.6339223978888358,
+                0.6743757461229624
+              ]
+            }
+          },
+          "shipped": {
+            "precision": {
+              "value": 0.5585365853658537,
+              "ci95": [
+                0.5119246282821892,
+                0.6059850374064838
+              ]
+            },
+            "recall": {
+              "value": 0.35394126738794435,
+              "ci95": [
+                0.31613065503412374,
+                0.3938126433016705
+              ]
+            },
+            "f1": {
+              "value": 0.4333017975402082,
+              "ci95": [
+                0.39425698633936623,
+                0.4702631429658354
+              ]
+            },
+            "balancedAccuracy": {
+              "value": 0.5980691515666836,
+              "ci95": [
+                0.5759185317684887,
+                0.6196291423740107
+              ]
+            }
+          },
+          "rules": {
+            "precision": {
+              "value": 0.8421052631578947,
+              "ci95": [
+                0.7142857142857143,
+                0.9474342105263157
+              ]
+            },
+            "recall": {
+              "value": 0.04945904173106646,
+              "ci95": [
+                0.03402053455019557,
+                0.06761154064406298
+              ]
+            },
+            "f1": {
+              "value": 0.09343065693430656,
+              "ci95": [
+                0.06487813946918537,
+                0.12573457244509875
+              ]
+            },
+            "balancedAccuracy": {
+              "value": 0.5221140021209822,
+              "ci95": [
+                0.5141196316269394,
+                0.5315460830246673
+              ]
+            }
+          },
+          "fixedRules": {
+            "precision": {
+              "value": 0.8478260869565217,
+              "ci95": [
+                0.7346598639455783,
+                0.9474021592442644
+              ]
+            },
+            "recall": {
+              "value": 0.06027820710973725,
+              "ci95": [
+                0.04220697195868167,
+                0.07975119617224881
+              ]
+            },
+            "f1": {
+              "value": 0.11255411255411256,
+              "ci95": [
+                0.07999704142011835,
+                0.14607070109731257
+              ]
+            },
+            "balancedAccuracy": {
+              "value": 0.5270876650195592,
+              "ci95": [
+                0.5181252961500687,
+                0.5367432233695452
+              ]
+            }
+          }
+        },
+        "f1Differences": {
+          "m1-rules": {
+            "value": 0.4667883211678832,
+            "ci95": [
+              0.4209865777485237,
+              0.5072696556263245
+            ]
+          },
+          "m1-fixedRules": {
+            "value": 0.4476648655480772,
+            "ci95": [
+              0.40465819126938735,
+              0.4900843070575658
+            ]
+          },
+          "m1-shipped": {
+            "value": 0.1269171805619816,
+            "ci95": [
+              0.08255738873110276,
+              0.17151345333649826
+            ]
+          },
+          "m2-m1": {
+            "value": -0.04660030105938817,
+            "ci95": [
+              -0.0734084917324558,
+              -0.021635174497026115
+            ]
+          },
+          "m2-shipped": {
+            "value": 0.08031687950259342,
+            "ci95": [
+              0.03679190390376021,
+              0.12565979665150404
+            ]
+          },
+          "m2-rules": {
+            "value": 0.42018802010849504,
+            "ci95": [
+              0.37744979180747423,
+              0.46373337317871166
+            ]
+          },
+          "m2-fixedRules": {
+            "value": 0.40106456448868905,
+            "ci95": [
+              0.35797542264315546,
+              0.4446000449654679
+            ]
+          }
+        }
+      },
+      "T-A": {
+        "records": 62028,
+        "clusters": 19333,
+        "methods": {
+          "m1": {
+            "precision": {
+              "value": 0.935015753756665,
+              "ci95": [
+                0.9316348693512629,
+                0.9381667568291823
+              ]
+            },
+            "recall": {
+              "value": 0.6478651496704312,
+              "ci95": [
+                0.6439067315264928,
+                0.6522319116418053
+              ]
+            },
+            "f1": {
+              "value": 0.7653944398978251,
+              "ci95": [
+                0.7620545126435364,
+                0.768796801906179
+              ]
+            },
+            "balancedAccuracy": {
+              "value": 0.7494016505822622,
+              "ci95": [
+                0.7456363898341366,
+                0.7534247737655836
+              ]
+            }
+          },
+          "m2": {
+            "precision": {
+              "value": 0.9474277483796224,
+              "ci95": [
+                0.944396689587774,
+                0.9501960930334017
+              ]
+            },
+            "recall": {
+              "value": 0.635165204248709,
+              "ci95": [
+                0.6310331141387627,
+                0.6399189954682779
+              ]
+            },
+            "f1": {
+              "value": 0.7604901036757777,
+              "ci95": [
+                0.7571054412751815,
+                0.7642714189467548
+              ]
+            },
+            "balancedAccuracy": {
+              "value": 0.7592434777324157,
+              "ci95": [
+                0.7554209494079732,
+                0.7631537024749405
+              ]
+            }
+          },
+          "shipped": {
+            "precision": {
+              "value": 0.9002988698981974,
+              "ci95": [
+                0.8957985232834892,
+                0.9046888991379148
+              ]
+            },
+            "recall": {
+              "value": 0.40469793022377093,
+              "ci95": [
+                0.40091102515252613,
+                0.4086643784382453
+              ]
+            },
+            "f1": {
+              "value": 0.5583907779644326,
+              "ci95": [
+                0.5544999031931285,
+                0.5624862470457201
+              ]
+            },
+            "balancedAccuracy": {
+              "value": 0.6281655043752629,
+              "ci95": [
+                0.624844433869591,
+                0.6317199889182546
+              ]
+            }
+          },
+          "rules": {
+            "precision": {
+              "value": 0.9663543441226575,
+              "ci95": [
+                0.961748554069812,
+                0.9707553564757104
+              ]
+            },
+            "recall": {
+              "value": 0.14289012972836812,
+              "ci95": [
+                0.13955979893953221,
+                0.14613226076553257
+              ]
+            },
+            "f1": {
+              "value": 0.2489667532277532,
+              "ci95": [
+                0.2438734653706879,
+                0.25393187920051763
+              ]
+            },
+            "balancedAccuracy": {
+              "value": 0.5632101795271445,
+              "ci95": [
+                0.561265937527483,
+                0.5652494174467686
+              ]
+            }
+          },
+          "fixedRules": {
+            "precision": {
+              "value": 0.9660114263580905,
+              "ci95": [
+                0.960819698199226,
+                0.9706356297415663
+              ]
+            },
+            "recall": {
+              "value": 0.209412653763802,
+              "ci95": [
+                0.20444066904545438,
+                0.2143085030672503
+              ]
+            },
+            "f1": {
+              "value": 0.34420771155007335,
+              "ci95": [
+                0.33742345549248104,
+                0.3508741628147928
+              ]
+            },
+            "balancedAccuracy": {
+              "value": 0.5925103574586904,
+              "ci95": [
+                0.5895373692651283,
+                0.5956422445388162
+              ]
+            }
+          }
+        },
+        "f1Differences": {
+          "m1-rules": {
+            "value": 0.5164276866700719,
+            "ci95": [
+              0.5107983491819901,
+              0.5222825254414911
+            ]
+          },
+          "m1-fixedRules": {
+            "value": 0.4211867283477517,
+            "ci95": [
+              0.41437597207873056,
+              0.4280487551413801
+            ]
+          },
+          "m1-shipped": {
+            "value": 0.20700366193339248,
+            "ci95": [
+              0.20264976113845035,
+              0.21111609083773172
+            ]
+          },
+          "m2-m1": {
+            "value": -0.004904336222047334,
+            "ci95": [
+              -0.007645502584207239,
+              -0.0023311411796136106
+            ]
+          },
+          "m2-shipped": {
+            "value": 0.20209932571134515,
+            "ci95": [
+              0.19820065416050456,
+              0.20581200448051407
+            ]
+          },
+          "m2-rules": {
+            "value": 0.5115233504480245,
+            "ci95": [
+              0.5058314959895326,
+              0.517508270663957
+            ]
+          },
+          "m2-fixedRules": {
+            "value": 0.4162823921257044,
+            "ci95": [
+              0.4097934377469281,
+              0.42296336559057246
+            ]
+          }
+        }
+      }
+    },
+    "verdict": "win",
+    "excludedLabels": 0
+  },
+  "testsSaved": {
+    "eligibleWebsites": 71,
+    "perApp": {
+      "grafana": {
+        "appCookies": [
+          {
+            "name": "grafana_session",
+            "key": "grafana_session|app|/",
+            "normalizedName": "grafana_session",
+            "m1TrainingName": false,
+            "splitSide": "absent",
+            "login": true,
+            "m1Necessary": 0.5606701050047311,
+            "m2Necessary": 0.4365818911303986,
+            "shippedAuthentication": 0.5350303053855896,
+            "rulesLabel": "authentication",
+            "rulesScore": 0.6666666666666666,
+            "source": "app"
+          },
+          {
+            "name": "grafana_session_expiry",
+            "key": "grafana_session_expiry|app|/",
+            "normalizedName": "grafana_session_expiry",
+            "m1TrainingName": false,
+            "splitSide": "absent",
+            "login": false,
+            "m1Necessary": 0.44636359848190227,
+            "m2Necessary": 0.3096004798993126,
+            "shippedAuthentication": 0.1788763403892517,
+            "rulesLabel": "authentication",
+            "rulesScore": 0.3333333333333333,
+            "source": "app"
+          }
+        ],
+        "methods": {
+          "m1": {
+            "mixes": 50,
+            "meanTests": 1.42,
+            "medianTests": 1.0,
+            "within3Share": 0.98,
+            "medianMixSize": 13.0
+          },
+          "m2": {
+            "mixes": 50,
+            "meanTests": 1.16,
+            "medianTests": 1.0,
+            "within3Share": 1.0,
+            "medianMixSize": 13.0
+          },
+          "shipped": {
+            "mixes": 50,
+            "meanTests": 2.68,
+            "medianTests": 3.0,
+            "within3Share": 0.76,
+            "medianMixSize": 13.0
+          },
+          "rules": {
+            "mixes": 50,
+            "meanTests": 1.38,
+            "medianTests": 1.0,
+            "within3Share": 1.0,
+            "medianMixSize": 13.0
+          },
+          "random": {
+            "mixes": 50,
+            "meanTests": 7.4,
+            "medianTests": 7.0,
+            "within3Share": 0.2219782374488257,
+            "medianMixSize": 13.0
+          }
+        }
+      },
+      "jupyter": {
+        "appCookies": [
+          {
+            "name": "_xsrf",
+            "key": "_xsrf|app|/",
+            "normalizedName": "_xsrf",
+            "m1TrainingName": true,
+            "splitSide": "train",
+            "login": false,
+            "m1Necessary": 0.22813990522625058,
+            "m2Necessary": 0.30520170269292496,
+            "shippedAuthentication": 0.5445958375930786,
+            "rulesLabel": "other",
+            "rulesScore": 0.7142857142857143,
+            "source": "app"
+          },
+          {
+            "name": "username-jupyter-localhost-8443",
+            "key": "username-jupyter-localhost-8443|app|/",
+            "normalizedName": "username-jupyter-localhost-0",
+            "m1TrainingName": false,
+            "splitSide": "absent",
+            "login": true,
+            "m1Necessary": 0.6411063933231909,
+            "m2Necessary": 0.46171972237786313,
+            "shippedAuthentication": 0.22315460443496704,
+            "rulesLabel": "authentication",
+            "rulesScore": 0.7222222222222222,
+            "source": "app"
+          }
+        ],
+        "methods": {
+          "m1": {
+            "mixes": 50,
+            "meanTests": 1.22,
+            "medianTests": 1.0,
+            "within3Share": 1.0,
+            "medianMixSize": 13.0
+          },
+          "m2": {
+            "mixes": 50,
+            "meanTests": 1.12,
+            "medianTests": 1.0,
+            "within3Share": 1.0,
+            "medianMixSize": 13.0
+          },
+          "shipped": {
+            "mixes": 50,
+            "meanTests": 6.12,
+            "medianTests": 6.0,
+            "within3Share": 0.06,
+            "medianMixSize": 13.0
+          },
+          "rules": {
+            "mixes": 50,
+            "meanTests": 1.08,
+            "medianTests": 1.0,
+            "within3Share": 1.0,
+            "medianMixSize": 13.0
+          },
+          "random": {
+            "mixes": 50,
+            "meanTests": 7.5,
+            "medianTests": 7.0,
+            "within3Share": 0.21969235219171282,
+            "medianMixSize": 13.0
+          }
+        }
+      },
+      "datasette": {
+        "appCookies": [
+          {
+            "name": "ds_actor",
+            "key": "ds_actor|app|/",
+            "normalizedName": "ds_actor",
+            "m1TrainingName": false,
+            "splitSide": "absent",
+            "login": true,
+            "m1Necessary": 0.2425436256618498,
+            "m2Necessary": 0.2988489615034842,
+            "shippedAuthentication": 0.630519688129425,
+            "rulesLabel": "other",
+            "rulesScore": 0.5,
+            "source": "app"
+          },
+          {
+            "name": "ds_csrftoken",
+            "key": "ds_csrftoken|app|/",
+            "normalizedName": "ds_csrftoken",
+            "m1TrainingName": false,
+            "splitSide": "absent",
+            "login": false,
+            "m1Necessary": 0.33922896349669285,
+            "m2Necessary": 0.3675633440752493,
+            "shippedAuthentication": 0.7067645192146301,
+            "rulesLabel": "authentication",
+            "rulesScore": 0.5882352941176471,
+            "source": "app"
+          }
+        ],
+        "methods": {
+          "m1": {
+            "mixes": 50,
+            "meanTests": 5.3,
+            "medianTests": 5.0,
+            "within3Share": 0.32,
+            "medianMixSize": 13.0
+          },
+          "m2": {
+            "mixes": 50,
+            "meanTests": 3.38,
+            "medianTests": 3.0,
+            "within3Share": 0.7,
+            "medianMixSize": 13.0
+          },
+          "shipped": {
+            "mixes": 50,
+            "meanTests": 2.98,
+            "medianTests": 3.0,
+            "within3Share": 0.76,
+            "medianMixSize": 13.0
+          },
+          "rules": {
+            "mixes": 50,
+            "meanTests": 9.28,
+            "medianTests": 9.5,
+            "within3Share": 0.08,
+            "medianMixSize": 13.0
+          },
+          "random": {
+            "mixes": 50,
+            "meanTests": 7.67,
+            "medianTests": 7.0,
+            "within3Share": 0.2180691420685027,
+            "medianMixSize": 13.0
+          }
+        }
+      },
+      "code-server": {
+        "appCookies": [
+          {
+            "name": "code-server-session",
+            "key": "code-server-session|app|/",
+            "normalizedName": "code-server-session",
+            "m1TrainingName": false,
+            "splitSide": "absent",
+            "login": true,
+            "m1Necessary": 0.5210753367281115,
+            "m2Necessary": 0.35815827378935783,
+            "shippedAuthentication": 0.8545218706130981,
+            "rulesLabel": "authentication",
+            "rulesScore": 0.5882352941176471,
+            "source": "app"
+          }
+        ],
+        "methods": {
+          "m1": {
+            "mixes": 50,
+            "meanTests": 1.44,
+            "medianTests": 1.0,
+            "within3Share": 0.96,
+            "medianMixSize": 12.0
+          },
+          "m2": {
+            "mixes": 50,
+            "meanTests": 1.42,
+            "medianTests": 1.0,
+            "within3Share": 0.98,
+            "medianMixSize": 12.0
+          },
+          "shipped": {
+            "mixes": 50,
+            "meanTests": 1.44,
+            "medianTests": 1.0,
+            "within3Share": 1.0,
+            "medianMixSize": 12.0
+          },
+          "rules": {
+            "mixes": 50,
+            "meanTests": 1.84,
+            "medianTests": 2.0,
+            "within3Share": 0.96,
+            "medianMixSize": 12.0
+          },
+          "random": {
+            "mixes": 50,
+            "meanTests": 6.98,
+            "medianTests": 6.5,
+            "within3Share": 0.2397612461068343,
+            "medianMixSize": 12.0
+          }
+        }
+      },
+      "django-admin": {
+        "appCookies": [
+          {
+            "name": "csrftoken",
+            "key": "csrftoken|app|/",
+            "normalizedName": "csrftoken",
+            "m1TrainingName": false,
+            "splitSide": "test",
+            "login": false,
+            "m1Necessary": 0.4985286430087125,
+            "m2Necessary": 0.3746813204305176,
+            "shippedAuthentication": 0.3954053223133087,
+            "rulesLabel": "authentication",
+            "rulesScore": 0.5789473684210527,
+            "source": "app"
+          },
+          {
+            "name": "sessionid",
+            "key": "sessionid|app|/",
+            "normalizedName": "sessionid",
+            "m1TrainingName": false,
+            "splitSide": "test",
+            "login": true,
+            "m1Necessary": 0.6541649575578109,
+            "m2Necessary": 0.6696212548575118,
+            "shippedAuthentication": 0.6974421143531799,
+            "rulesLabel": "authentication",
+            "rulesScore": 0.7222222222222222,
+            "source": "app"
+          }
+        ],
+        "methods": {
+          "m1": {
+            "mixes": 50,
+            "meanTests": 1.24,
+            "medianTests": 1.0,
+            "within3Share": 1.0,
+            "medianMixSize": 13.0
+          },
+          "m2": {
+            "mixes": 50,
+            "meanTests": 1.0,
+            "medianTests": 1.0,
+            "within3Share": 1.0,
+            "medianMixSize": 13.0
+          },
+          "shipped": {
+            "mixes": 50,
+            "meanTests": 1.76,
+            "medianTests": 2.0,
+            "within3Share": 1.0,
+            "medianMixSize": 13.0
+          },
+          "rules": {
+            "mixes": 50,
+            "meanTests": 1.02,
+            "medianTests": 1.0,
+            "within3Share": 1.0,
+            "medianMixSize": 13.0
+          },
+          "random": {
+            "mixes": 50,
+            "meanTests": 7.75,
+            "medianTests": 7.0,
+            "within3Share": 0.2176094351087957,
+            "medianMixSize": 13.0
+          }
+        }
+      }
+    },
+    "overall": {
+      "m1": {
+        "mixes": 250,
+        "meanTests": 2.124,
+        "medianTests": 1.0,
+        "within3Share": 0.852,
+        "medianMixSize": 13.0
+      },
+      "m2": {
+        "mixes": 250,
+        "meanTests": 1.616,
+        "medianTests": 1.0,
+        "within3Share": 0.936,
+        "medianMixSize": 13.0
+      },
+      "shipped": {
+        "mixes": 250,
+        "meanTests": 2.996,
+        "medianTests": 2.0,
+        "within3Share": 0.716,
+        "medianMixSize": 13.0
+      },
+      "rules": {
+        "mixes": 250,
+        "meanTests": 2.92,
+        "medianTests": 1.0,
+        "within3Share": 0.808,
+        "medianMixSize": 13.0
+      },
+      "random": {
+        "mixes": 250,
+        "meanTests": 7.46,
+        "medianTests": 7.0,
+        "within3Share": 0.22342208258493423,
+        "medianMixSize": 13.0
+      }
+    }
+  },
+  "changes": {
+    "wrongToRight": [
+      [
+        "_gat",
+        5404
+      ],
+      [
+        "lidc",
+        2769
+      ],
+      [
+        "_uetsid",
+        1576
+      ],
+      [
+        "_uetvid",
+        1237
+      ],
+      [
+        "__utmc",
+        1030
+      ],
+      [
+        "__utmb",
+        1025
+      ],
+      [
+        "hubspotutk",
+        304
+      ],
+      [
+        "apidts",
+        275
+      ],
+      [
+        "tapad_ts",
+        258
+      ],
+      [
+        "maid",
+        229
+      ],
+      [
+        "clid",
+        152
+      ],
+      [
+        "rxvt",
+        121
+      ],
+      [
+        "opt_out",
+        114
+      ],
+      [
+        "_te_",
+        97
+      ],
+      [
+        "matchgoogle",
+        85
+      ]
+    ],
+    "rightToWrong": [
+      [
+        "usermatchhistory",
+        2507
+      ],
+      [
+        "hubspotutk",
+        668
+      ],
+      [
+        "_vwo_uuid_v2",
+        218
+      ],
+      [
+        "rxvt",
+        200
+      ],
+      [
+        "__stripe_sid",
+        145
+      ],
+      [
+        "_gat",
+        130
+      ],
+      [
+        "sid",
+        119
+      ],
+      [
+        "__adroll_fpc",
+        107
+      ],
+      [
+        "cto_bundle",
+        82
+      ],
+      [
+        "ytrackuser",
+        82
+      ],
+      [
+        "optimizelydomaintestcookie",
+        74
+      ],
+      [
+        "_uetvid",
+        46
+      ],
+      [
+        "ac_enable_tracking",
+        44
+      ],
+      [
+        "calltrk_session_id",
+        36
+      ],
+      [
+        "sambapxid",
+        36
+      ]
+    ]
+  },
+  "specialNames": {
+    "_gid": {
+      "normalizedName": "_gid",
+      "splitSide": "train"
+    },
+    "_gat": {
+      "normalizedName": "_gat",
+      "splitSide": "test"
+    },
+    "optanonalertboxclosed": {
+      "normalizedName": "optanonalertboxclosed",
+      "splitSide": "train"
+    }
+  },
+  "featureImportance": {
+    "m1": [
+      {
+        "feature": "name_entropy",
+        "importance": 0.11008291064804787
+      },
+      {
+        "feature": "name_length",
+        "importance": 0.10941091878969253
+      },
+      {
+        "feature": "name_matches_tracking",
+        "importance": 0.08473939656287015
+      },
+      {
+        "feature": "value_length",
+        "importance": 0.07481162632741147
+      },
+      {
+        "feature": "name_has_underscore",
+        "importance": 0.06438196044049671
+      },
+      {
+        "feature": "exposure_score",
+        "importance": 0.06421847525419563
+      },
+      {
+        "feature": "cross_site_sendable",
+        "importance": 0.05902233015047806
+      },
+      {
+        "feature": "name_matches_preference",
+        "importance": 0.05503840638847212
+      },
+      {
+        "feature": "expiry_days",
+        "importance": 0.05307686330578819
+      },
+      {
+        "feature": "samesite_level",
+        "importance": 0.04044687337164941
+      }
+    ],
+    "shippedSplitFrequencyProxy": [
+      {
+        "feature": "name_entropy",
+        "splitFrequency": 0.09169969176574197,
+        "splits": 833
+      },
+      {
+        "feature": "value_length",
+        "splitFrequency": 0.07848965213562308,
+        "splits": 713
+      },
+      {
+        "feature": "name_length",
+        "splitFrequency": 0.07287538529282254,
+        "splits": 662
+      },
+      {
+        "feature": "path_is_root",
+        "splitFrequency": 0.05746367239101717,
+        "splits": 522
+      },
+      {
+        "feature": "f_login_behavior_score",
+        "splitFrequency": 0.04909731395860854,
+        "splits": 446
+      },
+      {
+        "feature": "exposure_score",
+        "splitFrequency": 0.04700572435050639,
+        "splits": 427
+      },
+      {
+        "feature": "f_security_posture_score",
+        "splitFrequency": 0.04315279612505504,
+        "splits": 392
+      },
+      {
+        "feature": "name_matches_auth",
+        "splitFrequency": 0.041391457507705856,
+        "splits": 376
+      },
+      {
+        "feature": "expiry_days",
+        "splitFrequency": 0.03555702333773668,
+        "splits": 323
+      },
+      {
+        "feature": "samesite_level",
+        "splitFrequency": 0.03500660501981506,
+        "splits": 318
+      }
+    ]
+  },
+  "onnxVerification": {
+    "event": "onnx_verified",
+    "rows": 1000,
+    "seed": 2026111302,
+    "tolerance": 1e-05,
+    "m1MaxAbsoluteDifference": 9.741637441162965e-08,
+    "m2MaxAbsoluteDifference": 1.1279974143629801e-07,
+    "at": "2026-11-10T07:29:19.321803+00:00"
+  },
+  "valueCheck": {
+    "at": "2026-11-10T07:36:10.481Z",
+    "valuesOfLengthAtLeast8Searched": 730090,
+    "shortValuesHeldSeparately": 5465,
+    "filesChecked": 49,
+    "filesContainingValue": 0,
+    "filesContainingSerializedValue": 0,
+    "filesWithLongIncidentalOverlap": 41,
+    "longIncidentalOverlaps": [
+      {
+        "file": "PROTOCOL.md",
+        "matchingLongValues": 2
+      },
+      {
+        "file": "analyze.py",
+        "matchingLongValues": 1
+      },
+      {
+        "file": "extract_features.mjs",
+        "matchingLongValues": 2
+      },
+      {
+        "file": "features/chunk-000.jsonl",
+        "matchingLongValues": 10
+      },
+      {
+        "file": "features/chunk-001.jsonl",
+        "matchingLongValues": 8
+      },
+      {
+        "file": "features/chunk-002.jsonl",
+        "matchingLongValues": 8
+      },
+      {
+        "file": "features/chunk-003.jsonl",
+        "matchingLongValues": 10
+      },
+      {
+        "file": "features/chunk-004.jsonl",
+        "matchingLongValues": 5
+      },
+      {
+        "file": "features/chunk-005.jsonl",
+        "matchingLongValues": 5
+      },
+      {
+        "file": "features/chunk-006.jsonl",
+        "matchingLongValues": 9
+      },
+      {
+        "file": "features/chunk-007.jsonl",
+        "matchingLongValues": 9
+      },
+      {
+        "file": "features/chunk-008.jsonl",
+        "matchingLongValues": 12
+      },
+      {
+        "file": "features/chunk-009.jsonl",
+        "matchingLongValues": 10
+      },
+      {
+        "file": "features/chunk-010.jsonl",
+        "matchingLongValues": 9
+      },
+      {
+        "file": "features/chunk-011.jsonl",
+        "matchingLongValues": 11
+      },
+      {
+        "file": "features/chunk-012.jsonl",
+        "matchingLongValues": 13
+      },
+      {
+        "file": "features/chunk-013.jsonl",
+        "matchingLongValues": 9
+      },
+      {
+        "file": "features/chunk-014.jsonl",
+        "matchingLongValues": 12
+      },
+      {
+        "file": "features/chunk-015.jsonl",
+        "matchingLongValues": 13
+      },
+      {
+        "file": "features/chunk-016.jsonl",
+        "matchingLongValues": 14
+      },
+      {
+        "file": "features/chunk-017.jsonl",
+        "matchingLongValues": 14
+      },
+      {
+        "file": "features/chunk-018.jsonl",
+        "matchingLongValues": 11
+      },
+      {
+        "file": "features/chunk-019.jsonl",
+        "matchingLongValues": 9
+      },
+      {
+        "file": "features/chunk-020.jsonl",
+        "matchingLongValues": 10
+      },
+      {
+        "file": "features/chunk-021.jsonl",
+        "matchingLongValues": 12
+      },
+      {
+        "file": "features/chunk-022.jsonl",
+        "matchingLongValues": 9
+      },
+      {
+        "file": "features/chunk-023.jsonl",
+        "matchingLongValues": 11
+      },
+      {
+        "file": "features/chunk-024.jsonl",
+        "matchingLongValues": 11
+      },
+      {
+        "file": "features/chunk-025.jsonl",
+        "matchingLongValues": 10
+      },
+      {
+        "file": "features/chunk-026.jsonl",
+        "matchingLongValues": 13
+      },
+      {
+        "file": "features/chunk-027.jsonl",
+        "matchingLongValues": 12
+      },
+      {
+        "file": "features/chunk-028.jsonl",
+        "matchingLongValues": 11
+      },
+      {
+        "file": "features/chunk-029.jsonl",
+        "matchingLongValues": 10
+      },
+      {
+        "file": "features/chunk-030.jsonl",
+        "matchingLongValues": 10
+      },
+      {
+        "file": "features/feature_names.json",
+        "matchingLongValues": 1
+      },
+      {
+        "file": "leak_check.mjs",
+        "matchingLongValues": 2
+      },
+      {
+        "file": "model/m1_meta.json",
+        "matchingLongValues": 1
+      },
+      {
+        "file": "model/m2_meta.json",
+        "matchingLongValues": 1
+      },
+      {
+        "file": "results.json",
+        "matchingLongValues": 1
+      },
+      {
+        "file": "results.md",
+        "matchingLongValues": 1
+      },
+      {
+        "file": "split.json",
+        "matchingLongValues": 44
+      }
+    ],
+    "longOverlapReason": "Every raw-string hit occurs in an allowed non-value field (cookie/normalized name, feature name, protocol/source literal, or numeric serialization). Feature rows have no value field, and the extraction code never writes observation.value. These measured overlaps are retained rather than suppressed.",
+    "filesWithShortIncidentalOverlap": 49,
+    "shortIncidentalFiles": [
+      ".gitignore",
+      "PROTOCOL.md",
+      "analyze.py",
+      "extract_features.mjs",
+      "features/chunk-000.jsonl",
+      "features/chunk-001.jsonl",
+      "features/chunk-002.jsonl",
+      "features/chunk-003.jsonl",
+      "features/chunk-004.jsonl",
+      "features/chunk-005.jsonl",
+      "features/chunk-006.jsonl",
+      "features/chunk-007.jsonl",
+      "features/chunk-008.jsonl",
+      "features/chunk-009.jsonl",
+      "features/chunk-010.jsonl",
+      "features/chunk-011.jsonl",
+      "features/chunk-012.jsonl",
+      "features/chunk-013.jsonl",
+      "features/chunk-014.jsonl",
+      "features/chunk-015.jsonl",
+      "features/chunk-016.jsonl",
+      "features/chunk-017.jsonl",
+      "features/chunk-018.jsonl",
+      "features/chunk-019.jsonl",
+      "features/chunk-020.jsonl",
+      "features/chunk-021.jsonl",
+      "features/chunk-022.jsonl",
+      "features/chunk-023.jsonl",
+      "features/chunk-024.jsonl",
+      "features/chunk-025.jsonl",
+      "features/chunk-026.jsonl",
+      "features/chunk-027.jsonl",
+      "features/chunk-028.jsonl",
+      "features/chunk-029.jsonl",
+      "features/chunk-030.jsonl",
+      "features/feature_names.json",
+      "leak_check.mjs",
+      "locks.txt",
+      "make_split.py",
+      "model/m1.joblib",
+      "model/m1.onnx",
+      "model/m1_meta.json",
+      "model/m2.joblib",
+      "model/m2.onnx",
+      "model/m2_meta.json",
+      "results.json",
+      "results.md",
+      "split.json",
+      "train_models.py"
+    ],
+    "shortOverlapReason": "Values shorter than 8 characters collide routinely with JSON syntax, numbers, cookie names, domains, feature labels, and binary bytes; they are listed separately and are not the privacy gate."
+  }
+}

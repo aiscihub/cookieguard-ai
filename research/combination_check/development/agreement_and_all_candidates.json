@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 1,
+  "selected": "K3",
+  "2021": {
+    "rows": 717,
+    "trackerRate": 0.3486750348675035,
+    "methods": {
+      "K0": {
+        "balancedAccuracy": 0.6827323340471092,
+        "precision": 0.5682656826568265,
+        "recall": 0.616,
+        "f1": 0.5911708253358925
+      },
+      "K1": {
+        "balancedAccuracy": 0.6066680942184154,
+        "precision": 0.6826923076923077,
+        "recall": 0.284,
+        "f1": 0.4011299435028249
+      },
+      "K2": {
+        "balancedAccuracy": 0.6816188436830835,
+        "precision": 0.6666666666666666,
+        "recall": 0.496,
+        "f1": 0.5688073394495413
+      },
+      "K3": {
+        "balancedAccuracy": 0.6861841541755889,
+        "precision": 0.6931818181818182,
+        "recall": 0.488,
+        "f1": 0.5727699530516432
+      },
+      "K4": {
+        "balancedAccuracy": 0.6770321199143469,
+        "precision": 0.7254901960784313,
+        "recall": 0.444,
+        "f1": 0.5508684863523573
+      },
+      "K5": {
+        "balancedAccuracy": 0.6726895074946466,
+        "precision": 0.6611111111111111,
+        "recall": 0.476,
+        "f1": 0.5534883720930233
+      }
+    },
+    "agreement": {
+      "agree": {
+        "count": 518,
+        "share": 0.7224546722454672,
+        "componentAccuracy": 0.7818532818532818,
+        "combinerAccuracy": 0.7818532818532818
+      },
+      "disagree": {
+        "count": 199,
+        "share": 0.2775453277545328,
+        "componentAccuracy": 0.49748743718592964,
+        "combinerAccuracy": 0.6532663316582915
+      }
+    }
+  },
+  "2026": {
+    "rows": 549,
+    "trackerRate": 0.6994535519125683,
+    "methods": {
+      "K0": {
+        "balancedAccuracy": 0.6972301136363637,
+        "precision": 0.8102189781021898,
+        "recall": 0.8671875,
+        "f1": 0.8377358490566038
+      },
+      "K1": {
+        "balancedAccuracy": 0.7262547348484849,
+        "precision": 0.9295154185022027,
+        "recall": 0.5494791666666666,
+        "f1": 0.690671031096563
+      },
+      "K2": {
+        "balancedAccuracy": 0.7352035984848485,
+        "precision": 0.8559077809798271,
+        "recall": 0.7734375,
+        "f1": 0.8125854993160054
+      },
+      "K3": {
+        "balancedAccuracy": 0.7473248106060606,
+        "precision": 0.8658892128279884,
+        "recall": 0.7734375,
+        "f1": 0.8170563961485557
+      },
+      "K4": {
+        "balancedAccuracy": 0.7377604166666667,
+        "precision": 0.8662613981762918,
+        "recall": 0.7421875,
+        "f1": 0.7994389901823282
+      },
+      "K5": {
+        "balancedAccuracy": 0.7486032196969696,
+        "precision": 0.8712574850299402,
+        "recall": 0.7578125,
+        "f1": 0.8105849582172702
+      }
+    },
+    "agreement": {
+      "agree": {
+        "count": 349,
+        "share": 0.6357012750455373,
+        "componentAccuracy": 0.830945558739255,
+        "combinerAccuracy": 0.830945558739255
+      },
+      "disagree": {
+        "count": 200,
+        "share": 0.36429872495446264,
+        "componentAccuracy": 0.65,
+        "combinerAccuracy": 0.63
+      }
+    }
+  }
+}

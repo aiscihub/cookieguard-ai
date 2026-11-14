@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "passed": true,
+  "basis": "hybrid structural receipt (Amendment A3); not a final value scan",
+  "scope": {
+    "crawl": {
+      "basis": "incremental value cross-scan receipts",
+      "acceptedReceipts": 2289,
+      "rejectedBatches": 1,
+      "forbiddenMatches": 0
+    },
+    "developmentAndLocalAnalysis": {
+      "basis": "locked artifacts plus incremental receipt frontier",
+      "developmentLocksSha256": "f40eab7a553c16fbbdecdf0317272d68ff25ffda64704fc49d281afcae2b7b92",
+      "predictionsSha256": "e30a8d68d7ddcd29f4af71aed372d0294c7b168bcaf697c716734e4e4a05a79e"
+    },
+    "cloudPrompts": {
+      "basis": "structural (Amendment A1)",
+      "structureCheckSha256": "6f0477d795b9f4e46413bc4b26674404c1d842025135182ad29b9cd6dc86e883",
+      "originalForbiddenMatchesPreserved": 11
+    },
+    "cloudReplies": {
+      "basis": "structural (Amendment A2)",
+      "valueScanPerformed": false,
+      "replyFiles": 18,
+      "validReplies": 18,
+      "invalidReplies": 0
+    }
+  },
+  "coordinatorRestarts": 4,
+  "artifacts": {
+    "cloud/prompt_structure_check.json": "6f0477d795b9f4e46413bc4b26674404c1d842025135182ad29b9cd6dc86e883",
+    "cloud/run_metadata.json": "f0438d7d48f6cb7c8f11eb073b3ff70caf369db28367ecbb8670bcfcb439e71b",
+    "cloud/cloud_results.json": "07d4435acf94344872a3581e9266fd8fa052542cfe5094849120d7aca5efe464",
+    "results.json": "8c07f43973a4f7d38d160f481821c20cec9e000afa6658def907f81a2ddb3a13",
+    "results.md": "23bac4f5090cd70f761204ff9ae4a2d114d424e7c5a89e8c1b59307383f05757"
+  }
+}

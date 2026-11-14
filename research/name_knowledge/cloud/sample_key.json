@@ -1,0 +1,2107 @@
+{
+  "schemaVersion": 1,
+  "sampleSeed": 2026111202,
+  "idSeed": 2026111203,
+  "items": {
+    "C242": {
+      "rowIndex": 8697,
+      "normalizedName": "taboola_vmp",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C204": {
+      "rowIndex": 5200,
+      "normalizedName": "__attentive_id",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C144": {
+      "rowIndex": 6002,
+      "normalizedName": "cookiebot-consent--preferences",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C109": {
+      "rowIndex": 4947,
+      "normalizedName": "pbjs_sharedid",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C158": {
+      "rowIndex": 6707,
+      "normalizedName": "test_cookie",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C248": {
+      "rowIndex": 9312,
+      "normalizedName": "glbe_sess_id",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C062": {
+      "rowIndex": 1021,
+      "normalizedName": "__pnahc",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C042": {
+      "rowIndex": 2760,
+      "normalizedName": "pbjs-unifiedid",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C194": {
+      "rowIndex": 392,
+      "normalizedName": "_dd_s_v0",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C052": {
+      "rowIndex": 10561,
+      "normalizedName": "countrycode",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C178": {
+      "rowIndex": 8003,
+      "normalizedName": "pmc_piano_reporting",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C006": {
+      "rowIndex": 1586,
+      "normalizedName": "sbjs_migrations",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C141": {
+      "rowIndex": 1210,
+      "normalizedName": "ax_visitor",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C259": {
+      "rowIndex": 204,
+      "normalizedName": "__attentive_ss_referrer",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C200": {
+      "rowIndex": 834,
+      "normalizedName": "oau",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C274": {
+      "rowIndex": 2318,
+      "normalizedName": "rlas0",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C271": {
+      "rowIndex": 11138,
+      "normalizedName": "ipe_0_fov",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C287": {
+      "rowIndex": 4648,
+      "normalizedName": "wtpersist",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C166": {
+      "rowIndex": 8654,
+      "normalizedName": "ccpa",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C185": {
+      "rowIndex": 4747,
+      "normalizedName": "ipc",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C036": {
+      "rowIndex": 410,
+      "normalizedName": "awsalb",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C063": {
+      "rowIndex": 7109,
+      "normalizedName": "lrswap",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C212": {
+      "rowIndex": 8646,
+      "normalizedName": "scmtmu",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C291": {
+      "rowIndex": 9386,
+      "normalizedName": "asp.net_sessionid",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C124": {
+      "rowIndex": 4149,
+      "normalizedName": "s_getnewrepeat",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C201": {
+      "rowIndex": 5350,
+      "normalizedName": "adtrackingtoken",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C026": {
+      "rowIndex": 2920,
+      "normalizedName": "bitoissecure",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C041": {
+      "rowIndex": 7184,
+      "normalizedName": "re_sync",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C058": {
+      "rowIndex": 606,
+      "normalizedName": "seohostpl_session",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C168": {
+      "rowIndex": 3423,
+      "normalizedName": "imdsuc",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C225": {
+      "rowIndex": 4862,
+      "normalizedName": "elqstatus",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C118": {
+      "rowIndex": 9313,
+      "normalizedName": "fortertoken",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C206": {
+      "rowIndex": 2424,
+      "normalizedName": "dmd-sid0",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C266": {
+      "rowIndex": 3377,
+      "normalizedName": "eqvsercookie",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C069": {
+      "rowIndex": 11134,
+      "normalizedName": "lpvid",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C002": {
+      "rowIndex": 3142,
+      "normalizedName": "selectedcountry",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C245": {
+      "rowIndex": 1192,
+      "normalizedName": "i0n_locale",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C115": {
+      "rowIndex": 1409,
+      "normalizedName": "pb_rtb_ev",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C061": {
+      "rowIndex": 9710,
+      "normalizedName": "opt_out",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C214": {
+      "rowIndex": 3989,
+      "normalizedName": "trckcookie",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C231": {
+      "rowIndex": 10705,
+      "normalizedName": "mcookie",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C072": {
+      "rowIndex": 4923,
+      "normalizedName": "lum",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C296": {
+      "rowIndex": 9311,
+      "normalizedName": "globale_consent",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C237": {
+      "rowIndex": 363,
+      "normalizedName": "khaos_p",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C297": {
+      "rowIndex": 4647,
+      "normalizedName": "ora_fpc",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C086": {
+      "rowIndex": 9127,
+      "normalizedName": "jwt_refresh",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C001": {
+      "rowIndex": 2826,
+      "normalizedName": "t_pt_gid",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C091": {
+      "rowIndex": 4046,
+      "normalizedName": "dotomiuser",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C057": {
+      "rowIndex": 7350,
+      "normalizedName": "bigipserverinhabitat_pool",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C122": {
+      "rowIndex": 10065,
+      "normalizedName": "__uin_i0",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C119": {
+      "rowIndex": 51,
+      "normalizedName": "contactregioncookie",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C064": {
+      "rowIndex": 8455,
+      "normalizedName": "_algolia_user_token",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C174": {
+      "rowIndex": 10176,
+      "normalizedName": "khaos",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C127": {
+      "rowIndex": 6660,
+      "normalizedName": "chsn_cnsnt",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C027": {
+      "rowIndex": 5079,
+      "normalizedName": "scmaps",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C080": {
+      "rowIndex": 491,
+      "normalizedName": "akacd_ncaa_prod",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C279": {
+      "rowIndex": 10776,
+      "normalizedName": "fbz_trk_sess",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C247": {
+      "rowIndex": 7324,
+      "normalizedName": "bigipserverinhabitat-varnish_pool",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C093": {
+      "rowIndex": 4027,
+      "normalizedName": "av-tp-bsw",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C005": {
+      "rowIndex": 10886,
+      "normalizedName": "_sn_n",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C094": {
+      "rowIndex": 6029,
+      "normalizedName": "userzip",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C268": {
+      "rowIndex": 11147,
+      "normalizedName": "ssod",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C044": {
+      "rowIndex": 9731,
+      "normalizedName": "geo_country",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C196": {
+      "rowIndex": 5676,
+      "normalizedName": "cookie",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C053": {
+      "rowIndex": 4164,
+      "normalizedName": "__qca",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C146": {
+      "rowIndex": 7717,
+      "normalizedName": "sequelsessionid",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C145": {
+      "rowIndex": 5881,
+      "normalizedName": "s_tbm",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C232": {
+      "rowIndex": 9743,
+      "normalizedName": "trpconsent",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C021": {
+      "rowIndex": 3726,
+      "normalizedName": "fpviewed",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C267": {
+      "rowIndex": 5408,
+      "normalizedName": "metadata_session_id",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C016": {
+      "rowIndex": 5590,
+      "normalizedName": "__0_cid",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C190": {
+      "rowIndex": 9327,
+      "normalizedName": "optin_ses.0.d0e",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C095": {
+      "rowIndex": 1033,
+      "normalizedName": "_ml_id",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C140": {
+      "rowIndex": 8017,
+      "normalizedName": "pmc_atlasmg_fpc",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C083": {
+      "rowIndex": 6196,
+      "normalizedName": "context-profile-id",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C049": {
+      "rowIndex": 2485,
+      "normalizedName": "globalidleexpirationtime",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C070": {
+      "rowIndex": 8517,
+      "normalizedName": "abldr",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C060": {
+      "rowIndex": 979,
+      "normalizedName": "lasid",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C239": {
+      "rowIndex": 507,
+      "normalizedName": "psmsessionid",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C240": {
+      "rowIndex": 5178,
+      "normalizedName": "dw_cookies_accepted",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C256": {
+      "rowIndex": 6304,
+      "normalizedName": "s_ecid",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C067": {
+      "rowIndex": 9318,
+      "normalizedName": "unisess",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C007": {
+      "rowIndex": 10393,
+      "normalizedName": "nlbi_0",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C043": {
+      "rowIndex": 5864,
+      "normalizedName": "s_cp_url",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C030": {
+      "rowIndex": 3530,
+      "normalizedName": "__cf_ob",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C175": {
+      "rowIndex": 5273,
+      "normalizedName": "linc.web_chat.ids",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C009": {
+      "rowIndex": 1331,
+      "normalizedName": "vst",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C096": {
+      "rowIndex": 11023,
+      "normalizedName": "pagenamecookie",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C142": {
+      "rowIndex": 611,
+      "normalizedName": "shoppinglistcount",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C132": {
+      "rowIndex": 9173,
+      "normalizedName": "__cq_uuid",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C234": {
+      "rowIndex": 6602,
+      "normalizedName": "omgsession",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C056": {
+      "rowIndex": 3984,
+      "normalizedName": "contribzone",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C082": {
+      "rowIndex": 1420,
+      "normalizedName": "0_c_0",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C089": {
+      "rowIndex": 673,
+      "normalizedName": "store.sig",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C090": {
+      "rowIndex": 3449,
+      "normalizedName": "inmusc",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C037": {
+      "rowIndex": 869,
+      "normalizedName": "ext_medium",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C170": {
+      "rowIndex": 4088,
+      "normalizedName": "irld",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C157": {
+      "rowIndex": 5862,
+      "normalizedName": "akaalb_mar_prod_alb",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C203": {
+      "rowIndex": 3537,
+      "normalizedName": "avvo_cache_context",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C011": {
+      "rowIndex": 5192,
+      "normalizedName": "crl0.fpcuid",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C161": {
+      "rowIndex": 9341,
+      "normalizedName": "_shopify_essential",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C032": {
+      "rowIndex": 8899,
+      "normalizedName": "ucid",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C033": {
+      "rowIndex": 10641,
+      "normalizedName": "_meta_cross_domain_direct_id",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C066": {
+      "rowIndex": 7749,
+      "normalizedName": "aam_uuid",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C238": {
+      "rowIndex": 1358,
+      "normalizedName": "repeat_visitor",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C264": {
+      "rowIndex": 10096,
+      "normalizedName": "nq_uservisitid",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C048": {
+      "rowIndex": 7716,
+      "normalizedName": "sequeluserid",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C019": {
+      "rowIndex": 132,
+      "normalizedName": "refcountry",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C085": {
+      "rowIndex": 7271,
+      "normalizedName": "_td",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C218": {
+      "rowIndex": 5677,
+      "normalizedName": "zuuid_k",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C280": {
+      "rowIndex": 9171,
+      "normalizedName": "igodigitalstdomain",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C262": {
+      "rowIndex": 2161,
+      "normalizedName": "dgag-seo-visit-referrer",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C035": {
+      "rowIndex": 9889,
+      "normalizedName": "i",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C229": {
+      "rowIndex": 7066,
+      "normalizedName": "s_dslv",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C230": {
+      "rowIndex": 2910,
+      "normalizedName": "iuid",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C189": {
+      "rowIndex": 1028,
+      "normalizedName": "__tbc",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C125": {
+      "rowIndex": 1702,
+      "normalizedName": "location_data",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C252": {
+      "rowIndex": 2127,
+      "normalizedName": "session_uuid",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C243": {
+      "rowIndex": 10873,
+      "normalizedName": "sns",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C295": {
+      "rowIndex": 4247,
+      "normalizedName": "experiment_buckets",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C128": {
+      "rowIndex": 11135,
+      "normalizedName": "ipe_landingtime",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C221": {
+      "rowIndex": 6130,
+      "normalizedName": "__eoi",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C084": {
+      "rowIndex": 126,
+      "normalizedName": "cookielanguage",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C258": {
+      "rowIndex": 9876,
+      "normalizedName": "ver",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C087": {
+      "rowIndex": 6723,
+      "normalizedName": "am-uid",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C031": {
+      "rowIndex": 5849,
+      "normalizedName": "bh",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C188": {
+      "rowIndex": 5456,
+      "normalizedName": "_an_uid",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C192": {
+      "rowIndex": 5204,
+      "normalizedName": "_attn_bopd_",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C160": {
+      "rowIndex": 1504,
+      "normalizedName": ".aspnetcore.antiforgery.#_ejgc",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C136": {
+      "rowIndex": 770,
+      "normalizedName": "st_ssp",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C236": {
+      "rowIndex": 796,
+      "normalizedName": "ts",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C250": {
+      "rowIndex": 7365,
+      "normalizedName": "_sfid_0e",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C075": {
+      "rowIndex": 669,
+      "normalizedName": "language.sig",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C008": {
+      "rowIndex": 6326,
+      "normalizedName": "smc_ls_session",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C152": {
+      "rowIndex": 8022,
+      "normalizedName": "__pvi",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C209": {
+      "rowIndex": 5251,
+      "normalizedName": "tv_uicr",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C261": {
+      "rowIndex": 5961,
+      "normalizedName": "_tq_id.tv-0-0.0d0e",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C193": {
+      "rowIndex": 5103,
+      "normalizedName": "llum",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C169": {
+      "rowIndex": 6360,
+      "normalizedName": "otadditionalconsentstring",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C277": {
+      "rowIndex": 4036,
+      "normalizedName": "rt",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C028": {
+      "rowIndex": 2418,
+      "normalizedName": "seerses",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C164": {
+      "rowIndex": 3367,
+      "normalizedName": "infolink",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C153": {
+      "rowIndex": 6947,
+      "normalizedName": "acc_accfirstload",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C017": {
+      "rowIndex": 6665,
+      "normalizedName": "tglr_sess_count",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C182": {
+      "rowIndex": 1476,
+      "normalizedName": "xedpxl",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C098": {
+      "rowIndex": 3629,
+      "normalizedName": "userlocalization",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C233": {
+      "rowIndex": 7202,
+      "normalizedName": "wenglobalweb",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C039": {
+      "rowIndex": 11136,
+      "normalizedName": "ipe.0.pageviewedcount",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C012": {
+      "rowIndex": 10073,
+      "normalizedName": "awsalbcors",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C220": {
+      "rowIndex": 2851,
+      "normalizedName": "pxid",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C004": {
+      "rowIndex": 10626,
+      "normalizedName": "gpv_p0",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C159": {
+      "rowIndex": 9439,
+      "normalizedName": "cds-client-device",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C055": {
+      "rowIndex": 10481,
+      "normalizedName": "__mub",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C275": {
+      "rowIndex": 9800,
+      "normalizedName": "otgppconsent",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C283": {
+      "rowIndex": 1895,
+      "normalizedName": "io_token_#-f0-0c0a-abdd-#",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C022": {
+      "rowIndex": 672,
+      "normalizedName": "store",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C078": {
+      "rowIndex": 2591,
+      "normalizedName": "elqcustomerguid",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C167": {
+      "rowIndex": 6966,
+      "normalizedName": "page.previouspage",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C171": {
+      "rowIndex": 5546,
+      "normalizedName": "usprivacy",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C282": {
+      "rowIndex": 79,
+      "normalizedName": "gmid",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C251": {
+      "rowIndex": 9830,
+      "normalizedName": "_awl",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C126": {
+      "rowIndex": 7094,
+      "normalizedName": "geocc",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C299": {
+      "rowIndex": 8766,
+      "normalizedName": "_lr_sampling_rate",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C040": {
+      "rowIndex": 1685,
+      "normalizedName": "lidc",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C077": {
+      "rowIndex": 293,
+      "normalizedName": "wisepops_visits",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C097": {
+      "rowIndex": 1296,
+      "normalizedName": "__mguid_",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C129": {
+      "rowIndex": 10563,
+      "normalizedName": "geodata",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C180": {
+      "rowIndex": 6828,
+      "normalizedName": "_clsk",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C138": {
+      "rowIndex": 3710,
+      "normalizedName": "_ym_isad",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C197": {
+      "rowIndex": 2778,
+      "normalizedName": "permutive-id",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C123": {
+      "rowIndex": 6180,
+      "normalizedName": "slb_route",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C181": {
+      "rowIndex": 5237,
+      "normalizedName": "_gegeo",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C199": {
+      "rowIndex": 6963,
+      "normalizedName": "dtlatc",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C112": {
+      "rowIndex": 100,
+      "normalizedName": "applicationgatewayaffinity",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C249": {
+      "rowIndex": 7358,
+      "normalizedName": "content",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C100": {
+      "rowIndex": 4815,
+      "normalizedName": "cfg_fpid",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C179": {
+      "rowIndex": 2496,
+      "normalizedName": "_pxhd",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C088": {
+      "rowIndex": 6220,
+      "normalizedName": "_omappvs",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C215": {
+      "rowIndex": 1610,
+      "normalizedName": "fplc",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C047": {
+      "rowIndex": 10033,
+      "normalizedName": "panoramaidtype",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C071": {
+      "rowIndex": 7655,
+      "normalizedName": "__sp",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C172": {
+      "rowIndex": 8174,
+      "normalizedName": "csuuid",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C092": {
+      "rowIndex": 2256,
+      "normalizedName": "lucid_decisions",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C208": {
+      "rowIndex": 3692,
+      "normalizedName": "csync",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C213": {
+      "rowIndex": 10436,
+      "normalizedName": "mls_spid.d0",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C110": {
+      "rowIndex": 10566,
+      "normalizedName": "geo",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C217": {
+      "rowIndex": 674,
+      "normalizedName": "profiletoken",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C068": {
+      "rowIndex": 5186,
+      "normalizedName": "extole_token",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C059": {
+      "rowIndex": 7151,
+      "normalizedName": "zd_cs_pm",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C278": {
+      "rowIndex": 7970,
+      "normalizedName": "timeonsite",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C292": {
+      "rowIndex": 9655,
+      "normalizedName": "fpc",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C300": {
+      "rowIndex": 3178,
+      "normalizedName": "ttcsid",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C222": {
+      "rowIndex": 1132,
+      "normalizedName": "bat_tracking_data_alt",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C276": {
+      "rowIndex": 6044,
+      "normalizedName": "a0",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C224": {
+      "rowIndex": 3902,
+      "normalizedName": "apt.sid",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C050": {
+      "rowIndex": 1060,
+      "normalizedName": "isreturninguser",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C116": {
+      "rowIndex": 4358,
+      "normalizedName": "bito",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C137": {
+      "rowIndex": 6423,
+      "normalizedName": "uids_grid",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C107": {
+      "rowIndex": 5266,
+      "normalizedName": "dt",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C025": {
+      "rowIndex": 2653,
+      "normalizedName": "_parsely_session",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C162": {
+      "rowIndex": 7478,
+      "normalizedName": "udid",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C013": {
+      "rowIndex": 438,
+      "normalizedName": "gob_cookie",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C143": {
+      "rowIndex": 2359,
+      "normalizedName": "irtps",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C065": {
+      "rowIndex": 10817,
+      "normalizedName": "aslbsa",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C210": {
+      "rowIndex": 981,
+      "normalizedName": "_gcl_au",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C014": {
+      "rowIndex": 2481,
+      "normalizedName": "localpageviewscount",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C076": {
+      "rowIndex": 3991,
+      "normalizedName": "org",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C281": {
+      "rowIndex": 7664,
+      "normalizedName": "usermatchhistory",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C269": {
+      "rowIndex": 7257,
+      "normalizedName": "_vwo_uuid",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C103": {
+      "rowIndex": 11142,
+      "normalizedName": "sssc",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C134": {
+      "rowIndex": 4156,
+      "normalizedName": "personalization_id",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C260": {
+      "rowIndex": 10628,
+      "normalizedName": "nvl_v0",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C186": {
+      "rowIndex": 4057,
+      "normalizedName": "_cs_s",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C198": {
+      "rowIndex": 5430,
+      "normalizedName": "tdcpm",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C290": {
+      "rowIndex": 1206,
+      "normalizedName": "_axwrt",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C191": {
+      "rowIndex": 10493,
+      "normalizedName": "cookie_support",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C073": {
+      "rowIndex": 7618,
+      "normalizedName": "#_p",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C074": {
+      "rowIndex": 9532,
+      "normalizedName": "_knxq_",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C045": {
+      "rowIndex": 9259,
+      "normalizedName": "customercookieid",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C156": {
+      "rowIndex": 5449,
+      "normalizedName": "chop_id",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C120": {
+      "rowIndex": 3567,
+      "normalizedName": "currentcountry",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C253": {
+      "rowIndex": 9282,
+      "normalizedName": "visme_locale",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C207": {
+      "rowIndex": 7241,
+      "normalizedName": "utag_main_ses_id",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C285": {
+      "rowIndex": 2679,
+      "normalizedName": "nid",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C223": {
+      "rowIndex": 4633,
+      "normalizedName": "coveo_visitorid",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C202": {
+      "rowIndex": 8054,
+      "normalizedName": "tdid",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C147": {
+      "rowIndex": 3196,
+      "normalizedName": "at_check",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C284": {
+      "rowIndex": 5463,
+      "normalizedName": "newbrowser",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C273": {
+      "rowIndex": 5622,
+      "normalizedName": "scmindex",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C023": {
+      "rowIndex": 10017,
+      "normalizedName": "_pubcid",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C235": {
+      "rowIndex": 8502,
+      "normalizedName": "sync",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C148": {
+      "rowIndex": 8030,
+      "normalizedName": "sd-session-id",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C135": {
+      "rowIndex": 9201,
+      "normalizedName": "fw_flu",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C227": {
+      "rowIndex": 5680,
+      "normalizedName": "scmill",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C219": {
+      "rowIndex": 3550,
+      "normalizedName": "aa_session_id",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C099": {
+      "rowIndex": 1457,
+      "normalizedName": "copr_red",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C029": {
+      "rowIndex": 5201,
+      "normalizedName": "__attentive_session_id",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C121": {
+      "rowIndex": 4441,
+      "normalizedName": "_wt.user-0",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C155": {
+      "rowIndex": 5413,
+      "normalizedName": "_hly_gvid",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C244": {
+      "rowIndex": 10353,
+      "normalizedName": "_biz_na",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C270": {
+      "rowIndex": 6315,
+      "normalizedName": "_rdt_uuid",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C289": {
+      "rowIndex": 2912,
+      "normalizedName": "avcid-sov-uid",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C105": {
+      "rowIndex": 2160,
+      "normalizedName": "dgag-source-medium",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C117": {
+      "rowIndex": 6462,
+      "normalizedName": "_tfpvi",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C195": {
+      "rowIndex": 6200,
+      "normalizedName": "lskey-c$cookieconsentpolicy",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C263": {
+      "rowIndex": 4460,
+      "normalizedName": "__utmt",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C003": {
+      "rowIndex": 7786,
+      "normalizedName": "hm_lvt_#",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C272": {
+      "rowIndex": 6146,
+      "normalizedName": "tld-kampyleusersession",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C018": {
+      "rowIndex": 1587,
+      "normalizedName": "sbjs_current_add",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C205": {
+      "rowIndex": 206,
+      "normalizedName": "sv_sid",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C294": {
+      "rowIndex": 9202,
+      "normalizedName": "fw_se",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C113": {
+      "rowIndex": 82,
+      "normalizedName": "gig_bootstrap_0_#_#",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C187": {
+      "rowIndex": 9471,
+      "normalizedName": "_trvb",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C211": {
+      "rowIndex": 609,
+      "normalizedName": "_ripgplsjne",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C102": {
+      "rowIndex": 9470,
+      "normalizedName": "_trva",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C038": {
+      "rowIndex": 7377,
+      "normalizedName": "bvbrandsid",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C081": {
+      "rowIndex": 8507,
+      "normalizedName": "t_gid",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C298": {
+      "rowIndex": 8770,
+      "normalizedName": "aqusr",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C020": {
+      "rowIndex": 10448,
+      "normalizedName": "abtastysession",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C015": {
+      "rowIndex": 6601,
+      "normalizedName": "omgid",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C131": {
+      "rowIndex": 8203,
+      "normalizedName": "e",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C101": {
+      "rowIndex": 5355,
+      "normalizedName": "audiencelist",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C226": {
+      "rowIndex": 4201,
+      "normalizedName": "tluid",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C254": {
+      "rowIndex": 9753,
+      "normalizedName": "dtm_token",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C228": {
+      "rowIndex": 495,
+      "normalizedName": "nexus-web-application-identifier",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C176": {
+      "rowIndex": 1628,
+      "normalizedName": "client-origin",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C034": {
+      "rowIndex": 2340,
+      "normalizedName": "sc_site",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C106": {
+      "rowIndex": 10313,
+      "normalizedName": "xsrf-token",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C177": {
+      "rowIndex": 7118,
+      "normalizedName": "zd_cs_ru",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C265": {
+      "rowIndex": 6185,
+      "normalizedName": "algolia_website_utm_params",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C114": {
+      "rowIndex": 3551,
+      "normalizedName": "_clck",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C108": {
+      "rowIndex": 5943,
+      "normalizedName": "bscookie",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C246": {
+      "rowIndex": 975,
+      "normalizedName": "__utmz",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C286": {
+      "rowIndex": 406,
+      "normalizedName": "gad",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C183": {
+      "rowIndex": 10901,
+      "normalizedName": "hc",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C216": {
+      "rowIndex": 2761,
+      "normalizedName": "pbjs-unifiedid_cst",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C079": {
+      "rowIndex": 9617,
+      "normalizedName": "callback",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C051": {
+      "rowIndex": 10713,
+      "normalizedName": "v0_0",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C149": {
+      "rowIndex": 8540,
+      "normalizedName": "_lr_retry_request",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C111": {
+      "rowIndex": 4575,
+      "normalizedName": "clinch-sid",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C257": {
+      "rowIndex": 7860,
+      "normalizedName": "_cs_c",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C293": {
+      "rowIndex": 1043,
+      "normalizedName": "gckp",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C241": {
+      "rowIndex": 4998,
+      "normalizedName": "sasd",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C150": {
+      "rowIndex": 4026,
+      "normalizedName": "av-mid",
+      "truth": true,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C130": {
+      "rowIndex": 26,
+      "normalizedName": "initialtrafficsource",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C151": {
+      "rowIndex": 2989,
+      "normalizedName": "nabsegmentation",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C054": {
+      "rowIndex": 3721,
+      "normalizedName": "userprogress",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C133": {
+      "rowIndex": 6951,
+      "normalizedName": "inqsession_0",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C139": {
+      "rowIndex": 5711,
+      "normalizedName": "eud",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C255": {
+      "rowIndex": 4054,
+      "normalizedName": "fpau",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C288": {
+      "rowIndex": 4064,
+      "normalizedName": "_sfid_0a0a",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C104": {
+      "rowIndex": 5988,
+      "normalizedName": "wdi",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": true
+    },
+    "C046": {
+      "rowIndex": 9015,
+      "normalizedName": "gtm_history",
+      "truth": false,
+      "unseen": true,
+      "cookieguard": false
+    },
+    "C024": {
+      "rowIndex": 3442,
+      "normalizedName": "ssi",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C010": {
+      "rowIndex": 7681,
+      "normalizedName": "_#",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C165": {
+      "rowIndex": 1311,
+      "normalizedName": "anprofile",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C173": {
+      "rowIndex": 6817,
+      "normalizedName": "visitor_id",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C163": {
+      "rowIndex": 3186,
+      "normalizedName": "__lt__cid",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": false
+    },
+    "C184": {
+      "rowIndex": 2522,
+      "normalizedName": "_bti",
+      "truth": true,
+      "unseen": false,
+      "cookieguard": true
+    },
+    "C154": {
+      "rowIndex": 154,
+      "normalizedName": "s_ppv",
+      "truth": false,
+      "unseen": false,
+      "cookieguard": true
+    }
+  }
+}

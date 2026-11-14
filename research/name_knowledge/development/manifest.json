@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "inputs": {
+    "head": "1f0ede14ee9d5e3c990a575f8eeae986a588d346",
+    "v3Sha256": "a4f3905c7f4ccbd061846e5e3e1c20a51a172daa37f31a8af16e7233e6be2a93",
+    "v1Sha256": "6820daa4cb8df4e56d96c6fbf92252b4591d73f6edc1645077ff74f1a54191c2",
+    "rulesSha256": "bcc2718198f0798b77505c27efcfd0bf8a251cfd90dc31b0daf375dc9df7e4bd"
+  },
+  "counts": {
+    "d1SelectionRows": 244781,
+    "d1DeploymentRows": 246505,
+    "rows2021": 242394,
+    "rows2026": 4111
+  },
+  "artifacts": {
+    "dictionary/d1_selection.json": "e8a4d63896f2abca0eed5db62eba0342584d2eb5e3b288832970560384f5c341",
+    "dictionary/d1_deployment.json": "6527449bdd92e4b2e0511f1a7fa7923d8c094f9af676d4113535617f96ca2267",
+    "dictionary/d2.json": "1f6eedb07c28ac8137595575763d0182e2cab1c42d7f60cae2c124d1a752141b",
+    "development/selection.json": "7337d1f5a59dec84df0c03c259fe9ec22c27d8e139b20402812f404724c084cc",
+    "development/source_manifest.json": "30a345b7494fc49fc9dfc2c6d79a91b4869cc1314c07aec280131ce81a9a73c9",
+    "test/frame.json": "b2c889a4087a804f5a7f5088f9fffd8cc7de3a291a67e58d740e72f7251caf8a"
+  }
+}

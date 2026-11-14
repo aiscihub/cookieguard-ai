@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "python": "3.9.6 (default, May 22 2026, 11:13:45) \n[Clang 21.0.0 (clang-2100.1.1.101)]",
+  "node": "v26.10.0",
+  "packages": {
+    "numpy": "1.26.4",
+    "onnxruntime": "1.19.2",
+    "scikit-learn": "1.5.2"
+  },
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "architecture": "arm64",
+  "processor": "arm",
+  "chromium": "Chrome for Testing 158; pinned path in crawl.mjs",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/158.0.0.0 Safari/537.36",
+  "cloudInterface": "Codex CLI fresh ephemeral sessions",
+  "cloudModel": "gpt-6-astra",
+  "cloudReasoning": "max"
+}

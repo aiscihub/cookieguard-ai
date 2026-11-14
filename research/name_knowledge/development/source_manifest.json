@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "repository": "https://github.com/jkwakman/Open-Cookie-Database.git",
+  "commit": "7786335566460016f07a50705a92fc781c976f6f",
+  "license": "Apache-2.0",
+  "licenseSha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+  "csvSha256": "ed4836ea285719d77c7340582be68d355f7358edded50e6b96bb3139fc0eb8c0",
+  "jsonSha256": "e816c610a761f95d509e52cf6e61509f8bc6b8da59c52180f08c8ead44059e04",
+  "edpbJsonSha256": "1b697ef48599a80e83502302a39ae4bed14aec171ce9877b058027aba3a14bac"
+}

@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "items": 300,
+  "batches": 6,
+  "itemsPerBatch": 50,
+  "samplePublicSha256": "ce445dd19ecadc2eebcb2d252b25d4797f02fdc823572fbf627dc8ad0f93b592",
+  "sampleKeySha256": "5440592a8d4ddd5cec2288583c1cf94718bd3497be3ad39695001cafbc462e8f",
+  "prompts": [
+    {
+      "file": "batch-1.txt",
+      "sha256": "4ab44dfba36e49c286df4808bf7fc2294cfce528484a4318682fa1a8a9442286"
+    },
+    {
+      "file": "batch-2.txt",
+      "sha256": "31de634cf3e1c0ed50198b9516853a0a8a211ba576f9ac91545d8f42d60c0ca1"
+    },
+    {
+      "file": "batch-3.txt",
+      "sha256": "1ee6e49149e247d2fc09d771da2fbdb0ce54b534326fb27c683bab7e230ec938"
+    },
+    {
+      "file": "batch-4.txt",
+      "sha256": "2726f850caa06326c0398d1d1ad0445130adbda13c889a7e663df26ece552856"
+    },
+    {
+      "file": "batch-5.txt",
+      "sha256": "c10bab6f2ecca4da6fbce463c5be7196095da0ad90e92cae82a5c4b4625d3121"
+    },
+    {
+      "file": "batch-6.txt",
+      "sha256": "7c485adb3db64afd9d6c87d06cb39c12f260c322ea531ad2cf24c8a97bdbbd50"
+    }
+  ]
+}

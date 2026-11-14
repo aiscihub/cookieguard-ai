@@ -1,0 +1,52 @@
+You are classifying browser cookies. For each item, decide whether it is a tracking cookie: analytics or advertising. Values and website names are withheld. The domain shown is the cookie domain. Reply with one JSON object whose keys are the IDs and whose values are true or false, e.g. {"C001": true, "C002": false}. Include every ID exactly once, with no prose, markdown, missing IDs, or extra IDs.
+
+C079 name="IQSmartAdServerCookieSync"; domain="intentiq.com"; third-party=yes; Secure=yes; HttpOnly=no; SameSite=None; lifetime=30 days; value length=28; character set=base64/base64url
+C164 name="dpm_sid"; domain="www.ringcentral.com"; third-party=yes; Secure=no; HttpOnly=no; SameSite=Lax; lifetime=0.020787 days; value length=36; character set=base64/base64url
+C172 name="first_touch_landing_page_query"; domain="www.make.com"; third-party=no; Secure=no; HttpOnly=no; SameSite=Lax; lifetime=89.9999 days; value length=0; character set=empty
+C006 name="externalReferrerHostName"; domain="arm.com"; third-party=no; Secure=no; HttpOnly=no; SameSite=Lax; lifetime=29.9999 days; value length=3; character set=base64/base64url
+C162 name="ddmSessionId"; domain="ksl.com"; third-party=no; Secure=no; HttpOnly=no; SameSite=Lax; lifetime=0.0207755 days; value length=12; character set=alphanumeric
+C125 name="IQSmaatoCookieSync"; domain="intentiq.com"; third-party=yes; Secure=yes; HttpOnly=no; SameSite=None; lifetime=30 days; value length=28; character set=base64/base64url
+C221 name="GOLVI"; domain="sainsburys.co.uk"; third-party=no; Secure=yes; HttpOnly=no; SameSite=Lax; lifetime=89.9999 days; value length=32; character set=hex
+C001 name="user_target_id"; domain="gusto.com"; third-party=no; Secure=yes; HttpOnly=no; SameSite=Lax; lifetime=400 days; value length=36; character set=base64/base64url
+C024 name="3rdpartycookie-test"; domain="surfly.com"; third-party=yes; Secure=yes; HttpOnly=no; SameSite=None; lifetime=2.02738e-05 days; value length=6; character set=alphanumeric
+C199 name="akacd_HP_PR"; domain="www.tractorsupply.com"; third-party=no; Secure=yes; HttpOnly=no; SameSite=None; lifetime=29.9999 days; value length=52; character set=other
+C146 name="profileTagId"; domain="navyfederal.org"; third-party=no; Secure=yes; HttpOnly=no; SameSite=Lax; lifetime=session; value length=36; character set=base64/base64url
+C266 name="IQTremorCookieSync"; domain="intentiq.com"; third-party=yes; Secure=yes; HttpOnly=no; SameSite=None; lifetime=30 days; value length=28; character set=base64/base64url
+C217 name="akaas_gol_random"; domain="sainsburys.co.uk"; third-party=no; Secure=no; HttpOnly=no; SameSite=Lax; lifetime=89.9999 days; value length=1; character set=digits
+C170 name="at_sdk_uab"; domain="tvn24.pl"; third-party=no; Secure=no; HttpOnly=no; SameSite=Strict; lifetime=6.99995 days; value length=2; character set=digits
+C244 name="sws-device-id"; domain="sweetwater.com"; third-party=no; Secure=yes; HttpOnly=yes; SameSite=Lax; lifetime=365 days; value length=10; character set=digits
+C064 name="referral_url"; domain="www.make.com"; third-party=no; Secure=no; HttpOnly=no; SameSite=Lax; lifetime=89.9999 days; value length=0; character set=empty
+C155 name="AAMC_cbsi_0"; domain="maxpreps.com"; third-party=no; Secure=no; HttpOnly=no; SameSite=Lax; lifetime=180 days; value length=10; character set=other
+C184 name="IBERIACOM_COOKIES_ALERT"; domain="www.iberia.com"; third-party=no; Secure=no; HttpOnly=no; SameSite=Strict; lifetime=session; value length=5; character set=alphanumeric
+C138 name="clAnalyticsId"; domain="clover.com"; third-party=no; Secure=no; HttpOnly=no; SameSite=Lax; lifetime=400 days; value length=16; character set=digits
+C015 name="dce_sessionStart"; domain="www.pearson.com"; third-party=no; Secure=no; HttpOnly=no; SameSite=Lax; lifetime=session; value length=29; character set=other
+C124 name="IBERIACOM_PERSONALIZATION"; domain="www.iberia.com"; third-party=no; Secure=no; HttpOnly=no; SameSite=Strict; lifetime=session; value length=32; character set=other
+C126 name="__ps_did"; domain="freshworks.com"; third-party=yes; Secure=yes; HttpOnly=no; SameSite=None; lifetime=365 days; value length=42; character set=base64/base64url
+C265 name="leady_session_id"; domain="www.cra.cz"; third-party=no; Secure=no; HttpOnly=no; SameSite=Lax; lifetime=session; value length=36; character set=base64/base64url
+C171 name="salesPod"; domain="www.directv.com"; third-party=no; Secure=no; HttpOnly=no; SameSite=Lax; lifetime=session; value length=28; character set=base64/base64url
+C205 name="gpv_entry"; domain="nature.org"; third-party=no; Secure=no; HttpOnly=no; SameSite=Lax; lifetime=session; value length=4; character set=alphanumeric
+C069 name="ANFSession"; domain="www.abercrombie.com"; third-party=no; Secure=no; HttpOnly=no; SameSite=Lax; lifetime=session; value length=18; character set=digits
+C092 name="X_Language"; domain="insta360.com"; third-party=no; Secure=no; HttpOnly=no; SameSite=Lax; lifetime=365 days; value length=5; character set=base64/base64url
+C292 name="isEQTraffic"; domain="www.tractorsupply.com"; third-party=no; Secure=no; HttpOnly=no; SameSite=Lax; lifetime=session; value length=1; character set=alphanumeric
+C132 name="_fs_cd_cp_pRdRgnTnF68pCV2F"; domain="abercrombie.com"; third-party=no; Secure=yes; HttpOnly=yes; SameSite=Lax; lifetime=0.0416056 days; value length=240; character set=base64/base64url
+C169 name="adobeECID"; domain="www.nutanix.com"; third-party=no; Secure=no; HttpOnly=no; SameSite=Lax; lifetime=session; value length=38; character set=digits
+C055 name="xxuid"; domain="nexx360.io"; third-party=yes; Secure=yes; HttpOnly=yes; SameSite=None; lifetime=90 days; value length=36; character set=base64/base64url
+C063 name="activeCookieConsentCategories"; domain="tunein.com"; third-party=no; Secure=no; HttpOnly=no; SameSite=Lax; lifetime=400 days; value length=42; character set=other
+C075 name="BNC_FV_KEY_EXPIRE"; domain="binance.info"; third-party=no; Secure=no; HttpOnly=no; SameSite=Lax; lifetime=365 days; value length=13; character set=digits
+C016 name="et_uvi"; domain="rentalcars.com"; third-party=no; Secure=yes; HttpOnly=yes; SameSite=Lax; lifetime=390 days; value length=108; character set=other
+C180 name="EPUSERCOOKIE"; domain="infolinks.com"; third-party=yes; Secure=yes; HttpOnly=no; SameSite=None; lifetime=90 days; value length=16; character set=alphanumeric
+C235 name="multitouch_landing"; domain="www.bluehost.com"; third-party=yes; Secure=no; HttpOnly=no; SameSite=Lax; lifetime=365 days; value length=57; character set=other
+C163 name="pageNamecookie"; domain="www.redcross.org"; third-party=no; Secure=no; HttpOnly=no; SameSite=Lax; lifetime=0.0207755 days; value length=0; character set=empty
+C097 name="__pianoParams"; domain="blick.ch"; third-party=no; Secure=no; HttpOnly=no; SameSite=Lax; lifetime=session; value length=4; character set=alphanumeric
+C242 name="deliveryZipState"; domain="www.tractorsupply.com"; third-party=no; Secure=no; HttpOnly=no; SameSite=Lax; lifetime=session; value length=2; character set=hex
+C042 name="_MFB_"; domain="www.gucci.com"; third-party=no; Secure=no; HttpOnly=no; SameSite=Lax; lifetime=360 days; value length=124; character set=base64/base64url
+C076 name="_evga_dc3c"; domain="ama-assn.org"; third-party=no; Secure=yes; HttpOnly=no; SameSite=Lax; lifetime=400 days; value length=35; character set=other
+C116 name="_cars_web_key"; domain="www.cars.com"; third-party=no; Secure=yes; HttpOnly=yes; SameSite=Lax; lifetime=59.9999 days; value length=1566; character set=other
+C018 name="__stidv"; domain="sharethis.com"; third-party=yes; Secure=yes; HttpOnly=no; SameSite=None; lifetime=365 days; value length=1; character set=digits
+C246 name="ak_lat"; domain="ncl.com"; third-party=no; Secure=yes; HttpOnly=no; SameSite=Lax; lifetime=session; value length=7; character set=other
+C167 name="ens_adobewebsdk"; domain="www.britishairways.com"; third-party=no; Secure=yes; HttpOnly=no; SameSite=None; lifetime=400 days; value length=36; character set=base64/base64url
+C190 name="cp-sess"; domain="cancer.org"; third-party=no; Secure=no; HttpOnly=no; SameSite=Lax; lifetime=29.9999 days; value length=517; character set=other
+C224 name="ctc"; domain="scholastic.com"; third-party=no; Secure=no; HttpOnly=no; SameSite=Lax; lifetime=session; value length=13; character set=other
+C003 name="IIQthetradedeskCookieSync"; domain="intentiq.com"; third-party=yes; Secure=yes; HttpOnly=no; SameSite=None; lifetime=30 days; value length=19; character set=base64/base64url
+C066 name="journalist_profile_visits"; domain="muckrack.com"; third-party=no; Secure=yes; HttpOnly=no; SameSite=Lax; lifetime=89.9999 days; value length=1; character set=digits
+C295 name="data-pba-r"; domain="media.net"; third-party=yes; Secure=yes; HttpOnly=no; SameSite=None; lifetime=0.000104167 days; value length=1; character set=digits

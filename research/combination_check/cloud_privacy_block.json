@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "blocked": true,
+  "stage": "cloud-prompt preflight",
+  "forbiddenMatches": 11,
+  "cloudCallsMade": 0,
+  "dataTransmitted": false,
+  "coordinatorExited": true,
+  "valuesRecoverable": false,
+  "reason": "Section 11 requires a collision in a required artifact to block completion. Cookie values were retained in memory only and were lost when the coordinator exited, so the matches cannot be safely identified, waived, or rescanned.",
+  "disposition": "Preserve the frozen test and local results; do not call cloud AI; issue an incomplete Section 12 report and stop before Section 13."
+}

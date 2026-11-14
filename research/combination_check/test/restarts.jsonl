@@ -1,0 +1,4 @@
+{"restart":1,"acceptedBatches":84,"acceptedSites":336,"nextRank":3737,"inFlightBatchDiscarded":true,"attemptedSitesNotRevisited":true,"reason":"coordinator stopped to add final-artifact privacy scan"}
+{"restart":2,"acceptedBatches":131,"acceptedSites":524,"nextRank":3925,"inFlightBatchDiscarded":true,"attemptedSitesNotRevisited":true,"reason":"coordinator stopped to retain final-segment values through analysis"}
+{"restart":3,"acceptedBatches":258,"acceptedSites":1032,"nextRank":4433,"inFlightBatchDiscarded":true,"attemptedSitesNotRevisited":true,"reason":"coordinator stopped to add cloud prompt and reply privacy handshakes"}
+{"restart":4,"acceptedBatches":568,"acceptedSites":2272,"discardedSites":4,"nextRank":5677,"inFlightBatchDiscarded":true,"attemptedSitesNotRevisited":true,"reason":"privacy cross-scan rejected in-flight batch 569 before acceptance"}

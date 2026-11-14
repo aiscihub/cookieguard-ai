@@ -1,0 +1,4202 @@
+[
+  {
+    "id": "C242",
+    "name": "taboola_vmp",
+    "domain": "taboola.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 364.9999859605785,
+    "valueShape": {
+      "length": 21,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C204",
+    "name": "__attentive_id",
+    "domain": "talbots.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 389.9999537037037,
+    "valueShape": {
+      "length": 32,
+      "characterSet": "hex"
+    }
+  },
+  {
+    "id": "C144",
+    "name": "cookiebot-consent--preferences",
+    "domain": "www.utu.fi",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 1,
+      "characterSet": "digits"
+    }
+  },
+  {
+    "id": "C109",
+    "name": "pbjs_sharedId",
+    "domain": "huffpost.com",
+    "thirdParty": true,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 29.999953703703703,
+    "valueShape": {
+      "length": 36,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C158",
+    "name": "test_cookie",
+    "domain": "doubleclick.net",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": true,
+    "sameSite": "None",
+    "lifetimeDays": 0.010354369050926633,
+    "valueShape": {
+      "length": 18,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C248",
+    "name": "GLBE_SESS_ID",
+    "domain": "www.patou.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 399.99995425416637,
+    "valueShape": {
+      "length": 100,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C062",
+    "name": "__pnahc",
+    "domain": "www.inquirer.com",
+    "thirdParty": true,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 89.99996527777778,
+    "valueShape": {
+      "length": 1,
+      "characterSet": "digits"
+    }
+  },
+  {
+    "id": "C042",
+    "name": "pbjs-unifiedid",
+    "domain": "www.prevention.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 59.99994212962963,
+    "valueShape": {
+      "length": 151,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C194",
+    "name": "_dd_s_v2",
+    "domain": "tvn.pl",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "Strict",
+    "lifetimeDays": 364.99994938657517,
+    "valueShape": {
+      "length": 127,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C052",
+    "name": "countryCode",
+    "domain": "dc.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 2,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C178",
+    "name": "pmc_piano_reporting",
+    "domain": "robbreport.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 6.999918981481481,
+    "valueShape": {
+      "length": 197,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C006",
+    "name": "sbjs_migrations",
+    "domain": "cloudbeds.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 179.99991898148147,
+    "valueShape": {
+      "length": 17,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C141",
+    "name": "ax_visitor",
+    "domain": "babbel.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 364.99994212962963,
+    "valueShape": {
+      "length": 161,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C259",
+    "name": "__attentive_ss_referrer",
+    "domain": "michaelkors.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 0.020810185185185185,
+    "valueShape": {
+      "length": 7,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C200",
+    "name": "OAU",
+    "domain": "opera.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 365.0000051329395,
+    "valueShape": {
+      "length": 35,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C274",
+    "name": "rlas3",
+    "domain": "rlcdn.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 364.9999817804054,
+    "valueShape": {
+      "length": 44,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C271",
+    "name": "ipe_322_fov",
+    "domain": "www.hyundaiusa.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 29.99996527777778,
+    "valueShape": {
+      "length": 200,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C287",
+    "name": "WTPERSIST",
+    "domain": "dow.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 364.9999537037037,
+    "valueShape": {
+      "length": 0,
+      "characterSet": "empty"
+    }
+  },
+  {
+    "id": "C166",
+    "name": "ccpa",
+    "domain": "contextweb.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 29.99998017265013,
+    "valueShape": {
+      "length": 4,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C185",
+    "name": "ipc",
+    "domain": "pubmatic.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 3.7982499709835756e-05,
+    "valueShape": {
+      "length": 11,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C036",
+    "name": "AWSALB",
+    "domain": "tvn.pl",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 6.999973266041941,
+    "valueShape": {
+      "length": 124,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C063",
+    "name": "lrswap",
+    "domain": "www.whattoexpect.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 179.99994212962963,
+    "valueShape": {
+      "length": 1,
+      "characterSet": "digits"
+    }
+  },
+  {
+    "id": "C212",
+    "name": "SCMtmu",
+    "domain": "smaato.net",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 20.99997951551996,
+    "valueShape": {
+      "length": 10,
+      "characterSet": "hex"
+    }
+  },
+  {
+    "id": "C291",
+    "name": "ASP.NET_SessionId",
+    "domain": "www.pew.org",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": true,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 24,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C124",
+    "name": "s_getNewRepeat",
+    "domain": "mlb.com",
+    "thirdParty": true,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 29.99994212962963,
+    "valueShape": {
+      "length": 17,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C201",
+    "name": "adTrackingToken",
+    "domain": "www.synchrony.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 40,
+      "characterSet": "hex"
+    }
+  },
+  {
+    "id": "C026",
+    "name": "bitoIsSecure",
+    "domain": "bidr.io",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 394.79165240474595,
+    "valueShape": {
+      "length": 2,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C041",
+    "name": "re_sync",
+    "domain": "ads.yieldmo.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 364.99998921672506,
+    "valueShape": {
+      "length": 77,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C058",
+    "name": "seohostpl_session",
+    "domain": "seohost.pl",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": true,
+    "sameSite": "Lax",
+    "lifetimeDays": 0.08328197027798052,
+    "valueShape": {
+      "length": 342,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C168",
+    "name": "IMDSUC",
+    "domain": "infolinks.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 89.99999807351718,
+    "valueShape": {
+      "length": 32,
+      "characterSet": "hex"
+    }
+  },
+  {
+    "id": "C225",
+    "name": "ELQSTATUS",
+    "domain": "eloqua.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 394.9999502061114,
+    "valueShape": {
+      "length": 2,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C118",
+    "name": "forterToken",
+    "domain": "patou.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 399.9999537037037,
+    "valueShape": {
+      "length": 62,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C206",
+    "name": "dmd-sid4",
+    "domain": "aim-tag.hcn.health",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 118,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C266",
+    "name": "EQVSERCOOKIE",
+    "domain": "infolinks.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 89.99999354284671,
+    "valueShape": {
+      "length": 19,
+      "characterSet": "digits"
+    }
+  },
+  {
+    "id": "C069",
+    "name": "LPVID",
+    "domain": "hyundaiusa.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 364.9999652777778,
+    "valueShape": {
+      "length": 22,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C002",
+    "name": "selectedCountry",
+    "domain": "www.swatch.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 364.999940165927,
+    "valueShape": {
+      "length": 2,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C245",
+    "name": "i18n_locale",
+    "domain": "babbel.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 364.999932070231,
+    "valueShape": {
+      "length": 2,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C115",
+    "name": "pb_rtb_ev",
+    "domain": "contextweb.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 365.0000010025584,
+    "valueShape": {
+      "length": 73,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C061",
+    "name": "opt_out",
+    "domain": "postrelease.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 364.99999482238456,
+    "valueShape": {
+      "length": 1,
+      "characterSet": "digits"
+    }
+  },
+  {
+    "id": "C214",
+    "name": "trckCookie",
+    "domain": "accor.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 29.999949803970477,
+    "valueShape": {
+      "length": 132,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C231",
+    "name": "mCookie",
+    "domain": "mediawallahscript.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 400.00000810432766,
+    "valueShape": {
+      "length": 36,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C072",
+    "name": "lum",
+    "domain": "ladsp.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 399.99997932318183,
+    "valueShape": {
+      "length": 119,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C296",
+    "name": "GlobalE_Consent",
+    "domain": "www.patou.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 91,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C237",
+    "name": "khaos_p",
+    "domain": "rubiconproject.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 364.99997516279973,
+    "valueShape": {
+      "length": 16,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C297",
+    "name": "ORA_FPC",
+    "domain": "dow.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 399.99995820769556,
+    "valueShape": {
+      "length": 39,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C086",
+    "name": "jwt_refresh",
+    "domain": "hallmark.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 6.999936414686618,
+    "valueShape": {
+      "length": 914,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C001",
+    "name": "t_pt_gid",
+    "domain": "taboola.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 364.99994839855367,
+    "valueShape": {
+      "length": 49,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C091",
+    "name": "DotomiUser",
+    "domain": "dotomi.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 395.00000211177047,
+    "valueShape": {
+      "length": 64,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C057",
+    "name": "BIGipServerinhabitat_POOL",
+    "domain": "inhabitat.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": true,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 21,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C122",
+    "name": "__uin_i5",
+    "domain": "go.sonobi.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 0.04165962616878527,
+    "valueShape": {
+      "length": 1,
+      "characterSet": "digits"
+    }
+  },
+  {
+    "id": "C119",
+    "name": "contactRegionCookie",
+    "domain": "www.globalsign.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 16,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C064",
+    "name": "_algolia_user_token",
+    "domain": "www.c-and-a.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Strict",
+    "lifetimeDays": 29.99994212962963,
+    "valueShape": {
+      "length": 36,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C174",
+    "name": "khaos",
+    "domain": "rubiconproject.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 364.99996918679386,
+    "valueShape": {
+      "length": 16,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C127",
+    "name": "chsn_cnsnt",
+    "domain": "thepointsguy.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 399.99994616374926,
+    "valueShape": {
+      "length": 56,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C027",
+    "name": "SCMaps",
+    "domain": "smaato.net",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 20.999989446133927,
+    "valueShape": {
+      "length": 10,
+      "characterSet": "hex"
+    }
+  },
+  {
+    "id": "C080",
+    "name": "akacd_ncaa_prod",
+    "domain": "ncaa.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 0.0013032388300807387,
+    "valueShape": {
+      "length": 52,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C279",
+    "name": "fbz_trk_sess",
+    "domain": "financebuzz.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 0.02078353081036497,
+    "valueShape": {
+      "length": 20,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C247",
+    "name": "BIGipServerinhabitat-varnish_POOL",
+    "domain": "inhabitat.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": true,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 21,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C093",
+    "name": "av-tp-bsw",
+    "domain": "ads.avads.net",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 1.9999640639126302,
+    "valueShape": {
+      "length": 1,
+      "characterSet": "digits"
+    }
+  },
+  {
+    "id": "C005",
+    "name": "_sn_n",
+    "domain": "www.clerk.io",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 365.0,
+    "valueShape": {
+      "length": 124,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C094",
+    "name": "userZip",
+    "domain": "espn.co.uk",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 5,
+      "characterSet": "digits"
+    }
+  },
+  {
+    "id": "C268",
+    "name": "SSOD",
+    "domain": "pokemoncenter.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 364.9999402444341,
+    "valueShape": {
+      "length": 38,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C044",
+    "name": "geo_country",
+    "domain": "www.troweprice.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 0.041603253936326065,
+    "valueShape": {
+      "length": 2,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C196",
+    "name": "cookie",
+    "domain": "onaudience.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 364.9999897123156,
+    "valueShape": {
+      "length": 16,
+      "characterSet": "hex"
+    }
+  },
+  {
+    "id": "C053",
+    "name": "__qca",
+    "domain": "mlb.com",
+    "thirdParty": true,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 391.99994212962963,
+    "valueShape": {
+      "length": 39,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C146",
+    "name": "sequelSessionId",
+    "domain": "www.healthstream.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 0.9999421296296296,
+    "valueShape": {
+      "length": 44,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C145",
+    "name": "s_tbm",
+    "domain": "marshalls.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 0.020775462962962964,
+    "valueShape": {
+      "length": 4,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C232",
+    "name": "TrpConsent",
+    "domain": "troweprice.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 399.9999434589236,
+    "valueShape": {
+      "length": 443,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C021",
+    "name": "fpViewed",
+    "domain": "chime.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 4,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C267",
+    "name": "Metadata_session_id",
+    "domain": "eightfold.ai",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 0.020775462962962964,
+    "valueShape": {
+      "length": 19,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C016",
+    "name": "__106_cid",
+    "domain": "bfmio.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 364.9999607413649,
+    "valueShape": {
+      "length": 36,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C190",
+    "name": "optin_ses.69.d86e",
+    "domain": "group.bnpparibas",
+    "thirdParty": true,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 0.020787037037037038,
+    "valueShape": {
+      "length": 1,
+      "characterSet": "digits"
+    }
+  },
+  {
+    "id": "C095",
+    "name": "_ml_id",
+    "domain": "inquirer.com",
+    "thirdParty": true,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 399.9999738936678,
+    "valueShape": {
+      "length": 71,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C140",
+    "name": "pmc_atlasmg_fpc",
+    "domain": "robbreport.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": true,
+    "sameSite": "Lax",
+    "lifetimeDays": 364.9999461722457,
+    "valueShape": {
+      "length": 63,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C083",
+    "name": "context-profile-id",
+    "domain": "www.algolia.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 364.999949440498,
+    "valueShape": {
+      "length": 36,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C049",
+    "name": "globalIdleExpirationTime",
+    "domain": "sika.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 13,
+      "characterSet": "digits"
+    }
+  },
+  {
+    "id": "C070",
+    "name": "abLdr",
+    "domain": "cdn.taboola.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 0.1249480335055678,
+    "valueShape": {
+      "length": 2,
+      "characterSet": "digits"
+    }
+  },
+  {
+    "id": "C060",
+    "name": "LaSID",
+    "domain": "www.webhouse.sk",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 32,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C239",
+    "name": "psmSessionId",
+    "domain": "ncaa.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 364.99994212962963,
+    "valueShape": {
+      "length": 36,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C240",
+    "name": "dw_cookies_accepted",
+    "domain": "www.talbots.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 1,
+      "characterSet": "digits"
+    }
+  },
+  {
+    "id": "C256",
+    "name": "s_ecid",
+    "domain": "frontier.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 399.99996234966375,
+    "valueShape": {
+      "length": 46,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C067",
+    "name": "unisess",
+    "domain": "www.gettyimages.co.uk",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": true,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 254,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C007",
+    "name": "nlbi_8705",
+    "domain": "piraeusbank.gr",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": true,
+    "sameSite": "None",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 48,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C043",
+    "name": "s_cp_url",
+    "domain": "marshalls.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 0,
+      "characterSet": "empty"
+    }
+  },
+  {
+    "id": "C030",
+    "name": "__cf_ob",
+    "domain": "player.vimeo.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 835,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C175",
+    "name": "linc.web_chat.ids",
+    "domain": "web-chat.letslinc.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": true,
+    "sameSite": "None",
+    "lifetimeDays": 399.99996758683966,
+    "valueShape": {
+      "length": 64,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C009",
+    "name": "vst",
+    "domain": "gumgum.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 364.9999599633228,
+    "valueShape": {
+      "length": 38,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C096",
+    "name": "pageNamecookie",
+    "domain": "www.redcrossblood.org",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 0.020775462962962964,
+    "valueShape": {
+      "length": 0,
+      "characterSet": "empty"
+    }
+  },
+  {
+    "id": "C142",
+    "name": "ShoppingListCount",
+    "domain": "www.publix.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 0.0068865740740740745,
+    "valueShape": {
+      "length": 1,
+      "characterSet": "digits"
+    }
+  },
+  {
+    "id": "C132",
+    "name": "__cq_uuid",
+    "domain": "hallmark.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 394.9999596957642,
+    "valueShape": {
+      "length": 26,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C234",
+    "name": "OMGSession",
+    "domain": "track.omguk.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 0.020782203610848496,
+    "valueShape": {
+      "length": 63,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C056",
+    "name": "contribZone",
+    "domain": "accor.com",
+    "thirdParty": true,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 364.9999245063657,
+    "valueShape": {
+      "length": 3,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C082",
+    "name": "1_C_48",
+    "domain": "sync.aniview.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 9.99997014452462,
+    "valueShape": {
+      "length": 10,
+      "characterSet": "hex"
+    }
+  },
+  {
+    "id": "C089",
+    "name": "store.sig",
+    "domain": "www.sigmaaldrich.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 399.9999030696656,
+    "valueShape": {
+      "length": 27,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C090",
+    "name": "INMUSC",
+    "domain": "infolinks.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 90.00000257489582,
+    "valueShape": {
+      "length": 42,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C037",
+    "name": "ext_medium",
+    "domain": "www.domestika.org",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 399.9999487187272,
+    "valueShape": {
+      "length": 4,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C170",
+    "name": "irld",
+    "domain": "education.pxf.io",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": true,
+    "sameSite": "None",
+    "lifetimeDays": 179.9999513233453,
+    "valueShape": {
+      "length": 51,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C157",
+    "name": "akaalb_mar_prod_alb",
+    "domain": "static.marshalls.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": true,
+    "sameSite": "None",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 53,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C203",
+    "name": "avvo_cache_context",
+    "domain": "www.avvo.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 10,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C011",
+    "name": "crl8.fpcuid",
+    "domain": "talbots.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 364.9999537037037,
+    "valueShape": {
+      "length": 36,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C161",
+    "name": "_shopify_essential",
+    "domain": "society6.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": true,
+    "sameSite": "Lax",
+    "lifetimeDays": 364.99992635070726,
+    "valueShape": {
+      "length": 93,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C032",
+    "name": "ucid",
+    "domain": "7054541.ucas.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": true,
+    "sameSite": "None",
+    "lifetimeDays": 364.9999605591319,
+    "valueShape": {
+      "length": 22,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C033",
+    "name": "_meta_cross_domain_direct_id",
+    "domain": "electronics.sony.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 364.9999652777778,
+    "valueShape": {
+      "length": 36,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C066",
+    "name": "aam_uuid",
+    "domain": "nbcwashington.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 99.99996527777778,
+    "valueShape": {
+      "length": 38,
+      "characterSet": "digits"
+    }
+  },
+  {
+    "id": "C238",
+    "name": "repeat_visitor",
+    "domain": "ktla.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 364.9999537037037,
+    "valueShape": {
+      "length": 20,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C264",
+    "name": "nQ_userVisitId",
+    "domain": "www.epidemicsound.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 0.020787037037037038,
+    "valueShape": {
+      "length": 36,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C048",
+    "name": "sequelUserId",
+    "domain": "www.healthstream.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 364.99994212962963,
+    "valueShape": {
+      "length": 41,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C019",
+    "name": "RefCountry",
+    "domain": "www.michaelkors.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 29.999925411133855,
+    "valueShape": {
+      "length": 4,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C085",
+    "name": "_td",
+    "domain": "jysk.de",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 399.99994175406243,
+    "valueShape": {
+      "length": 36,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C218",
+    "name": "zuuid_k",
+    "domain": "sportradarserving.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 363.99997384018644,
+    "valueShape": {
+      "length": 1,
+      "characterSet": "digits"
+    }
+  },
+  {
+    "id": "C280",
+    "name": "igodigitalstdomain",
+    "domain": "igodigital.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 0.04162573017455913,
+    "valueShape": {
+      "length": 5,
+      "characterSet": "digits"
+    }
+  },
+  {
+    "id": "C262",
+    "name": "dgag-seo-visit-referrer",
+    "domain": "desjardins.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 0.020763888888888887,
+    "valueShape": {
+      "length": 6,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C035",
+    "name": "i",
+    "domain": "openx.net",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 364.9999889703233,
+    "valueShape": {
+      "length": 47,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C229",
+    "name": "s_dslv",
+    "domain": "barclaycardus.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 399.9999445463303,
+    "valueShape": {
+      "length": 13,
+      "characterSet": "digits"
+    }
+  },
+  {
+    "id": "C230",
+    "name": "iuid",
+    "domain": "mygaru.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 92.99998434028967,
+    "valueShape": {
+      "length": 100,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C189",
+    "name": "__tbc",
+    "domain": "inquirer.com",
+    "thirdParty": true,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 399.9999731204052,
+    "valueShape": {
+      "length": 74,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C125",
+    "name": "location_data",
+    "domain": "www.housebeautiful.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 61,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C252",
+    "name": "session_uuid",
+    "domain": "songkick.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 36,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C243",
+    "name": "SNS",
+    "domain": "www.clerk.io",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 1,
+      "characterSet": "digits"
+    }
+  },
+  {
+    "id": "C295",
+    "name": "experiment_buckets",
+    "domain": "spareroom.co.uk",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 399.99993730819335,
+    "valueShape": {
+      "length": 21,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C128",
+    "name": "IPE_LandingTime",
+    "domain": "www.hyundaiusa.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 13,
+      "characterSet": "digits"
+    }
+  },
+  {
+    "id": "C221",
+    "name": "__eoi",
+    "domain": "elledecor.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 179.9999537037037,
+    "valueShape": {
+      "length": 77,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C084",
+    "name": "cookieLanguage",
+    "domain": "www.michaelkors.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": true,
+    "sameSite": "None",
+    "lifetimeDays": 364.9999254104385,
+    "valueShape": {
+      "length": 5,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C258",
+    "name": "ver",
+    "domain": "postrelease.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 364.9999670614357,
+    "valueShape": {
+      "length": 1,
+      "characterSet": "digits"
+    }
+  },
+  {
+    "id": "C087",
+    "name": "am-uid",
+    "domain": "admixer.net",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": true,
+    "sameSite": "None",
+    "lifetimeDays": 89.9999482684141,
+    "valueShape": {
+      "length": 32,
+      "characterSet": "hex"
+    }
+  },
+  {
+    "id": "C031",
+    "name": "bh",
+    "domain": "yandex.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 399.9999537037037,
+    "valueShape": {
+      "length": 128,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C188",
+    "name": "_an_uid",
+    "domain": "www.logmein.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 6.999953703703704,
+    "valueShape": {
+      "length": 1,
+      "characterSet": "digits"
+    }
+  },
+  {
+    "id": "C192",
+    "name": "_attn_bopd_",
+    "domain": "talbots.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 389.99994212962963,
+    "valueShape": {
+      "length": 4,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C160",
+    "name": ".AspNetCore.Antiforgery.cdV5uW_Ejgc",
+    "domain": "www.mind.org.uk",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": true,
+    "sameSite": "Strict",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 155,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C136",
+    "name": "st_ssp",
+    "domain": "seedtag.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": true,
+    "sameSite": "None",
+    "lifetimeDays": 29.999956587348823,
+    "valueShape": {
+      "length": 284,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C236",
+    "name": "ts",
+    "domain": "creativecdn.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 364.9999822831485,
+    "valueShape": {
+      "length": 10,
+      "characterSet": "digits"
+    }
+  },
+  {
+    "id": "C250",
+    "name": "_sfid_846e",
+    "domain": "www.colgate.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "Strict",
+    "lifetimeDays": 399.999948654826,
+    "valueShape": {
+      "length": 271,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C075",
+    "name": "language.sig",
+    "domain": "www.sigmaaldrich.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 399.9999030685756,
+    "valueShape": {
+      "length": 27,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C008",
+    "name": "smc_ls_session",
+    "domain": "frontier.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 13,
+      "characterSet": "digits"
+    }
+  },
+  {
+    "id": "C152",
+    "name": "__pvi",
+    "domain": "robbreport.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 0.9999305555555555,
+    "valueShape": {
+      "length": 100,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C209",
+    "name": "tv_UICR",
+    "domain": "tremorhub.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 29.999959690554274,
+    "valueShape": {
+      "length": 40,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C261",
+    "name": "_tq_id.TV-7290183636-1.2d1e",
+    "domain": "www.wickes.co.uk",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 399.999944183992,
+    "valueShape": {
+      "length": 42,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C193",
+    "name": "llum",
+    "domain": "ortb.net",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 365.00000267135323,
+    "valueShape": {
+      "length": 36,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C169",
+    "name": "OTAdditionalConsentString",
+    "domain": "larousse.fr",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 179.99994212962963,
+    "valueShape": {
+      "length": 3561,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C277",
+    "name": "RT",
+    "domain": "www.tamgrt.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 400.0000016404385,
+    "valueShape": {
+      "length": 91,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C028",
+    "name": "seerses",
+    "domain": "www.healio.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 0.020775462962962964,
+    "valueShape": {
+      "length": 1,
+      "characterSet": "hex"
+    }
+  },
+  {
+    "id": "C164",
+    "name": "infolink",
+    "domain": "pxl.iqm.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 29.99999115521985,
+    "valueShape": {
+      "length": 20,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C153",
+    "name": "ACC_ACCFirstLoad",
+    "domain": "britishgas.co.uk",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 10,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C017",
+    "name": "tglr_sess_count",
+    "domain": "thepointsguy.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 399.9999461629269,
+    "valueShape": {
+      "length": 1,
+      "characterSet": "digits"
+    }
+  },
+  {
+    "id": "C182",
+    "name": "xedpxl",
+    "domain": "driftpixel.live",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": true,
+    "sameSite": "None",
+    "lifetimeDays": 6.999984835452504,
+    "valueShape": {
+      "length": 73,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C098",
+    "name": "userLocalization",
+    "domain": "fairmont.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 364.99993722334506,
+    "valueShape": {
+      "length": 2,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C233",
+    "name": "wenGlobalWeb",
+    "domain": "wendys.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 63,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C039",
+    "name": "ipe.322.pageViewedCount",
+    "domain": "www.hyundaiusa.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 1,
+      "characterSet": "digits"
+    }
+  },
+  {
+    "id": "C012",
+    "name": "AWSALBCORS",
+    "domain": "www.corning.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 6.999927362686506,
+    "valueShape": {
+      "length": 124,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C220",
+    "name": "pxid",
+    "domain": "3d2fb0bd-52fc-4b75-aaf5-2d436c172540.prmutv.co",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": true,
+    "sameSite": "None",
+    "lifetimeDays": 91.99995746486165,
+    "valueShape": {
+      "length": 36,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C004",
+    "name": "gpv_p1",
+    "domain": "electronics.sony.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 0,
+      "characterSet": "empty"
+    }
+  },
+  {
+    "id": "C159",
+    "name": "cds-client-device",
+    "domain": "www.cirquedusoleil.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 7,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C055",
+    "name": "__mub",
+    "domain": "www.prozis.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "Strict",
+    "lifetimeDays": 0.001333994917847492,
+    "valueShape": {
+      "length": 53,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C275",
+    "name": "OTGPPConsent",
+    "domain": "www.king5.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 364.99994212962963,
+    "valueShape": {
+      "length": 22,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C283",
+    "name": "io_token_7c6a6574-f011-4c9a-abdd-9894a102ccef",
+    "domain": "mpsnare.iesnare.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": true,
+    "sameSite": "None",
+    "lifetimeDays": 364.99995576259164,
+    "valueShape": {
+      "length": 44,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C022",
+    "name": "store",
+    "domain": "www.sigmaaldrich.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 13.999930555555556,
+    "valueShape": {
+      "length": 4,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C078",
+    "name": "elqCustomerGUID",
+    "domain": "www.iqvia.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 36,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C167",
+    "name": "page.previousPage",
+    "domain": "bancopan.com.br",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 30,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C171",
+    "name": "usprivacy",
+    "domain": "www.9news.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 364.99994212962963,
+    "valueShape": {
+      "length": 4,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C282",
+    "name": "gmid",
+    "domain": "gigya.nascar.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": true,
+    "sameSite": "None",
+    "lifetimeDays": 364.9999480535752,
+    "valueShape": {
+      "length": 176,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C251",
+    "name": "_awl",
+    "domain": "king5.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 394.99995447916564,
+    "valueShape": {
+      "length": 74,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C126",
+    "name": "geoCC",
+    "domain": "whattoexpect.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 399.9999874804169,
+    "valueShape": {
+      "length": 2,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C299",
+    "name": "_lr_sampling_rate",
+    "domain": "www.wfaa.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 7.0,
+    "valueShape": {
+      "length": 3,
+      "characterSet": "digits"
+    }
+  },
+  {
+    "id": "C040",
+    "name": "lidc",
+    "domain": "linkedin.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 0.999971001945712,
+    "valueShape": {
+      "length": 108,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C077",
+    "name": "wisepops_visits",
+    "domain": "grist.org",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 399.9999586357066,
+    "valueShape": {
+      "length": 40,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C097",
+    "name": "__mguid_",
+    "domain": "mediago.io",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 364.9999522854857,
+    "valueShape": {
+      "length": 32,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C129",
+    "name": "geoData",
+    "domain": "dc.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 51,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C180",
+    "name": "_clsk",
+    "domain": "synchrony.com",
+    "thirdParty": true,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 0.9999652777777778,
+    "valueShape": {
+      "length": 56,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C138",
+    "name": "_ym_isad",
+    "domain": "dailysabah.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 0.8332986111111111,
+    "valueShape": {
+      "length": 1,
+      "characterSet": "digits"
+    }
+  },
+  {
+    "id": "C197",
+    "name": "permutive-id",
+    "domain": "prevention.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 180.95827546296297,
+    "valueShape": {
+      "length": 36,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C123",
+    "name": "slb_route",
+    "domain": "www.algolia.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": true,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 32,
+      "characterSet": "hex"
+    }
+  },
+  {
+    "id": "C181",
+    "name": "_gegeo",
+    "domain": "talbots.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "Strict",
+    "lifetimeDays": 0.9999563123837665,
+    "valueShape": {
+      "length": 232,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C199",
+    "name": "dtLatC",
+    "domain": "bancopan.com.br",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 1,
+      "characterSet": "digits"
+    }
+  },
+  {
+    "id": "C112",
+    "name": "ApplicationGatewayAffinity",
+    "domain": "www.swiss.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 32,
+      "characterSet": "hex"
+    }
+  },
+  {
+    "id": "C249",
+    "name": "content",
+    "domain": "www.colgate.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 13,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C100",
+    "name": "cfg_fpid",
+    "domain": "citizensbank.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 399.99992592902646,
+    "valueShape": {
+      "length": 36,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C179",
+    "name": "_pxhd",
+    "domain": "www.simon.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 364.9999428430089,
+    "valueShape": {
+      "length": 197,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C088",
+    "name": "_omappvs",
+    "domain": "www.algolia.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 0.013819444444444445,
+    "valueShape": {
+      "length": 13,
+      "characterSet": "digits"
+    }
+  },
+  {
+    "id": "C215",
+    "name": "FPLC",
+    "domain": "cloudbeds.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 0.8332802023159133,
+    "valueShape": {
+      "length": 144,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C047",
+    "name": "panoramaIdType",
+    "domain": "king5.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 0.999988425925926,
+    "valueShape": {
+      "length": 10,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C071",
+    "name": "__sp",
+    "domain": "hl.co.uk",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 0.010363491574923197,
+    "valueShape": {
+      "length": 54,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C172",
+    "name": "csuuid",
+    "domain": "primis.tech",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 24.99998613231436,
+    "valueShape": {
+      "length": 13,
+      "characterSet": "hex"
+    }
+  },
+  {
+    "id": "C092",
+    "name": "lucid_decisions",
+    "domain": "lucidmotors.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 0.0034009338087505766,
+    "valueShape": {
+      "length": 45,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C208",
+    "name": "csync",
+    "domain": "smartadserver.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 29.999992980948754,
+    "valueShape": {
+      "length": 43,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C213",
+    "name": "mls_spid.d418",
+    "domain": "mlssoccer.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 399.9999828798379,
+    "valueShape": {
+      "length": 152,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C110",
+    "name": "geo",
+    "domain": "networksolutions.com",
+    "thirdParty": true,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 364.99994212962963,
+    "valueShape": {
+      "length": 5,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C217",
+    "name": "profileToken",
+    "domain": "www.sigmaaldrich.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 14.999903069930497,
+    "valueShape": {
+      "length": 708,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C068",
+    "name": "extole_token",
+    "domain": "refer.talbots.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": true,
+    "sameSite": "None",
+    "lifetimeDays": 364.99996224024227,
+    "valueShape": {
+      "length": 26,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C059",
+    "name": "zd_cs_pm",
+    "domain": "zdbb.net",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 29.999968958772996,
+    "valueShape": {
+      "length": 1,
+      "characterSet": "digits"
+    }
+  },
+  {
+    "id": "C278",
+    "name": "timeOnSite",
+    "domain": "husqvarna.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 0.02082175925925926,
+    "valueShape": {
+      "length": 4,
+      "characterSet": "digits"
+    }
+  },
+  {
+    "id": "C292",
+    "name": "FPC",
+    "domain": "sleeper.com",
+    "thirdParty": true,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 6.99994212962963,
+    "valueShape": {
+      "length": 36,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C300",
+    "name": "ttcsid",
+    "domain": "swatch.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 389.99994212962963,
+    "valueShape": {
+      "length": 80,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C222",
+    "name": "bat_tracking_data_alt",
+    "domain": "bringatrailer.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 399.9999076727419,
+    "valueShape": {
+      "length": 92,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C276",
+    "name": "A3",
+    "domain": "yahoo.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": true,
+    "sameSite": "None",
+    "lifetimeDays": 365.2499669987957,
+    "valueShape": {
+      "length": 94,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C224",
+    "name": "apt.sid",
+    "domain": "gainsight.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 0.020787037037037038,
+    "valueShape": {
+      "length": 40,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C050",
+    "name": "isReturningUser",
+    "domain": "www.imperva.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 364.9999305555556,
+    "valueShape": {
+      "length": 4,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C116",
+    "name": "bito",
+    "domain": "bidr.io",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 394.7916706639694,
+    "valueShape": {
+      "length": 22,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C137",
+    "name": "uids_grid",
+    "domain": "sparteo.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 364.9999771093163,
+    "valueShape": {
+      "length": 52,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C107",
+    "name": "dt",
+    "domain": "udmserve.net",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 364.99996418082054,
+    "valueShape": {
+      "length": 36,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C025",
+    "name": "_parsely_session",
+    "domain": "weddingwire.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 0.020775462962962964,
+    "valueShape": {
+      "length": 122,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C162",
+    "name": "udid",
+    "domain": "investing.com",
+    "thirdParty": true,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 364.99992912989524,
+    "valueShape": {
+      "length": 32,
+      "characterSet": "hex"
+    }
+  },
+  {
+    "id": "C013",
+    "name": "gob_cookie",
+    "domain": "inmobi.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 365.00000488128376,
+    "valueShape": {
+      "length": 3,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C143",
+    "name": "irtps",
+    "domain": "sjv.io",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": true,
+    "sameSite": "None",
+    "lifetimeDays": 0.9999501056941571,
+    "valueShape": {
+      "length": 1,
+      "characterSet": "digits"
+    }
+  },
+  {
+    "id": "C065",
+    "name": "ASLBSA",
+    "domain": "www.eatright.org",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": true,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 68,
+      "characterSet": "hex"
+    }
+  },
+  {
+    "id": "C210",
+    "name": "_gcl_au",
+    "domain": "webhouse.sk",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 89.99995370370371,
+    "valueShape": {
+      "length": 73,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C014",
+    "name": "localPageviewsCount",
+    "domain": "www.sika.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 1,
+      "characterSet": "digits"
+    }
+  },
+  {
+    "id": "C076",
+    "name": "org",
+    "domain": "accor.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 0.010341173785704153,
+    "valueShape": {
+      "length": 3,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C281",
+    "name": "UserMatchHistory",
+    "domain": "linkedin.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 29.999919227107807,
+    "valueShape": {
+      "length": 78,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C269",
+    "name": "_vwo_uuid",
+    "domain": "znanylekarz.pl",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 365.24244212962964,
+    "valueShape": {
+      "length": 33,
+      "characterSet": "hex"
+    }
+  },
+  {
+    "id": "C103",
+    "name": "SSSC",
+    "domain": "pokemoncenter.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 110,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C134",
+    "name": "personalization_id",
+    "domain": "twitter.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 399.99994972261567,
+    "valueShape": {
+      "length": 29,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C260",
+    "name": "nvl_v29",
+    "domain": "electronics.sony.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 0,
+      "characterSet": "empty"
+    }
+  },
+  {
+    "id": "C186",
+    "name": "_cs_s",
+    "domain": "accor.com",
+    "thirdParty": true,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 0.020833333333333332,
+    "valueShape": {
+      "length": 21,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C198",
+    "name": "TDCPM",
+    "domain": "adsrvr.org",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 364.9999474738649,
+    "valueShape": {
+      "length": 132,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C290",
+    "name": "_axwrt",
+    "domain": "babbel.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 364.99994212962963,
+    "valueShape": {
+      "length": 36,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C191",
+    "name": "COOKIE_SUPPORT",
+    "domain": "www.voegol.com.br",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": true,
+    "sameSite": "Lax",
+    "lifetimeDays": 364.999907470856,
+    "valueShape": {
+      "length": 4,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C073",
+    "name": "amuid2_p",
+    "domain": "a-mx.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": true,
+    "sameSite": "None",
+    "lifetimeDays": 364.99999377486057,
+    "valueShape": {
+      "length": 36,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C074",
+    "name": "_knxq_",
+    "domain": "brand-display.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 399.9999730570476,
+    "valueShape": {
+      "length": 62,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C045",
+    "name": "CUSTOMERCOOKIEID",
+    "domain": "192.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": true,
+    "sameSite": "Lax",
+    "lifetimeDays": 29.99992848341388,
+    "valueShape": {
+      "length": 54,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C156",
+    "name": "chop_id",
+    "domain": "logmein.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 59.99994212962963,
+    "valueShape": {
+      "length": 20,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C120",
+    "name": "currentCountry",
+    "domain": "www.rentcafe.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 399.9999369285421,
+    "valueShape": {
+      "length": 3,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C253",
+    "name": "visme_locale",
+    "domain": "visme.co",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 5,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C207",
+    "name": "utag_main_ses_id",
+    "domain": "freepeople.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 0.020775462962962964,
+    "valueShape": {
+      "length": 27,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C285",
+    "name": "NID",
+    "domain": "google.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": true,
+    "sameSite": "None",
+    "lifetimeDays": 182.99992271503365,
+    "valueShape": {
+      "length": 315,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C223",
+    "name": "coveo_visitorId",
+    "domain": "dow.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 365.24244212962964,
+    "valueShape": {
+      "length": 36,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C202",
+    "name": "TDID",
+    "domain": "adsrvr.org",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 365.00000245716564,
+    "valueShape": {
+      "length": 36,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C147",
+    "name": "at_check",
+    "domain": "deutschepost.de",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 4,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C284",
+    "name": "newBrowser",
+    "domain": "www.roberthalf.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 13,
+      "characterSet": "digits"
+    }
+  },
+  {
+    "id": "C273",
+    "name": "SCMindex",
+    "domain": "smaato.net",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 20.999969321238222,
+    "valueShape": {
+      "length": 10,
+      "characterSet": "hex"
+    }
+  },
+  {
+    "id": "C023",
+    "name": "_pubcid",
+    "domain": "king5.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 269.99997685185184,
+    "valueShape": {
+      "length": 36,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C235",
+    "name": "sync",
+    "domain": "3lift.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 29.99998580692267,
+    "valueShape": {
+      "length": 160,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C148",
+    "name": "sd-session-id",
+    "domain": "live.rezync.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": true,
+    "sameSite": "None",
+    "lifetimeDays": 389.9999450385405,
+    "valueShape": {
+      "length": 154,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C135",
+    "name": "fw_flu",
+    "domain": "www.freshworks.com",
+    "thirdParty": true,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 364.99994212962963,
+    "valueShape": {
+      "length": 27,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C227",
+    "name": "SCMill",
+    "domain": "smaato.net",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 20.999974090186534,
+    "valueShape": {
+      "length": 10,
+      "characterSet": "hex"
+    }
+  },
+  {
+    "id": "C219",
+    "name": "aa_session_id",
+    "domain": "avvo.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 0.02078263895931067,
+    "valueShape": {
+      "length": 38,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C099",
+    "name": "copr_red",
+    "domain": "copper6.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": true,
+    "sameSite": "None",
+    "lifetimeDays": 13.999976217164486,
+    "valueShape": {
+      "length": 17,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C029",
+    "name": "__attentive_session_id",
+    "domain": "talbots.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 0.020787037037037038,
+    "valueShape": {
+      "length": 32,
+      "characterSet": "hex"
+    }
+  },
+  {
+    "id": "C121",
+    "name": "_wt.user-2392083",
+    "domain": "halfords.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 89.99997685185186,
+    "valueShape": {
+      "length": 275,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C155",
+    "name": "_hly_gvid",
+    "domain": "hushly.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 399.9999455160179,
+    "valueShape": {
+      "length": 36,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C244",
+    "name": "_biz_nA",
+    "domain": "lightspeedhq.com",
+    "thirdParty": true,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 364.9999537037037,
+    "valueShape": {
+      "length": 1,
+      "characterSet": "digits"
+    }
+  },
+  {
+    "id": "C270",
+    "name": "_rdt_uuid",
+    "domain": "frontier.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "Strict",
+    "lifetimeDays": 89.99995370370371,
+    "valueShape": {
+      "length": 50,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C289",
+    "name": "avcid-sov-uid",
+    "domain": "richaudience.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": true,
+    "sameSite": "None",
+    "lifetimeDays": 89.99998477803337,
+    "valueShape": {
+      "length": 24,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C105",
+    "name": "dgag-source-medium",
+    "domain": "desjardins.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 0.020763888888888887,
+    "valueShape": {
+      "length": 6,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C117",
+    "name": "_tfpvi",
+    "domain": "www.larousse.fr",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 364.99997685185184,
+    "valueShape": {
+      "length": 58,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C195",
+    "name": "LSKey-c$CookieConsentPolicy",
+    "domain": "algolia.my.site.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 364.99992869479235,
+    "valueShape": {
+      "length": 3,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C263",
+    "name": "__utmt",
+    "domain": "loseit.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 0.0068865740740740745,
+    "valueShape": {
+      "length": 1,
+      "characterSet": "digits"
+    }
+  },
+  {
+    "id": "C003",
+    "name": "Hm_lvt_b3f3b0d1331cbbc38a89657600125f8e",
+    "domain": "nielseniq.com",
+    "thirdParty": true,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 364.99994212962963,
+    "valueShape": {
+      "length": 10,
+      "characterSet": "digits"
+    }
+  },
+  {
+    "id": "C272",
+    "name": "Tld-kampyleUserSession",
+    "domain": "pge.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 364.9999537037037,
+    "valueShape": {
+      "length": 13,
+      "characterSet": "digits"
+    }
+  },
+  {
+    "id": "C018",
+    "name": "sbjs_current_add",
+    "domain": "cloudbeds.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 179.99991898148147,
+    "valueShape": {
+      "length": 102,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C205",
+    "name": "sv_sid",
+    "domain": "securedvisit.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 364.9999771860407,
+    "valueShape": {
+      "length": 25,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C294",
+    "name": "fw_se",
+    "domain": "www.freshworks.com",
+    "thirdParty": true,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 364.99994212962963,
+    "valueShape": {
+      "length": 4,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C113",
+    "name": "gig_bootstrap_3_s9qLgEJnnMMKsxqhMV1fgiRcax0L89AK9W4MMIh9wu5H7R_NwnwhK3894HCOpuPj",
+    "domain": "nascar.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 364.99994212962963,
+    "valueShape": {
+      "length": 10,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C187",
+    "name": "_trvb",
+    "domain": "www.trustradius.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": true,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 24,
+      "characterSet": "hex"
+    }
+  },
+  {
+    "id": "C211",
+    "name": "_ripgplsjne",
+    "domain": "www.publix.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 399.99992765800823,
+    "valueShape": {
+      "length": 36,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C102",
+    "name": "_trva",
+    "domain": "www.trustradius.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": true,
+    "sameSite": "Lax",
+    "lifetimeDays": 364.99995261751116,
+    "valueShape": {
+      "length": 24,
+      "characterSet": "hex"
+    }
+  },
+  {
+    "id": "C038",
+    "name": "BVBRANDSID",
+    "domain": "colgate.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 0.020763888888888887,
+    "valueShape": {
+      "length": 36,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C081",
+    "name": "t_gid",
+    "domain": "taboola.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 365.0000071908092,
+    "valueShape": {
+      "length": 49,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C298",
+    "name": "aqusr",
+    "domain": "nc0006rtbc.nikon.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 364.99994336220954,
+    "valueShape": {
+      "length": 23,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C020",
+    "name": "ABTastySession",
+    "domain": "logmein.com",
+    "thirdParty": true,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 0.020775462962962964,
+    "valueShape": {
+      "length": 69,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C015",
+    "name": "OMGID",
+    "domain": "track.omguk.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 59.99994886988291,
+    "valueShape": {
+      "length": 68,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C131",
+    "name": "E",
+    "domain": "e-planning.net",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 399.99999762317094,
+    "valueShape": {
+      "length": 16,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C101",
+    "name": "audienceList",
+    "domain": "www.synchrony.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 2,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C226",
+    "name": "tluid",
+    "domain": "3lift.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 89.99999510796258,
+    "valueShape": {
+      "length": 22,
+      "characterSet": "digits"
+    }
+  },
+  {
+    "id": "C254",
+    "name": "dtm_token",
+    "domain": "troweprice.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 394.99994212962963,
+    "valueShape": {
+      "length": 48,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C228",
+    "name": "nexus-web-application-identifier",
+    "domain": "www.ncaa.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 399.9999305888762,
+    "valueShape": {
+      "length": 50,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C176",
+    "name": "client-origin",
+    "domain": "payscale.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 6,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C034",
+    "name": "sc_site",
+    "domain": "www.goto.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": true,
+    "sameSite": "None",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 12,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C106",
+    "name": "XSRF-TOKEN",
+    "domain": "www.domain.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": true,
+    "sameSite": "Strict",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 10,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C177",
+    "name": "zd_cs_ru",
+    "domain": "zdbb.net",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 0.08328320327456351,
+    "valueShape": {
+      "length": 1,
+      "characterSet": "digits"
+    }
+  },
+  {
+    "id": "C265",
+    "name": "algolia_website_utm_params",
+    "domain": "algolia.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "Strict",
+    "lifetimeDays": 179.99994212962963,
+    "valueShape": {
+      "length": 71,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C114",
+    "name": "_clck",
+    "domain": "avvo.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 364.99994212962963,
+    "valueShape": {
+      "length": 27,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C108",
+    "name": "bscookie",
+    "domain": "www.linkedin.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": true,
+    "sameSite": "None",
+    "lifetimeDays": 364.99995916491855,
+    "valueShape": {
+      "length": 88,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C246",
+    "name": "__utmz",
+    "domain": "webhouse.sk",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 182.49994212962963,
+    "valueShape": {
+      "length": 70,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C286",
+    "name": "GAD",
+    "domain": "tvn.adocean.pl",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 394.9999694169451,
+    "valueShape": {
+      "length": 92,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C183",
+    "name": "HC",
+    "domain": "ftd.agency",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": true,
+    "sameSite": "None",
+    "lifetimeDays": 364.99998842592595,
+    "valueShape": {
+      "length": 37,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C216",
+    "name": "pbjs-unifiedid_cst",
+    "domain": "www.prevention.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 59.99994212962963,
+    "valueShape": {
+      "length": 12,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C079",
+    "name": "callback",
+    "domain": "id5-sync.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 0.0034756327199715153,
+    "valueShape": {
+      "length": 160,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C051",
+    "name": "v2_151",
+    "domain": "revcontent.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 29.999986534998925,
+    "valueShape": {
+      "length": 40,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C149",
+    "name": "_lr_retry_request",
+    "domain": "www.wfaa.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 0.04162037037037037,
+    "valueShape": {
+      "length": 4,
+      "characterSet": "alphanumeric"
+    }
+  },
+  {
+    "id": "C111",
+    "name": "clinch-sid",
+    "domain": "clinch.co",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 29.997065333806805,
+    "valueShape": {
+      "length": 47,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C257",
+    "name": "_cs_c",
+    "domain": "accaglobal.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 395.41662037037037,
+    "valueShape": {
+      "length": 1,
+      "characterSet": "digits"
+    }
+  },
+  {
+    "id": "C293",
+    "name": "gckp",
+    "domain": "cxense.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": true,
+    "sameSite": "None",
+    "lifetimeDays": 364.999980546214,
+    "valueShape": {
+      "length": 42,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C241",
+    "name": "sasd",
+    "domain": "smartadserver.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 0.9999702330789081,
+    "valueShape": {
+      "length": 163,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C150",
+    "name": "av-mid",
+    "domain": "ads.avads.net",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 383.24996198288267,
+    "valueShape": {
+      "length": 36,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C130",
+    "name": "initialTrafficSource",
+    "domain": "ferrari.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 27.999918981481482,
+    "valueShape": {
+      "length": 46,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C151",
+    "name": "nabSegmentation",
+    "domain": "nielseniq.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 119.99994212962963,
+    "valueShape": {
+      "length": 277,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C054",
+    "name": "userProgress",
+    "domain": "app.chime.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 0.9999470447555736,
+    "valueShape": {
+      "length": 19,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C133",
+    "name": "inqSession_10006573",
+    "domain": "centrica-uk.digital.nuance.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 364.99997685185184,
+    "valueShape": {
+      "length": 660,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C139",
+    "name": "eud",
+    "domain": "rfihub.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 389.9999784273958,
+    "valueShape": {
+      "length": 71,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C255",
+    "name": "FPAU",
+    "domain": "accor.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 89.99999420109998,
+    "valueShape": {
+      "length": 24,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C288",
+    "name": "_sfid_1a3a",
+    "domain": "accor.com",
+    "thirdParty": true,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 400.0000056551838,
+    "valueShape": {
+      "length": 62,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C104",
+    "name": "wdi",
+    "domain": "yelp.ca",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": true,
+    "sameSite": "None",
+    "lifetimeDays": 364.999970201574,
+    "valueShape": {
+      "length": 57,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C046",
+    "name": "gtm_history",
+    "domain": "www.docsity.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 0.020775462962962964,
+    "valueShape": {
+      "length": 86,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C024",
+    "name": "ssi",
+    "domain": "sitescout.com",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 365.0000060370482,
+    "valueShape": {
+      "length": 50,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C010",
+    "name": "_chartbeat2",
+    "domain": "6abc.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 394.9999652777778,
+    "valueShape": {
+      "length": 59,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C165",
+    "name": "anProfile",
+    "domain": "pro-market.net",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "None",
+    "lifetimeDays": 179.99995751821885,
+    "valueShape": {
+      "length": 133,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C173",
+    "name": "visitor_id",
+    "domain": "knotch.it",
+    "thirdParty": true,
+    "secure": true,
+    "httpOnly": true,
+    "sameSite": "None",
+    "lifetimeDays": 364.9999589032404,
+    "valueShape": {
+      "length": 36,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C163",
+    "name": "__lt__cid",
+    "domain": "swatch.com",
+    "thirdParty": false,
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 399.9999535321527,
+    "valueShape": {
+      "length": 36,
+      "characterSet": "base64/base64url"
+    }
+  },
+  {
+    "id": "C184",
+    "name": "_bti",
+    "domain": "simon.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": 364.99994212962963,
+    "valueShape": {
+      "length": 324,
+      "characterSet": "other"
+    }
+  },
+  {
+    "id": "C154",
+    "name": "s_ppv",
+    "domain": "michaelkors.com",
+    "thirdParty": false,
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "Lax",
+    "lifetimeDays": null,
+    "valueShape": {
+      "length": 17,
+      "characterSet": "other"
+    }
+  }
+]

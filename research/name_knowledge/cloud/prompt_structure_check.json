@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "amendment": "A1",
+  "passed": true,
+  "basis": "exact fixed-template rendering of frozen structured rows",
+  "dataBeyondFrozenRows": false,
+  "batches": [
+    {
+      "batch": 1,
+      "rows": 50,
+      "exact": true,
+      "sha256": "65e8e06cfcd83c11fe01889eaff052e25c147f9daf2db2f3f26fe86008d79e45"
+    },
+    {
+      "batch": 2,
+      "rows": 50,
+      "exact": true,
+      "sha256": "415b7d7711c9accb8a0828b15ad4e95732163575fb90782cedd8e4c5ece38170"
+    },
+    {
+      "batch": 3,
+      "rows": 50,
+      "exact": true,
+      "sha256": "b8d780ecc38f4bde1518f22f82cd34ed3a334d00083a4cb98056ea1aed73d1b1"
+    },
+    {
+      "batch": 4,
+      "rows": 50,
+      "exact": true,
+      "sha256": "4cdcd30aecdba03c41c00dc2d010311fe0c67c1bfacb160a42d3f81357c351f2"
+    },
+    {
+      "batch": 5,
+      "rows": 50,
+      "exact": true,
+      "sha256": "a1d39328c4f04ea19d981586a9cdfc9739a3e02299efe4fc69f5114de9c18a26"
+    },
+    {
+      "batch": 6,
+      "rows": 50,
+      "exact": true,
+      "sha256": "03988baec3c3f0dd35505f662339ae73f5024df4ec6d47527d4f05d7cb543c2c"
+    }
+  ]
+}

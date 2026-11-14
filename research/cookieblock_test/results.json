@@ -1,0 +1,579 @@
+{
+  "schemaVersion": 1,
+  "runDate": "2026-11-10T07:10:32.505184+00:00",
+  "cookieCount": 304422,
+  "websiteCount": 28089,
+  "scoringElapsedSeconds": 310.485,
+  "analysisElapsedSeconds": 6.652724027633667,
+  "trackerDetection": {
+    "eligible": 304422,
+    "excludedOtherLabels": 0,
+    "views": {
+      "A": {
+        "model": {
+          "precision": {
+            "value": 0.8194763114108066,
+            "ci95": [
+              0.8160854067697091,
+              0.8227597544873804
+            ]
+          },
+          "recall": {
+            "value": 0.4680531796764803,
+            "ci95": [
+              0.4658054077056533,
+              0.47019691107181427
+            ]
+          },
+          "f1": {
+            "value": 0.5958053712641189,
+            "ci95": [
+              0.5933802903399478,
+              0.5980574793039991
+            ]
+          },
+          "balancedAccuracy": {
+            "value": 0.6353912353749114,
+            "ci95": [
+              0.6335687265594679,
+              0.637093409736488
+            ]
+          }
+        },
+        "rules": {
+          "precision": {
+            "value": 0.9643545658417595,
+            "ci95": [
+              0.9619435379053366,
+              0.9668318634169596
+            ]
+          },
+          "recall": {
+            "value": 0.24520072426797915,
+            "ci95": [
+              0.24190371019920898,
+              0.2485443824462444
+            ]
+          },
+          "f1": {
+            "value": 0.3909873983091402,
+            "ci95": [
+              0.3867683952918024,
+              0.39525958046953047
+            ]
+          },
+          "balancedAccuracy": {
+            "value": 0.6139301738014218,
+            "ci95": [
+              0.6122203922557634,
+              0.6156708714327236
+            ]
+          }
+        },
+        "f1Difference": {
+          "value": 0.20481797295497872,
+          "ci95": [
+            0.19948351998967861,
+            0.21028815431350312
+          ]
+        },
+        "records": 304422,
+        "clusters": 28089
+      },
+      "B": {
+        "model": {
+          "precision": {
+            "value": 0.5961012311901505,
+            "ci95": [
+              0.5796922930317826,
+              0.6129439945320845
+            ]
+          },
+          "recall": {
+            "value": 0.26836027713625865,
+            "ci95": [
+              0.2580045320177444,
+              0.27906684107511426
+            ]
+          },
+          "f1": {
+            "value": 0.37010298333156383,
+            "ci95": [
+              0.3577892769932343,
+              0.3815730650931335
+            ]
+          },
+          "balancedAccuracy": {
+            "value": 0.5514191014272745,
+            "ci95": [
+              0.5450218573251837,
+              0.5587448011041347
+            ]
+          }
+        },
+        "rules": {
+          "precision": {
+            "value": 0.9350594227504244,
+            "ci95": [
+              0.9244445387662705,
+              0.9446166074581401
+            ]
+          },
+          "recall": {
+            "value": 0.3391839876828329,
+            "ci95": [
+              0.32836703411537577,
+              0.3498865219703166
+            ]
+          },
+          "f1": {
+            "value": 0.49779685911196475,
+            "ci95": [
+              0.4858171094760987,
+              0.5093716404506042
+            ]
+          },
+          "balancedAccuracy": {
+            "value": 0.6588701998680457,
+            "ci95": [
+              0.6529601570272504,
+              0.6643585799844532
+            ]
+          }
+        },
+        "f1Difference": {
+          "value": -0.12769387578040092,
+          "ci95": [
+            -0.146032421503561,
+            -0.10869883786904805
+          ]
+        },
+        "records": 13630,
+        "clusters": 13630
+      },
+      "C": {
+        "model": {
+          "precision": {
+            "value": 0.5952380952380952,
+            "ci95": [
+              0.5776757611249899,
+              0.6134474079486868
+            ]
+          },
+          "recall": {
+            "value": 0.26727610784009914,
+            "ci95": [
+              0.2571101934648671,
+              0.2774051046495004
+            ]
+          },
+          "f1": {
+            "value": 0.3689050470487596,
+            "ci95": [
+              0.3568305350310207,
+              0.38066266872072835
+            ]
+          },
+          "balancedAccuracy": {
+            "value": 0.5507639547254757,
+            "ci95": [
+              0.5439111256166207,
+              0.5575600289327438
+            ]
+          }
+        },
+        "rules": {
+          "precision": {
+            "value": 0.9357173265219242,
+            "ci95": [
+              0.9253474757835226,
+              0.9452938457161822
+            ]
+          },
+          "recall": {
+            "value": 0.3405639913232104,
+            "ci95": [
+              0.32896159243348394,
+              0.35197133713863316
+            ]
+          },
+          "f1": {
+            "value": 0.4993752129955697,
+            "ci95": [
+              0.48657392907676517,
+              0.5115571570154512
+            ]
+          },
+          "balancedAccuracy": {
+            "value": 0.6596136333611954,
+            "ci95": [
+              0.6536297528059404,
+              0.665370427702818
+            ]
+          }
+        },
+        "f1Difference": {
+          "value": -0.1304701659468101,
+          "ci95": [
+            -0.14952065526108335,
+            -0.11174018695524841
+          ]
+        },
+        "records": 13531,
+        "clusters": 13531
+      }
+    },
+    "mainVerdict": "loss",
+    "modelWrongRulesRight": [
+      [
+        "_gid",
+        17745
+      ],
+      [
+        "optanonalertboxclosed",
+        11811
+      ],
+      [
+        "_gat",
+        5406
+      ],
+      [
+        "vuid",
+        324
+      ],
+      [
+        "hubspotutk",
+        304
+      ],
+      [
+        "machine_last_seen",
+        229
+      ],
+      [
+        "maid",
+        229
+      ],
+      [
+        "m",
+        216
+      ],
+      [
+        "anx",
+        204
+      ],
+      [
+        "_clck",
+        152
+      ],
+      [
+        "_abck",
+        151
+      ],
+      [
+        "ajs_anonymous_id",
+        149
+      ],
+      [
+        "__stripe_mid",
+        149
+      ],
+      [
+        "ai_user",
+        124
+      ],
+      [
+        "messagesutk",
+        117
+      ],
+      [
+        "__zlcmid",
+        115
+      ],
+      [
+        "driftt_aid",
+        111
+      ],
+      [
+        "_ga",
+        103
+      ],
+      [
+        "_gcl_au",
+        101
+      ],
+      [
+        "_pin_unauth",
+        98
+      ]
+    ],
+    "rulesWrongModelRight": [
+      [
+        "ide",
+        8556
+      ],
+      [
+        "_fbp",
+        7784
+      ],
+      [
+        "bcookie",
+        2756
+      ],
+      [
+        "_hjid",
+        2735
+      ],
+      [
+        "_gcl_au",
+        2608
+      ],
+      [
+        "usermatchhistory",
+        2507
+      ],
+      [
+        "bscookie",
+        2477
+      ],
+      [
+        "muid",
+        2011
+      ],
+      [
+        "uuid2",
+        1380
+      ],
+      [
+        "__utmz",
+        1057
+      ],
+      [
+        "__utma",
+        1031
+      ],
+      [
+        "__gads",
+        1006
+      ],
+      [
+        "personalization_id",
+        968
+      ],
+      [
+        "__hstc",
+        956
+      ],
+      [
+        "nid",
+        871
+      ],
+      [
+        "tuuid",
+        849
+      ],
+      [
+        "a3",
+        843
+      ],
+      [
+        "uuid",
+        807
+      ],
+      [
+        "tdid",
+        725
+      ],
+      [
+        "loc",
+        707
+      ]
+    ]
+  },
+  "testsSaved": {
+    "eligibleWebsites": 6717,
+    "perApp": {
+      "grafana": {
+        "model": {
+          "mixes": 50,
+          "meanTests": 2.82,
+          "medianTests": 2.0,
+          "within3Share": 0.68,
+          "medianMixSize": 15.5
+        },
+        "rules": {
+          "mixes": 50,
+          "meanTests": 1.44,
+          "medianTests": 1.0,
+          "within3Share": 1.0,
+          "medianMixSize": 15.5
+        },
+        "random": {
+          "mixes": 50,
+          "meanTests": 9.3,
+          "medianTests": 8.25,
+          "within3Share": 0.1875308959918539,
+          "medianMixSize": 15.5
+        }
+      },
+      "jupyter": {
+        "model": {
+          "mixes": 50,
+          "meanTests": 10.2,
+          "medianTests": 9.0,
+          "within3Share": 0.0,
+          "medianMixSize": 16.0
+        },
+        "rules": {
+          "mixes": 50,
+          "meanTests": 1.14,
+          "medianTests": 1.0,
+          "within3Share": 1.0,
+          "medianMixSize": 16.0
+        },
+        "random": {
+          "mixes": 50,
+          "meanTests": 9.36,
+          "medianTests": 8.5,
+          "within3Share": 0.18504963044540934,
+          "medianMixSize": 16.0
+        }
+      },
+      "datasette": {
+        "model": {
+          "mixes": 50,
+          "meanTests": 2.66,
+          "medianTests": 3.0,
+          "within3Share": 0.86,
+          "medianMixSize": 15.0
+        },
+        "rules": {
+          "mixes": 50,
+          "meanTests": 10.5,
+          "medianTests": 9.0,
+          "within3Share": 0.04,
+          "medianMixSize": 15.0
+        },
+        "random": {
+          "mixes": 50,
+          "meanTests": 9.31,
+          "medianTests": 8.0,
+          "within3Share": 0.18792240992333326,
+          "medianMixSize": 15.0
+        }
+      },
+      "code-server": {
+        "model": {
+          "mixes": 50,
+          "meanTests": 1.1,
+          "medianTests": 1.0,
+          "within3Share": 1.0,
+          "medianMixSize": 16.0
+        },
+        "rules": {
+          "mixes": 50,
+          "meanTests": 1.64,
+          "medianTests": 1.0,
+          "within3Share": 0.96,
+          "medianMixSize": 16.0
+        },
+        "random": {
+          "mixes": 50,
+          "meanTests": 9.1,
+          "medianTests": 8.5,
+          "within3Share": 0.19385985991618646,
+          "medianMixSize": 16.0
+        }
+      },
+      "django-admin": {
+        "model": {
+          "mixes": 50,
+          "meanTests": 1.54,
+          "medianTests": 1.0,
+          "within3Share": 1.0,
+          "medianMixSize": 16.5
+        },
+        "rules": {
+          "mixes": 50,
+          "meanTests": 1.06,
+          "medianTests": 1.0,
+          "within3Share": 1.0,
+          "medianMixSize": 16.5
+        },
+        "random": {
+          "mixes": 50,
+          "meanTests": 9.41,
+          "medianTests": 8.75,
+          "within3Share": 0.18263034360957495,
+          "medianMixSize": 16.5
+        }
+      }
+    },
+    "overall": {
+      "model": {
+        "mixes": 250,
+        "meanTests": 3.664,
+        "medianTests": 2.0,
+        "within3Share": 0.708,
+        "medianMixSize": 16.0
+      },
+      "rules": {
+        "mixes": 250,
+        "meanTests": 3.156,
+        "medianTests": 1.0,
+        "within3Share": 0.8,
+        "medianMixSize": 16.0
+      },
+      "random": {
+        "mixes": 250,
+        "meanTests": 9.296,
+        "medianTests": 8.5,
+        "within3Share": 0.18739862797727158,
+        "medianMixSize": 16.0
+      }
+    }
+  },
+  "valueCheck": {
+    "at": "2026-11-10T07:09:37.221Z",
+    "filesChecked": 34,
+    "valuesOfLengthAtLeast8Held": 730090,
+    "filesContainingAValue": 0,
+    "filesContainingSerializedValue": 0,
+    "filesWithIncidentalSubstringMatch": 33,
+    "incidentalSubstringFiles": [
+      "INSPECT.md",
+      "PROTOCOL.md",
+      "predictions/chunk-000.jsonl",
+      "predictions/chunk-001.jsonl",
+      "predictions/chunk-002.jsonl",
+      "predictions/chunk-003.jsonl",
+      "predictions/chunk-004.jsonl",
+      "predictions/chunk-005.jsonl",
+      "predictions/chunk-006.jsonl",
+      "predictions/chunk-007.jsonl",
+      "predictions/chunk-008.jsonl",
+      "predictions/chunk-009.jsonl",
+      "predictions/chunk-010.jsonl",
+      "predictions/chunk-011.jsonl",
+      "predictions/chunk-012.jsonl",
+      "predictions/chunk-013.jsonl",
+      "predictions/chunk-014.jsonl",
+      "predictions/chunk-015.jsonl",
+      "predictions/chunk-016.jsonl",
+      "predictions/chunk-017.jsonl",
+      "predictions/chunk-018.jsonl",
+      "predictions/chunk-019.jsonl",
+      "predictions/chunk-020.jsonl",
+      "predictions/chunk-021.jsonl",
+      "predictions/chunk-022.jsonl",
+      "predictions/chunk-023.jsonl",
+      "predictions/chunk-024.jsonl",
+      "predictions/chunk-025.jsonl",
+      "predictions/chunk-026.jsonl",
+      "predictions/chunk-027.jsonl",
+      "predictions/chunk-028.jsonl",
+      "predictions/chunk-029.jsonl",
+      "predictions/chunk-030.jsonl"
+    ],
+    "method": "No output schema has a value field; raw substring matches were classified as incidental name/domain/numeric overlap, per the pre-study clarification. Cookie values are referenced only by the in-memory leak set."
+  }
+}

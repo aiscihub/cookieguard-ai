@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "parityPassed": true,
+  "selectionEras": [
+    2021,
+    2026
+  ],
+  "candidates": {
+    "K2": {
+      "threshold": {
+        "t": 0.57
+      },
+      "meanBalancedAccuracy": 0.708411221083966,
+      "eraBalancedAccuracy": [
+        0.6816188436830836,
+        0.7352035984848485
+      ]
+    },
+    "K3": {
+      "threshold": {
+        "tLow": 0.31,
+        "tHigh": 0.57
+      },
+      "meanBalancedAccuracy": 0.7167544823908247,
+      "eraBalancedAccuracy": [
+        0.6861841541755889,
+        0.7473248106060606
+      ]
+    },
+    "K4": {
+      "threshold": {
+        "t": 0.4
+      },
+      "meanBalancedAccuracy": 0.7073962682905068,
+      "eraBalancedAccuracy": [
+        0.6770321199143469,
+        0.7377604166666667
+      ]
+    },
+    "K5": {
+      "threshold": {
+        "t": 0.51
+      },
+      "meanBalancedAccuracy": 0.7106463635958082,
+      "eraBalancedAccuracy": [
+        0.6726895074946467,
+        0.7486032196969697
+      ]
+    }
+  },
+  "eligibleWithin005": [
+    "K3"
+  ],
+  "selected": "K3",
+  "selectionRule": "within 0.005 prefer K2, K3, K4, K5",
+  "baseRates": {
+    "2021": {
+      "unweighted": {
+        "rows": 717,
+        "tracker": 263,
+        "notTracker": 454,
+        "trackerRate": 0.3668061366806137,
+        "notTrackerRate": 0.6331938633193863
+      },
+      "effectiveWeighted": {
+        "trackerRate": 0.5,
+        "notTrackerRate": 0.5
+      }
+    },
+    "2026": {
+      "unweighted": {
+        "rows": 599,
+        "tracker": 441,
+        "notTracker": 158,
+        "trackerRate": 0.7362270450751253,
+        "notTrackerRate": 0.2637729549248748
+      },
+      "effectiveWeighted": {
+        "trackerRate": 0.5,
+        "notTrackerRate": 0.5
+      }
+    }
+  }
+}
