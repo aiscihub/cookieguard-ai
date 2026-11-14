@@ -1,5 +1,7 @@
 name: CookieGuard CI public beta release gate
 on:
+  # Refresh PRs use GITHUB_TOKEN; ci.py explicitly dispatches this required CI.
+  workflow_dispatch:
   push:
   pull_request:
     branches: [main]

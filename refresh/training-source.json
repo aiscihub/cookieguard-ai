@@ -1,0 +1,8 @@
+{
+  "assetName": "training-pool-2021.jsonl.gz",
+  "rows": 304422,
+  "schemaVersion": 1,
+  "sha256": "f90843ce3bd02287a6c89cba1d9cd2b840b1a16c15479294436055c7f09e3b6a",
+  "uploadApproved": true,
+  "url": "https://github.com/aiscihub/cookieguard-ai/releases/download/refresh-inputs-2021/training-pool-2021.jsonl.gz"
+}

@@ -1,0 +1,182 @@
+name: Monthly cookie dataset and candidate refresh
+on:
+  schedule:
+    - cron: '0 2 1 * *'
+  workflow_dispatch:
+    inputs:
+      sites:
+        description: 'Sites to sample (1–10000)'
+        type: number
+        default: 10000
+      shards:
+        description: 'Shards (1–16, at most the site count)'
+        type: number
+        default: 16
+      dry_run:
+        description: 'Evaluate only; no dataset or model PR'
+        type: boolean
+        default: true
+permissions:
+  contents: read
+concurrency:
+  group: monthly-refresh
+  cancel-in-progress: false
+env:
+  COOKIEGUARD_USAGE_METRICS: '0'
+  DO_NOT_TRACK: '1'
+  ORT_DISABLE_TELEMETRY: '1'
+  ANONYMIZED_TELEMETRY: 'false'
+  BROWSER_USE_CLOUD_SYNC: 'false'
+  BROWSER_USE_DISABLE_EXTENSIONS: '1'
+jobs:
+  frame:
+    if: github.ref == 'refs/heads/main' && github.run_attempt == 1
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    outputs:
+      matrix: ${{ steps.frame.outputs.matrix }}
+      month: ${{ steps.frame.outputs.month }}
+      shards: ${{ steps.frame.outputs.shards }}
+      dry_run: ${{ steps.frame.outputs.dry_run }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: '3.12'
+      - name: Approved asset, exclusions, frozen frame, and durable reservation
+        id: frame
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python refresh/ci.py prepare
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: frame
+          path: refresh/.work/run/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 90
+  crawl:
+    needs: frame
+    if: github.run_attempt == 1
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      max-parallel: 8
+      matrix: ${{ fromJSON(needs.frame.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - run: npm ci --no-audit --no-fund
+      - run: npm ci --prefix refresh --no-audit --no-fund
+      - run: npx --no-install playwright install --with-deps chromium
+      - uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
+        with:
+          name: frame
+          path: refresh/.work/run
+      - name: Crawl one reserved shard once
+        env:
+          REFRESH_SHARD: ${{ matrix.shard }}
+          REFRESH_SHARDS: ${{ needs.frame.outputs.shards }}
+        run: node refresh/crawl.mjs --shard "$REFRESH_SHARD" --of "$REFRESH_SHARDS"
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        if: always()
+        with:
+          name: shard-${{ matrix.shard }}
+          path: refresh/.work/run/shards/shard-${{ matrix.shard }}/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 90
+  evaluate:
+    needs: [frame, crawl]
+    if: always() && needs.frame.result == 'success' && github.run_attempt == 1
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      REFRESH_MONTH: ${{ needs.frame.outputs.month }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: '3.12'
+      - run: npm ci --no-audit --no-fund
+      - run: npm ci --prefix refresh --no-audit --no-fund
+      - run: npx --no-install playwright install --with-deps chromium
+      - run: node integrations/python/scripts/vendor_engine.mjs
+      - run: python -m pip install -r refresh/requirements.lock -r refresh/requirements-browser.txt -e './integrations/python[test]'
+      - run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+      - run: python refresh/fetch_training.py
+      - uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
+        with:
+          name: frame
+          path: refresh/.work/run
+      - uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
+        with:
+          pattern: shard-*
+          path: refresh/.work/run/shards
+      - run: node --test refresh/tests/core.test.mjs refresh/tests/network.test.mjs
+      - run: node --test refresh/tests/browser.test.mjs
+      - run: python -m unittest discover -s refresh/tests -v
+      - run: python refresh/merge.py
+      - run: python refresh/evaluate.py --month "$REFRESH_MONTH" --phase baseline
+      - run: python refresh/train.py --month "$REFRESH_MONTH"
+      - run: python refresh/evaluate.py --month "$REFRESH_MONTH" --phase candidate
+      - run: python refresh/canaries.py
+      - run: python refresh/gate.py --release "data/releases/$REFRESH_MONTH"
+      - name: Scan every deliverable before upload
+        run: python refresh/privacy_audit.py --release "data/releases/$REFRESH_MONTH"
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: evaluated-refresh
+          path: |
+            refresh/.work/run/
+            refresh/state/crawled_domains.txt
+            data/releases/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 90
+  publish:
+    needs: [frame, evaluate]
+    if: needs.frame.outputs.dry_run == 'false' && github.run_attempt == 1
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
+        with:
+          name: evaluated-refresh
+          path: .
+      # The training asset is audited by hash too, so restore it before the final verification.
+      - run: python refresh/fetch_training.py
+      - name: First-run drafts; later dataset auto-merge; every model requires a person
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python refresh/ci.py publish

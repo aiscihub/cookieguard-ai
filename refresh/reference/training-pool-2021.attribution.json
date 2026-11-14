@@ -1,0 +1,145 @@
+{
+  "asset": "training-pool-2021.jsonl.gz",
+  "attribution": "Bollinger, Kubicek, Cotrini, Basin. Automating Cookie Consent and GDPR Violation Detection. USENIX Security 2022.",
+  "excludedCredentialLikeNames": 0,
+  "featureFiles": [
+    {
+      "file": "chunk-000.jsonl",
+      "sha256": "034be90ae37483ea2b9b7b092117824c2bf08dd5424750d4d4a0b14aee4cf0a9"
+    },
+    {
+      "file": "chunk-001.jsonl",
+      "sha256": "e5afb8a368ea5c57543ab57018dd8912a49680b830bbeeeb98e77460de971b3c"
+    },
+    {
+      "file": "chunk-002.jsonl",
+      "sha256": "3291931252f9645e0dc38a53ca390f4575b7637df618ec759270987675dbcda0"
+    },
+    {
+      "file": "chunk-003.jsonl",
+      "sha256": "093ef16270f5d49101b0d14fdac28acaca912d75d447b5936b65cb110085fda8"
+    },
+    {
+      "file": "chunk-004.jsonl",
+      "sha256": "2bd7cad23db0eae9d6c6dbff0465249b71a3b5b43ed7500b4357eb85772df1bd"
+    },
+    {
+      "file": "chunk-005.jsonl",
+      "sha256": "bb9fe5e4440af718c2cd564bf8ad8189dea0cf055640a1e55d2879186a9a0eb7"
+    },
+    {
+      "file": "chunk-006.jsonl",
+      "sha256": "a8527f392e9241688d10cef4a8764c502ab4275b19df8bd4fd5b609f9562661b"
+    },
+    {
+      "file": "chunk-007.jsonl",
+      "sha256": "7beaf8d30517162d381f9b918ea558ea25a653d5dcb7a05c02edb894dc0791b5"
+    },
+    {
+      "file": "chunk-008.jsonl",
+      "sha256": "f16cb3569ba29cb53ecfb9fe571b72e9a09a05973303c75c336042f30fa608dc"
+    },
+    {
+      "file": "chunk-009.jsonl",
+      "sha256": "12501c0d037c35fe3edfad971e7b9e294ace8cf62a4ee32683ff0bb457e8de65"
+    },
+    {
+      "file": "chunk-010.jsonl",
+      "sha256": "a8e8759aa201d5f3d144a1b27956eefb225194c7c8e0752b545555ce71eed055"
+    },
+    {
+      "file": "chunk-011.jsonl",
+      "sha256": "06a937b655bf60791ae0c874b5904c166a2c2810e2b2610d3b166dbac26cc1c2"
+    },
+    {
+      "file": "chunk-012.jsonl",
+      "sha256": "520af66c8f66e089a08335631e4d3f424cf13e6f917f5408a1961f12ffb84584"
+    },
+    {
+      "file": "chunk-013.jsonl",
+      "sha256": "fe78183d5f4b0dd8bce4451c8c6624ea33ad8291dad95c978c6aabf614a1ad84"
+    },
+    {
+      "file": "chunk-014.jsonl",
+      "sha256": "9a64bc3f551891b33aeaa5d6d0015f6c022c3f6dc3728694575e304fe846a50d"
+    },
+    {
+      "file": "chunk-015.jsonl",
+      "sha256": "ceb1faf49b65fa4f43d8713ddac2f3a466009ac51c35ce21796de74afb6717b0"
+    },
+    {
+      "file": "chunk-016.jsonl",
+      "sha256": "c7af4630e0d0ef5b4395ef95844f7426b0cda3025ed7ed5a1fbae00e53dba81c"
+    },
+    {
+      "file": "chunk-017.jsonl",
+      "sha256": "5d23253c796da27c74ae266aa4c0fbf8926346a9590063d70aefbef35e318ef7"
+    },
+    {
+      "file": "chunk-018.jsonl",
+      "sha256": "9b97695c53e818ea4dbabf9ed12cd1cde68c22a54d95aff95ba56faaf739097e"
+    },
+    {
+      "file": "chunk-019.jsonl",
+      "sha256": "d0c253a7871df1c300883296f1a529e45db664426c5bceee97619345357f4edb"
+    },
+    {
+      "file": "chunk-020.jsonl",
+      "sha256": "eef46d8d025f44c09632f9d923921f295b65d799c7d5c1ffda5a0dc2584d87a8"
+    },
+    {
+      "file": "chunk-021.jsonl",
+      "sha256": "920140f0681a20713c3e1b7ba0aef75e3eeda47ce737752b74ad7c456d4327bc"
+    },
+    {
+      "file": "chunk-022.jsonl",
+      "sha256": "56707c92061f84ba1dce513c22e4e7f530154ee6e76c68efdcfa9b097d80db9d"
+    },
+    {
+      "file": "chunk-023.jsonl",
+      "sha256": "3ed41e00166cfb9f092bd0df20ec357765b28809f57e0183e8f6e5f38fd22c8d"
+    },
+    {
+      "file": "chunk-024.jsonl",
+      "sha256": "daa092bee8b43e75bb3d5b2d36604becf207cd1deb02e8acd65bedffc3637301"
+    },
+    {
+      "file": "chunk-025.jsonl",
+      "sha256": "8a95509bb2934b25ea8ffd02c5aac07ce3002552e8f4de3d36efef061a6d6c7a"
+    },
+    {
+      "file": "chunk-026.jsonl",
+      "sha256": "0c12595260f6b72edf838bc4d8ea82f043a37b518a93a2ed66e8abcf0e747551"
+    },
+    {
+      "file": "chunk-027.jsonl",
+      "sha256": "6642a1fb1e84447f4d2dd241c2b929a628d1d904df39882908000806c0fddfb2"
+    },
+    {
+      "file": "chunk-028.jsonl",
+      "sha256": "a7119dee308d023395ad9ce17b1501e939c6429f22e9f8d85c9d13ae273e6af9"
+    },
+    {
+      "file": "chunk-029.jsonl",
+      "sha256": "616c3fdce1fba913946686f6f7495e38563a080a544f4e99d166bf6650689110"
+    },
+    {
+      "file": "chunk-030.jsonl",
+      "sha256": "00236f7ffe90e70f63d9046f8dc1a43bf7c51d937ec5085f817d52a08324cc56"
+    }
+  ],
+  "fields": [
+    "name",
+    "normalizedName",
+    "label",
+    "features",
+    "siteId"
+  ],
+  "license": "CC-BY-4.0",
+  "originalNamesSourceSha256": "71364f0f8484daa950267aebe774a84cc64e8aecca00b562c48d4607dceb3168",
+  "rows": 304422,
+  "schemaVersion": 1,
+  "sha256": "f90843ce3bd02287a6c89cba1d9cd2b840b1a16c15479294436055c7f09e3b6a",
+  "source": "https://zenodo.org/records/5838646",
+  "transformation": "38 precomputed numeric features; binary labels; exact names joined by validated recordIndex; cookie contents omitted"
+}

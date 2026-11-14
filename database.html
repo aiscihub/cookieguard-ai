@@ -130,6 +130,12 @@
   </div>
 </div></section>
 
+<section class="downloads"><div class="container">
+  <div class="section-head"><span class="label">Dataset history</span><h2>Timestamped releases</h2></div>
+  <p class="muted">Monthly observations are evaluated before joining a later training pool. Model releases require a separate review.</p>
+  <div class="dl-grid" id="dataset-releases"><p class="muted">Loading releases…</p></div>
+</div></section>
+
 <section class="about"><div class="container">
   <div class="about-grid">
     <div><h3>Where the names come from</h3><p>A 2021 crawl of 28,089 websites (the CookieBlock dataset) and our own 2026 crawls of the Tranco top 20,000. Every labeled cookie casts one vote for its name; the majority wins and ties are dropped.</p></div>
@@ -228,6 +234,29 @@
   }).catch(function () { hint.textContent = 'offline'; status.textContent = 'The table could not be loaded. Download the files above instead.'; });
   q.addEventListener('input', function () { render(q.value); });
   document.querySelectorAll('.examples button').forEach(function (b) { b.addEventListener('click', function () { q.value = b.getAttribute('data-q'); render(q.value); q.focus(); }); });
+  fetch('data/releases/index.json').then(function (r) {
+    if (!r.ok) throw new Error('unavailable');
+    return r.json();
+  }).then(function (index) {
+    var host = document.getElementById('dataset-releases');
+    host.replaceChildren();
+    index.releases.filter(function (r) { return !r.dryRun; }).sort(function (a, b) {
+      return b.createdAt.localeCompare(a.createdAt) || b.id.localeCompare(a.id);
+    }).forEach(function (release) {
+      var card = document.createElement('div'); card.className = 'card dl';
+      var title = document.createElement('h3'); title.textContent = release.title; card.appendChild(title);
+      var counts = document.createElement('p');
+      counts.textContent = release.rows.toLocaleString() + ' cookies · ' + release.sites.toLocaleString() + ' sites';
+      card.appendChild(counts);
+      var links = document.createElement('div'); links.className = 'files';
+      [['CSV', release.csv || release.path + 'cookies.csv'], ['JSONL', release.jsonl || release.path + 'cookies.jsonl'],
+       ['README', release.readme || release.path + 'README.md']].forEach(function (entry) {
+        if (!/^data\/[a-zA-Z0-9_./-]+$/.test(entry[1]) || entry[1].indexOf('..') !== -1) return;
+        var a = document.createElement('a'); a.textContent = entry[0]; a.href = entry[1]; links.appendChild(a);
+      });
+      card.appendChild(links); host.appendChild(card);
+    });
+  }).catch(function () { document.getElementById('dataset-releases').textContent = 'Release history is unavailable. The study downloads above remain available.'; });
   fetch('data/stats.json').then(function (r) { return r.json(); }).then(function (s) {
     document.querySelector('[data-stat=names]').textContent = s.knownNames.raw.toLocaleString();
     document.querySelector('[data-stat=rows]').textContent = s.cookies2026.rows.toLocaleString();
