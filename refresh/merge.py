@@ -7,8 +7,9 @@ from datetime import datetime, timezone
 import json
 from pathlib import Path
 import sys
+import shutil
 from common import ROOT, ROW_FIELDS, die, load, month_seed, rows, sha, structural, validate_row, write_json
-from health import attempt_metrics, COMPARABILITY_NOTICE
+from health import attempt_metrics, COMPARABILITY_NOTICE, FAILURE_REASONS, assess_coverage, exclusion_report
 
 def main():
     p = argparse.ArgumentParser()
@@ -22,25 +23,32 @@ def main():
     frame_hash = sha(a.run / "frame.json")
     feature_names = load(ROOT / "refresh/reference/feature_names.json")["featureNames"]
     engine_hash = sha(ROOT / "packages/core/vendor/engine.cjs")
-    records, attempts, receipts, missing, seen = [], [], [], [], set()
+    records, attempts, receipts, missing, excluded_shards, seen = [], [], [], [], [], set()
     for shard in range(1, frame["shards"] + 1):
         folder = a.run / "shards" / ("shard-" + str(shard))
+        expected = {s["siteId"]: s for s in frame["frame"] if s["shard"] == shard}
         if not (folder / "receipt.json").exists():
             missing.append(shard)
+            excluded_shards.append({"shard": shard, "sites": len(expected), "reasonCode": "missing-shard"})
             continue
         receipt = load(folder / "receipt.json")
-        receipts.append(receipt)
         if not structural(receipt) or receipt["frameSha256"] != frame_hash or receipt["shard"] != shard:
             raise ValueError("receipt-provenance")
-        if not receipt["privacy"]["passed"]:
+        if receipt.get("status") == "failed-closed":
+            reason = receipt.get("reasonCode", "failed-closed")  # Old receipts did not record a cause.
+            if receipt.get("privacy", {}).get("passed") is not False or reason not in FAILURE_REASONS | {"failed-closed"}:
+                raise ValueError("invalid-failed-receipt")
+            excluded_shards.append({"shard": shard, "sites": len(expected), "reasonCode": reason})
             continue
+        if not all(receipt.get("privacy", {}).get(k) is True for k in
+                   ("passed", "structuralPassed", "crossScanPassed")):
+            raise ValueError("missing-shard-privacy-evidence")
         if receipt["of"] != frame["shards"] or receipt["month"] != frame["month"]:
             raise ValueError("receipt-frame-mismatch")
         if receipt["engineSha256"] != engine_hash or receipt["featureNames"] != feature_names:
             raise ValueError("shard-engine-mismatch")
         if receipt["rowsSha256"] != sha(folder / "cookies.jsonl") or receipt["attemptsSha256"] != sha(folder / "attempts.json"):
             raise ValueError("shard-digest-mismatch")
-        expected = {s["siteId"]: s for s in frame["frame"] if s["shard"] == shard}
         shard_attempts = load(folder / "attempts.json")
         if not structural(shard_attempts):
             raise ValueError("attempt-privacy-failure")
@@ -67,18 +75,16 @@ def main():
             identities.add(identity)
         if len({r["rank"] for r in shard_rows}) != len(usable_ranks):
             raise ValueError("usable-count-mismatch")
+        receipts.append(receipt)
         records.extend(shard_rows)
         attempts.extend(shard_attempts)
     complete = len(seen) == frame["sites"] and not missing
-    private = complete and all(r["privacy"]["passed"] for r in receipts)
+    private = bool(receipts)  # Every included shard passed all checks above.
     records.sort(key=lambda r: (r["rank"], r["name"], r["domain"], r["path"]))
     dest = a.releases / frame["month"]
     if dest.exists():
         raise ValueError("release-already-exists")
     dest.mkdir(parents=True)
-    # Do not export data from incomplete/quarantined runs.
-    if not private:
-        records = []
     with (dest / "cookies.jsonl").open("w") as stream:
         for row in records:
             stream.write(json.dumps(row, separators=(",", ":"), allow_nan=False) + "\n")
@@ -108,11 +114,20 @@ def main():
         "planned": frame["sites"], "attempted": len(attempts), "statusCounts": status,
         "usableSites": stats["sites"], "rows": len(records), "complete": complete,
         "privacyPassed": private, "structuralPassed": all(structural(r) for r in records),
+        "plannedShards": frame["shards"], "includedShards": [r["shard"] for r in receipts],
+        "excludedShards": excluded_shards, "excludedSites": sum(x["sites"] for x in excluded_shards),
         "missingShards": missing, "shardReceipts": receipts,
         "files": {name: sha(dest / name) for name in ["cookies.jsonl", "cookies.csv", "stats.json"]},
         "license": "CC-BY-4.0",
     }
+    manifest["coveragePassed"] = assess_coverage(manifest)["passed"]
     write_json(dest / "manifest.json", manifest)
+    # Persist the fixed reasons before removing excluded payloads from the upload tree.
+    # Never inspect or copy rows from these failed/missing shards.
+    for item in excluded_shards:
+        folder = a.run / "shards" / ("shard-" + str(item["shard"]))
+        if folder.exists():
+            shutil.rmtree(folder)
     (dest / "README.md").write_text(
         "# CookieGuard monthly observations: " + frame["month"] + "\n\n"
         + ("LOCAL DRY RUN. Not a published dataset or approved model.\n\n" if frame["dryRun"] else "")
@@ -122,7 +137,8 @@ def main():
         "prefixes spreadsheet formulas with an apostrophe. No cookie contents are exported. "
         "The 38 numeric features include measurements of contents computed in memory.\n\n"
         + COMPARABILITY_NOTICE + "\n\n"
-        "License: CC BY 4.0. Attribution: Avelyn Jing, CookieGuard AI cookie database, "
+        + "\n".join(exclusion_report(manifest)) + "\n"
+        + "License: CC BY 4.0. Attribution: Avelyn Jing, CookieGuard AI cookie database, "
         + frame["month"] + ". Ranking: Tranco " + frame["trancoListId"] + ".\n"
     )
     index_path = a.releases / "index.json"

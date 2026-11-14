@@ -1,7 +1,7 @@
 """Coverage counts, health rules, and the shared report text."""
 from collections import Counter
 
-ROBOTS_STATUSES = {'allowed', 'disallowed', 'absent-4xx', 'server-error', 'network-error', 'redirect-limit', 'too-large', 'unreachable', 'tls-error'}
+ROBOTS_STATUSES = {'not-checked', 'allowed', 'disallowed', 'absent-4xx', 'server-error', 'network-error', 'redirect-limit', 'too-large', 'unreachable', 'tls-error'}
 ROBOTS_FAILURE_STATUSES = {'server-error', 'redirect-limit', 'too-large', 'network-error'}
 UNANSWERED_STATUSES = {'unreachable', 'tls-error'}
 CMP_FAMILIES = ('cookiebot', 'onetrust', 'none')
@@ -80,3 +80,47 @@ def health_report(manifest):
         lines.append('| ' + status + ' | ' + str(count) + ' |')
     lines += ['', COMPARABILITY_NOTICE, '']
     return lines
+
+
+FAILURE_REASONS = {'privacy-rejected', 'browser-error', 'io-error'}
+EXCLUSION_REASONS = FAILURE_REASONS | {'missing-shard', 'failed-closed'}
+
+def assess_coverage(manifest):
+    """Count reserved sites, not equally weighted shards; a quarter is permitted."""
+    planned, included = manifest.get('planned'), manifest.get('attempted')
+    excluded, total = manifest.get('excludedSites'), manifest.get('plannedShards')
+    kept, dropped = manifest.get('includedShards', []), manifest.get('excludedShards', [])
+    valid = (all(type(n) is int for n in (planned, included, excluded, total)) and
+             planned > 0 and total > 0 and included > 0 and excluded >= 0 and included + excluded == planned)
+    if valid:
+        ids = kept + [item.get('shard') for item in dropped]
+        valid = (all(type(n) is int for n in ids) and sorted(ids) == list(range(1, total + 1)) and
+                 bool(kept) and all(type(item.get('sites')) is int and item['sites'] > 0 and
+                                   item.get('reasonCode') in EXCLUSION_REASONS for item in dropped) and
+                 sum(item['sites'] for item in dropped) == excluded)
+    return {'passed': bool(valid and excluded * 4 <= planned), 'evidenceValid': bool(valid),
+            'rule': 'excluded reserved sites / frame <= 25%; at least one included shard',
+            'plannedSites': planned, 'includedSites': included, 'excludedSites': excluded,
+            'excludedRate': excluded / planned if valid else None}
+
+def included_privacy_passed(manifest):
+    receipts = manifest.get('shardReceipts', [])
+    return (bool(receipts) and [r.get('shard') for r in receipts] == manifest.get('includedShards') and
+            all(all(r.get('privacy', {}).get(k) is True for k in
+                    ('passed', 'structuralPassed', 'crossScanPassed')) for r in receipts))
+
+def exclusion_report(manifest):
+    coverage = assess_coverage(manifest)
+    lines = ['', '### Shard exclusions', '',
+             'Included sites: ' + str(coverage['includedSites']) + '; excluded reserved sites: ' +
+             str(coverage['excludedSites']) + ' / ' + str(coverage['plannedSites']) + '.', '',
+             'Publication requires at most 25% excluded sites. Health uses included shards only. '
+             'Excluded payloads are removed before the deliverable audit and upload.', '',
+             '| Excluded shard | Reserved sites | Reason code |', '|---|---:|---|']
+    for item in manifest['excludedShards']:
+        lines.append('| ' + str(item['shard']) + ' | ' + str(item['sites']) + ' | ' + item['reasonCode'] + ' |')
+    if not manifest['excludedShards']:
+        lines.append('| None | 0 | — |')
+    if any(item['reasonCode'] == 'failed-closed' for item in manifest['excludedShards']):
+        lines += ['', 'Legacy failed-closed receipts do not record the cause; no cause is inferred.']
+    return lines + ['']

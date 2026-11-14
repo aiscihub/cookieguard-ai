@@ -212,6 +212,35 @@ without the pilot blocking the real reservation. Actions reruns remain prohibite
 delete reservations or rerun a crawl to recover a failed run. The local checkpoints did not
 create any remote reservation branches.
 
+Missing and failed-closed shards are excluded individually. Every included shard must pass
+its own content cross-scan, structural validation, frame provenance, and payload digests.
+The manifest and `REPORT.md` list each excluded shard, its reserved site count, and its fixed
+reason. Old failed receipts without a reason are reported as `failed-closed`; no cause is inferred.
+Publication is blocked if more than 25% of reserved sites are excluded (four of sixteen equal
+shards are allowed; five are blocked). Health uses only included attempts. Excluded payloads
+are removed from the downloaded working artifact tree before the audit and upload; the entire
+reserved frame remains in the cumulative exclusion state.
+
+Browser context failures become per-site `browser-error` attempts. A disconnected browser is
+relaunched for the next batch, without retrying any site or resetting the in-memory privacy
+guard. Fatal receipts contain only `privacy-rejected`, `browser-error`, or `io-error`.
+`not-checked` means the browser failed before a robots decision; it does not count as a robots
+protocol failure. A shard is uploadable only after its successful receipt, or after failed
+payloads and atomic-write leftovers have been removed and a fixed failure receipt is saved.
+Both `npm ci` installs get up to three attempts in crawl and evaluate jobs.
+
+For recovery, dispatch with `from_run` set to a source run ID after owner review. Frame selection
+and all crawl jobs are skipped. The workflow downloads that run's frame and shard artifacts
+using `actions: read`, checks the frame byte-for-byte against the month's real reservation,
+and reserves `refresh/recoveries/<run-id>` with an empty expected ref (no overwrite). Only one
+recovery attempt per source run is permitted, including if recovery itself fails. Reservation
+reads use raw media so full 10,000-site frames are supported. The frame's month and real-run
+status override the ordinary dispatch size and dry-run defaults. Merge, evaluation, training,
+gates, audit, and publication then follow the normal path; there are no new public visits.
+The original first-real-run flag is preserved, so recovery cannot bypass the draft checkpoint.
+Expired artifacts or a different reservation block recovery. Do not delete a recovery marker
+or re-crawl to retry. The local shard-failure checkpoint makes no remote writes or dispatches.
+
 After an independent final privacy audit, a real run may open the timestamped dataset PR,
 including its report, index entry, and cumulative exclusions. The model PR exists only when
 every gate passes and always requires a person. It never receives `auto-merge`.

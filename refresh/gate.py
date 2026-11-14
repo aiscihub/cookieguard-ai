@@ -3,7 +3,7 @@ import argparse
 import json
 from pathlib import Path
 from common import ROOT, load, sha, structural, write_json
-from health import assess_health, health_report
+from health import assess_health, health_report, assess_coverage, included_privacy_passed, exclusion_report
 
 def assess(manifest, evaluation, parity, canaries):
     gates = {}
@@ -18,8 +18,9 @@ def assess(manifest, evaluation, parity, canaries):
     gates["Canaries"] = {"passed": canaries["passed"], "rule": "npm test with candidate preload; real Browser Use candidate bridge: FAIL CG001 / PASS"}
     gates["Parity"] = {"passed": parity["passed"] and parity["rows"] >= 1000 and parity["maxAbsoluteDifference"] <= 1e-5,
                        "rule": "ONNX versus scikit-learn <= 1e-5 on 1000 rows", "maxAbsoluteDifference": parity["maxAbsoluteDifference"]}
-    gates["Privacy"] = {"passed": manifest["privacyPassed"] and manifest["structuralPassed"] and manifest["complete"],
-                        "rule": "all shard receipts passed; complete frame; structural check passed"}
+    gates["Privacy"] = {"passed": manifest["privacyPassed"] and manifest["structuralPassed"] and included_privacy_passed(manifest),
+                        "rule": "every included shard passed its own cross-scan and structural check"}
+    gates["Coverage"] = assess_coverage(manifest)
     gates["Health"] = assess_health(manifest)
     return gates
 
@@ -86,6 +87,7 @@ def main():
               "## 3. Crawl and privacy", "", "| Status | Sites |", "|---|---:|"]
     for status, count in manifest["statusCounts"].items():
         lines.append("| " + status + " | " + str(count) + " |")
+    lines += exclusion_report(manifest)
     lines += health_report(manifest)
     lines += ["", "No site is revisited. A site with an unverifiable robots policy is skipped conservatively. "
               "All shards run at concurrency 4 with a 30-second site cap. Cookies remain in memory; no browser traces, "
@@ -108,7 +110,7 @@ def main():
               "## 5. Validation evidence", "",
               "npm test: " + str(canaries.get("npmTestCount", "unknown")) + " tests; passed=" + str(canaries["npmTestPassed"]) + ". "
               "Both real Browser Use scenarios invoke the candidate model. The test adapter is isolated from the shipped bridge.", "",
-              "The public crawl used " + str(len(manifest["shardReceipts"])) + " shards. A separate browser fixture exercises "
+              "The included crawl data uses " + str(len(manifest["shardReceipts"])) + " shards. A separate browser fixture exercises "
               "a usable Cookiebot declaration, consent, reload, 38-feature extraction, and content exclusion without any public requests. "
               "Fixture results are not added to the dataset or its yield.", "",
               "See privacy-audit.json for the SHA-256 output inventory and grep-proof.txt for actual zero-match checks. "

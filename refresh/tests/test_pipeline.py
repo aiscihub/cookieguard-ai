@@ -32,7 +32,7 @@ class PipelineTests(unittest.TestCase):
             (shard / 'cookies.jsonl').touch()
             write_json(shard / 'attempts.json', [{**site, 'status': 'no-supported-cmp', 'visited': True, 'robotsStatus': 'allowed', 'cmp': 'none'}])
             receipt = {'frameSha256': sha(run / 'frame.json'), 'shard': 1, 'of': 1, 'month': '2026-01',
-                       'privacy': {'passed': True}, 'attempted': 1, 'visitedSites': 1, 'rows': 0,
+                       'privacy': {'passed': True, 'structuralPassed': True, 'crossScanPassed': True}, 'attempted': 1, 'visitedSites': 1, 'rows': 0,
                        'engineSha256': sha(ROOT / 'packages/core/vendor/engine.cjs'),
                        'featureNames': load(ROOT / 'refresh/reference/feature_names.json')['featureNames'],
                        'rowsSha256': sha(shard / 'cookies.jsonl'), 'attemptsSha256': '0' * 64}
@@ -106,7 +106,8 @@ class PipelineTests(unittest.TestCase):
         evaluation = {'candidateMinus': {name: {'natural': pair, 'unseenNames': pair}
                                         for name in ['production-rules', 'production-v1']}}
         gates = assess({'privacyPassed': True, 'structuralPassed': True, 'complete': True,
-                        'usableSites': 0, 'attempted': 100}, evaluation,
+                        'usableSites': 0, 'attempted': 100, 'includedShards': [1],
+                        'shardReceipts': [{'shard': 1, 'privacy': {'passed': True, 'structuralPassed': True, 'crossScanPassed': True}}]}, evaluation,
                        {'passed': True, 'rows': 1000, 'maxAbsoluteDifference': 1e-7}, {'passed': True})
         self.assertFalse(gates['No regression']['passed'])
         self.assertFalse(gates['Unseen names']['passed'])

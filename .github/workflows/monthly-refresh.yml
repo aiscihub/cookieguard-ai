@@ -4,6 +4,10 @@ on:
     - cron: '0 2 1 * *'
   workflow_dispatch:
     inputs:
+      from_run:
+        description: 'Recover artifacts from one completed real run; skip all frame selection and crawling'
+        type: string
+        default: ''
       sites:
         description: 'Sites to sample (1–10000)'
         type: number
@@ -30,7 +34,7 @@ env:
   BROWSER_USE_DISABLE_EXTENSIONS: '1'
 jobs:
   frame:
-    if: github.ref == 'refs/heads/main' && github.run_attempt == 1
+    if: github.ref == 'refs/heads/main' && github.run_attempt == 1 && inputs.from_run == ''
     # Pinned: ubuntu-latest is moving to 26.04, where Playwright system dependencies can fail to install.
     runs-on: ubuntu-24.04
     timeout-minutes: 20
@@ -64,6 +68,41 @@ jobs:
           include-hidden-files: true
           if-no-files-found: error
           retention-days: 90
+  recover:
+    if: github.ref == 'refs/heads/main' && github.run_attempt == 1 && inputs.from_run != ''
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: write
+      actions: read
+    outputs:
+      month: ${{ steps.recover.outputs.month }}
+      dry_run: ${{ steps.recover.outputs.dry_run }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
+        with:
+          name: frame
+          path: refresh/.work/run
+          run-id: ${{ inputs.from_run }}
+          github-token: ${{ github.token }}
+      - name: Verify the real reservation and reserve this source run for one recovery
+        id: recover
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python refresh/ci.py recover
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: frame
+          path: refresh/.work/run/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 90
   crawl:
     needs: frame
     if: github.run_attempt == 1
@@ -82,8 +121,10 @@ jobs:
         with:
           node-version: '24'
           package-manager-cache: false
-      - run: npm ci --no-audit --no-fund
-      - run: npm ci --prefix refresh --no-audit --no-fund
+      - name: Install root dependencies (up to three attempts)
+        run: for attempt in 1 2 3; do npm ci --no-audit --no-fund && exit 0; sleep 15; done; exit 1
+      - name: Install refresh dependencies (up to three attempts)
+        run: for attempt in 1 2 3; do npm ci --prefix refresh --no-audit --no-fund && exit 0; sleep 15; done; exit 1
       - name: Install Chromium and its system dependencies (retried; no site is visited here)
         run: for attempt in 1 2 3; do npx --no-install playwright install --with-deps chromium && exit 0; sleep 15; done; exit 1
       - uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
@@ -96,7 +137,7 @@ jobs:
           REFRESH_SHARDS: ${{ needs.frame.outputs.shards }}
         run: node refresh/crawl.mjs --shard "$REFRESH_SHARD" --of "$REFRESH_SHARDS"
       - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
-        if: always()
+        if: always() && hashFiles('refresh/.work/run/shards/shard-*/upload-ready.json') != ''
         with:
           name: shard-${{ matrix.shard }}
           path: refresh/.work/run/shards/shard-${{ matrix.shard }}/
@@ -104,13 +145,16 @@ jobs:
           if-no-files-found: error
           retention-days: 90
   evaluate:
-    needs: [frame, crawl]
-    if: always() && needs.frame.result == 'success' && github.run_attempt == 1
+    needs: [frame, crawl, recover]
+    if: always() && github.run_attempt == 1 && (needs.frame.result == 'success' || needs.recover.result == 'success')
+    permissions:
+      contents: read
+      actions: read
     # Pinned: ubuntu-latest is moving to 26.04, where Playwright system dependencies can fail to install.
     runs-on: ubuntu-24.04
     timeout-minutes: 120
     env:
-      REFRESH_MONTH: ${{ needs.frame.outputs.month }}
+      REFRESH_MONTH: ${{ needs.recover.outputs.month || needs.frame.outputs.month }}
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
@@ -122,8 +166,10 @@ jobs:
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
         with:
           python-version: '3.12'
-      - run: npm ci --no-audit --no-fund
-      - run: npm ci --prefix refresh --no-audit --no-fund
+      - name: Install root dependencies (up to three attempts)
+        run: for attempt in 1 2 3; do npm ci --no-audit --no-fund && exit 0; sleep 15; done; exit 1
+      - name: Install refresh dependencies (up to three attempts)
+        run: for attempt in 1 2 3; do npm ci --prefix refresh --no-audit --no-fund && exit 0; sleep 15; done; exit 1
       - name: Install Chromium and its system dependencies (retried; no site is visited here)
         run: for attempt in 1 2 3; do npx --no-install playwright install --with-deps chromium && exit 0; sleep 15; done; exit 1
       - run: node integrations/python/scripts/vendor_engine.mjs
@@ -138,7 +184,9 @@ jobs:
         with:
           pattern: shard-*
           path: refresh/.work/run/shards
-      - run: node --test refresh/tests/core.test.mjs refresh/tests/network.test.mjs
+          run-id: ${{ inputs.from_run || github.run_id }}
+          github-token: ${{ github.token }}
+      - run: node --test refresh/tests/core.test.mjs refresh/tests/network.test.mjs refresh/tests/shards.test.mjs
       - run: node --test refresh/tests/browser.test.mjs
       - run: python -m unittest discover -s refresh/tests -v
       - run: python refresh/merge.py
@@ -162,8 +210,8 @@ jobs:
           if-no-files-found: error
           retention-days: 90
   publish:
-    needs: [frame, evaluate]
-    if: needs.frame.outputs.dry_run == 'false' && github.run_attempt == 1
+    needs: [frame, recover, evaluate]
+    if: always() && needs.evaluate.result == 'success' && github.run_attempt == 1 && (needs.frame.outputs.dry_run == 'false' || needs.recover.outputs.dry_run == 'false')
     # Pinned: ubuntu-latest is moving to 26.04, where Playwright system dependencies can fail to install.
     runs-on: ubuntu-24.04
     timeout-minutes: 15

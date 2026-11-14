@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 import re
 import subprocess
+from health import assess_coverage, included_privacy_passed
 from common import CREDENTIAL, FORBIDDEN, ROOT, load, sha, structural, write_json
 
 FIELDS = r'"(value|cookieValue|rawValue|authorization|password|api[_-]?key|access[_-]?token|refresh[_-]?token)"\s*:'
@@ -29,6 +30,24 @@ def check_file(path):
         header = next(csv.reader(text.splitlines()), [])
         return not any(FORBIDDEN.fullmatch(key) for key in header)
     return True
+
+def receipt_audit(run, manifest):
+    receipts = [load(f) for f in sorted((run / "shards").glob("shard-*/receipt.json"))]
+    receipts.sort(key=lambda r: r['shard'])
+    frame = load(run / "frame.json")
+    folder = run / 'shards'
+    actual_folders = {p.name for p in folder.iterdir()} if folder.exists() else set()
+    expected_folders = {'shard-' + str(n) for n in manifest['includedShards']}
+    allowed = {'started.json', 'receipt.json', 'attempts.json', 'cookies.jsonl', 'upload-ready.json'}
+    payloads_match = actual_folders == expected_folders
+    for receipt in receipts:
+        shard = folder / ('shard-' + str(receipt['shard']))
+        payloads_match = payloads_match and {p.name for p in shard.iterdir()} <= allowed
+        for name, field in [('cookies.jsonl', 'rowsSha256'), ('attempts.json', 'attemptsSha256')]:
+            payloads_match = payloads_match and (shard / name).is_file() and sha(shard / name) == receipt[field]
+    return (payloads_match and assess_coverage(manifest)['evidenceValid'] and included_privacy_passed(manifest) and
+            receipts == manifest['shardReceipts'] and manifest['planned'] == frame['sites'] and
+            manifest['plannedShards'] == frame['shards'] and manifest['frameSha256'] == sha(run / 'frame.json'))
 
 def main():
     p = argparse.ArgumentParser()
@@ -62,9 +81,7 @@ def main():
                              "matchingFiles": n, "passed": compressed.returncode == 1 and n == 0})
         proof += ["gzip -cd training-pool-2021.jsonl.gz | rg --text --ignore-case --files-with-matches -- " + repr(pattern),
                   "exit=" + str(compressed.returncode) + "; matching streams=" + str(n), ""]
-    receipts = [load(f) for f in (run / "shards").glob("shard-*/receipt.json")]
-    frame = load(run / "frame.json")
-    receipt_ok = len(receipts) == frame["shards"] and all(r["privacy"]["passed"] for r in receipts)
+    receipt_ok = receipt_audit(run, load(release / "manifest.json"))
     passed = all(c["passed"] for c in checks + grep_results) and receipt_ok
     result = {"passed": passed, "scope": "all run/release deliverables, reference assets, exclusion state, release indexes, decompressed training asset and attribution",
               "files": checks, "grep": grep_results, "shardReceiptsPassed": receipt_ok,

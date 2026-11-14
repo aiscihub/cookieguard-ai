@@ -70,6 +70,9 @@ export function crossScan(node, secrets, field = '', matcher = buildMatcher(secr
   }
   return { bad, metadataCoincidences };
 }
+export class PrivacyRejection extends Error {
+  constructor() { super('privacy-rejected'); }
+}
 export class PrivacyGuard {
   constructor() { this.secrets = new Set(); this.checks = 0; }
   observe(cookies) {
@@ -81,7 +84,7 @@ export class PrivacyGuard {
   check(data) {
     this.checks++;
     const result = crossScan(data, this.secrets);
-    if (!structural(data) || result.bad) throw new Error('privacy-rejected');
+    if (!structural(data) || result.bad) throw new PrivacyRejection();
     return result;
   }
   receipt() {
