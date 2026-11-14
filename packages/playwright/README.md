@@ -1,10 +1,11 @@
 # @aiscihub/cookieguard-playwright
 
-Passive cookie auditing for an existing Playwright BrowserContext. Version 0.3.0
-uses `@aiscihub/cookieguard-core` 0.3.0. In an existing Playwright project, install:
+Passive cookie auditing for an existing Playwright BrowserContext. Version 0.4.0
+uses `@aiscihub/cookieguard-core` 0.4.0 and adds default-on invocation reporting.
+Install it in an existing Playwright project:
 
 ```bash
-npm install --save-dev @aiscihub/cookieguard-playwright@0.3.0
+npm install --save-dev @aiscihub/cookieguard-playwright@0.4.0
 ```
 
 ## Fail-closed login gate (0.3.0)
@@ -88,3 +89,14 @@ the workflow before snapshotting and block service workers for reliable evidence
 Pass `classifier` from `createOnnxClassifier` for optional original-model triage.
 Values are transient, results are labeled `onnx`, and failures mark collection
 incomplete without fallback. Dispose of the model after the collector.
+
+The 0.4.0 [usage-reporting pilot](https://github.com/aiscihub/cookieguard-ai/blob/main/docs/USAGE_METRICS.md)
+defaults on. The first `collect()`/`evaluate()` attempts one invocation event;
+repeated calls do not report again. `usageMetrics: false`,
+`COOKIEGUARD_USAGE_METRICS=0`, or `DO_NOT_TRACK=1` disables reporting.
+`usageMetrics: null` or an omitted setting follows the environment/default.
+Events contain fixed package/version/integration fields, a fresh random invocation
+ID, and fixed privacy controls, without audit data. The bundled public token
+targets CookieGuard's US Cloud project `735326`. Delivery is best effort and
+does not change audit results. Downloads and imports do not report. Existing npm
+0.3.0 installations remain unchanged until upgraded.

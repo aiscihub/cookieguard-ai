@@ -1,3 +1,4 @@
+import '../tests/fixtures/disable-usage.mjs';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { mkdir, mkdtemp, writeFile, readFile, rm, stat } from 'node:fs/promises';
@@ -25,7 +26,11 @@ for (const name of fromRegistry ? [] : names) {
   assert.equal(result.version, RELEASE);
   const paths = result.files.map(file => file.path);
   assert.ok(paths.includes('LICENSE') && paths.includes('src/index.d.ts') && paths.includes('README.md'));
-  if (name === '@aiscihub/cookieguard-core') assert.ok(paths.includes('vendor/engine.cjs'));
+  if (name === '@aiscihub/cookieguard-core') {
+    for (const path of ['vendor/engine.cjs', 'src/usage.js', 'src/usage-worker.js', 'src/usage-config.js', 'src/usage.d.ts']) {
+      assert.ok(paths.includes(path), `Core package is missing ${path}`);
+    }
+  }
   assert.ok(paths.every(path => !/\.(onnx|node|wasm|dylib|so|dll)$/.test(path)));
   const tarball = join(destination, result.filename);
   const contents = await readFile(tarball);
@@ -56,6 +61,8 @@ try {
     import { startCookieAudit } from '@aiscihub/cookieguard-playwright';
     import { createOnnxClassifier } from '@aiscihub/cookieguard-core/onnx';
     if (typeof startCookieAudit !== 'function' || typeof createOnnxClassifier !== 'function') process.exit(2);
+    const { reportUsage, flushUsage } = await import('@aiscihub/cookieguard-core/usage');
+    if (typeof reportUsage !== 'function' || typeof flushUsage !== 'function') process.exit(2);
     const report = evaluateCookiePolicy([normalizeCookie({name:'theme',value:'dark'})]);
     if (exitCode(report) !== 0) process.exit(2);
   `], { cwd: temporary });

@@ -31,6 +31,20 @@
   processes; Node 25+ also blocks network). As a last check, a result containing
   an observed store cookie value (12+ characters, not purely alphabetic) is refused.
   Python memory is not securely erased.
+- **CookieGuard usage reporting defaults on and can be disabled.** The 0.4.0
+  [PostHog pilot](https://github.com/aiscihub/cookieguard-ai/blob/main/docs/USAGE_METRICS.md)
+  attempts one fixed invocation event after `start()` accepts the session.
+  The bundled public token targets CookieGuard's US Cloud project `735326`.
+  Publication is pending; existing Python 0.3.0 installations remain unchanged.
+  Downloads, imports, and construction do not report. `usage_metrics=False`,
+  `COOKIEGUARD_USAGE_METRICS=0`, or `DO_NOT_TRACK=1` disables reporting;
+  `usage_metrics=None` or omission follows the environment/default. Events contain
+  package/version/integration metadata and a fresh invocation UUID, with no
+  cookie data, URLs, audit outcomes, or persistent identity. Provider transport
+  still receives a source IP; the pilot requires IP discard and disabled GeoIP.
+  Delivery is best effort and failures do not affect audits. Provisional checks,
+  the compatibility import, and the nested Node engine do not emit additional
+  events. This setting is separate from Browser Use.
 - **The model is outside CookieGuard's boundary.** Your LLM provider receives the
   task, page content, and the sanitized tool output. Pass credentials through
   Browser Use `sensitive_data` with distinctive values. Browser Use masks every

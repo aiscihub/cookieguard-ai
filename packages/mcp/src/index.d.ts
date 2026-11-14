@@ -13,6 +13,8 @@ export interface CookieGuardMcpOptions {
    * tests. Enables cookieguard_audit {"evidenceFile"}. Resolved once at startup.
    */
   evidenceDir?: string;
+  /** Trusted startup setting for content-free invocation reporting. Enabled by default; false or environment opt-outs disable it. */
+  usageMetrics?: boolean | null;
 }
 export const VERSION: string;
 /** Creates an unconnected MCP server with an independent configuration snapshot. */

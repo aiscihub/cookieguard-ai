@@ -8,6 +8,16 @@ and publishes both distributions from this folder, always at the same version:
 | `cookieguard` | The package: core (`cookieguard`) and integrations (`cookieguard.browser_use`) |
 | `cookieguard-browser-use` | Compatibility package in `compat/cookieguard-browser-use`; depends on `cookieguard==<version>` and re-exports it |
 
+## 0.4.0 release preparation — 2026-11-13
+
+Publication is pending. Both distributions move to 0.4.0; the compatibility
+package requires exactly `cookieguard==0.4.0`. The vendored npm engine remains
+0.3.0. The release adds [default-on usage reporting](../../docs/USAGE_METRICS.md)
+with documented environment/API opt-outs; no cookie data or audit results are
+reported. Keep reporting disabled in release tests and clean-consumer checks.
+Verify upgrades from 0.3.0 as well as earlier supported releases, and record actual
+publication evidence only after registry upload and installation checks pass.
+
 ## Checklist (used for 0.3.0, published 2026-11-08, and 0.2.0, published 2026-11-06)
 
 1. Merge with CI green, including the upgrade-path step on Python 3.12.
@@ -21,7 +31,7 @@ and publishes both distributions from this folder, always at the same version:
 4. Run the workflow from the tag with `target: pypi`. The build job runs
    `verify_external.py` (clean consumer, tests, demo, sdist), `twine check`,
    `verify_metadata.py` (links pinned to the tag), the version-lockstep check, and
-   `verify_upgrade.py` (fresh install, and upgrades from 0.2.0 and both 0.1.0 releases). Approve
+   `verify_upgrade.py` (fresh install, and upgrades from 0.3.0, 0.2.0, and both 0.1.0 releases). Approve
    the `pypi` deployment.
 5. Verify the uploads against the workflow artifact, install from PyPI in clean venvs on
    Python 3.11-3.13, and record the publication in [VALIDATION.md](VALIDATION.md).

@@ -80,11 +80,24 @@ expected auth cookie, invalid input, or incomplete collection returns exit 2.
 
 Reports contain only selected metadata, classifications, policy evidence, and
 fixed explanations. No input object spreading, arbitrary exception text, raw
-headers, telemetry, HAR, traces, or browser storage exports. Text/Markdown escapes
+headers, HAR, traces, or browser storage exports. Text/Markdown escapes
 untrusted metadata. Report files are created with owner-only permissions.
 Cookie metadata itself can identify an application; review artifacts before
 sharing. Caller-enabled Playwright traces and application logs are outside this
 tool's control.
+
+The 0.4.0 [PostHog usage pilot](USAGE_METRICS.md) is a separate, default-on
+invocation reporter. Top-level adapters call it once at their admission boundary;
+the core evaluator and nested scanners do not emit automatically. It receives
+only fixed package/version/integration metadata and creates a fresh invocation
+UUID. It never receives audit inputs or results. `COOKIEGUARD_USAGE_METRICS=0`
+and `DO_NOT_TRACK=1` each override API enablement; an explicit API `false` also
+disables reporting. An omitted setting, `null`, or Python `None` follows the
+environment/default. The Python adapter disables reporting in its Node
+child while preserving the engine sandbox and ONNX opt-out. Bounded background
+delivery failures never alter audit decisions. The bundled public token routes
+enabled events to CookieGuard's US Cloud project `735326`. Downloads and imports
+do not report; delivery is best effort. Publication of 0.4.0 is pending, and published npm/Python 0.3.0 remain unchanged.
 
 ## Verification and limits
 

@@ -1,3 +1,4 @@
+import '../../tests/fixtures/disable-usage.mjs';
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({

@@ -26,6 +26,7 @@ import importlib.metadata as m, pathlib, cookieguard, cookieguard.browser_use as
 from cookieguard._engine import verify_engine_files
 verify_engine_files()
 assert compat.CookieGuardAudit is bu.CookieGuardAudit is cookieguard.CookieGuardAudit
+assert compat.flush_usage_metrics is bu.flush_usage_metrics is cookieguard.flush_usage_metrics
 from cookieguard_browser_use.demo import app, scripted
 from cookieguard.browser_use.demo import app as new_app, scripted as new_scripted
 assert app is new_app and scripted is new_scripted
@@ -36,6 +37,8 @@ print(m.version('cookieguard'), m.version('cookieguard-browser-use'))
 
 SCENARIOS = {
 	f'fresh install of cookieguard-browser-use {VERSION}': [[f'cookieguard-browser-use=={VERSION}']],
+	'upgrade from cookieguard and cookieguard-browser-use 0.3.0': [['cookieguard==0.3.0', 'cookieguard-browser-use==0.3.0'],
+		['-U', f'cookieguard=={VERSION}', f'cookieguard-browser-use=={VERSION}']],
 	'upgrade from cookieguard and cookieguard-browser-use 0.2.0': [['cookieguard==0.2.0', 'cookieguard-browser-use==0.2.0'],
 		['-U', f'cookieguard=={VERSION}', f'cookieguard-browser-use=={VERSION}']],
 	'upgrade from cookieguard-browser-use 0.1.0': [['cookieguard-browser-use==0.1.0'], ['-U', f'cookieguard-browser-use=={VERSION}']],
@@ -45,7 +48,8 @@ SCENARIOS = {
 
 def run(python: Path, *args: str, cwd: Path) -> subprocess.CompletedProcess:
 	env = {key: value for key, value in os.environ.items() if not key.startswith(('PYTHON', 'VIRTUAL_ENV'))}
-	env.update(PIP_DISABLE_PIP_VERSION_CHECK='1', ANONYMIZED_TELEMETRY='false', BROWSER_USE_CLOUD_SYNC='false')
+	env.update(PIP_DISABLE_PIP_VERSION_CHECK='1', ANONYMIZED_TELEMETRY='false', BROWSER_USE_CLOUD_SYNC='false',
+		COOKIEGUARD_USAGE_METRICS='0', DO_NOT_TRACK='1')
 	return subprocess.run([str(python), *args], cwd=cwd, env=env, capture_output=True, text=True, timeout=900)
 
 

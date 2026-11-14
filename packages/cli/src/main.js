@@ -5,7 +5,8 @@ import { join } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { AuditError, safeError, normalizeCookies, normalizeLegacyResults, evaluateCookiePolicy,
   validatePolicy, formatText, formatJson, exitCode, explain, isEvidenceReport, readEvidence } from '@aiscihub/cookieguard-core';
-import { scanUrl } from './scan.js';
+import { reportUsage, flushUsage } from '@aiscihub/cookieguard-core/usage';
+import { scanUrl, validateTarget } from './scan.js';
 import { capabilities } from './capabilities.js';
 import { evaluateCheck, formatGateText, gateCheckId, gateResult } from './gate.js';
 import manifest from '../package.json' with { type: 'json' };
@@ -125,7 +126,7 @@ async function readEvidenceFile(path) {
   try { return await readJson(path); } catch { return {}; }
 }
 
-async function runGate(values, positionals, format, io) {
+async function runGate(values, positionals, format, io, onInvoked) {
   if (positionals.length !== 1 || !values.evidence || !values.require?.length || values.require.length > 100
     || ['input', 'baseline', 'allow-origin', 'timeout-ms'].some(key => values[key] !== undefined)) throw new AuditError('CONFIG');
   const runId = values['run-id'];
@@ -133,6 +134,7 @@ async function runGate(values, positionals, format, io) {
   const policy = policyOf(values);
   if (!policy.authCookies.length && !policy.authEvidence.length) throw new AuditError('CONFIG');
   const ids = [...new Set(values.require.map(gateCheckId))];
+  onInvoked();
   const checks = [];
   for (const id of ids) {
     const input = await readEvidenceFile(join(values.evidence, `${id}.json`));
@@ -147,6 +149,11 @@ async function runGate(values, positionals, format, io) {
 }
 
 export async function runCli(args, io = { stdout: process.stdout, stderr: process.stderr }) {
+  let auditInvoked = false;
+  const onInvoked = () => {
+    reportUsage({ package: manifest.name, version: manifest.version, integration: 'cli' });
+    auditInvoked = true;
+  };
   try {
     const { values, positionals } = parseArgs({ args, allowPositionals: true, strict: true, options: {
       help: { type: 'boolean' }, version: { type: 'boolean' }, json: { type: 'boolean' },
@@ -165,7 +172,7 @@ export async function runCli(args, io = { stdout: process.stdout, stderr: proces
     if (!['json', 'text'].includes(format)) throw new AuditError('CONFIG');
     const gateOnly = ['evidence', 'require', 'run-id', 'require-session', 'require-logout'];
     if (positionals[0] !== 'gate' && gateOnly.some(key => values[key] !== undefined)) throw new AuditError('CONFIG');
-    if (positionals[0] === 'gate') return await runGate(values, positionals, format, io);
+    if (positionals[0] === 'gate') return await runGate(values, positionals, format, io, onInvoked);
     const scanOnly = ['auth-cookie', 'fail-on', 'output', 'input', 'baseline', 'allow-origin', 'timeout-ms',
       'allowed-samesite', 'max-lifetime-days', 'require-explicit-samesite', 'require-host-only'];
     if (['capabilities', 'explain'].includes(positionals[0])) {
@@ -184,15 +191,17 @@ export async function runCli(args, io = { stdout: process.stdout, stderr: proces
     const policy = policyOf(values);
     const timeoutMs = Number(values['timeout-ms'] ?? 10000);
     if (!Number.isInteger(timeoutMs) || timeoutMs < 100 || timeoutMs > 60000) throw new AuditError('CONFIG');
+    if (values.input && values['allow-origin']) throw new AuditError('CONFIG');
+    const target = values.input ? undefined : validateTarget(positionals[1], values['allow-origin']).href;
+    onInvoked();
     const baseline = values.baseline ? await readJson(values.baseline) : undefined;
     let collection;
     if (values.input) {
-      if (values['allow-origin']) throw new AuditError('CONFIG');
       const input = await readJson(values.input);
       collection = isEvidenceReport(input) ? readEvidence(input)
         : { observations: Array.isArray(input) ? normalizeCookies(input) : normalizeLegacyResults(input), mode: 'fixture', complete: true };
     } else {
-      collection = await scanUrl(positionals[1], { allowOrigins: values['allow-origin'], timeoutMs });
+      collection = await scanUrl(target, { allowOrigins: values['allow-origin'], timeoutMs });
     }
     const report = evaluateCookiePolicy(collection.observations, policy, { ...collection, baseline });
     const contents = format === 'json' ? formatJson(report) : formatText(report);
@@ -205,5 +214,7 @@ export async function runCli(args, io = { stdout: process.stdout, stderr: proces
     if (wantsJson(args)) io.stdout.write(errorJson(safe));
     io.stderr.write(`CookieGuard CI: ${safe.code} — ${safe.message}\nResult: INCOMPLETE\n`);
     return 2;
+  } finally {
+    if (auditInvoked) await flushUsage();
   }
 }

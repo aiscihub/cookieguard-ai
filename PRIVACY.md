@@ -9,8 +9,9 @@ CI reads cookie values only transiently to compute the original engine's numeric
 features. Values, raw Set-Cookie headers, credentials, arbitrary error messages,
 and legacy nested analysis contexts never enter CI reports. Output uses an
 allowlist of metadata and fixed evidence explanations. Files written by the CLI
-are owner-readable. CI creates no storage-state exports, traces, HAR, screenshots,
-or telemetry. Default CLI scanning sends no cookies or authorization headers.
+are owner-readable. CI creates no storage-state exports, traces, HAR, or screenshots.
+Default CLI scanning sends no cookies or authorization headers. Instrumented
+integrations enable minimal usage reporting by default, with opt-outs described below.
 
 Playwright continues making the application's normal authenticated requests;
 CookieGuard is a passive local observer and adds no transmission of values. The
@@ -20,6 +21,35 @@ JavaScript memory is garbage-collected, not securely erased. Cookie names, domai
 and paths can themselves identify an application: review metadata before sharing
 reports or uploading artifacts. The example Action retains sanitized reports for
 seven days, and upload can be disabled.
+
+## Usage reporting and opt-outs
+
+The 0.4.0 [PostHog pilot](docs/USAGE_METRICS.md) enables reporting by default
+and attempts one event per accepted audit invocation. Its bundled public token
+targets CookieGuard's US Cloud project `735326`. Downloading, installing, or
+importing a package creates no event. Direct core evaluation does not report
+automatically. Publication of 0.4.0 is pending;
+published npm and Python 0.3.0 installations and past downloads are unchanged.
+
+The event contains the package, package version, integration, schema version,
+event name, public ingestion token, a fresh random invocation UUID, and fixed
+properties disabling person-profile processing and GeoIP and replacing the event
+IP with `0.0.0.0`. It includes no cookie data, URLs, audit results, prompts, errors,
+or stable user/installation identifier. Counts describe reported invocations.
+
+Set `COOKIEGUARD_USAGE_METRICS=0` or `DO_NOT_TRACK=1` before starting the process to
+force reporting off, including when an API setting enables it. The API settings
+`usage_metrics=False` (Python), `usageMetrics: false`
+(Playwright/MCP startup), or `enabled: false` (direct core helper) also disable
+reporting. Omitted settings, Python `None`, and JavaScript `null` follow the
+environment/default. Delivery is best effort, with bounded queues/timeouts and
+no retries or persistent telemetry files. It does not affect security decisions.
+Counts describe reported invocations, not unique users or installs.
+
+The PostHog project must discard client
+IPs and disable GeoIP enrichment before collection. Its network infrastructure
+still receives a source IP; these controls do not promise transport anonymity or
+the absence of provider logs. See the guide for the exact payload and controls.
 
 ## Legacy extension boundary
 
@@ -48,7 +78,8 @@ CookieGuard reads cookie metadata available through the browser, including:
 - CI does not store or transmit raw cookie values; see the legacy export exception above.
 - Authentication tokens are never exfiltrated.
 - No browsing history is logged.
-- No personal data is sent to external servers.
+- Usage events exclude audit content and persistent identifiers; the
+  receiving provider's transport boundary is described above.
 
 ## Local Processing
 
@@ -60,12 +91,15 @@ CookieGuard reads cookie metadata available through the browser, including:
 
 - CI persists only requested, sanitized metadata reports. The legacy manual export is described above.
 - Analysis results are displayed in-session only.
-- No analytics tracking is included.
+- The legacy browser extension includes no analytics tracking. Usage reporting in
+  instrumented integrations defaults on, can be disabled, and stores no local identity.
 
 ## User Control
 
 Users can:
+
 - Disable the extension at any time.
+- Disable integration usage reporting with either forced opt-out above.
 - Inspect the open-source code.
 - Modify or remove local backend components.
 

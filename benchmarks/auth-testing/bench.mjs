@@ -51,6 +51,8 @@ export function childEnv(who, extra = {}) {
     GIT_AUTHOR_NAME: 'Developer', GIT_AUTHOR_EMAIL: 'dev@example.invalid', GIT_COMMITTER_NAME: 'Developer', GIT_COMMITTER_EMAIL: 'dev@example.invalid',
     npm_config_update_notifier: 'false', npm_config_fund: 'false', npm_config_audit: 'false',
     ...extra,
+    // Synthetic benchmark invocations must never enter package-usage metrics.
+    COOKIEGUARD_USAGE_METRICS: '0', DO_NOT_TRACK: '1',
   };
 }
 

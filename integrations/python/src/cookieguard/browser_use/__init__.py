@@ -7,6 +7,7 @@ decides PASS, FAIL, or INCOMPLETE. The agent cannot override that decision.
 
 from .._errors import CookieGuardError, CookiePolicyError
 from .._result import AuditResult, Finding
+from .._usage import flush_usage_metrics
 from ._audit import ACTION_DESCRIPTION, DEFAULT_ACTION_NAME, CookieGuardAudit
 
 __all__ = [
@@ -17,4 +18,5 @@ __all__ = [
 	'CookiePolicyError',
 	'DEFAULT_ACTION_NAME',
 	'Finding',
+	'flush_usage_metrics',
 ]

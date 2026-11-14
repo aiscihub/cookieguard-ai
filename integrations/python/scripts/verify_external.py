@@ -33,7 +33,9 @@ CANARY_PREFIX = 'CGBU_CANARY_'
 
 
 def sh(*args: str, cwd: Path, env: dict[str, str] | None = None, timeout: int = 900) -> subprocess.CompletedProcess:
-	completed = subprocess.run(list(args), cwd=cwd, env=env, capture_output=True, text=True, timeout=timeout)
+	# Installed-package demos are verification runs too, outside pytest's fixtures.
+	child_env = {**(os.environ if env is None else env), 'COOKIEGUARD_USAGE_METRICS': '0', 'DO_NOT_TRACK': '1'}
+	completed = subprocess.run(list(args), cwd=cwd, env=child_env, capture_output=True, text=True, timeout=timeout)
 	if CANARY_PREFIX in completed.stdout + completed.stderr:
 		raise SystemExit('Synthetic secret detected in command output; output withheld.')
 	return completed
@@ -63,7 +65,8 @@ def main() -> int:
 		'cookieguard/_node/node_modules/@aiscihub/cookieguard-core/vendor/engine.cjs',
 		'cookieguard/_node/node_modules/@aiscihub/cookieguard-core/LICENSE',
 		'cookieguard/_node/node_modules/@aiscihub/cookieguard-playwright/src/index.js',
-		'cookieguard/py.typed', 'cookieguard/browser_use/demo/app.py']
+		'cookieguard/py.typed', 'cookieguard/browser_use/demo/app.py',
+		'cookieguard/_usage.py', 'cookieguard/_usage_config.py']
 	missing = [name for name in required if name not in names]
 	if missing or not any(name.endswith('licenses/LICENSE') for name in names):
 		raise SystemExit(f'Wheel is missing required files: {missing}')

@@ -13,6 +13,7 @@ from .._engine import LocalEngine
 from .._errors import CookieGuardError
 from .._origins import validate_origins
 from .._result import AuditResult, guard_values
+from .._usage import report_invocation
 
 _logger = logging.getLogger('cookieguard.browser_use')
 _SEVERITIES = ('info', 'low', 'medium', 'high', 'critical')
@@ -56,6 +57,10 @@ class CookieGuardAudit:
 	by developer code. The final status is decided by the CookieGuard core engine,
 	never by the agent. One instance audits one workflow; create a new instance for
 	another workflow or session.
+
+	An accepted start reports one best-effort usage count by default, with no audit
+	inputs or persistent identity. Set ``usage_metrics=False``,
+	``COOKIEGUARD_USAGE_METRICS=0``, or ``DO_NOT_TRACK=1`` to disable reporting.
 	"""
 
 	def __init__(
@@ -78,8 +83,11 @@ class CookieGuardAudit:
 		allow_nonlocal_origins: bool = False,
 		timeout_seconds: float = 600,
 		node_path: str | None = None,
+		usage_metrics: bool | None = None,
 	) -> None:
 		if isinstance(allowed_origins, str):
+			raise CookieGuardError('CONFIG')
+		if usage_metrics is not None and not isinstance(usage_metrics, bool):
 			raise CookieGuardError('CONFIG')
 		self.origins = validate_origins(list(allowed_origins), allow_nonlocal_origins)
 		if fail_on not in _SEVERITIES or isinstance(allowed_same_site, str):
@@ -130,6 +138,8 @@ class CookieGuardAudit:
 		self._collector: CdpEvidenceCollector | None = None
 		self._lock = asyncio.Lock()
 		self._agent_checks = 0
+		self._usage_metrics = usage_metrics
+		self._usage_reported = False
 
 	@property
 	def state(self) -> str:
@@ -210,6 +220,9 @@ class CookieGuardAudit:
 				root = None
 			if root is None or not getattr(root, 'url', None):
 				raise CookieGuardError('SESSION')
+			if not self._usage_reported:
+				self._usage_reported = True
+				report_invocation(self._usage_metrics)
 			engine = LocalEngine(self._node_path)
 			probe = (SessionProbe(self.session_probe_url, self.policy['authCookies'], require_logout=self.require_logout)
 				if self.session_probe_url else None)

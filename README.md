@@ -22,7 +22,7 @@
 
 [Quick start](#quick-start) · [How it works](#how-it-works) · [Your policy](#your-policy-decides-what-fails) · [What it checks](#what-it-checks) · [MCP](#use-it-from-an-mcp-client) · [Coding agents](#use-it-from-a-coding-agent) · [More tools](#more-ways-to-use-cookieguard) · [FAQ](#faq) · [Documentation](#documentation)
 
-<code>pip install cookieguard</code>
+<code>pip install cookieguard==0.4.0</code>
 
 </div>
 
@@ -60,10 +60,11 @@ logs, or reports.
 
 ### Install
 
-Needs **Python 3.11+, Node.js 24+, and Chrome or Chromium**. Install version 0.3.0:
+Needs **Python 3.11+, Node.js 24+, and Chrome or Chromium**. Version 0.4.0 is being
+prepared for release; the installation examples below apply after publication:
 
 ```bash
-pip install cookieguard
+pip install cookieguard==0.4.0
 ```
 
 Code that uses `cookieguard-browser-use` or `import cookieguard_browser_use` keeps working:
@@ -111,6 +112,10 @@ result.assert_policy()                          # raises CookiePolicyError on FA
 `assert_policy()` raises on FAIL or INCOMPLETE even if the agent never called the
 audit tool, or reported success.
 [Install guide](integrations/python/docs/install.md) · [Real-model example](integrations/python/examples/agent_login.py)
+
+Version 0.4.0 enables minimal [usage reporting](docs/USAGE_METRICS.md) for accepted
+audits by default. Set `COOKIEGUARD_USAGE_METRICS=0`, `DO_NOT_TRACK=1`, or
+`usage_metrics=False` to disable it. Cookie data and audit results are never sent.
 
 ## How it works
 
@@ -180,7 +185,7 @@ The same published policy engine powers every tool:
 With **Node.js 24+**, scan a local endpoint that sets your authentication cookie:
 
 ```bash
-npx cookieguard-ci@0.3.0 scan http://localhost:3000 --auth-cookie session_id
+npx cookieguard-ci@0.4.0 scan http://localhost:3000 --auth-cookie session_id
 ```
 
 The CLI, Action, and MCP server do not log in or execute JavaScript. Use Browser Use or
@@ -196,7 +201,8 @@ origins and policy; the client can only choose which URL or evidence file to aud
 
 > [!NOTE]
 > [`@aiscihub/cookieguard-mcp`](https://www.npmjs.com/package/@aiscihub/cookieguard-mcp)
-> is on npm (0.3.0) and in the official MCP Registry as `io.github.aiscihub/cookieguard`.
+> 0.4.0 is being prepared for npm. Earlier releases are available on npm and
+> listed in the official MCP Registry as `io.github.aiscihub/cookieguard`.
 > It needs Node.js 24+.
 
 [![CookieGuard MCP server](https://mcprush.com/badge/cookieguard-mcp/card.svg)](https://mcprush.com/to/cookieguard-mcp?ref=badge) [![CookieGuard AI MCP server – quality and maintenance score on Glama](https://glama.ai/mcp/servers/aiscihub/cookieguard-ai/badges/card.svg)](https://glama.ai/mcp/servers/aiscihub/cookieguard-ai)
@@ -227,7 +233,7 @@ session cookie names. Then add the server to your client's MCP settings:
   "mcpServers": {
     "cookieguard": {
       "command": "npx",
-      "args": ["--yes", "@aiscihub/cookieguard-mcp@0.3.0",
+      "args": ["--yes", "@aiscihub/cookieguard-mcp@0.4.0",
                "--config", "/absolute/path/cookieguard.json"]
     }
   }
@@ -265,7 +271,7 @@ folder, and `npm run package:skill` builds a ZIP of it for skill marketplaces.
 Automated tools can read [`cookieguard.capabilities.json`](cookieguard.capabilities.json):
 a versioned, machine-readable description of every check, input, output schema, exit
 code, privacy property, and limitation. Output schemas are in [`schemas/`](schemas).
-`npx cookieguard-ci@0.3.0 capabilities --json` and `npx cookieguard-ci@0.3.0 explain CG001`
+`npx cookieguard-ci@0.4.0 capabilities --json` and `npx cookieguard-ci@0.4.0 explain CG001`
 print the same information.
 [Agent discovery details](docs/agent-discovery.md)
 
@@ -315,6 +321,13 @@ tests check this with synthetic tokens. Your model provider still receives the t
 page content. Pass credentials through Browser Use `sensitive_data`, and set
 `ANONYMIZED_TELEMETRY=false` to turn off Browser Use telemetry.
 [Limits & privacy](integrations/python/docs/limits-and-privacy.md)
+
+CookieGuard 0.4.0 adds separate [usage reporting](docs/USAGE_METRICS.md), enabled
+by default for accepted audit invocations. It attempts one minimal PostHog event,
+without cookie data, URLs, audit results, or persistent identity. Disable it before
+starting the process with `COOKIEGUARD_USAGE_METRICS=0` or `DO_NOT_TRACK=1`, or use
+the API's explicit `false` setting. Downloads and imports do not report. Publication
+is pending; existing npm and Python 0.3.0 installations remain unchanged.
 
 </details>
 

@@ -2,7 +2,7 @@
 
 ## Playwright
 
-`@aiscihub/cookieguard-playwright` 0.3.0 observes `Set-Cookie` responses and the
+`@aiscihub/cookieguard-playwright` 0.4.0 observes `Set-Cookie` responses and the
 browser cookie store of a Playwright `BrowserContext` during your existing login test.
 Verified with Chromium; other browsers are untested.
 
@@ -47,13 +47,13 @@ Read the test password from the environment or your test secret store, never fro
 
 ## CLI
 
-`cookieguard-ci` 0.3.0 needs only Node.js 24+. It sends one GET (plus same-origin
+`cookieguard-ci` 0.4.0 needs only Node.js 24+. It sends one GET (plus same-origin
 redirects), with no cookies or authorization headers, and audits `Set-Cookie`.
 It cannot log in or run JavaScript.
 
 ```bash
-npx --yes cookieguard-ci@0.3.0 scan http://127.0.0.1:3000/ --auth-cookie session_id
-npx --yes cookieguard-ci@0.3.0 scan http://127.0.0.1:3000/ --auth-cookie session_id --format json --output cookieguard.json
+npx --yes cookieguard-ci@0.4.0 scan http://127.0.0.1:3000/ --auth-cookie session_id
+npx --yes cookieguard-ci@0.4.0 scan http://127.0.0.1:3000/ --auth-cookie session_id --format json --output cookieguard.json
 ```
 
 | Option | Effect |
@@ -76,7 +76,7 @@ as a failed gate; never retry with a looser policy to get 0.
 Start the application, wait until it answers, then run the CLI and keep its exit code:
 
 ```bash
-npx --yes cookieguard-ci@0.3.0 scan "$APP_URL" --auth-cookie session_id --format json --output cookieguard.json
+npx --yes cookieguard-ci@0.4.0 scan "$APP_URL" --auth-cookie session_id --format json --output cookieguard.json
 ```
 
 ## GitHub Actions
@@ -98,7 +98,7 @@ the audit's code. Do not pass credentials or tokens as inputs.
 
 ## Machine-readable help
 
-`npx --yes cookieguard-ci@0.3.0 capabilities --json` prints every check, operation,
-output schema, exit code, and limitation. `npx --yes cookieguard-ci@0.3.0 explain CG001 --json`
+`npx --yes cookieguard-ci@0.4.0 capabilities --json` prints every check, operation,
+output schema, exit code, and limitation. `npx --yes cookieguard-ci@0.4.0 explain CG001 --json`
 explains a rule ID, incomplete reason (such as `expected-auth-cookie-not-observed`),
 error code, or status.

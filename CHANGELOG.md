@@ -1,5 +1,31 @@
 # Changelog
 
+## CookieGuard 0.4.0 — usage reporting — 2026-11-13
+
+Release preparation; npm and PyPI publication is pending. The four npm packages
+(`@aiscihub/cookieguard-core`, `cookieguard-ci`, `@aiscihub/cookieguard-playwright`,
+and `@aiscihub/cookieguard-mcp`) and both Python distributions (`cookieguard` and
+`cookieguard-browser-use`) move to 0.4.0 with exact internal dependencies. The
+Python integration retains its sandboxed, published npm engine 0.3.0.
+
+- **Usage reporting defaults on.** Accepted audits in CLI, Playwright, MCP,
+  GitHub Action, and Python Browser Use attempt one minimal `cookieguard_invoked`
+  event to CookieGuard's PostHog US Cloud project `735326`. Events contain fixed
+  package/version/integration metadata and privacy controls with a fresh random
+  invocation ID; no cookie data, URLs, audit results, or persistent identity.
+  Downloads, installs, imports, and direct core evaluation do not report.
+  Delivery is best effort and does not change audits. Set
+  `COOKIEGUARD_USAGE_METRICS=0`, `DO_NOT_TRACK=1`, or the API's explicit `false`
+  setting to disable reporting. An omitted setting, Python `None`, or JavaScript
+  `null` follows the environment/default. See the [usage guide](docs/USAGE_METRICS.md)
+  for the exact payload, controls, and limits. Existing npm and Python 0.3.0
+  installations remain unchanged until upgraded.
+- **Explicit core reporting helper.** `@aiscihub/cookieguard-core/usage` exports
+  `reportUsage()` and bounded `flushUsage()`; Python exports bounded
+  `flush_usage_metrics()`. The Python compatibility package shares the canonical
+  `cookieguard` hook without double counting. Environment opt-outs override API
+  enablement. Cookie and session policy behavior is unchanged.
+
 ## cookieguard 0.3.0 (Python) — 2026-11-08
 
 Published on PyPI with `cookieguard-browser-use` 0.3.0 from tag `cookieguard-v0.3.0`; see

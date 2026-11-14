@@ -1,12 +1,13 @@
 # @aiscihub/cookieguard-core
 
 Local normalization, existing-engine triage, evidence-aware policy, and value-free
-reports. ESM, Node 24+, maintained TypeScript declarations. Version 0.3.0 adds
+reports. ESM, Node 24+, maintained TypeScript declarations. Version 0.4.0 adds
+an explicit usage-reporting helper. Version 0.3.0 added
 the session checks CG010–CG012 and the gate's INCOMPLETE reasons; 0.2.0 added
 `explain()` and `readEvidence()`. No runtime dependencies for rule mode.
 
 ```bash
-npm install @aiscihub/cookieguard-core@0.3.0
+npm install @aiscihub/cookieguard-core@0.4.0
 ```
 
 Part of [CookieGuard CI](https://github.com/aiscihub/cookieguard-ai), alongside the
@@ -94,3 +95,20 @@ process startup. Scores are labeled uncalibrated, not the Python pipeline's
 calibrated outputs. The model is not retrained, replaced, or used to gate CI.
 Failures return a fixed `MODEL` error, never a silent fallback. Do not supply
 untrusted models.
+
+## Invocation reporting
+
+The 0.4.0 [usage-reporting pilot](https://github.com/aiscihub/cookieguard-ai/blob/main/docs/USAGE_METRICS.md)
+defaults on when its helper is called. Core evaluation never emits automatically.
+An application can explicitly call `reportUsage({ package: '@aiscihub/cookieguard-core', version,
+integration: 'core' })` from `@aiscihub/cookieguard-core/usage`,
+using the trusted core package version and no audit data. Adapters already report
+at their own invocation boundary; do not add a second core event beneath them.
+`COOKIEGUARD_USAGE_METRICS=0`, `DO_NOT_TRACK=1`, or `enabled: false` disables
+reporting. An omitted `enabled` or `enabled: null` follows the environment/default.
+The bundled public PostHog token targets CookieGuard's US Cloud project `735326`.
+Events include fixed package/version/integration fields, a fresh invocation
+ID, and fixed privacy controls. Delivery is best effort and never affects audits.
+Downloading or importing does not report. Existing npm 0.3.0 installations remain
+unchanged until upgraded. Optional
+`flushUsage()` waits briefly for queued events without guaranteeing delivery.

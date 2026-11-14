@@ -1,16 +1,16 @@
 # CookieGuard
 
-> Evidence-based audits of authentication-cookie configuration (HttpOnly, Secure, SameSite, Domain scope, lifetime, __Host-/__Secure- prefixes) for web applications you own or are authorized to test. Results are PASS, FAIL, or INCOMPLETE with exit codes 0/1/2, rule IDs CG001-CG009, and fixes. Cookie values are never output. Runs locally; no telemetry.
+> Evidence-based audits of authentication-cookie configuration (HttpOnly, Secure, SameSite, Domain scope, lifetime, __Host-/__Secure- prefixes) for web applications you own or are authorized to test. Results are PASS, FAIL, or INCOMPLETE with exit codes 0/1/2, rule IDs CG001-CG009, and fixes. Cookie values are never output. Audits run locally. Version 0.4.0 enables minimal package-invocation metrics by default; set COOKIEGUARD_USAGE_METRICS=0 or DO_NOT_TRACK=1 to disable them. No cookie data or audit results are sent.
 
 Use it to add a session-cookie check to a Browser Use agent login, a Playwright end-to-end test, a CI job, or an MCP client. It audits configuration only: it does not test XSS, CSRF, exploitability, or server-side session handling.
 
 ## Integrations
 
-- [Browser Use (PyPI: cookieguard 0.3.0)](https://github.com/aiscihub/cookieguard-ai/tree/main/integrations/python): `pip install cookieguard`, then `from cookieguard import CookieGuardAudit`; `CookieGuardAudit` observes the agent's browser over its own CDP connection and enforces the result outside the agent.
-- [Playwright (npm: @aiscihub/cookieguard-playwright 0.3.0)](https://github.com/aiscihub/cookieguard-ai/blob/main/docs/CI_GUIDE.md#quick-start-playwright): `startCookieAudit(context, { origins, policy })` then `assertCookiePolicy(await audit.evaluate())`.
-- [CLI (npm: cookieguard-ci 0.3.0)](https://github.com/aiscihub/cookieguard-ai/blob/main/docs/CI_GUIDE.md#quick-start-cli): `npx --yes cookieguard-ci@0.3.0 scan URL --auth-cookie NAME --format json`.
+- [Browser Use (PyPI: cookieguard 0.4.0)](https://github.com/aiscihub/cookieguard-ai/tree/main/integrations/python): `pip install cookieguard`, then `from cookieguard import CookieGuardAudit`; `CookieGuardAudit` observes the agent's browser over its own CDP connection and enforces the result outside the agent.
+- [Playwright (npm: @aiscihub/cookieguard-playwright 0.4.0)](https://github.com/aiscihub/cookieguard-ai/blob/main/docs/CI_GUIDE.md#quick-start-playwright): `startCookieAudit(context, { origins, policy })` then `assertCookiePolicy(await audit.evaluate())`.
+- [CLI (npm: cookieguard-ci 0.4.0)](https://github.com/aiscihub/cookieguard-ai/blob/main/docs/CI_GUIDE.md#quick-start-cli): `npx --yes cookieguard-ci@0.4.0 scan URL --auth-cookie NAME --format json`.
 - [GitHub Action](https://github.com/aiscihub/cookieguard-ai/blob/main/action/README.md): `aiscihub/cookieguard-ai/action@ci-v0.1.0`.
-- [MCP server (npm: @aiscihub/cookieguard-mcp 0.3.0; MCP Registry: io.github.aiscihub/cookieguard)](https://github.com/aiscihub/cookieguard-ai/tree/main/packages/mcp): local stdio server with a startup allowlist and policy; tools `cookieguard_capabilities`, `cookieguard_audit`, and `cookieguard_explain`.
+- [MCP server (npm: @aiscihub/cookieguard-mcp 0.4.0; MCP Registry: io.github.aiscihub/cookieguard)](https://github.com/aiscihub/cookieguard-ai/tree/main/packages/mcp): local stdio server with a startup allowlist and policy; tools `cookieguard_capabilities`, `cookieguard_audit`, and `cookieguard_explain`.
 
 ## For agents
 
@@ -20,6 +20,8 @@ Use it to add a session-cookie check to a Browser Use agent login, a Playwright 
 - [Rules CG001-CG009](https://github.com/aiscihub/cookieguard-ai/blob/main/skills/cookieguard-browser-auth-security/references/security-checks.md)
 
 ## Optional
+
+- [Usage metrics and opt-outs](https://github.com/aiscihub/cookieguard-ai/blob/main/docs/USAGE_METRICS.md)
 
 - [Agent discovery and publication status](https://github.com/aiscihub/cookieguard-ai/blob/main/docs/agent-discovery.md)
 - [Changelog](https://github.com/aiscihub/cookieguard-ai/blob/main/CHANGELOG.md)

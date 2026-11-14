@@ -7,7 +7,9 @@
 Catch insecure authentication-cookie configurations before they reach production.
 CookieGuard CI checks server declarations and browser observations, explains the
 evidence, and fails CI only for confirmed policy violations. Everything runs
-locally. No account, API key, cloud classifier, or telemetry is required.
+locally. No account, API key, or cloud classifier is required. Version 0.4.0 adds
+default-on [usage reporting](USAGE_METRICS.md); set `COOKIEGUARD_USAGE_METRICS=0`
+or `DO_NOT_TRACK=1` to disable it.
 
 **Authenticated workflows need [Playwright](#quick-start-playwright).** The CLI
 and GitHub Action inspect HTTP response headers; they do **not** log in, execute
@@ -59,10 +61,11 @@ from this repository, using the same security engine. Published npm packages:
 [`cookieguard-ci`](https://www.npmjs.com/package/cookieguard-ci),
 [`@aiscihub/cookieguard-core`](https://www.npmjs.com/package/@aiscihub/cookieguard-core),
 and [`@aiscihub/cookieguard-playwright`](https://www.npmjs.com/package/@aiscihub/cookieguard-playwright).
-All three are version `0.3.0` under the default `latest` dist-tag (0.1.0 was the
-public beta), published
-by [`aiscihub`](https://www.npmjs.com/~aiscihub). Package names, versions, and
-maintainer ownership have been checked against the public npm registry.
+The latest published version is `0.3.0` under the default `latest` dist-tag
+(0.1.0 was the public beta), maintained by
+[`aiscihub`](https://www.npmjs.com/~aiscihub). Release candidate `0.4.0` is being
+prepared together with the MCP package; the npm installation examples below
+apply after its publication. The pinned historical Action example is unchanged.
 
 Verified on GitHub-hosted Linux with Chromium in the
 [toolkit workflow](https://github.com/aiscihub/cookieguard-ai/actions/runs/39098406137)
@@ -90,7 +93,7 @@ Requirements: **Node 24 or newer** and npm. Against your running local test
 application, using its authentication-cookie name:
 
 ```bash
-npx cookieguard-ci@0.3.0 scan http://localhost:3000 --auth-cookie session_id
+npx cookieguard-ci@0.4.0 scan http://localhost:3000 --auth-cookie session_id
 ```
 
 The version pin keeps CI reproducible. The CLI itself needs no browser,
@@ -172,7 +175,7 @@ printed. No public website is visited by the demo or tests.
 In an existing Playwright project using Node 24 or newer:
 
 ```bash
-npm install --save-dev @aiscihub/cookieguard-playwright@0.3.0
+npm install --save-dev @aiscihub/cookieguard-playwright@0.4.0
 ```
 
 To run this repository's demo tests from a full contributor installation:
@@ -367,9 +370,18 @@ browser for this initial release.
 CI never serializes cookie values, raw Set-Cookie headers, request credentials,
 legacy analysis contexts, or arbitrary exception messages. Values are used only
 in memory for model features. Reports contain selected metadata and fixed
-explanations. No telemetry or cloud inference; the optional Node ONNX adapter
-disables runtime telemetry before loading it. If your application initializes
-ONNX first, set `ORT_DISABLE_TELEMETRY=1` before starting the process.
+explanations. Classification and policy evaluation stay local. The 0.4.0
+[usage-reporting pilot](USAGE_METRICS.md) defaults on and attempts one fixed event
+per accepted audit invocation. The bundled token targets CookieGuard's US Cloud
+project `735326`; 0.4.0 publication is pending.
+Published npm 0.3.0 installations remain unchanged. Use `COOKIEGUARD_USAGE_METRICS=0`,
+`DO_NOT_TRACK=1`, or an explicit API `false` to disable it. Downloads and imports
+do not report. Events exclude cookie data and audit results, use a fresh random
+invocation ID, and cannot measure unique users. Delivery is best effort and does
+not affect audits.
+The optional Node ONNX adapter disables ONNX runtime telemetry before loading it.
+If your application initializes ONNX first, set `ORT_DISABLE_TELEMETRY=1` before
+starting the process.
 
 Cookie names, domains, and paths may themselves be sensitive; review reports
 before sharing. The original extension's legacy JSON export includes cookie

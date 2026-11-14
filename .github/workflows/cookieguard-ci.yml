@@ -5,6 +5,9 @@ on:
     branches: [main]
 permissions:
   contents: read
+env:
+  COOKIEGUARD_USAGE_METRICS: '0'
+  DO_NOT_TRACK: '1'
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -130,7 +133,7 @@ jobs:
       - name: Engine, policy, and attribution tests (no browser)
         working-directory: integrations/python
         timeout-minutes: 5
-        run: .venv/bin/python -m pytest -v -p no:cacheprovider tests/test_config.py tests/test_engine.py tests/test_collector.py tests/test_compat.py
+        run: .venv/bin/python -m pytest -v -p no:cacheprovider tests/test_config.py tests/test_engine.py tests/test_collector.py tests/test_compat.py tests/test_usage.py
       - name: Allow Chromium's sandbox on Ubuntu 24.04
         # Ubuntu 23.10+ restricts unprivileged user namespaces with AppArmor. Playwright's
         # Chromium, which Browser Use prefers, needs them for its sandbox; keep the sandbox on.
@@ -166,7 +169,7 @@ jobs:
         run: .venv/bin/python scripts/verify_external.py
       - name: Check Browser Use evidence for synthetic-secret leakage
         run: node scripts/check-artifacts.js artifacts/browser-use
-      - name: Upgrade paths from the published 0.1 packages
+      - name: Upgrade paths from the published 0.1, 0.2, and 0.3 packages
         if: ${{ matrix.python == '3.12' }}
         working-directory: integrations/python
         run: |

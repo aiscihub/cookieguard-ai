@@ -14,9 +14,10 @@ from cookieguard.browser_use import (
 	CookieGuardError,
 	CookiePolicyError,
 	Finding,
+	flush_usage_metrics,
 )
 
-__version__ = '0.3.0'
+__version__ = '0.4.0'
 __all__ = [
 	'ACTION_DESCRIPTION',
 	'AuditResult',
@@ -25,5 +26,6 @@ __all__ = [
 	'CookiePolicyError',
 	'DEFAULT_ACTION_NAME',
 	'Finding',
+	'flush_usage_metrics',
 	'__version__',
 ]

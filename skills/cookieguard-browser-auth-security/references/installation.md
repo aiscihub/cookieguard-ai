@@ -1,17 +1,17 @@
 # Installation
 
 Install CookieGuard only as a test or development dependency of the project being
-audited, after telling the user what you will add. Every command below installs a
-published release.
+audited, after telling the user what you will add. These commands target 0.4.0;
+publication is pending. Verify registry availability before installing.
 
 | Package | Registry | Version | Install | Requires |
 | --- | --- | --- | --- | --- |
-| `cookieguard` | PyPI | 0.3.0 | `.venv/bin/pip install cookieguard==0.3.0` | Python 3.11-3.13, browser-use >=0.13.14,<0.14, Node.js 24+, Chrome or Chromium |
-| `cookieguard-browser-use` | PyPI | 0.3.0 | Only for existing projects | Compatibility package: installs `cookieguard` and keeps `import cookieguard_browser_use` working |
-| `@aiscihub/cookieguard-playwright` | npm | 0.3.0 | `npm install --save-dev @aiscihub/cookieguard-playwright@0.3.0` | Node.js 24+, `@playwright/test` |
-| `@aiscihub/cookieguard-core` | npm | 0.3.0 | `npm install --save-dev @aiscihub/cookieguard-core@0.3.0` | Node.js 24+; only needed to write JSON reports from Playwright |
-| `cookieguard-ci` | npm | 0.3.0 | `npx --yes cookieguard-ci@0.3.0 ...` (no install) | Node.js 24+ |
-| `@aiscihub/cookieguard-mcp` | npm | 0.3.0 | `npx --yes @aiscihub/cookieguard-mcp@0.3.0 --config /absolute/path/cookieguard.json` | Node.js 24+ |
+| `cookieguard` | PyPI | 0.4.0 | `.venv/bin/pip install cookieguard==0.4.0` | Python 3.11-3.13, browser-use >=0.13.14,<0.14, Node.js 24+, Chrome or Chromium |
+| `cookieguard-browser-use` | PyPI | 0.4.0 | Only for existing projects | Compatibility package: installs `cookieguard` and keeps `import cookieguard_browser_use` working |
+| `@aiscihub/cookieguard-playwright` | npm | 0.4.0 | `npm install --save-dev @aiscihub/cookieguard-playwright@0.4.0` | Node.js 24+, `@playwright/test` |
+| `@aiscihub/cookieguard-core` | npm | 0.4.0 | `npm install --save-dev @aiscihub/cookieguard-core@0.4.0` | Node.js 24+; only needed to write JSON reports from Playwright |
+| `cookieguard-ci` | npm | 0.4.0 | `npx --yes cookieguard-ci@0.4.0 ...` (no install) | Node.js 24+ |
+| `@aiscihub/cookieguard-mcp` | npm | 0.4.0 | `npx --yes @aiscihub/cookieguard-mcp@0.4.0 --config /absolute/path/cookieguard.json` | Node.js 24+ |
 
 On npm, the package named `cookieguard` is an unrelated project. Use the names above.
 
@@ -20,7 +20,7 @@ On npm, the package named `cookieguard` is an unrelated project. Use the names a
 ```bash
 python3 --version                      # must be 3.11, 3.12, or 3.13
 python3.12 -m venv .venv               # if the default python3 is older
-.venv/bin/pip install cookieguard==0.3.0
+.venv/bin/pip install cookieguard==0.4.0
 node --version                         # must be 24 or newer
 ```
 
@@ -32,11 +32,16 @@ do not work around that with `--no-sandbox`.
 
 ```bash
 .venv/bin/python -m cookieguard.browser_use.demo   # real browser, no LLM key; exit 0 = expected FAIL and PASS
-npx --yes cookieguard-ci@0.3.0 --version           # prints 0.3.0
-npx --yes cookieguard-ci@0.3.0 explain CG001       # rule explanation, no network audit
+npx --yes cookieguard-ci@0.4.0 --version           # prints 0.4.0
+npx --yes cookieguard-ci@0.4.0 explain CG001       # rule explanation, no network audit
 ```
 
 ## Network access
 
 Installation contacts `pypi.org` and `files.pythonhosted.org`, or `registry.npmjs.org`.
-Audits contact only the application origins you configure. CookieGuard sends no telemetry.
+Audits inspect the application origins you configure. Version 0.4.0 also attempts
+one minimal PostHog event per accepted audit by default. Disable it with
+`COOKIEGUARD_USAGE_METRICS=0`, `DO_NOT_TRACK=1`, or the integration's explicit
+`false` setting. Events exclude cookie data, URLs, audit results, and persistent
+identity. Delivery is best effort and cannot change audit results. See the
+[usage guide](https://github.com/aiscihub/cookieguard-ai/blob/main/docs/USAGE_METRICS.md).

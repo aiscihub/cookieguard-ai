@@ -38,7 +38,7 @@ Each finding has a rule ID (`CG001`-`CG009`), a `severity` (`info` to `critical`
 | `NETWORK` | App not reachable, non-2xx status, or timeout | Start the app and retry |
 | `CONFIG` | Invalid option or policy value | Fix the command or configuration |
 
-`npx --yes cookieguard-ci@0.3.0 explain CODE` explains any rule, issue, or error code.
+`npx --yes cookieguard-ci@0.4.0 explain CODE` explains any rule, issue, or error code.
 
 - **Not run**: if prerequisites are missing or the environment is unsupported, say the
   audit was not performed. A skipped check is never a pass.

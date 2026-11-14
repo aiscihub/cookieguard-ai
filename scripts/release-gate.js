@@ -1,3 +1,4 @@
+import '../tests/fixtures/disable-usage.mjs';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
