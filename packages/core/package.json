@@ -1,6 +1,6 @@
 {
   "name": "@aiscihub/cookieguard-core",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Local, evidence-aware authentication-cookie policy engine: HttpOnly, Secure, SameSite, Domain, lifetime, and prefix checks without cookie values",
   "keywords": ["cookie", "session-cookie", "authentication", "security", "httponly", "samesite", "set-cookie", "policy", "audit"],
   "homepage": "https://github.com/aiscihub/cookieguard-ai/tree/main/packages/core",
@@ -11,7 +11,8 @@
   "engines": { "node": ">=24" },
   "exports": {
     ".": { "types": "./src/index.d.ts", "import": "./src/index.js" },
-    "./onnx": { "types": "./src/onnx.d.ts", "import": "./src/onnx.js" }
+    "./onnx": { "types": "./src/onnx.d.ts", "import": "./src/onnx.js" },
+    "./usage": { "types": "./src/usage.d.ts", "import": "./src/usage.js" }
   },
   "files": ["src", "vendor", "LICENSE", "README.md"],
   "peerDependencies": { "onnxruntime-node": "1.30.0" },

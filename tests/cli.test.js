@@ -1,3 +1,4 @@
+import './fixtures/disable-usage.mjs';
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtemp, readFile, rm, writeFile, stat } from 'node:fs/promises';
@@ -67,7 +68,7 @@ test('HTTP errors, no headers, timeouts, and bad options cannot report success',
   assert.equal((await run(['scan', `${target}/secure`, '--fail-on', DEMO_VALUE])).code, 2);
   assert.equal((await run([`--${DEMO_VALUE}`])).code, 2);
   assert.equal((await run(['--help'])).code, 0);
-  assert.equal((await run(['--version'])).out, '0.3.0\n');
+  assert.equal((await run(['--version'])).out, '0.4.0\n');
 });
 test('fixture parse errors and nested legacy data are never reflected', async () => {
   const file = join(temp, 'input.json');

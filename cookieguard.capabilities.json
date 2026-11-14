@@ -4,7 +4,7 @@
   "tool": {
     "id": "cookieguard",
     "name": "CookieGuard",
-    "version": "0.3.0",
+    "version": "0.4.0",
     "license": "MIT",
     "repository": "https://github.com/aiscihub/cookieguard-ai",
     "documentation": "https://github.com/aiscihub/cookieguard-ai#readme",
@@ -27,7 +27,7 @@
       "kind": "python-package",
       "registry": "pypi",
       "package": "cookieguard",
-      "version": "0.3.0",
+      "version": "0.4.0",
       "install": "pip install cookieguard",
       "entryPoint": "cookieguard.CookieGuardAudit",
       "requires": [
@@ -47,8 +47,8 @@
       "kind": "npm-package",
       "registry": "npm",
       "package": "@aiscihub/cookieguard-playwright",
-      "version": "0.3.0",
-      "install": "npm install --save-dev @aiscihub/cookieguard-playwright@0.3.0",
+      "version": "0.4.0",
+      "install": "npm install --save-dev @aiscihub/cookieguard-playwright@0.4.0",
       "entryPoint": "startCookieAudit",
       "requires": [
         "Node.js 24+",
@@ -64,8 +64,8 @@
       "kind": "npm-package",
       "registry": "npm",
       "package": "cookieguard-ci",
-      "version": "0.3.0",
-      "install": "npx --yes cookieguard-ci@0.3.0 scan http://127.0.0.1:3000/ --auth-cookie session_id --format json",
+      "version": "0.4.0",
+      "install": "npx --yes cookieguard-ci@0.4.0 scan http://127.0.0.1:3000/ --auth-cookie session_id --format json",
       "entryPoint": "cookieguard-ci",
       "requires": [
         "Node.js 24+"
@@ -95,10 +95,10 @@
       "kind": "mcp-server",
       "registry": "npm",
       "package": "@aiscihub/cookieguard-mcp",
-      "version": "0.3.0",
+      "version": "0.4.0",
       "mcpRegistryName": "io.github.aiscihub/cookieguard",
       "transport": "stdio",
-      "install": "npx --yes @aiscihub/cookieguard-mcp@0.3.0 --config /absolute/path/cookieguard.json",
+      "install": "npx --yes @aiscihub/cookieguard-mcp@0.4.0 --config /absolute/path/cookieguard.json",
       "entryPoint": "cookieguard-mcp",
       "requires": [
         "Node.js 24+",
@@ -146,7 +146,7 @@
         "server-declaration",
         "browser-observation"
       ],
-      "network": "None beyond the workflow the browser already performs."
+      "network": "Browser workflow traffic. Package-usage reporting to PostHog is enabled by default, can be disabled, and sends no audit data."
     },
     {
       "id": "audit-http-headers",
@@ -166,7 +166,7 @@
       "evidence": [
         "server-declaration"
       ],
-      "network": "GET without cookies or authorization headers; bodies are discarded."
+      "network": "GET without cookies or authorization headers; bodies are discarded. Package-usage reporting to PostHog is enabled by default, can be disabled, and sends no audit data."
     },
     {
       "id": "audit-evidence-file",
@@ -186,7 +186,7 @@
       "evidence": [
         "supplied-evidence"
       ],
-      "network": "None."
+      "network": "Package-usage reporting to PostHog is enabled by default and sends no audit data. No network when reporting is disabled."
     },
     {
       "id": "agent-provisional-check",
@@ -265,7 +265,7 @@
         "browser-observation",
         "supplied-evidence"
       ],
-      "network": "None beyond the login workflow and an optional session probe."
+      "network": "Login workflow and an optional session probe. Package-usage reporting to PostHog is enabled by default, can be disabled, and sends no audit data."
     },
     {
       "id": "explain",
@@ -518,7 +518,8 @@
   },
   "privacy": [
     "Cookie values are never written to results, reports, logs, or MCP responses.",
-    "No telemetry, accounts, or remote services. The engine runs locally.",
+    "The engine runs locally; no account or remote service is required for analysis. Package-usage reporting to PostHog is enabled by default.",
+    "Usage events contain package/version/integration and a fresh event ID, never audit inputs or results. COOKIEGUARD_USAGE_METRICS=0 or DO_NOT_TRACK=1 disables them.",
     "HTTP scans send no cookies or authorization headers and discard response bodies.",
     "CookieGuard never asks for or stores credentials. It replays session tokens only when a session probe is configured, only to that probe URL on an allowed origin, and only from the local process.",
     "Web Storage values are classified locally and discarded; only the area, a sanitized key, and the token kind are reported.",

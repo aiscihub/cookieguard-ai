@@ -7,6 +7,7 @@
   "engines": { "node": ">=24" },
   "workspaces": ["packages/*"],
   "scripts": {
+    "configure:usage": "node scripts/configure-usage-metrics.js",
     "prepare": "npm run build",
     "build": "node scripts/build.js",
     "build:schemas": "node scripts/build-schemas.js",
@@ -14,8 +15,8 @@
     "package:skill": "node scripts/package-skill.js",
     "lint": "eslint packages scripts tests examples action integrations/python/scripts integrations/python/src benchmarks/discovery/run.mjs benchmarks/discovery/score.mjs benchmarks/auth-testing/bench.mjs benchmarks/auth-testing/score.mjs benchmarks/auth-testing/variants.mjs benchmarks/auth-testing/validate.mjs benchmarks/security-gate/run.mjs benchmarks/security-gate/variants.mjs benchmarks/security-gate/agent.mjs eslint.config.js",
     "typecheck": "tsc --noEmit -p tsconfig.json",
-    "test": "node --test --test-timeout=30000 tests/*.test.js",
-    "test:mcp": "node --test --test-timeout=30000 tests/mcp.test.js",
+    "test": "node --import ./tests/fixtures/disable-usage.mjs --test --test-timeout=30000 tests/*.test.js",
+    "test:mcp": "node --import ./tests/fixtures/disable-usage.mjs --test --test-timeout=30000 tests/mcp.test.js",
     "verify:mcp": "node scripts/verify-mcp-package.js",
     "demo:mcp": "node examples/mcp/run.js",
     "test:playwright": "playwright test --config examples/playwright/playwright.config.js",

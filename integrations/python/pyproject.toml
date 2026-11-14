@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "cookieguard"
-version = "0.3.0"
+version = "0.4.0"
 description = "CookieGuard authentication-cookie policy checks for AI browser agents, starting with Browser Use"
 dynamic = ["readme"]
 license = "MIT"
@@ -54,15 +54,23 @@ fragments = [{ path = "README.md" }]
 # Update these release-tag pins together with the package version.
 [[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
 pattern = '''(?P<prefix>(?:src|srcset)="|!\[[^\]]*\]\()(?P<path>docs/[^"()\s]+\.(?:svg|gif))'''
-replacement = '\g<prefix>https://raw.githubusercontent.com/aiscihub/cookieguard-ai/cookieguard-v0.3.0/integrations/python/\g<path>'
+replacement = '\g<prefix>https://raw.githubusercontent.com/aiscihub/cookieguard-ai/cookieguard-v0.4.0/integrations/python/\g<path>'
 
 [[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
 pattern = '''(?P<prefix>\]\()(?P<path>docs/[^)\s]+\.md(?:#[^)\s]*)?)'''
-replacement = '\g<prefix>https://github.com/aiscihub/cookieguard-ai/blob/cookieguard-v0.3.0/integrations/python/\g<path>'
+replacement = '\g<prefix>https://github.com/aiscihub/cookieguard-ai/blob/cookieguard-v0.4.0/integrations/python/\g<path>'
 
 [[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
 pattern = '''(?P<prefix>\]\()\.\./\.\./(?P<path>README\.md(?:#[^)\s]*)?)'''
-replacement = '\g<prefix>https://github.com/aiscihub/cookieguard-ai/blob/cookieguard-v0.3.0/\g<path>'
+replacement = '\g<prefix>https://github.com/aiscihub/cookieguard-ai/blob/cookieguard-v0.4.0/\g<path>'
+
+[[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
+pattern = '''(?P<prefix>\]\()VALIDATION\.md(?P<anchor>#[^)\s]*)?'''
+replacement = '\g<prefix>https://github.com/aiscihub/cookieguard-ai/blob/cookieguard-v0.4.0/integrations/python/VALIDATION.md\g<anchor>'
+
+[[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
+pattern = 'https://github\.com/aiscihub/cookieguard-ai/blob/main/docs/USAGE_METRICS\.md'
+replacement = 'https://github.com/aiscihub/cookieguard-ai/blob/cookieguard-v0.4.0/docs/USAGE_METRICS.md'
 
 [[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
 pattern = ', not yet on PyPI\.'

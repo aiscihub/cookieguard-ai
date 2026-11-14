@@ -1,12 +1,20 @@
 # MCP release checklist
 
+Release candidate 0.4.0 is being prepared with all four npm packages and both
+Python distributions. Publication and MCP Registry submission are pending.
+It adds [default-on invocation reporting](../../docs/USAGE_METRICS.md), with
+`COOKIEGUARD_USAGE_METRICS=0`, `DO_NOT_TRACK=1`, and trusted API opt-outs. Use the
+same reviewed, tested artifacts for publication and verify registry installs;
+keep reporting disabled during release validation.
+
 `@aiscihub/cookieguard-mcp` 0.3.0 was [published to npm](https://www.npmjs.com/package/@aiscihub/cookieguard-mcp)
 on 2026-11-08 under the `latest` dist-tag, together with `@aiscihub/cookieguard-core`,
 `cookieguard-ci`, and `@aiscihub/cookieguard-playwright` 0.3.0. See the
 [0.3.0 publication record](VALIDATION.md#030-publication--2026-11-08). The MCP Registry
 still lists 0.2.0. Earlier records: [0.2.0](VALIDATION.md#020-publication--2026-11-06),
 [0.1.0](VALIDATION.md#010-publication--2026-11-05), and
-[0.1.0-beta.1](VALIDATION.md#npm-publication--2026-11-05). The Python package stays at 0.2.0.
+[0.1.0-beta.1](VALIDATION.md#npm-publication--2026-11-05). The Python package was still at 0.2.0 during that npm release; its later
+0.3.0 publication is recorded in [Python validation](../../integrations/python/VALIDATION.md).
 
 ## 1. Review and merge
 
@@ -57,7 +65,7 @@ After a successful upload, users can configure:
   "mcpServers": {
     "cookieguard": {
       "command": "npx",
-      "args": ["--yes", "@aiscihub/cookieguard-mcp@0.3.0", "--config", "/absolute/path/cookieguard.json"]
+      "args": ["--yes", "@aiscihub/cookieguard-mcp@0.4.0", "--config", "/absolute/path/cookieguard.json"]
     }
   }
 }

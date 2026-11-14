@@ -10,7 +10,7 @@ An illustrative walkthrough; the output below is from a real run.
 1. **Detect.** `requirements.txt` pins `browser-use`, the login handler sets a cookie
    named `session_id`, and `python3.12` and Node.js 24+ are available.
 2. **Install, after telling the user.** Run `python3.12 -m venv .venv` and
-   `.venv/bin/pip install cookieguard==0.3.0` as a test dependency.
+   `.venv/bin/pip install cookieguard==0.4.0` as a test dependency.
 3. **Audit.** Wrap the existing agent run with `CookieGuardAudit(allowed_origins=[...],
    auth_cookies=['session_id'])`, starting collection before the login and calling
    `finish()` afterwards. The password stays in Browser Use `sensitive_data`.

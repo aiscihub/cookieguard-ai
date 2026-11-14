@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "projectId": 735326,
+  "region": "us",
+  "verificationDate": "2026-11-13",
+  "verificationTimezone": "America/Los_Angeles",
+  "kind": "synthetic-cli-audits",
+  "runs": [
+    {
+      "startedAt": "2026-11-14T01:38:08.938Z",
+      "finishedAt": "2026-11-14T01:38:09.307Z",
+      "auditExitCode": 0,
+      "auditStatus": "passed",
+      "event": "cookieguard_invoked",
+      "distinctId": "b74d6209-4487-4dce-9134-067fa6f1b948",
+      "package": "cookieguard-ci",
+      "packageVersion": "0.2.0",
+      "integration": "cli",
+      "httpStatus": 200,
+      "receiptStatus": null
+    },
+    {
+      "startedAt": "2026-11-14T01:39:10.746Z",
+      "finishedAt": "2026-11-14T01:39:11.161Z",
+      "auditExitCode": 0,
+      "auditStatus": "passed",
+      "event": "cookieguard_invoked",
+      "distinctId": "9fde62bd-dc27-4a16-aa71-8e515b309442",
+      "package": "cookieguard-ci",
+      "packageVersion": "0.2.0",
+      "integration": "cli",
+      "httpStatus": 200,
+      "receiptStatus": "Ok"
+    }
+  ],
+  "captureAcceptanceVerified": true,
+  "eventStorageVerified": true,
+  "eventStorageVerificationMethod": "Owner-provided PostHog activity screenshot showing both exact invocation IDs.",
+  "dashboardCreated": false,
+  "notes": [
+    "The first observation helper understood numeric acknowledgements only; the second also recognized the current JSON status Ok.",
+    "Each probe exercised the actual CLI hook and unchanged production sender and worker. It did not call capture independently.",
+    "Only fixed invocation metadata was sent; neither synthetic cookie metadata nor results were transmitted.",
+    "HTTP acknowledgement alone does not verify stored-event visibility; the owner subsequently supplied a PostHog activity screenshot matching both invocation IDs.",
+    "Saved-dashboard creation and project-level privacy settings have not been verified.",
+    "These two synthetic invocation IDs should be excluded from adoption counts."
+  ]
+}

@@ -4,6 +4,7 @@ import { join } from 'node:path';
 import { McpServer } from '@modelcontextprotocol/server';
 import * as z from 'zod/v4';
 import { AuditError, evaluateCookiePolicy, exitCode, explain, formatJson, readEvidence, safeError, EXPLAIN_IDS } from '@aiscihub/cookieguard-core';
+import { reportUsage } from '@aiscihub/cookieguard-core/usage';
 import { capabilities, scanUrl, validateTarget } from 'cookieguard-ci';
 import { validateConfig } from './config.js';
 import { mcpAuditResultSchema, mcpCapabilitiesSchema, mcpExplainResultSchema } from './schemas.js';
@@ -100,6 +101,7 @@ export function createCookieGuardServer(options) {
   const guarded = async (run, limitations = scope) => {
     if (busy) return failure({ code: 'BUSY', message: 'Another CookieGuard audit is in progress. Retry after it completes.' }, limitations);
     busy = true;
+    reportUsage({ package: manifest.name, version: manifest.version, integration: 'mcp', enabled: config.usageMetrics ?? undefined });
     try { return await run(); }
     catch (error) { return failure(safeError(error), limitations); }
     finally { busy = false; }

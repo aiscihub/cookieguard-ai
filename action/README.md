@@ -30,6 +30,19 @@ that generated file with seven-day retention, then enforces the status. No
 user-supplied artifact path is accepted. Outputs: `exit-code` (0/1/2), `report-path`.
 Inputs enter via environment variables, never shell interpolation.
 
+The 0.4.0 [usage-reporting pilot](../docs/USAGE_METRICS.md) defaults on in this
+source checkout. Each accepted audit attempts one event to CookieGuard's PostHog
+US Cloud project `735326`, reported as package `cookieguard-ci` and integration
+`github-action`. It includes fixed package/version/integration fields, a fresh
+invocation ID, and fixed privacy controls, without audit data. Delivery is best
+effort and never changes audit results. The pinned release above is unchanged;
+0.4.0 publication is pending. Disable reporting on the Action step:
+
+```yaml
+  env:
+    COOKIEGUARD_USAGE_METRICS: '0' # Alternatively, DO_NOT_TRACK: '1'
+```
+
 When developing in this repository, run contributor tests before invoking
 `./action`: its production install removes dev dependencies from its own checkout.
 To use a local source copy, check the complete source tree out into a subdirectory

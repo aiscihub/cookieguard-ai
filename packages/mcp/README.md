@@ -4,8 +4,9 @@ Let an MCP client check HTTP cookie configuration against your local policy.
 CookieGuard returns **PASS / FAIL / INCOMPLETE**, rule IDs, explanations, and fixes.
 Cookie values never appear in tool results.
 
-Version **0.3.0** on npm, listed in the official MCP Registry as
-`io.github.aiscihub/cookieguard`. Requires **Node.js 24+**. Version 0.3.0 updates the
+Version **0.4.0** adds default-on invocation reporting. Earlier releases are
+available on npm and in the official MCP Registry as
+`io.github.aiscihub/cookieguard`. Requires **Node.js 24+**. Version 0.3.0 updated the
 engine (explanations for CG010–CG012, and session and Web Storage evidence in
 `cookieguard_audit` evidence files); its tools are unchanged. Version 0.2.0 added
 `cookieguard_capabilities`, `cookieguard_audit` (including sanitized evidence files), and
@@ -95,7 +96,7 @@ For clients that use an `mcpServers` JSON object:
       "command": "npx",
       "args": [
         "--yes",
-        "@aiscihub/cookieguard-mcp@0.3.0",
+        "@aiscihub/cookieguard-mcp@0.4.0",
         "--config",
         "/absolute/path/cookieguard.json"
       ]
@@ -206,6 +207,17 @@ authentication-cookie failures. Defaults and rules are described in the
 - Configured origins, policy, the evidence directory path (when set), summary counts,
   and findings are visible to the client and may be sent to its model provider. Do not put secrets in config or
   tool arguments. The server creates no audit log or report file.
+- The 0.4.0 [usage-reporting pilot](https://github.com/aiscihub/cookieguard-ai/blob/main/docs/USAGE_METRICS.md)
+  defaults on and attempts one fixed event per admitted audit.
+  A startup setting `"usageMetrics": false`,
+  `COOKIEGUARD_USAGE_METRICS=0`, or `DO_NOT_TRACK=1` disables it. Tool arguments
+  cannot change reporting; `"usageMetrics": null` or omission follows the
+  environment/default. BUSY rejections, discovery tools, downloads, and imports
+  do not count. Events contain fixed package/version/integration fields, a fresh
+  random invocation ID, and fixed privacy controls, without tool arguments,
+  origins, results, or stable identity. The bundled public token targets
+  CookieGuard's US Cloud project `735326`. Delivery is best effort and never
+  affects audits. Existing npm 0.3.0 installations remain unchanged until upgraded.
 - A pass covers only these configured checks. MCP exposes a tool; it cannot force
   an agent to call it or enforce its result. Enforce results in your test runner
   or CI when you need a release gate. Baseline regression comparison is not

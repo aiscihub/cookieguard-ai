@@ -170,7 +170,8 @@ const exposures = text => [...new Set(text.match(CANARY) ?? [])].length;
 export async function runCell({ dir, approach, env: extraEnv = {}, who = null }) {
   const runId = `run-${randomBytes(6).toString('hex')}`;
   const env = { PATH: process.env.PATH, HOME: who?.home ?? process.env.HOME, CI: '1', COOKIEGUARD_RUN_ID: runId, FORCE_COLOR: '0',
-    ...(process.env.PLAYWRIGHT_BROWSERS_PATH ? { PLAYWRIGHT_BROWSERS_PATH: process.env.PLAYWRIGHT_BROWSERS_PATH } : {}), ...extraEnv };
+    ...(process.env.PLAYWRIGHT_BROWSERS_PATH ? { PLAYWRIGHT_BROWSERS_PATH: process.env.PLAYWRIGHT_BROWSERS_PATH } : {}), ...extraEnv,
+    COOKIEGUARD_USAGE_METRICS: '0', DO_NOT_TRACK: '1' };
   // A planted evidence file gets the run ID the forger read from the environment.
   for (const file of ['cookieguard-evidence/sign-in-and-out.json']) {
     const path = join(dir, file);
@@ -266,7 +267,8 @@ async function privacy({ deps, out }) {
     await cp(join(HERE, 'privacy/idioms.spec.js'), join(dir, 'e2e/idioms.spec.js'));
     // Run only this idiom.
     const only = await run('npx', ['playwright', 'test', 'e2e/idioms.spec.js', '-g', `${idiom.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`], { cwd: dir, env: { PATH: process.env.PATH, HOME: process.env.HOME, CI: '1', FORCE_COLOR: '0',
-      ...(process.env.PLAYWRIGHT_BROWSERS_PATH ? { PLAYWRIGHT_BROWSERS_PATH: process.env.PLAYWRIGHT_BROWSERS_PATH } : {}) } });
+      ...(process.env.PLAYWRIGHT_BROWSERS_PATH ? { PLAYWRIGHT_BROWSERS_PATH: process.env.PLAYWRIGHT_BROWSERS_PATH } : {}),
+      COOKIEGUARD_USAGE_METRICS: '0', DO_NOT_TRACK: '1' } });
     const files = await textFiles(dir, ['test-results']);
     const row = { idiom, variant, exitCode: only.exitCode, ran: /\b1 failed\b/.test(only.output), exposure: { console: exposures(only.output), files: files.filter(f => exposures(f.content)).map(f => f.path) },
       output: only.output.slice(-6000) };

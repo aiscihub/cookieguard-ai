@@ -17,6 +17,9 @@ on:
 
 permissions:
   contents: read
+env:
+  COOKIEGUARD_USAGE_METRICS: '0'
+  DO_NOT_TRACK: '1'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -70,7 +73,7 @@ jobs:
           assert compat['dependencies'] == [f"cookieguard=={core['version']}"], compat['dependencies']
           print(f"cookieguard {core['version']} and cookieguard-browser-use {compat['version']} are in lockstep")
           EOF
-      - name: Install and upgrade paths from the published 0.1 packages
+      - name: Install and upgrade paths from the published 0.1, 0.2, and 0.3 packages
         working-directory: integrations/python
         run: python scripts/verify_upgrade.py dist
       - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6

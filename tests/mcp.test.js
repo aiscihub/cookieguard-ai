@@ -1,3 +1,4 @@
+import './fixtures/disable-usage.mjs';
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
@@ -187,6 +188,6 @@ test('bad startup configuration exits 2 without reflecting paths or input; help 
   }
   await assert.rejects(readConfig('relative.json'), { code: 'CONFIG' });
   assert.match((await exec(process.execPath, [bin, '--help'])).stdout, /--config/);
-  assert.equal((await exec(process.execPath, [bin, '--version'])).stdout.trim(), '0.3.0');
+  assert.equal((await exec(process.execPath, [bin, '--version'])).stdout.trim(), '0.4.0');
   await assert.rejects(exec(process.execPath, [bin, `--${DEMO_VALUE}`]), error => { clean(error.stdout + error.stderr); return error.code === 2; });
 });

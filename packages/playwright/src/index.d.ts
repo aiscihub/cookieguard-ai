@@ -10,6 +10,8 @@ export interface SessionProbeOptions {
 export interface AuditOptions {
   origins: string[]; policy?: Policy; timeoutMs?: number; maxObservations?: number;
   classifier?: OnnxClassifier;
+  /** Content-free invocation reporting. Enabled by default; false or environment opt-outs disable it. Null follows the default/environment setting. */
+  usageMetrics?: boolean | null;
   /** Opt-in: replay the configured authentication cookies to one protected URL to check rotation (CG010) and logout (CG011). */
   sessionProbe?: SessionProbeOptions;
   /** Read localStorage and sessionStorage of allowed origins for tokens (CG012). Default true. */

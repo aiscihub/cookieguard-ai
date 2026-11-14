@@ -1,5 +1,7 @@
 import { AuditError, normalizeCookie, parseSetCookie, evaluateCookiePolicy, validatePolicy, storageObservation } from '@aiscihub/cookieguard-core';
 import { sessionProbeConfig, createSessionProbe } from './session.js';
+import { reportUsage } from '@aiscihub/cookieguard-core/usage';
+import manifest from '../package.json' with { type: 'json' };
 
 const STORAGE_TIMEOUT_MS = 5000;
 const MAX_STORAGE_ENTRIES = 1000;
@@ -36,6 +38,8 @@ export function startCookieAudit(context, options) {
   if (!Number.isInteger(timeoutMs) || timeoutMs < 100 || timeoutMs > 600000
     || !Number.isInteger(maxObservations) || maxObservations < 1 || maxObservations > 1000) throw new AuditError('CONFIG');
   if (options.classifier && (options.classifier.mode !== 'onnx' || typeof options.classifier.classify !== 'function')) throw new AuditError('CONFIG');
+  const usageMetrics = options.usageMetrics;
+  if (usageMetrics !== undefined && usageMetrics !== null && typeof usageMetrics !== 'boolean') throw new AuditError('CONFIG');
   if (options.storage !== undefined && typeof options.storage !== 'boolean') throw new AuditError('CONFIG');
   const sessionConfig = sessionProbeConfig(options.sessionProbe, origins, policy);
   const session = sessionConfig ? createSessionProbe(sessionConfig) : null;
@@ -161,6 +165,7 @@ export function startCookieAudit(context, options) {
   }
 
   async function collectOnce(storagePolicy) {
+    reportUsage({ package: manifest.name, version: manifest.version, integration: 'playwright', enabled: usageMetrics ?? undefined });
     detach();
     let waitTimer;
     try {

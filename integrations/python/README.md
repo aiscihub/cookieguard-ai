@@ -67,17 +67,30 @@ result.assert_policy()                          # raises CookiePolicyError on FA
 success. `CookieGuardAudit` is also an async context manager; `close()` stops
 collection without a result. One instance audits one workflow.
 
+The 0.4.0 [usage-reporting pilot](https://github.com/aiscihub/cookieguard-ai/blob/main/docs/USAGE_METRICS.md)
+defaults on and attempts one fixed event per accepted `start()`.
+`usage_metrics=False`, `COOKIEGUARD_USAGE_METRICS=0`, or `DO_NOT_TRACK=1` disables
+it; `usage_metrics=None` or omission follows the environment/default. Events use
+fixed package/version/integration fields, a fresh random invocation ID, and fixed
+privacy controls, without cookie data or audit results. The bundled public token
+targets CookieGuard's US Cloud project `735326`. Delivery is best effort and does
+not change audit results. Downloads, imports, and construction do not report.
+Existing Python 0.3.0 installations remain unchanged until upgraded.
+See [privacy boundaries](docs/limits-and-privacy.md) for provider transport and Browser Use settings.
+
 Needs Python 3.11+, Node.js 24+, and Chrome or Chromium: **[Install](docs/install.md)**.
 
-Install [version 0.3.0 from PyPI](https://pypi.org/project/cookieguard/):
+Install version 0.4.0 from [PyPI](https://pypi.org/project/cookieguard/):
 
 ```bash
-pip install cookieguard
+pip install cookieguard==0.4.0
 ```
 
 Code that uses `cookieguard-browser-use` or `import cookieguard_browser_use` keeps working:
 that package now installs `cookieguard` and re-exports it.
 
-Status: `0.3.0`, tested with browser-use 0.13.14 on Linux (Python 3.11–3.13) and macOS (Python 3.12).
+Version: `0.4.0`. Historical environment validation covers browser-use
+0.13.14 on Linux (Python 3.11–3.13) and macOS (Python 3.12); current release checks
+are recorded in [VALIDATION.md](VALIDATION.md).
 See [tested environments](docs/limits-and-privacy.md#tested-environments-and-dependencies).
 This is a community integration, not an official Browser Use package.

@@ -13,7 +13,7 @@ import cookieguard.browser_use as browser_use  # noqa: E402
 
 def test_compat_names_are_the_umbrella_objects():
 	for name in ('CookieGuardAudit', 'AuditResult', 'Finding', 'CookieGuardError', 'CookiePolicyError',
-			'ACTION_DESCRIPTION', 'DEFAULT_ACTION_NAME'):
+			'ACTION_DESCRIPTION', 'DEFAULT_ACTION_NAME', 'flush_usage_metrics'):
 		assert getattr(compat, name) is getattr(browser_use, name) is getattr(cookieguard, name)
 	assert compat.__version__ == cookieguard.__version__
 

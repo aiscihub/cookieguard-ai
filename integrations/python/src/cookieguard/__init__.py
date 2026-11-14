@@ -12,8 +12,9 @@ from typing import Any
 
 from ._errors import CookieGuardError, CookiePolicyError
 from ._result import AuditResult, Finding
+from ._usage import flush_usage_metrics
 
-__version__ = '0.3.0'
+__version__ = '0.4.0'
 
 # Integration names, imported only when first used so the core never requires an
 # integration's dependencies.
@@ -31,6 +32,7 @@ __all__ = [
 	'CookiePolicyError',
 	'DEFAULT_ACTION_NAME',
 	'Finding',
+	'flush_usage_metrics',
 	'__version__',
 ]
 

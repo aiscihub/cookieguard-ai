@@ -1,8 +1,10 @@
 import { appendFile, mkdtemp } from 'node:fs/promises';
 import { join } from 'node:path';
-import { scanUrl } from 'cookieguard-ci';
+import { scanUrl, validateTarget } from 'cookieguard-ci';
 import { AuditError, evaluateCookiePolicy, validatePolicy, exitCode, formatJson, formatMarkdown, formatText, safeError } from '@aiscihub/cookieguard-core';
+import { reportUsage, flushUsage } from '@aiscihub/cookieguard-core/usage';
 import { writeReport } from '../packages/cli/src/main.js';
+import manifest from '../packages/cli/package.json' with { type: 'json' };
 
 const list = value => (value ?? '').split(',').map(item => item.trim()).filter(Boolean);
 
@@ -10,7 +12,10 @@ async function main() {
   let code = 2, json, summary;
   try {
     const policy = validatePolicy({ authCookies: list(process.env.CG_AUTH_COOKIES), failOn: process.env.CG_FAIL_ON || 'high' });
-    const collection = await scanUrl(process.env.CG_TARGET, { allowOrigins: list(process.env.CG_ALLOW_ORIGINS) });
+    const allowOrigins = list(process.env.CG_ALLOW_ORIGINS);
+    const target = validateTarget(process.env.CG_TARGET, allowOrigins).href;
+    reportUsage({ package: manifest.name, version: manifest.version, integration: 'github-action' });
+    const collection = await scanUrl(target, { allowOrigins });
     const report = evaluateCookiePolicy(collection.observations, policy, collection);
     code = exitCode(report); json = formatJson(report); summary = formatMarkdown(report);
     process.stdout.write(formatText(report));
@@ -30,3 +35,4 @@ async function main() {
 
 try { await main(); }
 catch { process.stderr.write('CookieGuard CI: unable to write action results. Audit incomplete.\n'); process.exitCode = 2; }
+finally { await flushUsage(); }

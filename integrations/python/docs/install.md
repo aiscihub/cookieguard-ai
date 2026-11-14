@@ -14,16 +14,21 @@
 
 ## From PyPI
 
-Install [version 0.3.0](https://pypi.org/project/cookieguard/) with:
+Version 0.4.0 is being prepared for [PyPI](https://pypi.org/project/cookieguard/).
+After publication, install it with:
 
 ```bash
 pip install cookieguard
 # Or pin this release:
-pip install cookieguard==0.3.0
+pip install cookieguard==0.4.0
 ```
 
 Code that uses `cookieguard-browser-use` or `import cookieguard_browser_use` keeps working:
 that package now installs `cookieguard` and re-exports it.
+
+Version 0.4.0 enables minimal invocation reporting by default. Disable it with
+`COOKIEGUARD_USAGE_METRICS=0`, `DO_NOT_TRACK=1`, or `usage_metrics=False`; see
+[limits and privacy](limits-and-privacy.md). Installing or importing does not report.
 
 Node.js 24+ and Chrome or Chromium are still required; pip does not install them.
 See [tested environments and dependencies](limits-and-privacy.md#tested-environments-and-dependencies).
@@ -39,5 +44,7 @@ node integrations/python/scripts/vendor_engine.mjs --published  # copies the pub
 pip install ./integrations/python
 ```
 
-The vendor step requires the workspace packages to be byte-identical to the npm
-release (`--registry`) and records SHA-256 hashes that are checked before Node starts.
+The `--published` vendor step downloads the pinned npm engine 0.3.0 and records
+SHA-256 hashes that are checked before Node starts. It does not replace that engine
+with the newer workspace packages. The separate `--registry` verification mode
+compares workspace packages with the pinned published engine.

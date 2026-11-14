@@ -73,7 +73,7 @@ def node_command(node: str, directory: Path, script: str = 'bridge.mjs') -> list
 
 def child_env() -> dict[str, str]:
 	env = {'PATH': os.environ.get('PATH', os.defpath), 'NODE_NO_WARNINGS': '1', 'NODE_DISABLE_COLORS': '1',
-		'ORT_DISABLE_TELEMETRY': '1'}
+		'ORT_DISABLE_TELEMETRY': '1', 'COOKIEGUARD_USAGE_METRICS': '0', 'DO_NOT_TRACK': '1'}
 	if sys.platform == 'win32':
 		for key in ('SYSTEMROOT', 'WINDIR'):
 			if key in os.environ:

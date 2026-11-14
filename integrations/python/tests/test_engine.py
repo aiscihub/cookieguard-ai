@@ -240,9 +240,15 @@ def test_missing_or_old_node_is_an_engine_error(tmp_path):
 def test_child_environment_is_minimal(monkeypatch):
 	monkeypatch.setenv('NODE_OPTIONS', '--require=/tmp/inject.js')
 	monkeypatch.setenv('OPENAI_API_KEY', canary())
+	monkeypatch.setenv('COOKIEGUARD_USAGE_METRICS', '1')
+	monkeypatch.setenv('COOKIEGUARD_POSTHOG_PROJECT_TOKEN', 'phc_' + 'a' * 32)
+	monkeypatch.setenv('COOKIEGUARD_POSTHOG_REGION', 'eu')
 	env = child_env()
 	assert 'NODE_OPTIONS' not in env and 'OPENAI_API_KEY' not in env
-	assert set(env) <= {'PATH', 'NODE_NO_WARNINGS', 'NODE_DISABLE_COLORS', 'ORT_DISABLE_TELEMETRY', 'SYSTEMROOT', 'WINDIR'}
+	assert env['COOKIEGUARD_USAGE_METRICS'] == '0' and env['DO_NOT_TRACK'] == '1'
+	assert env['ORT_DISABLE_TELEMETRY'] == '1'
+	assert set(env) <= {'PATH', 'NODE_NO_WARNINGS', 'NODE_DISABLE_COLORS', 'ORT_DISABLE_TELEMETRY',
+		'COOKIEGUARD_USAGE_METRICS', 'DO_NOT_TRACK', 'SYSTEMROOT', 'WINDIR'}
 
 
 def test_engine_sandbox_denies_writes_and_child_processes(tmp_path):

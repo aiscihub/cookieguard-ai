@@ -5,7 +5,7 @@ const REPO = 'https://github.com/aiscihub/cookieguard-ai';
 const RAW = 'https://raw.githubusercontent.com/aiscihub/cookieguard-ai/main';
 // Versions that are actually published. Mark an operation "unreleased" while it
 // exists only on the main branch; it then needs a source checkout.
-const PUBLISHED = Object.freeze({ cli: '0.3.0', core: '0.3.0', playwright: '0.3.0', mcp: '0.3.0', python: '0.3.0' });
+const PUBLISHED = Object.freeze({ cli: '0.4.0', core: '0.4.0', playwright: '0.4.0', mcp: '0.4.0', python: '0.4.0' });
 
 /** The stable, versioned description of what CookieGuard can do. Static data only. */
 export function capabilities() {
@@ -32,11 +32,11 @@ export function capabilities() {
         tested: ['Linux, Python 3.11-3.13, Chromium 156', 'macOS, Python 3.12, Chrome 156'],
         documentation: `${REPO}/tree/main/integrations/python` },
       { id: 'playwright', kind: 'npm-package', registry: 'npm', package: '@aiscihub/cookieguard-playwright', version: PUBLISHED.playwright,
-        install: 'npm install --save-dev @aiscihub/cookieguard-playwright@0.3.0', entryPoint: 'startCookieAudit',
+        install: 'npm install --save-dev @aiscihub/cookieguard-playwright@0.4.0', entryPoint: 'startCookieAudit',
         requires: ['Node.js 24+', '@playwright/test'], tested: ['Linux (CI) and macOS arm64 (local), Node.js 24, Chromium'],
         documentation: `${REPO}/blob/main/docs/CI_GUIDE.md#quick-start-playwright` },
       { id: 'cli', kind: 'npm-package', registry: 'npm', package: 'cookieguard-ci', version: PUBLISHED.cli,
-        install: 'npx --yes cookieguard-ci@0.3.0 scan http://127.0.0.1:3000/ --auth-cookie session_id --format json',
+        install: 'npx --yes cookieguard-ci@0.4.0 scan http://127.0.0.1:3000/ --auth-cookie session_id --format json',
         entryPoint: 'cookieguard-ci', requires: ['Node.js 24+'], tested: ['Linux (CI) and macOS arm64 (local), Node.js 24'],
         documentation: `${REPO}/blob/main/docs/CI_GUIDE.md#quick-start-cli` },
       { id: 'github-action', kind: 'github-action', package: 'aiscihub/cookieguard-ai/action', version: 'ci-v0.1.0',
@@ -45,7 +45,7 @@ export function capabilities() {
         tested: ['ubuntu-latest'], documentation: `${REPO}/blob/main/docs/CI_GUIDE.md#quick-start-github-actions` },
       { id: 'mcp', kind: 'mcp-server', registry: 'npm', package: '@aiscihub/cookieguard-mcp', version: PUBLISHED.mcp,
         mcpRegistryName: 'io.github.aiscihub/cookieguard', transport: 'stdio',
-        install: 'npx --yes @aiscihub/cookieguard-mcp@0.3.0 --config /absolute/path/cookieguard.json',
+        install: 'npx --yes @aiscihub/cookieguard-mcp@0.4.0 --config /absolute/path/cookieguard.json',
         entryPoint: 'cookieguard-mcp', requires: ['Node.js 24+', 'A startup JSON configuration with allowedOrigins'],
         tested: ['Official MCP SDK client on Linux (Node.js 24) and macOS (Node.js 26)'],
         documentation: `${REPO}/tree/main/packages/mcp` },
@@ -59,17 +59,17 @@ export function capabilities() {
         description: 'Audit cookies created while your own test code drives an authorized browser workflow, such as a login.',
         inputs: ['Exact allowed origins', 'Authentication-cookie names (required to confirm failures)', 'Optional policy settings'],
         permissions: ['Your test code owns the browser session; the collector starts before the workflow and observes only allowed origins'],
-        evidence: ['server-declaration', 'browser-observation'], network: 'None beyond the workflow the browser already performs.' },
+        evidence: ['server-declaration', 'browser-observation'], network: 'Browser workflow traffic. Package-usage reporting to PostHog is enabled by default, can be disabled, and sends no audit data.' },
       { id: 'audit-http-headers', availability: 'released', surfaces: ['cli', 'github-action', 'mcp'],
         description: 'Send one GET request (plus same-origin redirects) and audit the Set-Cookie headers.',
         inputs: ['URL on loopback or an explicitly allowed origin, without credentials, query, or fragment'],
         permissions: ['Loopback by default; nonlocal origins need --allow-origin; the MCP server needs an exact startup allowlist'],
-        evidence: ['server-declaration'], network: 'GET without cookies or authorization headers; bodies are discarded.' },
+        evidence: ['server-declaration'], network: 'GET without cookies or authorization headers; bodies are discarded. Package-usage reporting to PostHog is enabled by default, can be disabled, and sends no audit data.' },
       { id: 'audit-evidence-file', availability: 'released', surfaces: ['cli', 'mcp'],
         description: 'Re-evaluate a sanitized CookieGuard JSON report or Browser Use result under the current policy.',
         inputs: ['cookieguard-ci scan --input FILE', 'MCP cookieguard_audit {"evidenceFile": "name.json"} inside the configured evidenceDir'],
         permissions: ['Local file read only; the MCP server reads only plain .json names inside its startup evidenceDir'],
-        evidence: ['supplied-evidence'], network: 'None.' },
+        evidence: ['supplied-evidence'], network: 'Package-usage reporting to PostHog is enabled by default and sends no audit data. No network when reporting is disabled.' },
       { id: 'agent-provisional-check', availability: 'released', surfaces: ['browser-use'],
         description: 'Optional read-only cookieguard_audit action an agent can call mid-run. Provisional; it cannot satisfy policy.',
         inputs: ['None from the agent'], permissions: ['Registered by developer code with audit.register_tools(tools)'],
@@ -87,7 +87,7 @@ export function capabilities() {
         description: 'Fail closed in CI: the Playwright cookieGuard fixture writes value-free evidence for each login test, and cookieguard-ci gate re-evaluates it under the gate\'s own policy. A required check that was skipped, filtered out, or deleted has no evidence and is INCOMPLETE.',
         inputs: ['cookieGuardFixtures({ origins, policy }) passed to test.extend()', 'cookieguard-ci gate --evidence DIR --require "TEST TITLE" --auth-cookie NAME'],
         permissions: ['Reads only the evidence directory; the fixture writes one JSON file per test'],
-        evidence: ['server-declaration', 'browser-observation', 'supplied-evidence'], network: 'None beyond the login workflow and an optional session probe.' },
+        evidence: ['server-declaration', 'browser-observation', 'supplied-evidence'], network: 'Login workflow and an optional session probe. Package-usage reporting to PostHog is enabled by default, can be disabled, and sends no audit data.' },
       { id: 'explain', availability: 'released', surfaces: ['cli', 'mcp'],
         description: 'Explain a rule ID, incomplete reason, error code, or status without any cookie data.',
         inputs: ['cookieguard-ci explain CG001 --json', 'MCP cookieguard_explain {"id": "CG001"}'], permissions: [],
@@ -120,7 +120,8 @@ export function capabilities() {
     },
     privacy: [
       'Cookie values are never written to results, reports, logs, or MCP responses.',
-      'No telemetry, accounts, or remote services. The engine runs locally.',
+      'The engine runs locally; no account or remote service is required for analysis. Package-usage reporting to PostHog is enabled by default.',
+      'Usage events contain package/version/integration and a fresh event ID, never audit inputs or results. COOKIEGUARD_USAGE_METRICS=0 or DO_NOT_TRACK=1 disables them.',
       'HTTP scans send no cookies or authorization headers and discard response bodies.',
       'CookieGuard never asks for or stores credentials. It replays session tokens only when a session probe is configured, only to that probe URL on an allowed origin, and only from the local process.',
       'Web Storage values are classified locally and discarded; only the area, a sanitized key, and the token kind are reported.',

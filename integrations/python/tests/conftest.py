@@ -112,3 +112,9 @@ async def login(tools, session, origin: str, *, password: str | None = None, new
 @pytest.fixture
 def token():
 	return canary()
+
+
+@pytest.fixture(autouse=True)
+def disable_usage_metrics(monkeypatch):
+	# Tests never inherit permission to report usage to a live service.
+	monkeypatch.setenv('COOKIEGUARD_USAGE_METRICS', '0')

@@ -1,3 +1,4 @@
+import './fixtures/disable-usage.mjs';
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';

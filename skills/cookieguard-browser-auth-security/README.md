@@ -23,7 +23,7 @@ or server-side session handling.
 - Tested on macOS and Linux. Windows is untested.
 
 The skill itself contains only Markdown and JSON. CookieGuard is installed from public
-registries when the agent follows the skill: `cookieguard-browser-use` from PyPI, and
+registries when the agent follows the skill: `cookieguard` from PyPI, and
 `@aiscihub/cookieguard-playwright`, `cookieguard-ci`, and `@aiscihub/cookieguard-mcp` from npm.
 
 ## Install the skill
@@ -37,7 +37,13 @@ registries when the agent follows the skill: `cookieguard-browser-use` from PyPI
 
 The skill makes no network calls of its own. When followed, it installs packages from
 `pypi.org`, `files.pythonhosted.org`, or `registry.npmjs.org`, and audits only the
-application origins you configure (loopback by default). CookieGuard sends no telemetry.
+application origins you configure (loopback by default). Version 0.4.0 adds
+minimal PostHog invocation reporting, enabled by default. Set
+`COOKIEGUARD_USAGE_METRICS=0`, `DO_NOT_TRACK=1`, or the integration's explicit
+`false` setting to disable it. Events contain package/version/integration fields
+and a fresh invocation ID; no cookie data, URLs, audit results, or persistent
+identity. Installing and importing do not report. See the
+[usage guide](https://github.com/aiscihub/cookieguard-ai/blob/main/docs/USAGE_METRICS.md).
 Links point to `github.com/aiscihub/cookieguard-ai`.
 
 ## Privacy
