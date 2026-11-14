@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 import re
 import subprocess
+from resume import verify_resumed_shard
 from health import assess_coverage, included_privacy_passed
 from common import CREDENTIAL, FORBIDDEN, ROOT, load, sha, structural, write_json
 
@@ -38,13 +39,23 @@ def receipt_audit(run, manifest):
     folder = run / 'shards'
     actual_folders = {p.name for p in folder.iterdir()} if folder.exists() else set()
     expected_folders = {'shard-' + str(n) for n in manifest['includedShards']}
-    allowed = {'started.json', 'receipt.json', 'attempts.json', 'cookies.jsonl', 'upload-ready.json'}
+    allowed = {'started.json', 'receipt.json', 'attempts.json', 'cookies.jsonl', 'upload-ready.json', 'visited.json', 'checkpoint.json'}
     payloads_match = actual_folders == expected_folders
     for receipt in receipts:
         shard = folder / ('shard-' + str(receipt['shard']))
         payloads_match = payloads_match and {p.name for p in shard.iterdir()} <= allowed
         for name, field in [('cookies.jsonl', 'rowsSha256'), ('attempts.json', 'attemptsSha256')]:
             payloads_match = payloads_match and (shard / name).is_file() and sha(shard / name) == receipt[field]
+    if payloads_match:
+        for receipt in receipts:
+            shard = folder / ('shard-' + str(receipt['shard']))
+            if 'visitedSha256' in receipt:
+                payloads_match = payloads_match and sha(shard / 'visited.json') == receipt['visitedSha256']
+            try:
+                verify_resumed_shard(run, frame, receipt, load(shard / 'attempts.json'),
+                                     [json.loads(line) for line in (shard / 'cookies.jsonl').read_text().splitlines() if line.strip()])
+            except (ValueError, KeyError, OSError, StopIteration):
+                payloads_match = False
     return (payloads_match and assess_coverage(manifest)['evidenceValid'] and included_privacy_passed(manifest) and
             receipts == manifest['shardReceipts'] and manifest['planned'] == frame['sites'] and
             manifest['plannedShards'] == frame['shards'] and manifest['frameSha256'] == sha(run / 'frame.json'))

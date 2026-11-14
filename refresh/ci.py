@@ -12,8 +12,10 @@ import tempfile
 from datetime import datetime, timezone
 from common import ROOT, die, load, month_seed, sha, write_json
 from health import assess_coverage, included_privacy_passed
+from resume import build_plan, prefixes, stage_plan, source_paths, run_id, plan_report
 
 RUN = ROOT / 'refresh/.work/run'
+SOURCE = ROOT / 'refresh/.work/source'
 
 def action_only():
     if (os.environ.get('GITHUB_ACTIONS') != 'true' or os.environ.get('GITHUB_REF') != 'refs/heads/main'
@@ -40,7 +42,7 @@ def gh(*args, **kwargs):
 def create_branch(branch, files):
     """Create a branch from origin/main using a private index; never switch this checkout."""
     action_only()
-    if not re.fullmatch(r'refresh/(?:reservations/\d{4}-\d{2}(?:-pilot)?|(?:data|model)/\d{4}-\d{2}|recoveries/[1-9]\d{0,19})', branch):
+    if not re.fullmatch(r'refresh/(?:reservations/\d{4}-\d{2}(?:-pilot)?|(?:data|model)/\d{4}-\d{2}|resumes/[1-9]\d{0,19})', branch):
         raise ValueError('invalid-branch')
     with tempfile.TemporaryDirectory() as temp:
         env = dict(os.environ, GIT_INDEX_FILE=str(Path(temp) / 'index'),
@@ -95,8 +97,8 @@ def prepare():
     repo = action_only()
     event = load(Path(os.environ['GITHUB_EVENT_PATH']))
     inputs = event.get('inputs', {})
-    if inputs.get('from_run'):
-        raise ValueError('recovery-cannot-prepare-or-crawl')
+    if inputs.get('resume_run'):
+        raise ValueError('resume-cannot-prepare-new-frame')
     scheduled = os.environ['GITHUB_EVENT_NAME'] == 'schedule'
     sites, shards = int(inputs.get('sites', 10000)), int(inputs.get('shards', 16))
     dry = False if scheduled else str(inputs.get('dry_run', 'true')).lower() == 'true'
@@ -130,40 +132,44 @@ def prepare():
         output.write('month=' + month + '\ndry_run=' + str(dry).lower() + '\nmatrix=' +
                      json.dumps({'shard': list(range(1, shards + 1))}) + '\nshards=' + str(shards) + '\n')
 
-def recovery_run_id(value):
-    if not isinstance(value, str) or not re.fullmatch(r'[1-9]\d{0,19}', value):
-        raise ValueError('invalid-source-run')
-    return value
-
-def recover():
-    """Use downloaded artifacts only. Never select a frame, install a browser, or visit a site."""
+def resume(visited_prefix=None):
+    """Verify a saved frame and stage a single resume; only later shard jobs may visit sites."""
     repo = action_only()
-    source = recovery_run_id(load(Path(os.environ['GITHUB_EVENT_PATH'])).get('inputs', {}).get('from_run'))
-    branch = 'refresh/recoveries/' + source
+    inputs = load(Path(os.environ['GITHUB_EVENT_PATH'])).get('inputs', {})
+    source = run_id(inputs.get('resume_run'))
+    overrides = prefixes(' '.join([inputs.get('visited_prefix', ''), *(visited_prefix or [])]))
+    branch = 'refresh/resumes/' + source
     refs = gh('api', 'repos/' + repo + '/git/matching-refs/heads/' + branch, '--jq', '.[].ref').splitlines()
     if 'refs/heads/' + branch in refs:
-        raise ValueError('source-run-already-recovered')
-    frame, workflow = load(RUN / 'frame.json'), load(RUN / 'workflow.json')
+        raise ValueError('source-run-already-resumed')
+    frame_dir, _ = source_paths(SOURCE)
+    frame, workflow = load(frame_dir / 'frame.json'), load(frame_dir / 'workflow.json')
     month = frame['month']
     reservation = reservation_branch(month, False)
-    reserved = reservation_bytes(repo, reservation)
-    if (frame.get('dryRun') is not False or (RUN / 'frame.json').read_bytes() != reserved or
+    if (frame.get('dryRun') is not False or (frame_dir / 'frame.json').read_bytes() != reservation_bytes(repo, reservation) or
         workflow.get('month') != month or workflow.get('dryRun') is not False or
         workflow.get('reservationBranch') != reservation or type(workflow.get('firstRealRun')) is not bool or
         not re.fullmatch(r'[0-9a-f]{40}', workflow.get('sourceCommit', ''))):
-        raise ValueError('recovery-reservation-mismatch')
+        raise ValueError('resume-reservation-mismatch')
+    plan, payloads = build_plan(SOURCE, source, overrides)
+    stage_plan(SOURCE, RUN, plan, payloads)
     current = git('rev-parse', 'HEAD')
-    record = {'schemaVersion': 1, 'fromRun': source, 'month': month, 'frameSha256': sha(RUN / 'frame.json'),
-              'reservationBranch': reservation, 'sourceCommit': workflow['sourceCommit'], 'recoveryCommit': current}
-    write_json(ROOT / 'refresh/recovery.json', record)
-    # The empty expected ref is the atomic guard, even if another recovery races the read above.
-    create_branch(branch, ['refresh/recovery.json'])
+    record = {'schemaVersion': 1, 'sourceRun': source, 'month': month, 'frameSha256': plan['frameSha256'],
+              'reservationBranch': reservation, 'sourceCommit': workflow['sourceCommit'], 'resumeCommit': current,
+              'planSha256': sha(RUN / 'resume-plan.json'), 'visitedPrefixOverrides': plan['visitedPrefixOverrides']}
+    write_json(ROOT / 'refresh/resume.json', record)
+    # Empty expected ref is the atomic guard, including two resumes racing the read above.
+    create_branch(branch, ['refresh/resume.json'])
     first = workflow['firstRealRun'] or not any(e.get('kind') == 'monthly' and not e.get('dryRun')
                                                for e in load(ROOT / 'data/releases/index.json')['releases'])
-    write_json(RUN / 'recovery.json', record)
-    write_json(RUN / 'workflow.json', {**workflow, 'firstRealRun': first, 'sourceCommit': current, 'fromRun': source})
+    write_json(RUN / 'resume.json', record)
+    write_json(RUN / 'workflow.json', {**workflow, 'firstRealRun': first, 'sourceCommit': current, 'resumeRun': source})
+    (RUN / 'RESUME_PLAN.md').write_text(plan_report(plan))
+    pending = [s['shard'] for s in plan['shards'] if s['remaining']]
     with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
-        output.write('month=' + month + '\ndry_run=false\n')
+        output.write('month=' + month + '\ndry_run=false\nshards=' + str(frame['shards']) +
+                     '\nmatrix=' + json.dumps({'shard': pending}) + '\nhas_work=' + str(bool(pending)).lower() + '\n')
+
 
 def dataset_policy(gate, first):
     healthy = gate.get('gates', {}).get('Health', {}).get('passed') is True
@@ -229,9 +235,14 @@ def publish():
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('stage', choices=['prepare', 'recover', 'publish'])
-    stage = parser.parse_args().stage
-    {'prepare': prepare, 'recover': recover, 'publish': publish}[stage]()
+    parser.add_argument('stage', choices=['prepare', 'resume', 'publish'])
+    parser.add_argument('--visited-prefix', action='append', default=[])
+    args = parser.parse_args()
+    stage = args.stage
+    if stage == 'resume':
+        resume(args.visited_prefix)
+    else:
+        {'prepare': prepare, 'publish': publish}[stage]()
     print(json.dumps({'stage': stage, 'completed': True}))
 
 if __name__ == '__main__':

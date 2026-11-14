@@ -24,6 +24,7 @@ def attempt_metrics(attempts):
     families = Counter(item['cmp'] for item in attempts)
     return {
         'visitedSites': sum(item['visited'] for item in attempts),
+        'visitedNotRecordedSites': sum(item['status'] == 'visited-not-recorded' for item in attempts),
         'robotsUnavailableSites': unavailable,
         'unreachableOrTlsSites': unanswered,
         'robotsStatusCounts': dict(sorted(Counter(item['robotsStatus'] for item in attempts).items())),
@@ -78,7 +79,9 @@ def health_report(manifest):
     for status in sorted(ROBOTS_STATUSES):
         count = manifest.get('robotsStatusCounts', {}).get(status, 0)
         lines.append('| ' + status + ' | ' + str(count) + ' |')
-    lines += ['', COMPARABILITY_NOTICE, '']
+    lines += ['', 'Visited but not recorded: ' + str(manifest.get('visitedNotRecordedSites', 0)) +
+              '. These count as attempted; their document/robots outcomes are unknown and they are never revisited.',
+              '', COMPARABILITY_NOTICE, '']
     return lines
 
 

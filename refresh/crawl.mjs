@@ -6,7 +6,7 @@ import { chromium } from '@playwright/test';
 import { getDomain } from 'tldts';
 import { args, die, normalizeName, readJSON, ROOT, sha, writeAtomic, writeJSON } from './common.mjs';
 import { acceptApi, cleanDomain, declaration, matchDeclaration, valueShape } from './cmp.mjs';
-import { PrivacyGuard, PrivacyRejection } from './privacy.mjs';
+import { PrivacyGuard, PrivacyRejection, structural } from './privacy.mjs';
 import { checkRobots, requestErrorStatus } from './robots.mjs';
 
 const engine = createRequire(import.meta.url)(resolve(ROOT, 'packages/core/vendor/engine.cjs'));
@@ -128,17 +128,54 @@ export async function oneSite(browser, item, frame, guard) {
     }
   }
 }
+export function resumeInput(frame, shard, frameSha256, plan, attemptsBytes, rowsBytes) {
+  const sites = frame.frame.filter(site => site.shard === shard);
+  const attempts = JSON.parse(attemptsBytes), rows = String(rowsBytes).split('\n').filter(Boolean).map(line => JSON.parse(line));
+  if (plan.shard !== shard || plan.frameSha256 !== frameSha256 || !Number.isInteger(plan.recorded) ||
+      !Number.isInteger(plan.visitedPrefix) || plan.visitedPrefix < plan.recorded || plan.visitedPrefix > sites.length ||
+      sha(attemptsBytes) !== plan.keptAttemptsSha256 || sha(rowsBytes) !== plan.keptRowsSha256 ||
+      attempts.length !== plan.recorded || rows.length !== plan.rows || !structural({ attempts, rows }) ||
+      JSON.stringify(plan.remainingSiteIds) !== JSON.stringify(sites.slice(plan.visitedPrefix).map(s => s.siteId)) ||
+      attempts.some((a, i) => ['siteId', 'domain', 'rank', 'shard'].some(k => a[k] !== sites[i][k])) ||
+      !['passed', 'structuralPassed', 'crossScanPassed'].every(k => plan.keptPrivacy[k] === true) ||
+      plan.resume.keptPrefix !== plan.recorded || plan.resume.visitedPrefix !== plan.visitedPrefix ||
+      plan.resume.sourceRun !== plan.sourceRun || plan.resume.keptRowsSha256 !== plan.keptRowsSha256 ||
+      plan.resume.keptAttemptsSha256 !== plan.keptAttemptsSha256) throw new Error('invalid-resume-input');
+  return { proof: plan.resume, attempts, rows };
+}
+const skippedAttempt = site => ({ ...site, status: 'visited-not-recorded', visited: false,
+  robotsStatus: 'not-checked', cmp: 'none', counts: { observedCookies: 0, unmatchedDeclarations: 0, duplicateObservations: 0 } });
+
 // Storage and browser adapters let failure paths run entirely in memory in tests.
 export async function crawlShard({ frame, shard, frameSha256, engineSha256, storage,
   launch = () => chromium.launch({ headless: true }), visit = oneSite, guard = new PrivacyGuard(),
-  progress = record => console.log(JSON.stringify(record)) }) {
-  const total = frame.shards, sites = frame.frame.filter(site => site.shard === shard);
+  progress = record => console.log(JSON.stringify(record)), resume = null }) {
+  const total = frame.shards, allSites = frame.frame.filter(site => site.shard === shard);
+  const prefix = resume?.proof.visitedPrefix || 0, sites = allSites.slice(prefix);
   // Reserve outside cleanup: an existing shard must never be overwritten or revisited.
   storage.start({ shard, month: frame.month });
-  const attempts = [], rows = [];
-  let browser, reasonCode = 'browser-error';
+  const attempts = resume ? [...resume.attempts, ...allSites.slice(resume.proof.keptPrefix, prefix).map(skippedAttempt)] : [];
+  const rows = resume ? [...resume.rows] : [];
+  const oldRows = rows.length, visited = allSites.slice(0, prefix).map(site => site.siteId);
+  const ledger = () => ({ schemaVersion: 1, shard, frameSha256, siteIds: visited });
+  let browser, reasonCode = 'io-error';
   try {
+    // Preserve the inherited prefix even if a resume is cancelled before its first new batch.
+    storage.json('visited.json', ledger());
+    if (resume) {
+      reasonCode = 'privacy-rejected';
+      const inherited = { schemaVersion: 1, shard, frameSha256, engineSha256, featureNames: engine.FEATURE_NAMES,
+        attempts, rows, privacy: guard.receipt(), resume: resume.proof };
+      guard.check(inherited);
+      reasonCode = 'io-error';
+      storage.json('checkpoint.json', inherited);
+    }
     for (let offset = 0; offset < sites.length; offset += 4) {
+      // Persist intent before launching a browser or calling any site. A failed ledger write
+      // prevents that batch from starting. These frame IDs survive every fail-closed cleanup.
+      reasonCode = 'io-error';
+      visited.push(...sites.slice(offset, offset + 4).map(site => site.siteId));
+      storage.json('visited.json', ledger());
       reasonCode = 'browser-error';
       if (!browser || browser.isConnected?.() === false) {
         await browser?.close().catch(() => {});
@@ -159,19 +196,34 @@ export async function crawlShard({ frame, shard, frameSha256, engineSha256, stor
       // Retain the same guard across browser relaunches and cross-scan all batches.
       reasonCode = 'privacy-rejected';
       guard.check({ attempts, rows });
+      const checkpoint = { schemaVersion: 1, shard, frameSha256, engineSha256, featureNames: engine.FEATURE_NAMES,
+        attempts, rows, privacy: guard.receipt(), ...(resume ? { resume: resume.proof } : {}) };
+      guard.check(checkpoint);
       reasonCode = 'io-error';
+      // The single atomic snapshot survives cancellation between the two export writes.
+      storage.json('checkpoint.json', checkpoint);
       storage.write('cookies.jsonl', rows.map(row => JSON.stringify(row)).join('\n') + (rows.length ? '\n' : ''));
       storage.json('attempts.json', attempts);
-      progress({ shard, completed: attempts.length, planned: sites.length, rows: rows.length });
+      progress({ shard, completed: attempts.length, planned: allSites.length, rows: rows.length });
+    }
+    if (!sites.length) {
+      reasonCode = 'privacy-rejected';
+      guard.check({ attempts, rows });
+      reasonCode = 'io-error';
+      storage.json('visited.json', ledger());
+      storage.write('cookies.jsonl', rows.map(row => JSON.stringify(row)).join('\n') + (rows.length ? '\n' : ''));
+      storage.json('attempts.json', attempts);
     }
     reasonCode = 'io-error';
     const receipt = {
       schemaVersion: 1, shard, of: total, month: frame.month, dryRun: frame.dryRun,
-      frameSha256, sites: sites.length, attempted: attempts.length,
+      frameSha256, sites: allSites.length, attempted: attempts.length,
       usableSites: attempts.filter(x => x.status === 'usable').length,
       visitedSites: attempts.filter(x => x.visited).length, rows: rows.length,
       rowsSha256: sha(storage.read('cookies.jsonl')), attemptsSha256: sha(storage.read('attempts.json')),
-      engineSha256, featureNames: engine.FEATURE_NAMES, privacy: guard.receipt(), finishedAt: new Date().toISOString()
+      engineSha256, featureNames: engine.FEATURE_NAMES, privacy: guard.receipt(), finishedAt: new Date().toISOString(),
+      visitedSha256: sha(storage.read('visited.json')),
+      ...(resume ? { resume: resume.proof, newPart: { attempted: sites.length, rows: rows.length - oldRows, privacy: guard.receipt() } } : {})
     };
     reasonCode = 'privacy-rejected';
     guard.check(receipt);
@@ -181,16 +233,17 @@ export async function crawlShard({ frame, shard, frameSha256, engineSha256, stor
     return receipt;
   } catch {
     try {
-      // Atomic-write leftovers also belong to the failed shard. An incomplete cleanup
-      // cannot create the upload marker, so Actions will not upload its payload.
-      for (const name of ['cookies.jsonl', 'attempts.json', 'receipt.json', 'upload-ready.json']) {
+      // Persist the failed disposition before cleanup. Cancellation during cleanup must
+      // not let the artifact stager restore a checkpoint the privacy guard rejected.
+      storage.json('receipt.json', { schemaVersion: 1, shard, of: total, month: frame.month,
+        frameSha256, privacy: { passed: false }, status: 'failed-closed', reasonCode,
+        ...(resume ? { resume: resume.proof, newPart: { attempted: visited.length - prefix, rows: 0, privacy: { passed: false } } } : {}) });
+      for (const name of ['cookies.jsonl', 'attempts.json', 'checkpoint.json', 'upload-ready.json']) {
         storage.remove(name);
         storage.remove(name + '.tmp');
       }
-      storage.json('receipt.json', { schemaVersion: 1, shard, of: total, month: frame.month,
-        frameSha256, privacy: { passed: false }, status: 'failed-closed', reasonCode });
       storage.json('upload-ready.json', { passed: true });
-    } catch { /* No raw I/O exception and no upload marker on cleanup failure. */ }
+    } catch { /* No raw I/O exception; artifact staging exports only the ledger and failure receipt. */ }
     throw new Error('shard-failed-closed');
   } finally { await browser?.close().catch(() => {}); }
 }
@@ -199,9 +252,13 @@ export async function main() {
   const a = args({ shard: { type: 'string' }, of: { type: 'string' },
     frame: { type: 'string', default: 'refresh/.work/run/frame.json' },
     out: { type: 'string', default: 'refresh/.work/run/shards' },
-    browser: { type: 'string' } });
+    browser: { type: 'string' }, 'resume-input': { type: 'string' } });
   const frame = readJSON(a.frame), shard = Number(a.shard), total = Number(a.of);
   if (!Number.isInteger(shard) || shard < 1 || shard > total || total !== frame.shards) throw new Error('invalid-shard');
+  const frameSha256 = sha(readFileSync(a.frame));
+  const resume = a['resume-input'] ? resumeInput(frame, shard, frameSha256,
+    readJSON(resolve(a['resume-input'], 'plan.json')), readFileSync(resolve(a['resume-input'], 'kept-attempts.json')),
+    readFileSync(resolve(a['resume-input'], 'kept-cookies.jsonl'))) : null;
   const out = resolve(a.out, 'shard-' + shard);
   mkdirSync(out, { recursive: true });
   const storage = {
@@ -211,7 +268,7 @@ export async function main() {
     read: name => readFileSync(resolve(out, name)),
     remove: name => rmSync(resolve(out, name), { force: true }),
   };
-  return crawlShard({ frame, shard, frameSha256: sha(readFileSync(a.frame)),
+  return crawlShard({ frame, shard, frameSha256, resume,
     engineSha256: sha(readFileSync(resolve(ROOT, 'packages/core/vendor/engine.cjs'))), storage,
     launch: () => chromium.launch({ headless: true, ...(a.browser ? { executablePath: a.browser } : {}) }) });
 }

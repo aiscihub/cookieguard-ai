@@ -3,6 +3,7 @@ import argparse
 import json
 from pathlib import Path
 from common import ROOT, load, sha, structural, write_json
+from resume import plan_report
 from health import assess_health, health_report, assess_coverage, included_privacy_passed, exclusion_report
 
 def assess(manifest, evaluation, parity, canaries):
@@ -87,6 +88,8 @@ def main():
               "## 3. Crawl and privacy", "", "| Status | Sites |", "|---|---:|"]
     for status, count in manifest["statusCounts"].items():
         lines.append("| " + status + " | " + str(count) + " |")
+    if (run / 'resume-plan.json').exists():
+        lines += ['', plan_report(load(run / 'resume-plan.json')).replace('# Resume plan:', '### Resume plan:', 1)]
     lines += exclusion_report(manifest)
     lines += health_report(manifest)
     lines += ["", "No site is revisited. A site with an unverifiable robots policy is skipped conservatively. "

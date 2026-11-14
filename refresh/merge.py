@@ -9,6 +9,7 @@ from pathlib import Path
 import sys
 import shutil
 from common import ROOT, ROW_FIELDS, die, load, month_seed, rows, sha, structural, validate_row, write_json
+from resume import verify_resumed_shard
 from health import attempt_metrics, COMPARABILITY_NOTICE, FAILURE_REASONS, assess_coverage, exclusion_report
 
 def main():
@@ -75,6 +76,7 @@ def main():
             identities.add(identity)
         if len({r["rank"] for r in shard_rows}) != len(usable_ranks):
             raise ValueError("usable-count-mismatch")
+        verify_resumed_shard(a.run, frame, receipt, shard_attempts, shard_rows)
         receipts.append(receipt)
         records.extend(shard_rows)
         attempts.extend(shard_attempts)
@@ -121,6 +123,10 @@ def main():
         "license": "CC-BY-4.0",
     }
     manifest["coveragePassed"] = assess_coverage(manifest)["passed"]
+    if (a.run / 'resume-plan.json').exists():
+        plan = load(a.run / 'resume-plan.json')
+        manifest['resume'] = {'sourceRun': plan['sourceRun'], 'planSha256': sha(a.run / 'resume-plan.json'),
+                              'sourceTotals': plan['totals'], 'visitedPrefixOverrides': plan['visitedPrefixOverrides']}
     write_json(dest / "manifest.json", manifest)
     # Persist the fixed reasons before removing excluded payloads from the upload tree.
     # Never inspect or copy rows from these failed/missing shards.
@@ -128,6 +134,9 @@ def main():
         folder = a.run / "shards" / ("shard-" + str(item["shard"]))
         if folder.exists():
             shutil.rmtree(folder)
+        kept = a.run / 'resume-inputs' / folder.name
+        if kept.exists():
+            shutil.rmtree(kept)
     (dest / "README.md").write_text(
         "# CookieGuard monthly observations: " + frame["month"] + "\n\n"
         + ("LOCAL DRY RUN. Not a published dataset or approved model.\n\n" if frame["dryRun"] else "")

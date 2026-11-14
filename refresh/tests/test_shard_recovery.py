@@ -177,17 +177,18 @@ class ShardTests(unittest.TestCase):
                 do_merge(root, run)
             self.assertFalse((root / 'data/releases/2026-11').exists())
 
-class RecoveryTests(unittest.TestCase):
+class ResumeAuthorizationTests(unittest.TestCase):
     def setUp(self):
         temp = tempfile.TemporaryDirectory()
         self.addCleanup(temp.cleanup)
         self.root = Path(temp.name); self.run = make_run(self.root, missing=tuple(range(1, 17)), failed=())
+        self.dest = self.root / 'resumed'
         self.event = self.root / 'event.json'
-        write_json(self.event, {'inputs': {'from_run': '43627693953', 'dry_run': 'true'}})
+        write_json(self.event, {'inputs': {'resume_run': '43627693953', 'dry_run': 'true'}})
         self.remote_frame = (self.run / 'frame.json').read_bytes()
         self.refs, self.git_calls, self.gh_calls = set(), [], []
         self.stack = contextlib.ExitStack(); self.addCleanup(self.stack.close)
-        for target, value in [('ci.ROOT', self.root), ('ci.RUN', self.run)]:
+        for target, value in [('ci.ROOT', self.root), ('ci.RUN', self.dest), ('ci.SOURCE', self.run)]:
             self.stack.enter_context(patch(target, value))
         self.stack.enter_context(patch('ci.action_only', return_value='fixture/repo'))
         self.stack.enter_context(patch('ci.git', side_effect=self.git))
@@ -214,15 +215,15 @@ class RecoveryTests(unittest.TestCase):
             self.refs.add(ref)
         return 'b' * 40
 
-    def test_recovery_uses_exact_real_reservation_without_crawl_and_preserves_first_draft(self):
-        ci.recover()
-        self.assertEqual(self.refs, {'refs/heads/refresh/recoveries/43627693953'})
+    def test_resume_uses_exact_real_reservation_without_crawl_and_preserves_first_draft(self):
+        ci.resume()
+        self.assertEqual(self.refs, {'refs/heads/refresh/resumes/43627693953'})
         self.assertEqual((self.run / 'frame.json').read_bytes(), self.remote_frame)
-        self.assertTrue(load(self.run / 'workflow.json')['firstRealRun'])
-        self.assertEqual(load(self.run / 'workflow.json')['sourceCommit'], 'b' * 40)
-        self.assertEqual(load(self.run / 'recovery.json')['sourceCommit'], 'a' * 40)
+        self.assertTrue(load(self.dest / 'workflow.json')['firstRealRun'])
+        self.assertEqual(load(self.dest / 'workflow.json')['sourceCommit'], 'b' * 40)
+        self.assertEqual(load(self.dest / 'resume.json')['sourceCommit'], 'a' * 40)
         self.assertIn('ref=refresh/reservations/2026-11', self.gh_calls[1][1])
-        self.assertEqual((self.root / 'output.txt').read_text(), 'month=2026-11\ndry_run=false\n')
+        self.assertTrue((self.root / 'output.txt').read_text().startswith('month=2026-11\ndry_run=false\n'))
         self.quiet.assert_not_called()
         self.assertIn('first-run PR is a draft', ci.pr_body('data', True, {'gates': {'Health': {'passed': True}}}, ''))
 
@@ -232,41 +233,41 @@ class RecoveryTests(unittest.TestCase):
         write_json(self.run / 'frame.json', frame)
         self.remote_frame = (self.run / 'frame.json').read_bytes()
         self.assertGreater(len(self.remote_frame), 1024 * 1024)
-        ci.recover()
+        ci.resume()
         self.assertEqual((self.run / 'frame.json').read_bytes(), self.remote_frame)
 
-    def test_recovery_refuses_mismatched_frame_before_reserving(self):
+    def test_resume_refuses_mismatched_frame_before_reserving(self):
         changed = load(self.run / 'frame.json'); changed['frame'][0]['domain'] = 'different.example'
         write_json(self.run / 'frame.json', changed)
-        with self.assertRaisesRegex(ValueError, 'recovery-reservation-mismatch'):
-            ci.recover()
+        with self.assertRaisesRegex(ValueError, 'resume-reservation-mismatch'):
+            ci.resume()
         self.assertFalse(self.refs)
         self.assertFalse(self.git_calls)
 
-    def test_recovery_refuses_pilot_even_if_bytes_match(self):
+    def test_resume_refuses_pilot_even_if_bytes_match(self):
         frame = load(self.run / 'frame.json'); frame['dryRun'] = True
         write_json(self.run / 'frame.json', frame)
         self.remote_frame = (self.run / 'frame.json').read_bytes()
-        with self.assertRaisesRegex(ValueError, 'recovery-reservation-mismatch'):
-            ci.recover()
+        with self.assertRaisesRegex(ValueError, 'resume-reservation-mismatch'):
+            ci.resume()
         self.assertFalse(self.refs)
 
-    def test_second_recovery_refused_and_no_overwrite_guard_also_stops_race(self):
-        ci.recover()
-        with self.assertRaisesRegex(ValueError, 'source-run-already-recovered'):
-            ci.recover()
-        with patch('ci.gh', side_effect=['', self.remote_frame]):
+    def test_second_resume_refused_and_no_overwrite_guard_also_stops_race(self):
+        ci.resume()
+        with self.assertRaisesRegex(ValueError, 'source-run-already-resumed'):
+            ci.resume()
+        with patch('ci.gh', side_effect=['', self.remote_frame]), patch('ci.RUN', self.root / 'race-resume'):
             with self.assertRaisesRegex(ValueError, 'subprocess-failed'):
-                ci.recover()
+                ci.resume()
         self.assertEqual(len(self.refs), 1)
 
-    def test_prepare_rejects_recovery_and_invalid_source_ids_never_call_remote(self):
-        with self.assertRaisesRegex(ValueError, 'recovery-cannot-prepare-or-crawl'):
+    def test_prepare_rejects_resume_and_invalid_source_ids_never_call_remote(self):
+        with self.assertRaisesRegex(ValueError, 'resume-cannot-prepare-new-frame'):
             ci.prepare()
         for value in ['', '0', '-1', '123/456', '1; command', 123]:
-            write_json(self.event, {'inputs': {'from_run': value}})
+            write_json(self.event, {'inputs': {'resume_run': value}})
             with self.assertRaisesRegex(ValueError, 'invalid-source-run'):
-                ci.recover()
+                ci.resume()
         self.assertFalse(self.git_calls)
         self.assertFalse(self.gh_calls)
         self.quiet.assert_not_called()
@@ -291,45 +292,52 @@ class WorkflowTests(unittest.TestCase):
         expression = expression.replace('always()', 'True').replace('&&', ' and ').replace('||', ' or ')
         return bool(eval(expression, {'__builtins__': {}}, {'true': True, 'false': False}))
 
-    def test_recovery_skips_frame_and_crawl_but_runs_evaluate_and_publish(self):
-        context = {'github.ref': 'refs/heads/main', 'github.run_attempt': 1, 'inputs.from_run': '43627693953',
-                   'needs.recover.outputs.dry_run': 'false'}
-        statuses = {'frame': 'skipped', 'crawl': 'skipped', 'recover': 'success', 'evaluate': 'success'}
+    def test_resume_skips_sampling_and_runs_only_the_pending_shard_matrix(self):
+        context = {'github.ref': 'refs/heads/main', 'github.run_attempt': 1, 'inputs.resume_run': '43627693953',
+                   'needs.resume.outputs.dry_run': 'false', 'needs.resume.outputs.has_work': 'true'}
+        statuses = {'frame': 'skipped', 'crawl': 'skipped', 'resume': 'success', 'resume_crawl': 'success', 'evaluate': 'success'}
         self.assertFalse(self.job_runs('frame', context, statuses))
         self.assertFalse(self.job_runs('crawl', context, statuses))
-        for job in ['recover', 'evaluate', 'publish']:
+        for job in ['resume', 'resume_crawl', 'evaluate', 'publish']:
             self.assertTrue(self.job_runs(job, context, statuses))
+        context['needs.resume.outputs.has_work'] = 'false'
+        self.assertFalse(self.job_runs('resume_crawl', context, statuses))
+        self.assertTrue(self.job_runs('evaluate', context, statuses))
         for failed in ['failure', 'cancelled']:
-            statuses['recover'] = failed
+            statuses['resume'] = failed
             self.assertFalse(self.job_runs('evaluate', context, statuses))
         statuses['evaluate'] = 'failure'
         self.assertFalse(self.job_runs('publish', context, statuses))
 
     def test_scheduled_run_evaluates_after_failed_shard_and_still_publishes(self):
-        context = {'github.ref': 'refs/heads/main', 'github.run_attempt': 1, 'inputs.from_run': '',
+        context = {'github.ref': 'refs/heads/main', 'github.run_attempt': 1, 'inputs.resume_run': '',
                    'needs.frame.outputs.dry_run': 'false'}
-        statuses = {'frame': 'success', 'crawl': 'failure', 'recover': 'skipped', 'evaluate': 'success'}
+        statuses = {'frame': 'success', 'crawl': 'failure', 'resume': 'skipped', 'resume_crawl': 'skipped', 'evaluate': 'success'}
         for job in ['frame', 'crawl', 'evaluate', 'publish']:
             self.assertTrue(self.job_runs(job, context, statuses))
-        self.assertFalse(self.job_runs('recover', context, statuses))
+        self.assertFalse(self.job_runs('resume', context, statuses))
+        self.assertFalse(self.job_runs('resume_crawl', context, statuses))
         self.assertEqual(self.workflow['on']['schedule'][0]['cron'], '0 2 1 * *')
 
-    def test_cross_run_downloads_are_authenticated_and_only_verified_frame_goes_downstream(self):
-        for job, artifact in [('recover', 'name'), ('evaluate', 'pattern')]:
-            config = self.workflow['jobs'][job]
-            self.assertEqual(config['permissions']['actions'], 'read')
-            downloads = [step['with'] for step in config['steps'] if step.get('uses', '').startswith('actions/download-artifact@')]
-            source = next(step for step in downloads if artifact in step)
-            self.assertIn('inputs.from_run', source['run-id'])
+    def test_cross_run_downloads_are_authenticated_and_evaluation_uses_current_artifacts(self):
+        config = self.workflow['jobs']['resume']
+        self.assertEqual(config['permissions']['actions'], 'read')
+        downloads = [step['with'] for step in config['steps'] if step.get('uses', '').startswith('actions/download-artifact@')]
+        self.assertEqual(len(downloads), 2)
+        for source in downloads:
+            self.assertIn('inputs.resume_run', source['run-id'])
             self.assertEqual(source['github-token'], '${{ github.token }}')
-        frame = next(step['with'] for step in self.workflow['jobs']['evaluate']['steps']
-                     if step.get('with', {}).get('name') == 'frame')
-        self.assertNotIn('run-id', frame)  # Current run's verified/rebound workflow metadata.
+        for step in self.workflow['jobs']['evaluate']['steps']:
+            if step.get('uses', '').startswith('actions/download-artifact@'):
+                self.assertNotIn('run-id', step['with'])
+        for job in ['crawl', 'resume_crawl']:
+            seal = next(s for s in self.workflow['jobs'][job]['steps'] if 'refresh/seal.mjs' in s.get('run', ''))
+            self.assertEqual(seal['if'], 'always()')
 
     def test_actual_npm_retry_scripts_stop_on_success_and_after_three_failures(self):
-        scripts = [step['run'] for job in ['crawl', 'evaluate'] for step in self.workflow['jobs'][job]['steps']
+        scripts = [step['run'] for job in ['crawl', 'resume_crawl', 'evaluate'] for step in self.workflow['jobs'][job]['steps']
                    if 'npm ci ' in step.get('run', '')]
-        self.assertEqual(len(scripts), 4)
+        self.assertEqual(len(scripts), 6)
         for script in scripts:
             for succeed_on in (1, 3, 4):
                 # Shell functions are the only npm/sleep implementations; nothing installs or connects.
