@@ -146,7 +146,9 @@ export async function prepare({ id, version, condition, repeat = 1, workspace, r
     const serverConfig = join(toolsDir, 'server-config.json');
     await writeFile(serverConfig, JSON.stringify({ allowedOrigins: ['http://127.0.0.1:3000', 'http://localhost:3000'], policy: { authCookies: AUTH_COOKIES } }, null, 2));
     mcpConfig = join(toolsDir, 'mcp.json');
-    await writeFile(mcpConfig, JSON.stringify({ mcpServers: { cookieguard: { command: process.execPath, args: [join(toolsDir, MCP_BIN), '--config', serverConfig] } } }, null, 2));
+    await writeFile(mcpConfig, JSON.stringify({ mcpServers: { cookieguard: { command: process.execPath,
+      args: [join(toolsDir, MCP_BIN), '--config', serverConfig],
+      env: { COOKIEGUARD_USAGE_METRICS: '0', DO_NOT_TRACK: '1' } } } }, null, 2));
   }
   await mkdir(run, { recursive: true });
   // In CI the harness runs as root on a checkout owned by the runner user.

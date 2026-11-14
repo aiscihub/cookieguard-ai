@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import os
 import secrets
 import shutil
 import sys
@@ -26,6 +27,10 @@ from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 
 from cookieguard.browser_use.demo.scripted import ScriptedLoginModel, run_scenario
+
+# Synthetic validation must not count as package adoption, including MCP children.
+os.environ['COOKIEGUARD_USAGE_METRICS'] = '0'
+os.environ['DO_NOT_TRACK'] = '1'
 
 ROOT = Path(__file__).resolve().parents[3]
 MCP_BIN = ROOT / 'packages' / 'mcp' / 'bin' / 'cookieguard-mcp.js'
@@ -72,7 +77,8 @@ async def audit(evidence: Path, origins: list[str], config_path: Path) -> None:
 		'evidenceDir': str(evidence)}))
 	node = shutil.which('node')
 	check(node is not None, 'Node.js is on PATH')
-	params = StdioServerParameters(command=node, args=[str(MCP_BIN), '--config', str(config_path)])
+	params = StdioServerParameters(command=node, args=[str(MCP_BIN), '--config', str(config_path)],
+		env={'COOKIEGUARD_USAGE_METRICS': '0', 'DO_NOT_TRACK': '1'})
 	async with stdio_client(params) as (read, write), ClientSession(read, write) as session:
 		await session.initialize()
 

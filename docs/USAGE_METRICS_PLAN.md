@@ -1,12 +1,13 @@
 # CookieGuard usage metrics proposal
 
-**Status update, November 13, 2026:** the 0.4.0 release candidate implements a default-on
+**Status update, November 13, 2026:** the published 0.4.0 release implements a default-on
 PostHog pilot covering Python, CLI, Playwright, MCP, and GitHub Action, with an
 explicit helper for direct core use. See [current setup, schema, and privacy
 controls](USAGE_METRICS.md). Accepted audit invocations attempt reporting to US
 Cloud project `735326` using the bundled public token. `COOKIEGUARD_USAGE_METRICS=0`,
-`DO_NOT_TRACK=1`, or an explicit API `false` disables reporting. Publication is
-pending; npm and Python 0.3.0 installations remain unchanged. The implemented
+`DO_NOT_TRACK=1`, or an explicit API `false` disables reporting. The
+[publication record](RELEASE_0.4.0.md) documents npm and PyPI verification; existing
+0.3.0 installations remain unchanged until upgraded. The implemented
 CLI hook covers both accepted `scan` and `gate` commands.
 The proposal below, including its original default-off recommendation, is
 retained as investigation history, not the current rollout instructions.

@@ -1,3 +1,4 @@
+import '../../tests/fixtures/disable-usage.mjs';
 import assert from 'node:assert/strict';
 import { mkdtemp, mkdir, writeFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
@@ -22,7 +23,8 @@ export async function runMcpDemo(bin) {
     await mkdir(evidenceDir);
     const path = join(temp, 'cookieguard.json');
     await writeFile(path, JSON.stringify({ allowedOrigins: [origin], policy: { authCookies: ['session_id'] }, evidenceDir }));
-    const transport = new StdioClientTransport({ command: process.execPath, args: [bin, '--config', path], cwd: temp, stderr: 'pipe' });
+    const transport = new StdioClientTransport({ command: process.execPath, args: [bin, '--config', path], cwd: temp,
+      env: { COOKIEGUARD_USAGE_METRICS: '0', DO_NOT_TRACK: '1' }, stderr: 'pipe' });
     transport.stderr.on('data', data => { stderr += data; });
     await client.connect(transport);
     const call = async (name, args = {}) => {

@@ -83,7 +83,7 @@ npm install --save-dev @aiscihub/cookieguard-playwright@0.4.0
 npx --yes cookieguard-ci@0.4.0 --version
 ```
 
-These commands target the 0.4.0 release, whose publication is pending.
+These commands target the published 0.4.0 release.
 Version requirements and verification: [installation](references/installation.md).
 Version 0.4.0 enables minimal invocation reporting to PostHog by default. Disclose
 that behavior before installing or upgrading. Set `COOKIEGUARD_USAGE_METRICS=0`,

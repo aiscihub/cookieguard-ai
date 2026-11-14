@@ -35,8 +35,9 @@ source checkout. Each accepted audit attempts one event to CookieGuard's PostHog
 US Cloud project `735326`, reported as package `cookieguard-ci` and integration
 `github-action`. It includes fixed package/version/integration fields, a fresh
 invocation ID, and fixed privacy controls, without audit data. Delivery is best
-effort and never changes audit results. The pinned release above is unchanged;
-0.4.0 publication is pending. Disable reporting on the Action step:
+effort and never changes audit results. The pinned historical Action release above
+is unchanged; this behavior is available from the `cookieguard-v0.4.0` source tag.
+Disable reporting on the Action step:
 
 ```yaml
   env:

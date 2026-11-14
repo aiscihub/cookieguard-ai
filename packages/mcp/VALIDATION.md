@@ -374,3 +374,10 @@ MCP demo passed; cookie-value canary absent from results and diagnostics.
 
 Not updated. `io.github.aiscihub/cookieguard` 0.2.0 remains active and latest, and it
 still installs and works. `packages/mcp/server.json` is 0.3.0, ready for `mcp-publisher`.
+
+## 0.4.0 publication — 2026-11-13
+
+See the [coordinated 0.4.0 release record](../../docs/RELEASE_0.4.0.md) for the source commit, hosted checks,
+registry upload timestamps, artifact checksums, fresh-consumer verification, and
+the cutoff for possible synthetic MCP usage events. Earlier release evidence above
+is retained unchanged.

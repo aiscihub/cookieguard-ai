@@ -19,17 +19,17 @@ over enable settings; see [reporting controls](#reporting-controls).
 
 ## Current status
 
-This is the **0.4.0 release candidate; publication is pending**. Both Node.js and Python bundle
+Version **0.4.0 is published on npm and PyPI**; see the
+[release and verification record](RELEASE_0.4.0.md). Both Node.js and Python bundle
 the public ingestion token for [CookieGuard's PostHog project](https://us.posthog.com/project/735326/home):
 project ID **735326**, region **US Cloud** (`us`). Accepted audit invocations
 attempt reporting to that project unless disabled. Installing the 0.4.0 release is required before consumers can report.
 Existing npm and Python 0.3.0 installations do not acquire instrumentation retroactively. Registry downloads cannot be
 converted into past invocation counts.
 
-**Release behavior change:** 0.4.0 will enable this outbound
-usage request by default. Disclose that change and the opt-out settings in the
-release notes and package documentation. This source change does not publish or
-upgrade any package.
+**Release behavior change:** 0.4.0 enables this outbound usage request by default.
+The package documentation and release notes disclose that change and its opt-outs.
+Installing CookieGuard does not upgrade an existing consumer automatically.
 
 The public token permits event ingestion only. Project ID `735326` identifies
 the project in management APIs; reading events, changing settings, or creating
@@ -46,6 +46,15 @@ The owner subsequently supplied a PostHog activity screenshot displaying both
 exact invocation IDs, confirming end-to-end delivery and stored-event visibility
 for these CLI audits. Exclude those two IDs from adoption counts. Project-level
 privacy settings and saved-dashboard creation remain unverified.
+
+The 0.4.0 release checks also found a validation-launcher gap: MCP SDK subprocesses
+did not inherit the parent process's reporting opt-outs. Some synthetic MCP
+invocations from local and hosted validation may therefore have reached PostHog.
+Their invocation IDs were not logged, and receipt has not been verified. The
+validation launchers now pass explicit child-process opt-outs. Use the rollout
+cutoff in the [0.4.0 release record](RELEASE_0.4.0.md#metrics-cutoff) to exclude this
+validation period from adoption charts; the package version alone cannot separate
+these tests from consumer invocations.
 
 This guide supersedes the collector recommendation in the
 [original investigation](USAGE_METRICS_PLAN.md). No PostHog project or private
@@ -224,7 +233,8 @@ The legacy browser extension has no usage-reporting hook.
    7 days, and the last 30 days to a private dashboard.
 3. Add separate breakdowns by `integration`, `package`, and `package_version`.
    Filter to one package when comparing its versions, and annotate the rollout
-   date and reporting default.
+   date and reporting default. Apply the [rollout cutoff](RELEASE_0.4.0.md#metrics-cutoff)
+   and exclude the two known pilot invocation IDs above.
 
 These controls are described in [PostHog Trends](https://posthog.com/docs/product-analytics/trends/overview).
 Label charts **Reported audit invocations**. Fresh IDs make unique-user, active-user,

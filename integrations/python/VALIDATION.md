@@ -514,3 +514,10 @@ maintainer approval of the `pypi` environment. The tag's tree is identical to PR
   - the same objects under both names, with no stale 0.1 files;
   - engine verification and a clean `pip check`;
   - a working `python -m cookieguard_browser_use.demo`.
+
+## cookieguard 0.4.0 and cookieguard-browser-use 0.4.0 publication — 2026-11-13
+
+See the [coordinated 0.4.0 release record](../../docs/RELEASE_0.4.0.md) for the source commit, hosted checks,
+registry upload timestamps, artifact checksums, fresh-consumer verification, and
+the cutoff for possible synthetic MCP usage events. Earlier release evidence above
+is retained unchanged.

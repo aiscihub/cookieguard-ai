@@ -97,7 +97,8 @@ environment/default. The Python adapter disables reporting in its Node
 child while preserving the engine sandbox and ONNX opt-out. Bounded background
 delivery failures never alter audit decisions. The bundled public token routes
 enabled events to CookieGuard's US Cloud project `735326`. Downloads and imports
-do not report; delivery is best effort. Publication of 0.4.0 is pending, and published npm/Python 0.3.0 remain unchanged.
+do not report; delivery is best effort. Version 0.4.0 is published on npm and PyPI;
+existing 0.3.0 installations remain unchanged until upgraded.
 
 ## Verification and limits
 

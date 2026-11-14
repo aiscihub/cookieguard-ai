@@ -1,7 +1,8 @@
 # MCP release checklist
 
-Release candidate 0.4.0 is being prepared with all four npm packages and both
-Python distributions. Publication and MCP Registry submission are pending.
+Version 0.4.0 is published with all four npm packages and both Python
+distributions. See the [coordinated release record](../../docs/RELEASE_0.4.0.md)
+for registry verification, MCP Registry status, and the metrics rollout cutoff.
 It adds [default-on invocation reporting](../../docs/USAGE_METRICS.md), with
 `COOKIEGUARD_USAGE_METRICS=0`, `DO_NOT_TRACK=1`, and trusted API opt-outs. Use the
 same reviewed, tested artifacts for publication and verify registry installs;
@@ -11,7 +12,7 @@ keep reporting disabled during release validation.
 on 2026-11-08 under the `latest` dist-tag, together with `@aiscihub/cookieguard-core`,
 `cookieguard-ci`, and `@aiscihub/cookieguard-playwright` 0.3.0. See the
 [0.3.0 publication record](VALIDATION.md#030-publication--2026-11-08). The MCP Registry
-still lists 0.2.0. Earlier records: [0.2.0](VALIDATION.md#020-publication--2026-11-06),
+state for 0.4.0 is recorded above. Earlier records: [0.2.0](VALIDATION.md#020-publication--2026-11-06),
 [0.1.0](VALIDATION.md#010-publication--2026-11-05), and
 [0.1.0-beta.1](VALIDATION.md#npm-publication--2026-11-05). The Python package was still at 0.2.0 during that npm release; its later
 0.3.0 publication is recorded in [Python validation](../../integrations/python/VALIDATION.md).

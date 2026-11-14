@@ -70,7 +70,7 @@ function cleanEnv(sandbox, project) {
     PIP_DISABLE_PIP_VERSION_CHECK: '1', PLAYWRIGHT_BROWSERS_PATH: join(homedir(), 'Library/Caches/ms-playwright'),
     XDG_CONFIG_HOME: join(sandbox, 'xdg-config'), XDG_CACHE_HOME: join(sandbox, 'xdg-cache'),
     BROWSER_USE_CONFIG_DIR: join(sandbox, 'browseruse'), ANONYMIZED_TELEMETRY: 'false', BROWSER_USE_CLOUD_SYNC: 'false',
-    PWD: project };
+    COOKIEGUARD_USAGE_METRICS: '0', DO_NOT_TRACK: '1', PWD: project };
 }
 
 async function prepare(task, condition, slot, run) {
@@ -101,7 +101,8 @@ async function prepare(task, condition, slot, run) {
       policy: { authCookies: [task.fixture === 'agentapp' ? 'sid' : 'session'] } }));
     mcpConfig = join(run, 'mcp.json');
     await writeFile(mcpConfig, JSON.stringify({ mcpServers: { cookieguard: { command: process.execPath,
-      args: [join(repo, 'packages/mcp/bin/cookieguard-mcp.js'), '--config', serverConfig] } } }));
+      args: [join(repo, 'packages/mcp/bin/cookieguard-mcp.js'), '--config', serverConfig],
+      env: { COOKIEGUARD_USAGE_METRICS: '0', DO_NOT_TRACK: '1' } } } }));
   }
   return { sandbox, project, settings, env, port, mcpConfig };
 }
