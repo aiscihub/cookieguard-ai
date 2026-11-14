@@ -2,7 +2,8 @@
 
 ## CookieGuard 0.4.0 — usage reporting — 2026-11-13
 
-Release preparation; npm and PyPI publication is pending. The four npm packages
+[Published on npm and PyPI](docs/RELEASE_0.4.0.md) from tag `cookieguard-v0.4.0`
+at commit `f9027658` after PR #52 passed hosted CI. The four npm packages
 (`@aiscihub/cookieguard-core`, `cookieguard-ci`, `@aiscihub/cookieguard-playwright`,
 and `@aiscihub/cookieguard-mcp`) and both Python distributions (`cookieguard` and
 `cookieguard-browser-use`) move to 0.4.0 with exact internal dependencies. The

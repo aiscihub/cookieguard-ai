@@ -61,11 +61,11 @@ from this repository, using the same security engine. Published npm packages:
 [`cookieguard-ci`](https://www.npmjs.com/package/cookieguard-ci),
 [`@aiscihub/cookieguard-core`](https://www.npmjs.com/package/@aiscihub/cookieguard-core),
 and [`@aiscihub/cookieguard-playwright`](https://www.npmjs.com/package/@aiscihub/cookieguard-playwright).
-The latest published version is `0.3.0` under the default `latest` dist-tag
+The latest published version is `0.4.0` under the default `latest` dist-tag
 (0.1.0 was the public beta), maintained by
-[`aiscihub`](https://www.npmjs.com/~aiscihub). Release candidate `0.4.0` is being
-prepared together with the MCP package; the npm installation examples below
-apply after its publication. The pinned historical Action example is unchanged.
+[`aiscihub`](https://www.npmjs.com/~aiscihub), together with the MCP package. See
+the [0.4.0 publication record](RELEASE_0.4.0.md). The pinned historical Action
+example is unchanged.
 
 Verified on GitHub-hosted Linux with Chromium in the
 [toolkit workflow](https://github.com/aiscihub/cookieguard-ai/actions/runs/39098406137)
@@ -373,8 +373,7 @@ in memory for model features. Reports contain selected metadata and fixed
 explanations. Classification and policy evaluation stay local. The 0.4.0
 [usage-reporting pilot](USAGE_METRICS.md) defaults on and attempts one fixed event
 per accepted audit invocation. The bundled token targets CookieGuard's US Cloud
-project `735326`; 0.4.0 publication is pending.
-Published npm 0.3.0 installations remain unchanged. Use `COOKIEGUARD_USAGE_METRICS=0`,
+project `735326`. Existing npm 0.3.0 installations remain unchanged until upgraded. Use `COOKIEGUARD_USAGE_METRICS=0`,
 `DO_NOT_TRACK=1`, or an explicit API `false` to disable it. Downloads and imports
 do not report. Events exclude cookie data and audit results, use a fresh random
 invocation ID, and cannot measure unique users. Delivery is best effort and does

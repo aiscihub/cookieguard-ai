@@ -56,7 +56,8 @@ async function connect(t, options = {}) {
   const config = { allowedOrigins: [target], policy: { authCookies: ['session_id'] }, timeoutMs: 500, ...options.config };
   const path = join(temp, `config-${Math.random()}.json`);
   await writeFile(path, JSON.stringify(config));
-  const transport = new StdioClientTransport({ command: process.execPath, args: [bin, '--config', path], stderr: 'pipe' });
+  const transport = new StdioClientTransport({ command: process.execPath, args: [...(options.nodeArgs ?? []), bin, '--config', path],
+    env: { COOKIEGUARD_USAGE_METRICS: '0', DO_NOT_TRACK: '1' }, stderr: 'pipe' });
   let stderr = '';
   transport.stderr.on('data', data => { stderr += data; });
   const client = new Client({ name: 'cookieguard-test', version: '1.0.0' }, {
@@ -73,6 +74,14 @@ async function connect(t, options = {}) {
     return result;
   } };
 }
+
+test('stdio verification forwards usage opt-outs into the child before its first audit', async t => {
+  const bootstrap = `import assert from 'node:assert/strict';
+    assert.equal(process.env.COOKIEGUARD_USAGE_METRICS, '0');
+    assert.equal(process.env.DO_NOT_TRACK, '1');`;
+  const { scan } = await connect(t, { nodeArgs: ['--import', `data:text/javascript,${encodeURIComponent(bootstrap)}`] });
+  assert.equal((await scan(`${target}/secure`)).structuredContent.status, 'passed');
+});
 
 for (const mode of ['legacy', { pin: '2026-07-28' }]) {
   test(`stdio discovery, schema, and pass/fail/incomplete (${JSON.stringify(mode)})`, async t => {

@@ -1,8 +1,8 @@
 # Installation
 
 Install CookieGuard only as a test or development dependency of the project being
-audited, after telling the user what you will add. These commands target 0.4.0;
-publication is pending. Verify registry availability before installing.
+audited, after telling the user what you will add. These commands target the
+published 0.4.0 release on npm and PyPI.
 
 | Package | Registry | Version | Install | Requires |
 | --- | --- | --- | --- | --- |

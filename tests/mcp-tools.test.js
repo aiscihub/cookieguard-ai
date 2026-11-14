@@ -44,7 +44,8 @@ function clean(value) {
 async function connect(t, config) {
   const path = join(temp, `config-${Math.random()}.json`);
   await writeFile(path, JSON.stringify({ allowedOrigins: [target], policy: { authCookies: ['session_id'] }, timeoutMs: 1000, ...config }));
-  const transport = new StdioClientTransport({ command: process.execPath, args: [bin, '--config', path], stderr: 'pipe' });
+  const transport = new StdioClientTransport({ command: process.execPath, args: [bin, '--config', path],
+    env: { COOKIEGUARD_USAGE_METRICS: '0', DO_NOT_TRACK: '1' }, stderr: 'pipe' });
   let stderr = '';
   transport.stderr.on('data', data => { stderr += data; });
   const client = new Client({ name: 'cookieguard-tools-test', version: '1.0.0' }, { versionNegotiation: { mode: { pin: '2026-07-28' } } });

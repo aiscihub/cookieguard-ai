@@ -28,8 +28,8 @@ The 0.4.0 [PostHog pilot](docs/USAGE_METRICS.md) enables reporting by default
 and attempts one event per accepted audit invocation. Its bundled public token
 targets CookieGuard's US Cloud project `735326`. Downloading, installing, or
 importing a package creates no event. Direct core evaluation does not report
-automatically. Publication of 0.4.0 is pending;
-published npm and Python 0.3.0 installations and past downloads are unchanged.
+automatically. Version 0.4.0 is [published on npm and PyPI](docs/RELEASE_0.4.0.md);
+existing 0.3.0 installations and past downloads are unchanged until an upgrade.
 
 The event contains the package, package version, integration, schema version,
 event name, public ingestion token, a fresh random invocation UUID, and fixed

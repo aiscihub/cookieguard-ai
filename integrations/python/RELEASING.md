@@ -8,15 +8,16 @@ and publishes both distributions from this folder, always at the same version:
 | `cookieguard` | The package: core (`cookieguard`) and integrations (`cookieguard.browser_use`) |
 | `cookieguard-browser-use` | Compatibility package in `compat/cookieguard-browser-use`; depends on `cookieguard==<version>` and re-exports it |
 
-## 0.4.0 release preparation — 2026-11-13
+## 0.4.0 publication — 2026-11-13
 
-Publication is pending. Both distributions move to 0.4.0; the compatibility
+Both distributions are published on PyPI; see the
+[coordinated release record](../../docs/RELEASE_0.4.0.md). The compatibility
 package requires exactly `cookieguard==0.4.0`. The vendored npm engine remains
 0.3.0. The release adds [default-on usage reporting](../../docs/USAGE_METRICS.md)
 with documented environment/API opt-outs; no cookie data or audit results are
 reported. Keep reporting disabled in release tests and clean-consumer checks.
-Verify upgrades from 0.3.0 as well as earlier supported releases, and record actual
-publication evidence only after registry upload and installation checks pass.
+The publishing workflow verified upgrades from 0.3.0 as well as earlier supported
+releases. Its four uploaded artifacts match the PyPI files by SHA-256 and size.
 
 ## Checklist (used for 0.3.0, published 2026-11-08, and 0.2.0, published 2026-11-06)
 

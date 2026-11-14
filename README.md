@@ -60,8 +60,8 @@ logs, or reports.
 
 ### Install
 
-Needs **Python 3.11+, Node.js 24+, and Chrome or Chromium**. Version 0.4.0 is being
-prepared for release; the installation examples below apply after publication:
+Needs **Python 3.11+, Node.js 24+, and Chrome or Chromium**. Install the
+[published 0.4.0 release](docs/RELEASE_0.4.0.md):
 
 ```bash
 pip install cookieguard==0.4.0
@@ -201,8 +201,8 @@ origins and policy; the client can only choose which URL or evidence file to aud
 
 > [!NOTE]
 > [`@aiscihub/cookieguard-mcp`](https://www.npmjs.com/package/@aiscihub/cookieguard-mcp)
-> 0.4.0 is being prepared for npm. Earlier releases are available on npm and
-> listed in the official MCP Registry as `io.github.aiscihub/cookieguard`.
+> 0.4.0 is published on npm and active in the official MCP Registry as
+> `io.github.aiscihub/cookieguard`. See the [release record](docs/RELEASE_0.4.0.md).
 > It needs Node.js 24+.
 
 [![CookieGuard MCP server](https://mcprush.com/badge/cookieguard-mcp/card.svg)](https://mcprush.com/to/cookieguard-mcp?ref=badge) [![CookieGuard AI MCP server – quality and maintenance score on Glama](https://glama.ai/mcp/servers/aiscihub/cookieguard-ai/badges/card.svg)](https://glama.ai/mcp/servers/aiscihub/cookieguard-ai)
@@ -326,8 +326,8 @@ CookieGuard 0.4.0 adds separate [usage reporting](docs/USAGE_METRICS.md), enable
 by default for accepted audit invocations. It attempts one minimal PostHog event,
 without cookie data, URLs, audit results, or persistent identity. Disable it before
 starting the process with `COOKIEGUARD_USAGE_METRICS=0` or `DO_NOT_TRACK=1`, or use
-the API's explicit `false` setting. Downloads and imports do not report. Publication
-is pending; existing npm and Python 0.3.0 installations remain unchanged.
+the API's explicit `false` setting. Downloads and imports do not report. Existing
+npm and Python 0.3.0 installations remain unchanged until upgraded.
 
 </details>
 

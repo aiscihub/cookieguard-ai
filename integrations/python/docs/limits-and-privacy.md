@@ -35,7 +35,7 @@
   [PostHog pilot](https://github.com/aiscihub/cookieguard-ai/blob/main/docs/USAGE_METRICS.md)
   attempts one fixed invocation event after `start()` accepts the session.
   The bundled public token targets CookieGuard's US Cloud project `735326`.
-  Publication is pending; existing Python 0.3.0 installations remain unchanged.
+  Existing Python 0.3.0 installations remain unchanged until upgraded.
   Downloads, imports, and construction do not report. `usage_metrics=False`,
   `COOKIEGUARD_USAGE_METRICS=0`, or `DO_NOT_TRACK=1` disables reporting;
   `usage_metrics=None` or omission follows the environment/default. Events contain

@@ -153,7 +153,8 @@ test('the MCP server re-evaluates session and storage evidence and names a stora
     const config = join(temp, `config-${authStorageKeys.length}.json`);
     await writeFile(config, JSON.stringify({ allowedOrigins: [origin], policy: { authCookies: ['sid'], authStorageKeys }, evidenceDir: temp }));
     const client = new Client({ name: 'cookieguard-session-test', version: '1.0.0' }, { versionNegotiation: { mode: { pin: '2026-07-28' } } });
-    await client.connect(new StdioClientTransport({ command: process.execPath, args: [resolve('packages/mcp/bin/cookieguard-mcp.js'), '--config', config] }));
+    await client.connect(new StdioClientTransport({ command: process.execPath, args: [resolve('packages/mcp/bin/cookieguard-mcp.js'), '--config', config],
+      env: { COOKIEGUARD_USAGE_METRICS: '0', DO_NOT_TRACK: '1' } }));
     try {
       const response = await client.callTool({ name: 'cookieguard_audit', arguments: { evidenceFile: 'login.json' } });
       const result = mcpAuditResultSchema.parse(response.structuredContent);
