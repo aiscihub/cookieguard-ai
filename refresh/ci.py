@@ -45,9 +45,10 @@ def create_branch(branch, files):
     if not re.fullmatch(r'refresh/(?:reservations/\d{4}-\d{2}(?:-pilot)?|(?:data|model)/\d{4}-\d{2}|resumes/[1-9]\d{0,19})', branch):
         raise ValueError('invalid-branch')
     with tempfile.TemporaryDirectory() as temp:
+        # GitHub's official Actions bot; the numeric ID avoids attributing automation to another user.
         env = dict(os.environ, GIT_INDEX_FILE=str(Path(temp) / 'index'),
-                   GIT_AUTHOR_NAME='CookieGuard refresh', GIT_AUTHOR_EMAIL='refresh@users.noreply.github.com',
-                   GIT_COMMITTER_NAME='CookieGuard refresh', GIT_COMMITTER_EMAIL='refresh@users.noreply.github.com')
+                   GIT_AUTHOR_NAME='github-actions[bot]', GIT_AUTHOR_EMAIL='41898282+github-actions[bot]@users.noreply.github.com',
+                   GIT_COMMITTER_NAME='github-actions[bot]', GIT_COMMITTER_EMAIL='41898282+github-actions[bot]@users.noreply.github.com')
         base = git('rev-parse', 'origin/main')
         git('read-tree', base, env=env)
         git('add', '--', *files, env=env)
