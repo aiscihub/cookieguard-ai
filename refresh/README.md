@@ -212,6 +212,71 @@ without the pilot blocking the real reservation. Actions reruns remain prohibite
 delete reservations or rerun a crawl to recover a failed run. The local checkpoints did not
 create any remote reservation branches.
 
+Missing and failed-closed shards are excluded individually. Every included shard must pass
+its own content cross-scan, structural validation, frame provenance, and payload digests.
+The manifest and `REPORT.md` list each excluded shard, its reserved site count, and its fixed
+reason. Old failed receipts without a reason are reported as `failed-closed`; no cause is inferred.
+Publication is blocked if more than 25% of reserved sites are excluded (four of sixteen equal
+shards are allowed; five are blocked). Health uses only included attempts. Excluded payloads
+are removed from the downloaded working artifact tree before the audit and upload; the entire
+reserved frame remains in the cumulative exclusion state.
+
+Browser context failures become per-site `browser-error` attempts. A disconnected browser is
+relaunched for the next batch, without retrying any site or resetting the in-memory privacy
+guard. Fatal receipts contain only `privacy-rejected`, `browser-error`, or `io-error`.
+`not-checked` means the browser failed before a robots decision; it does not count as a robots
+protocol failure. Before each batch, `visited.json` records the frame's site IDs before any browser work. It
+survives fail-closed and is included in the saved artifact. `checkpoint.json` is one atomic
+snapshot of the last checked attempts, rows, and privacy evidence. After cancellation, artifact
+staging retains that snapshot and the ledger, and discards possibly torn export files. A failed
+shard exports its fixed failure receipt and ledger without rows. Both `npm ci` installs get up
+to three attempts in crawl, resume-crawl, and evaluate jobs.
+
+For resume, dispatch with `resume_run` set to the source run ID after owner review. Frame
+selection and ordinary crawl jobs are skipped. The workflow downloads that run's frame and
+shard artifacts with `actions: read`, checks the frame byte-for-byte against the real monthly
+reservation, and computes a plan from the artifacts. The four states are:
+
+| Source state | Keep | Never visit again | New work |
+|---|---|---|---|
+| Complete | All recorded attempts and rows, after receipt/digest validation | Whole shard | None |
+| Interrupted | Checked frame-order prefix, preferably the atomic snapshot | Ledger prefix; for legacy artifacts, recorded prefix plus the next batch of up to 4 | Remaining suffix |
+| Failed-closed | No rows | Ledger prefix; legacy failures require an explicit visited prefix | Remaining suffix |
+| Never-started | No rows | None | Whole shard |
+
+Legacy overrides are provided as `visited_prefix` in dispatch, or `--visited-prefix` to the
+planner/CI script. Run `43627693953` requires **`visited_prefix=2=36`**, based on its last log
+progress of 32 plus the in-flight batch. New ledgers remove that need. An override cannot
+reduce a known visited prefix. Each override is retained in the plan and report.
+
+Only shards with remaining sites enter the new crawl matrix; completed shards are carried
+forward without browser jobs. Visited-but-unrecorded sites get `visited-not-recorded`, count
+as attempted, and are never revisited. Their document/robots outcomes are unknown, so they
+are reported separately from the Health gate's observed document visits.
+
+Each resumed receipt names the source run, source state, kept prefix and digests, visited
+prefix, source privacy evidence, and the new part's privacy result. Merge and audit verify the
+kept data and skipped attempts against the plan. Legacy prefixes rely on the original
+incremental batch-check contract; old cookie contents are unavailable for a new scan. The new
+guard cross-scans the retained output against new cookie contents and records separate evidence.
+
+One resume attempt per source run is reserved at `refresh/resumes/<run-id>` with an empty
+expected ref (no overwrite), even if that resume later fails. The reservation records the plan
+digest and overrides. Raw reservation reads support full 10,000-site frames. Planning hashes
+the tracked canonical engine, whose bytes are copied by the normal package build, so planning
+requires no npm install or browser. The source month and real-run status override ordinary
+dispatch size and dry-run defaults. Evaluation, training, gates, audit, and publication then
+follow the normal path. The original first-real-run flag is retained for draft PRs.
+
+The local checkpoint only computes the plan and runs fake tests. Its plan matches all counts
+and remaining IDs in `.work/runs/43627693953/RESUME_STATE.json`: 7,204 recorded, 60 visited but
+not recorded, 2,736 remaining, 235 kept usable sites, and 5,826 kept rows. To recompute the plan
+without visiting sites, choose a new output directory and run:
+
+```sh
+python refresh/resume.py --source refresh/.work/runs/43627693953 --source-run 43627693953 --visited-prefix 2=36 --expect refresh/.work/runs/43627693953/RESUME_STATE.json --out refresh/.work/resume-plan-review
+```
+
 After an independent final privacy audit, a real run may open the timestamped dataset PR,
 including its report, index entry, and cumulative exclusions. The model PR exists only when
 every gate passes and always requires a person. It never receives `auto-merge`.

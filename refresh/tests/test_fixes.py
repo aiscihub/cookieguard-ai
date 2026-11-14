@@ -74,7 +74,7 @@ class FixTests(unittest.TestCase):
             self.assertEqual(len(pushes), 2)
             self.assertTrue(pushes[-1][-1].endswith(pilot))
         refs = '\n'.join(['refs/heads/' + real, 'refs/heads/' + pilot])
-        payload = lambda domain: base64.b64encode(json.dumps({'frame': [{'domain': domain}]}).encode()).decode()
+        payload = lambda domain: json.dumps({'frame': [{'domain': domain}]}).encode()
         with patch('ci.gh', side_effect=[refs, payload('real.example'), payload('pilot.example')]):
             self.assertEqual(ci.prior_reservations('fixture/repo'), {'real.example', 'pilot.example'})
         with patch('ci.gh', return_value='refs/heads/refresh/reservations/2026-11-pilot-again'):
@@ -116,7 +116,11 @@ class FixTests(unittest.TestCase):
                     write_json(run / 'privacy-audit.json', {'passed': True, 'files': []})
                     gate = {'gates': {'Health': {'passed': healthy}}, 'eligibleForModelPR': False, 'allGatesPassed': False}
                     write_json(run / 'gate.json', gate)
-                    write_json(root / 'data/releases' / month / 'manifest.json', {'dryRun': False, 'privacyPassed': True, 'complete': True})
+                    write_json(root / 'data/releases' / month / 'manifest.json', {
+                        'dryRun': False, 'privacyPassed': True, 'structuralPassed': True, 'complete': True,
+                        'planned': 1, 'attempted': 1, 'plannedShards': 1, 'includedShards': [1],
+                        'excludedSites': 0, 'excludedShards': [], 'shardReceipts': [{'shard': 1, 'privacy': {
+                            'passed': True, 'structuralPassed': True, 'crossScanPassed': True}}]})
                     (run / 'REPORT.md').write_text('In-memory policy fixture.\n')
                     def gh(*args):
                         return 'https://github.com/fixture/repo/pull/1' if args[:2] == ('pr', 'create') else ''
