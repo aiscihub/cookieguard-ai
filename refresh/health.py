@@ -42,11 +42,13 @@ def assess_health(manifest):
     unanswered = manifest.get('unreachableOrTlsSites')
     unanswered_rate = (unanswered / attempted if type(unanswered) is int and attempted > 0
                        and 0 <= unanswered <= attempted else None)
-    yield_passed = site_yield is not None and site_yield >= .03
+    # 1.5%: the November 2026 pilot measured 11 usable of 330 visited (3.3%; 95% interval about
+    # 1.7-5.9%). A broken parser yields about 0%. The floor catches that without failing a healthy month.
+    yield_passed = site_yield is not None and site_yield >= .015
     availability_passed = unavailable_rate is not None and unavailable_rate <= .20
     return {
         'passed': yield_passed and availability_passed,
-        'rule': 'usable / visited >= 3%; robots response/protocol failures / attempted <= 20%',
+        'rule': 'usable / visited >= 1.5%; robots response/protocol failures / attempted <= 20%',
         'attemptedSites': attempted, 'visitedSites': visited, 'usableSites': usable,
         'usableSiteYield': site_yield, 'yieldPassed': yield_passed,
         'robotsUnavailableSites': unavailable, 'robotsUnavailableRate': unavailable_rate,
@@ -61,7 +63,7 @@ def health_report(manifest):
     fmt = lambda x: 'N/A' if x is None else format(100 * x, '.2f') + '%'
     lines = ['', '### Coverage and Health', '', '| Measure | Count | Rate | Rule |', '|---|---:|---:|---|',
              '| Usable / visited | ' + str(health['usableSites']) + ' / ' + str(health['visitedSites']) +
-             ' | ' + fmt(health['usableSiteYield']) + ' | At least 3% |',
+             ' | ' + fmt(health['usableSiteYield']) + ' | At least 1.5% |',
              '| Robots response/protocol failures / attempted | ' + str(health['robotsUnavailableSites']) + ' / ' + str(health['attemptedSites']) +
              ' | ' + fmt(health['robotsUnavailableRate']) + ' | At most 20% |',
              '| Unreachable + TLS / attempted | ' + str(health['unreachableOrTlsSites']) + ' / ' + str(health['attemptedSites']) +

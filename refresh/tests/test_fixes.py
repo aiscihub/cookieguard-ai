@@ -25,7 +25,8 @@ class FixTests(unittest.TestCase):
         self.assertEqual(result['robotsUnavailableRate'], .10)
         self.assertTrue(assess_health(manifest(unavailable=20))['passed'])
         self.assertFalse(assess_health(manifest(unavailable=21))['passed'])
-        self.assertFalse(assess_health(manifest(usable=1))['passed'])
+        self.assertTrue(assess_health(manifest(usable=1))['passed'])  # 1/50 = 2% >= 1.5%.
+        self.assertFalse(assess_health(manifest(visited=100, usable=1))['passed'])  # 1/100 = 1% < 1.5%.
         self.assertFalse(assess_health(manifest(visited=0, usable=0))['passed'])
         self.assertFalse(assess_health(manifest(visited=101))['passed'])
         self.assertFalse(assess_health(manifest(usable=51))['passed'])

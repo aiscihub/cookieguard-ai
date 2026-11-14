@@ -147,10 +147,12 @@ browser trace, HAR, screenshot, storage-state snapshot, or page text is exported
 deadline includes robots, navigation, consent, reload, and settling within a browser context.
 
 `visited` means robots permitted an origin and document navigation started. Health requires
-both usable sites / visited sites >= 3% and robots response/protocol failures / attempted
+both usable sites / visited sites >= 1.5% and robots response/protocol failures / attempted
 sites <= 20%. The latter counts only `server-error`, `redirect-limit`, `too-large`, and
 `network-error`, once per site. It does not count the broad `status=robots-unavailable` field.
-The denominator remains all attempted sites. Missing denominators fail closed.
+The denominator remains all attempted sites. Missing denominators fail closed. The 1.5% floor
+comes from the November 2026 hosted pilot: 11 usable of 330 visited (3.3%), with fewer consent
+banners and more blocking than the study crawl. A broken parser yields about 0%.
 
 `unreachable` plus `tls-error` is reported separately, with its share of attempted sites, as
 the study's `navigation-failed` equivalent. There is no gate on this rate. Counts use the final
