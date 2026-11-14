@@ -1,0 +1,13 @@
+{
+  "frameSha256": "4b0009953f1dea0a84b74531fbf098f8fbb312d6a6cb56061dab7cf0c06a6ae6",
+  "month": "2026-11",
+  "planSha256": "7ebee074e2e25300023b1d75ef82819446832a044779a6663f1d53351e653bf4",
+  "reservationBranch": "refresh/reservations/2026-11",
+  "resumeCommit": "7e4a12f3bb404a3ec8f5ec8064d68fc421c940ce",
+  "schemaVersion": 1,
+  "sourceCommit": "12bc24ab71d1664bc43d59b0786c18fb201faa36",
+  "sourceRun": "43627693953",
+  "visitedPrefixOverrides": {
+    "2": 36
+  }
+}
