@@ -1,0 +1,824 @@
+{
+  "files": [
+    {
+      "passed": true,
+      "path": "data/releases/2026-11/README.md",
+      "sha256": "0c45b18fef6148791085c9fbcca68a3f78f255ee507c1dff868e9bcec6b97f90"
+    },
+    {
+      "passed": true,
+      "path": "data/releases/2026-11/REPORT.md",
+      "sha256": "eb87687f1b59fa765f90757cca39831f81c6ef78ce2b867dc68b1ee42f931dc5"
+    },
+    {
+      "passed": true,
+      "path": "data/releases/2026-11/cookies.csv",
+      "sha256": "44ff1da31b61a9a218a699e566344c5383328543ce8480e5000b29ea992a7e0a"
+    },
+    {
+      "passed": true,
+      "path": "data/releases/2026-11/cookies.jsonl",
+      "sha256": "e4795ca22b93fefc7bbef03164796d825533db4626fc03987c3cf79b718bec09"
+    },
+    {
+      "passed": true,
+      "path": "data/releases/2026-11/manifest.json",
+      "sha256": "e7dc92889350344d3af757fe490b8d2586b155c1390070920030c4476de14cb6"
+    },
+    {
+      "passed": true,
+      "path": "data/releases/2026-11/stats.json",
+      "sha256": "46673863b8c54585079159573cfde250d3e8535fd216dc22daa0740b3badacbd"
+    },
+    {
+      "passed": true,
+      "path": "data/releases/index.json",
+      "sha256": "ee44f05ffb98b3a4886eaacfedcc0a15997af6265b8ee9128efbf0f68009eb14"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/inputs/training-pool-2021.attribution.json",
+      "sha256": "2e0a8d13e1db7fa56cb4916ee08ba2ea0b1f4a7b7ec607cb4b6b558345e9827a"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/inputs/training-pool-2021.jsonl.gz",
+      "sha256": "f90843ce3bd02287a6c89cba1d9cd2b840b1a16c15479294436055c7f09e3b6a"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/REPORT.md",
+      "sha256": "eb87687f1b59fa765f90757cca39831f81c6ef78ce2b867dc68b1ee42f931dc5"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/RESUME_PLAN.md",
+      "sha256": "d5d6c092dc2919470c2ea19edb2752eee7b76ae1dfeee35c2d23c2e8becffe4f"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/baseline.json",
+      "sha256": "7376565879d7d713e12c627670de281f8af488b69f3e2b118710ef434dacdd4a"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/browser-canary.json",
+      "sha256": "8fcef99ea2e664ba7864fb26e3367e60e1bdab4f7f6e44d9fca0c831b48a8b94"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/canaries.json",
+      "sha256": "7b54525c039fddb91c5f284ec24bcecdf450ce993fcb137a0f14ea53b839c2f7"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/candidate/MODEL_CARD.md",
+      "sha256": "9bfc1e79864db707314b5742d20f64a831bd81a96fab1443ea0c813a329b4ef3"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/candidate/lookup.json",
+      "sha256": "54af011b28a6b291f36d8236c3156e50ebf151bb9fa79847d547ed3b58224149"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/candidate/membership.json",
+      "sha256": "94e72fdd0b8ebb3136cdb49cf860205ec82a7bdb12d7dd8abaac96262ddce21d"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/candidate/meta.json",
+      "sha256": "33915cd02e92b93b712366613373e1f8c256ed21230ff21d5079f918085ed149"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/candidate/model.onnx",
+      "sha256": "b33d9aa44f00401f4722dbac7d0208a55dff3e6ec5c4a192598c280b179d20c0"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/candidate/parity.json",
+      "sha256": "515610adb3636df96f23bd53832cb5a44ba89a269970ab11173175954a9d5d50"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/evaluation.json",
+      "sha256": "5a3ae93d950db9e0d5ad1809fc050492837876231a92915573d366bd818d2b7d"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/exclusions.txt",
+      "sha256": "2ec04347269420e5f7c320c6e9ca9f2e843416a9318d657b259c1783b9c28020"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/frame.json",
+      "sha256": "4b0009953f1dea0a84b74531fbf098f8fbb312d6a6cb56061dab7cf0c06a6ae6"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/gate.json",
+      "sha256": "7025cf3458b09c2eaf1fc87e2a2930bf881f93aa21184f85417fae3b192ac3fa"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/history-exclusions.txt",
+      "sha256": "2ec04347269420e5f7c320c6e9ca9f2e843416a9318d657b259c1783b9c28020"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/merge.json",
+      "sha256": "e986f20b872789be8a304ff63bbd2c7e8e6b4d8b5feb6e3f854e52c183ee48a5"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/ranking.csv",
+      "sha256": "22e1bd0d024cd5ff30fd6f28ea101db667f053851713c085f3e6db3406d75f73"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/recovery.json",
+      "sha256": "39abb3a2dda1272f1c28d0d8ca333fbfe036130a3c5a389db84c64a48ec01dff"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-1/kept-attempts.json",
+      "sha256": "b48c7e0074ef641eebbdda545c5988e48e2bd81256b1742f9fb76105a4fc2832"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-1/kept-cookies.jsonl",
+      "sha256": "94a0f55c920c4d187066eb61f6b2bbab1efb72558e2762d5cf20863aaa3d3e61"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-1/plan.json",
+      "sha256": "09c1037d640d9034a0e6148d27ddc3d0566075747cdc140d987dc4858cc3fefe"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-10/kept-attempts.json",
+      "sha256": "b8fdb092725e7c295b9e10ded1a83f8a8d6b698e7985d2188dcffdd7cfe60072"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-10/kept-cookies.jsonl",
+      "sha256": "4bd84bae32915b9af6a036fd11442b67e0537c8b7c72dc31ca3841f7721fad84"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-10/plan.json",
+      "sha256": "53c4e2176ef6b0a923935db059303724399280684f441874e311da57a8a7d5b8"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-11/kept-attempts.json",
+      "sha256": "a14f4e845bbf81b7508b3688d83bce3cfc6595172cb24cbb44a46c3d8ca4a6f1"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-11/kept-cookies.jsonl",
+      "sha256": "77de88d8c3f1f926f035caced7ef43919d09d2c2ce917ebd6cdfb6d91e46b95a"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-11/plan.json",
+      "sha256": "8def54c4173cff5d64b74dcb3534349d8e741447bce4a2dd2fae5f63f581e27f"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-12/kept-attempts.json",
+      "sha256": "817a01f65bba9bf16a9667a3f40bdceb1290d9598022cc8e247e422914c27b08"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-12/kept-cookies.jsonl",
+      "sha256": "54c794bfee77b1581bb41996ef8fbcc1501f6800cb74d73ee032e298dd1fc75a"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-12/plan.json",
+      "sha256": "b05a5b103cf1a02367c8b7a4d10c6ec93ed344c41ccfba13cdd78a924ad4feba"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-13/kept-attempts.json",
+      "sha256": "61020304dcb80eeb7e7308dd6c2dbad6af1444fe655b9f18b95c3ff37ffe35f0"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-13/kept-cookies.jsonl",
+      "sha256": "be9c0cd629dd90c55eaf0d8d40f9a355d6ba0948bb490b6005053e56ee5555aa"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-13/plan.json",
+      "sha256": "df86f03340d7612b32519dfbfe04106775350434624888e0241120a30775797e"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-14/kept-attempts.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-14/kept-cookies.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-14/plan.json",
+      "sha256": "91ddc364dc626eb37751152e2fff1849d158da6a09da4457721367f700f56b1a"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-15/kept-attempts.json",
+      "sha256": "17cce51287b5d0727b83558d3fa9bc79d442dec496da3896622591068bbea45b"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-15/kept-cookies.jsonl",
+      "sha256": "3d5593c88e7ae460740f411ec6d5b639d703c1df7e92c6dedeeda655c6afbb8a"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-15/plan.json",
+      "sha256": "f86347a385c5bb9811dcb4a46c33259b52ecab390b6a7902196a0c836b94dbbf"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-16/kept-attempts.json",
+      "sha256": "ce42ec984726ac37e5f224fec6cb6357044c4c57ee990d5d458b89a39a90e30f"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-16/kept-cookies.jsonl",
+      "sha256": "5283b6992ae526c086adc2b8591c2fa71dd928a0a39959775d1c17f28092f9fd"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-16/plan.json",
+      "sha256": "fc40f868e252871662795683aeb2e18f275a4d2622416efcca14525c6e2a2aba"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-3/kept-attempts.json",
+      "sha256": "696e40dc235f7a465bbc1ce85dcba9a68876e867077b8376b55920f0273f876e"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-3/kept-cookies.jsonl",
+      "sha256": "7e5bda2c5f70d0a033b13a086fc8b0533cf9dfe6558e93bc9b054459dc39d4d2"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-3/plan.json",
+      "sha256": "3005a0b3e7fdb2ba8479c45674184f0a47efae21ee150b4f11293f8536466f67"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-4/kept-attempts.json",
+      "sha256": "c40b0ac4212ba1ee11ee953eb58067faca42107dc5b9313fad9d8ec9ee298d24"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-4/kept-cookies.jsonl",
+      "sha256": "d24f4be66f68f40dc931c5f30cb799d8200964f3028a796635aca98307316d74"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-4/plan.json",
+      "sha256": "15990895d5e63f88bed6a29f751a90704f4e473a2b9a704ce6361a0b6cf92e21"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-5/kept-attempts.json",
+      "sha256": "92e4f1d483dab3e05f2769313c91e60868be4d636b15f0cf6165ec3c059bceff"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-5/kept-cookies.jsonl",
+      "sha256": "ea9ee477dc778b394f230b471fee30a22792b7209d8823e5621a743bfdc74985"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-5/plan.json",
+      "sha256": "41a0db2cf081f70cb874d03ac8fb4027f5835e43ca8e03f8983e0ddb1723edb3"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-6/kept-attempts.json",
+      "sha256": "b717bc773a44138bb4bc2a1d4d69c9b3d79f02dd4e68174b486bc0ec7174c96a"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-6/kept-cookies.jsonl",
+      "sha256": "90e86b6cd0fdd5f10949a7e7023074b033bc486163883596e5ce4bb0d71baca4"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-6/plan.json",
+      "sha256": "1ba680d48457d17fe391315b1393522add1fc2e7ab1267532947f372206d2856"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-7/kept-attempts.json",
+      "sha256": "e0e23428a95004813e2df32cecc1d6d985e1bed3320756c73e235a5a2fa85f66"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-7/kept-cookies.jsonl",
+      "sha256": "43d36ef03701b7c8b9a9bafd5722fed104da9414ddb2256dc6250a0fe7c6e761"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-7/plan.json",
+      "sha256": "3d9d34fb6da8e00c30374c3590e67a81df5d10a5cf379e252787a778dab0e011"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-8/kept-attempts.json",
+      "sha256": "3ae4aa10a4f299754eabc53b73bb7562b8199ccb23121c68acaa2ab01bc6beee"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-8/kept-cookies.jsonl",
+      "sha256": "c7cb83207ad558350c8f5b91a338f181d8548a74a84ba6ca8ad8df8a357e4c30"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-8/plan.json",
+      "sha256": "37ac861ff2978abd38dd91cf8c828548b264bcdecfaf405d00b269d2ad45e4d8"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-9/kept-attempts.json",
+      "sha256": "ee3c18062b70c05ae50a1038f8943984afdb3d209b22775ce5c5f624a38f9d2e"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-9/kept-cookies.jsonl",
+      "sha256": "0ab0363bd058950139fc382080c31d83ac1a6e989e1448ce6f3047af576f6fe9"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-inputs/shard-9/plan.json",
+      "sha256": "80471fe95128056ce49a8806243cba2c6e63cc7ccf0df551e3961b0c9ad95132"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume-plan.json",
+      "sha256": "7ebee074e2e25300023b1d75ef82819446832a044779a6663f1d53351e653bf4"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/resume.json",
+      "sha256": "ecb80f777ec11efdcc1374bc5f39540f39c6d20078116edf88d308511818b6b9"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/rules.json",
+      "sha256": "6ec6f585ac957a31a784a192abf232e11a44038ee3f2648f43bf127ba45f68e2"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-1/attempts.json",
+      "sha256": "fac508b637f92eee532ff0886404117ad948c732240685916a0d35b13effd40b"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-1/cookies.jsonl",
+      "sha256": "94a0f55c920c4d187066eb61f6b2bbab1efb72558e2762d5cf20863aaa3d3e61"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-1/receipt.json",
+      "sha256": "c23b13b2a3f8b51cb781d2d62df68fccd4975a3c8c70ae8669cd26e9567784f9"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-1/visited.json",
+      "sha256": "336142674b1a1b95cd492d82abfb3245e49e9ab234f7a70802ce71994d9e1319"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-10/attempts.json",
+      "sha256": "1f1cc3bb00ca5d56606a838dd9e6169e74b5306bdead93a71a678a77bb463313"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-10/cookies.jsonl",
+      "sha256": "c7ad6fa72efef8c85007507a3c4d17f5e36ce5ef3e8e75f0377f8d12dceb678c"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-10/receipt.json",
+      "sha256": "4e5b0ba5dc000c5743488f4192432e41b184511446ca14c62e0503f0c6d86f20"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-10/started.json",
+      "sha256": "0be567691d98a41bacc3f97083ad566da99779f49446d74f21f1a44254727747"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-10/visited.json",
+      "sha256": "1273bd58c07aa0472b99f1afecb33f52b63a0a573b53bee92e99aea350caf346"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-11/attempts.json",
+      "sha256": "0e1b0963147f10c4f53fdddb4e4e0eeed217eea6108023a4a7089399d4e28688"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-11/cookies.jsonl",
+      "sha256": "128ebadf73e8efbad4ad3684db16976bfe999fe86e469b7918a6f72b0a8330eb"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-11/receipt.json",
+      "sha256": "34d35ed34e128f1610bfeb54b1028291fd98cf020aa317bd5d222122748aca4a"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-11/started.json",
+      "sha256": "24fda12c39c9c2dc64e54eb23d3c08465394f7cb81fc03d2e97b4d703f8a5421"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-11/visited.json",
+      "sha256": "c287ae7913e1a9ac05d8ba8d4cd69dfce7b78e1cc3cb251ed2499d3f0684ef07"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-12/attempts.json",
+      "sha256": "2d892bc02df9c5ed3477982263d00243b3ebe4b48882d346989aa11eeff8b040"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-12/cookies.jsonl",
+      "sha256": "e467ce70764e31a8f8f43a0228d93b6a22991690017500bf6a4aa79bc1f8977e"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-12/receipt.json",
+      "sha256": "404dec1fe33e9cd9fbbacd43d01106998c928cc8ab125a1dc6ab007ddcb6d7be"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-12/started.json",
+      "sha256": "5413bb774ad3491ac942dc5d1f03226fb49c22055f64b1863a07df0c33875c2b"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-12/visited.json",
+      "sha256": "a98b7761d5eb8cc4e6eff2f99e9a77598c946ab51be01fb714d1eb0106f87e62"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-13/attempts.json",
+      "sha256": "dcb6dccb9c21050e1adcfc15fe51770b1a8ee5ae6f06d9523a79015f09cb9d3d"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-13/cookies.jsonl",
+      "sha256": "bf119185e76f8c92836591069656d6a73535e0fc462de007984b6515f4e2428a"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-13/receipt.json",
+      "sha256": "29ff4dcafde0e6f8847367d0e8d2b3645c772825866b7210af040e60c2b4491b"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-13/started.json",
+      "sha256": "bab8ddff7e713954a973e548ba59a0b1d783e54fbd05fc3a432c6e81341fdc1b"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-13/visited.json",
+      "sha256": "f86d603e06fb5a4d72321ef9f94f9f48f4457ab55e9481024f2205b3c84c4145"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-14/attempts.json",
+      "sha256": "bedb0ef4ff68732430c922374e2b4b616e44723d551bf20dc0d76a8c1cd39d73"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-14/cookies.jsonl",
+      "sha256": "56d74bca3203827c8338f02a5896393bd5fbfe3eec897dd1a11e95c6b4d6f8bc"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-14/receipt.json",
+      "sha256": "f6c7b67dab50296090a7f30e9e1e4137f2099f5de99dc19695ed7e269d124d3f"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-14/started.json",
+      "sha256": "112651bc18354af51127e078875b8bbc87b83aae9d726917fc3698058d64ba65"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-14/visited.json",
+      "sha256": "8f25a71d758570288ad677c283e839d35350c9e2e4518a6b135bdc955e5022f4"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-15/attempts.json",
+      "sha256": "3bc2814528edf7a1a362c79b4c9e6557cb000b4854896256996bda21e17fe419"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-15/cookies.jsonl",
+      "sha256": "41ab5e26a192e43cdaae34d649a868d53090d3670cb4f7f953476dc20b853c2f"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-15/receipt.json",
+      "sha256": "7458b0a872cc13a5f970732b187fc510e4b9b00cb6ae98e202095dd6c2bc1de0"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-15/started.json",
+      "sha256": "a0dd62b91c7a763b6d6dcaf22b671b25c41821c2eb998aa5ed087d7fc43fee10"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-15/visited.json",
+      "sha256": "1f1c29444c99185871fe1e107450554873d072a197a8ce6cd90cc05464139025"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-16/attempts.json",
+      "sha256": "d33ed0857d7fd7d4f63d1354c0b7cccced72b28be57a91cd7d979cbae97a2f47"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-16/cookies.jsonl",
+      "sha256": "d12bca7d1a9a6f2ea41dac9ffd946dfbc50791a4880e14ff5c14b9a76566c96b"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-16/receipt.json",
+      "sha256": "1aa5297ba83fdd3951a6c493c8d485c29a4818c5023f3e1885e8fb370decee33"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-16/started.json",
+      "sha256": "e8e08c1fb34f6a428f0fd903cdda605e40aca9215170724bf772c2c47c4e39cb"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-16/visited.json",
+      "sha256": "ee29f326de69219dafb487a9159c6e5419ae633ccdc5a87b7dafdc305a977716"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-3/attempts.json",
+      "sha256": "455402db627d42f35490ab1c5d88a4b447a4bb290a4d7673a17db59315f57804"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-3/cookies.jsonl",
+      "sha256": "7e5bda2c5f70d0a033b13a086fc8b0533cf9dfe6558e93bc9b054459dc39d4d2"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-3/receipt.json",
+      "sha256": "0727604dc5107155d55229aa5de24a9186277cc476a9eb12a377cd0ef4f5108a"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-3/visited.json",
+      "sha256": "d484562a94e55cc79c68cd235fc6d0642611cac37f210d29da4f6ddb83931c65"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-4/attempts.json",
+      "sha256": "03489d271353db2c59531518da9dc5be6e475e969fdbeddb1fb6d4f727f5a056"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-4/cookies.jsonl",
+      "sha256": "d24f4be66f68f40dc931c5f30cb799d8200964f3028a796635aca98307316d74"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-4/receipt.json",
+      "sha256": "d88bb6f868b0291da0b74edf818ee41676b9205c387a90c22e82ab7fd5d897c2"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-4/visited.json",
+      "sha256": "4d42711e3b9d51f6629655540100d9002123dd1f0c9a921442b42ce7a9d5ca44"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-5/attempts.json",
+      "sha256": "7fa0bfd2049707cfa1115059e2377f7e5969b8d68d9a3c81ceadb4663450a13a"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-5/cookies.jsonl",
+      "sha256": "ea9ee477dc778b394f230b471fee30a22792b7209d8823e5621a743bfdc74985"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-5/receipt.json",
+      "sha256": "b6c2f8551c10110d5e8f1b0de29ae779f9f52c35878a2d94bd3a6b7a34fa14f7"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-5/visited.json",
+      "sha256": "ec3eb7909cdb65c18c258e3a40d285286521405957fdea2f4bdf37d0a647c77b"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-6/attempts.json",
+      "sha256": "36734e135e6b5dc505cb68996879e32b2d9d62a7dc13cfc7312dabaa3052b9cb"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-6/cookies.jsonl",
+      "sha256": "90e86b6cd0fdd5f10949a7e7023074b033bc486163883596e5ce4bb0d71baca4"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-6/receipt.json",
+      "sha256": "4720261df6ca010c25272e3cad6a11a07f689209b6180432ed01cc25d168ab00"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-6/visited.json",
+      "sha256": "8b8135bab2b9cf9bbbb85463b9fc0c04cbaaafa2287b0aa13ed8f294ad715a52"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-7/attempts.json",
+      "sha256": "c678880ffc9e20111c9c5e5583b7e75492d07bcb8a638454c8fb62f4dad6d6fc"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-7/cookies.jsonl",
+      "sha256": "43d36ef03701b7c8b9a9bafd5722fed104da9414ddb2256dc6250a0fe7c6e761"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-7/receipt.json",
+      "sha256": "9e4d2f8cbb756cc2e186e2d1fac904991ac9d7a7cb09b4a5a24b4a0b026c20e4"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-7/visited.json",
+      "sha256": "7405a4340c5ea57632672e799af4f3f70f9245a71e2f93b7a0255fe5886c80b3"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-8/attempts.json",
+      "sha256": "a6c80dbf146de1f5cfc6c44de3d987361b57b2431c4b04fedfbb3da5bb28d669"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-8/cookies.jsonl",
+      "sha256": "c7cb83207ad558350c8f5b91a338f181d8548a74a84ba6ca8ad8df8a357e4c30"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-8/receipt.json",
+      "sha256": "f4a16db105c3e9a14d0a58e35f80d90d5997f1556921a7286639830b9856364e"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-8/visited.json",
+      "sha256": "86548e0305646fd68be2e451f12a6484f1a765dd76f6b6b6e6b56e2001a37d0f"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-9/attempts.json",
+      "sha256": "ee970a2e5091ebd7ce03b0cb178a6a988ac39cf4c45f073046939cf136b8f7a9"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-9/cookies.jsonl",
+      "sha256": "0ab0363bd058950139fc382080c31d83ac1a6e989e1448ce6f3047af576f6fe9"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-9/receipt.json",
+      "sha256": "ebd761fb044d25553f1ddc84f553d3dbb25aa268fcaceea131940325d5bb09af"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-9/visited.json",
+      "sha256": "68fbd53ceeac8073b9bb399eb1f64bfe7a754cda6316af48b9cdedd5a18520c6"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/workflow.json",
+      "sha256": "446e1c4246f3e44912b6febab55d00be5804641c0e0223de5ae632625022ddc8"
+    },
+    {
+      "passed": true,
+      "path": "refresh/reference/OCD-LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "passed": true,
+      "path": "refresh/reference/feature_names.json",
+      "sha256": "9ad5daaa04eebd738d3ad75e1eb2ca72c4aafa9466ca45e9468a0b451d6b142d"
+    },
+    {
+      "passed": true,
+      "path": "refresh/reference/ocd-source.json",
+      "sha256": "80b17ecff2713381f70f701e31f87dee0be8b528c869362e5bced2346a943de0"
+    },
+    {
+      "passed": true,
+      "path": "refresh/reference/ocd.csv",
+      "sha256": "ed4836ea285719d77c7340582be68d355f7358edded50e6b96bb3139fc0eb8c0"
+    },
+    {
+      "passed": true,
+      "path": "refresh/reference/provenance.json",
+      "sha256": "257842e0504b6ba924d8bf4826796a8415927956b566fb1d43249375d89a049f"
+    },
+    {
+      "passed": true,
+      "path": "refresh/reference/seed.json",
+      "sha256": "1aa5171514df2296ce30f235d7f1fae6525d6e90bad9921375532a7bbfe5a626"
+    },
+    {
+      "passed": true,
+      "path": "refresh/reference/study-c2.meta.json",
+      "sha256": "d4b6249ef5cde11ba55db852233cb5e5c5e07ab4ac02e5d507ea3e8246b03d8a"
+    },
+    {
+      "passed": true,
+      "path": "refresh/reference/study-c2.onnx",
+      "sha256": "a4f3905c7f4ccbd061846e5e3e1c20a51a172daa37f31a8af16e7233e6be2a93"
+    },
+    {
+      "passed": true,
+      "path": "refresh/reference/study-lookup.json",
+      "sha256": "fee080df3aa7b03cda7c5fb4dd967fba2f597a96e64f3848a37c2ea0d62fb9ab"
+    },
+    {
+      "passed": true,
+      "path": "refresh/reference/study-membership.json",
+      "sha256": "c94786337ab0db407056f8a4f217742b0a166198eee120b827fed51dc84fe49f"
+    },
+    {
+      "passed": true,
+      "path": "refresh/reference/training-pool-2021.attribution.json",
+      "sha256": "2e0a8d13e1db7fa56cb4916ee08ba2ea0b1f4a7b7ec607cb4b6b558345e9827a"
+    },
+    {
+      "passed": true,
+      "path": "refresh/reference/v1-membership.json",
+      "sha256": "25a255a53fbe74c1e8cf3ff73bea12b3409b97adbd04e00d3bc3dc48d1a5afd8"
+    },
+    {
+      "passed": true,
+      "path": "refresh/state/crawled_domains.txt",
+      "sha256": "e80da4d3f11bd798c3b68f18f99eb60f6b52a34cf6d03745c663eea364b51b8b"
+    },
+    {
+      "passed": true,
+      "path": "refresh/training-source.json",
+      "sha256": "402723538359d84b43f83335047907e365023348977c87b53d1b0b2a683c1869"
+    }
+  ],
+  "grep": [
+    {
+      "check": "Forbidden contents/credential fields",
+      "exitCode": 1,
+      "matchingFiles": 0,
+      "passed": true
+    },
+    {
+      "check": "Forbidden contents/credential fields in decompressed training asset",
+      "exitCode": 1,
+      "matchingFiles": 0,
+      "passed": true
+    },
+    {
+      "check": "Credential and JWT signatures",
+      "exitCode": 1,
+      "matchingFiles": 0,
+      "passed": true
+    },
+    {
+      "check": "Credential and JWT signatures in decompressed training asset",
+      "exitCode": 1,
+      "matchingFiles": 0,
+      "passed": true
+    }
+  ],
+  "limitations": "Signature grep cannot prove absence of arbitrary unknown strings. Live shard cross-scans and fixed output schemas provide the cookie-content checks.",
+  "passed": true,
+  "scope": "all run/release deliverables, reference assets, exclusion state, release indexes, decompressed training asset and attribution",
+  "shardReceiptsPassed": true
+}
