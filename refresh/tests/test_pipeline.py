@@ -9,7 +9,7 @@ from unittest.mock import patch
 import numpy as np
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from common import ROOT, normalize_name, sha, structural, write_json, load
-from evaluate import paired, summary
+from evaluate import describe, paired, summary
 from gate import assess
 from lookup import Lookup, build_lookup
 from privacy_audit import check_file
@@ -76,6 +76,23 @@ class PipelineTests(unittest.TestCase):
         self.assertIsNone(empty['metrics']['balancedAccuracy']['estimate'])
         single = summary(np.array([0, 0]), [0, 0], ['a', 'b'], 42)
         self.assertIsNone(single['metrics']['balancedAccuracy']['lower'])
+
+    def test_nonempty_lookup_metrics_round_trip_through_json(self):
+        # Lookup comparisons against NumPy labels used to leave an np.int64 in
+        # labelDisagreements, crashing the first nonempty real baseline export.
+        labels = np.array([0, 1, 0, 1], dtype=np.int64)
+        predictions = np.array([0, 0, 0, 1], dtype=np.int64)
+        hits = [('raw', {'label': 0}), ('normalized', {'label': 0}), None, None]
+        result = describe(labels, predictions, [False, False, True, True], hits,
+                          np.array(['a', 'a', 'b', 'b']), 42)
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / 'evaluation.json'
+            write_json(path, result)
+            self.assertEqual(load(path), result)
+        self.assertEqual(result['lookup'], {
+            'hits': 2, 'hitRate': .5, 'hitAccuracy': .5, 'labelDisagreements': 1})
+        self.assertIs(type(result['lookup']['labelDisagreements']), int)
+        self.assertIs(type(result['lookup']['hitAccuracy']), float)
 
     def test_lookup_majority_ties_exact_and_pinned_prefix(self):
         with tempfile.TemporaryDirectory() as directory:

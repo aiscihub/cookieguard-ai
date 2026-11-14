@@ -97,7 +97,7 @@ def prepare():
     repo = action_only()
     event = load(Path(os.environ['GITHUB_EVENT_PATH']))
     inputs = event.get('inputs', {})
-    if inputs.get('resume_run'):
+    if inputs.get('resume_run') or inputs.get('evaluate_run'):
         raise ValueError('resume-cannot-prepare-new-frame')
     scheduled = os.environ['GITHUB_EVENT_NAME'] == 'schedule'
     sites, shards = int(inputs.get('sites', 10000)), int(inputs.get('shards', 16))
@@ -136,6 +136,8 @@ def resume(visited_prefix=None):
     """Verify a saved frame and stage a single resume; only later shard jobs may visit sites."""
     repo = action_only()
     inputs = load(Path(os.environ['GITHUB_EVENT_PATH'])).get('inputs', {})
+    if inputs.get('evaluate_run'):
+        raise ValueError('incompatible-recovery-inputs')
     source = run_id(inputs.get('resume_run'))
     overrides = prefixes(' '.join([inputs.get('visited_prefix', ''), *(visited_prefix or [])]))
     branch = 'refresh/resumes/' + source
@@ -169,6 +171,62 @@ def resume(visited_prefix=None):
     with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
         output.write('month=' + month + '\ndry_run=false\nshards=' + str(frame['shards']) +
                      '\nmatrix=' + json.dumps({'shard': pending}) + '\nhas_work=' + str(bool(pending)).lower() + '\n')
+
+
+def recover():
+    """Stage saved artifacts for evaluation; never reserve a frame or launch a crawler."""
+    repo = action_only()
+    inputs = load(Path(os.environ['GITHUB_EVENT_PATH'])).get('inputs', {})
+    if inputs.get('resume_run') or inputs.get('visited_prefix'):
+        raise ValueError('incompatible-recovery-inputs')
+    source = run_id(inputs.get('evaluate_run'))
+    frame_dir, shards_dir = source_paths(SOURCE)
+    frame, workflow = load(frame_dir / 'frame.json'), load(frame_dir / 'workflow.json')
+    month = frame['month']
+    reservation = reservation_branch(month, False)
+    remote = json.loads(gh('api', 'repos/' + repo + '/actions/runs/' + source))
+    if (remote.get('status') != 'completed' or remote.get('head_branch') != 'main' or
+        remote.get('path') != '.github/workflows/monthly-refresh.yml' or
+        remote.get('head_sha') != workflow.get('sourceCommit') or
+        not re.fullmatch(r'[0-9a-f]{40}', workflow.get('sourceCommit', '')) or
+        frame.get('dryRun') is not False or workflow.get('dryRun') is not False or
+        workflow.get('month') != month or type(workflow.get('firstRealRun')) is not bool or
+        workflow.get('reservationBranch') != reservation or
+        (frame_dir / 'frame.json').read_bytes() != reservation_bytes(repo, reservation)):
+        raise ValueError('evaluation-source-mismatch')
+    if RUN.exists():
+        raise ValueError('evaluation-output-already-exists')
+    RUN.mkdir(parents=True)
+    for name in ('frame.json', 'workflow.json', 'exclusions.txt', 'history-exclusions.txt', 'ranking.csv',
+                 'resume.json', 'resume-plan.json', 'RESUME_PLAN.md'):
+        if (frame_dir / name).exists():
+            shutil.copyfile(frame_dir / name, RUN / name)
+    # A resumed run carries completed shards in its frame artifact and emits only
+    # newly completed shards separately. Select whole directories, never mix files.
+    for shard in range(1, frame['shards'] + 1):
+        name = 'shard-' + str(shard)
+        folder = shards_dir / name
+        if not folder.exists():
+            folder = frame_dir / 'shards' / name
+        if folder.exists():
+            shutil.copytree(folder, RUN / 'shards' / name)
+        inherited = frame_dir / 'resume-inputs' / name
+        if inherited.exists():
+            shutil.copytree(inherited, RUN / 'resume-inputs' / name)
+    # Merge and the full privacy audit still validate every included receipt,
+    # digest and kept-prefix proof before any deliverable is uploaded or published.
+    current = git('rev-parse', 'HEAD')
+    first = workflow['firstRealRun'] or not any(e.get('kind') == 'monthly' and not e.get('dryRun')
+                                               for e in load(ROOT / 'data/releases/index.json')['releases'])
+    write_json(RUN / 'recovery.json', {'schemaVersion': 1, 'sourceRun': source,
+               'sourceCommit': workflow['sourceCommit'], 'evaluationCommit': current,
+               'frameSha256': sha(RUN / 'frame.json'), 'mode': 'evaluation-only'})
+    write_json(RUN / 'workflow.json', {**workflow, 'firstRealRun': first,
+                                     'sourceCommit': current, 'evaluateRun': source})
+    with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+        output.write('month=' + month + '\ndry_run=false\n')
+    with open(os.environ['GITHUB_ENV'], 'a') as output:
+        output.write('REFRESH_MONTH=' + month + '\n')
 
 
 def dataset_policy(gate, first):
@@ -235,14 +293,14 @@ def publish():
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('stage', choices=['prepare', 'resume', 'publish'])
+    parser.add_argument('stage', choices=['prepare', 'resume', 'recover', 'publish'])
     parser.add_argument('--visited-prefix', action='append', default=[])
     args = parser.parse_args()
     stage = args.stage
     if stage == 'resume':
         resume(args.visited_prefix)
     else:
-        {'prepare': prepare, 'publish': publish}[stage]()
+        {'prepare': prepare, 'recover': recover, 'publish': publish}[stage]()
     print(json.dumps({'stage': stage, 'completed': True}))
 
 if __name__ == '__main__':
