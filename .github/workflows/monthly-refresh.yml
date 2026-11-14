@@ -4,6 +4,10 @@ on:
     - cron: '0 2 1 * *'
   workflow_dispatch:
     inputs:
+      evaluate_run:
+        description: 'Evaluate saved artifacts only; no sampling or website visits'
+        type: string
+        default: ''
       resume_run:
         description: 'Resume a stopped real run; visit only sites not previously attempted'
         type: string
@@ -38,7 +42,7 @@ env:
   BROWSER_USE_DISABLE_EXTENSIONS: '1'
 jobs:
   frame:
-    if: github.ref == 'refs/heads/main' && github.run_attempt == 1 && inputs.resume_run == ''
+    if: github.ref == 'refs/heads/main' && github.run_attempt == 1 && inputs.resume_run == '' && inputs.evaluate_run == ''
     # Pinned: ubuntu-latest is moving to 26.04, where Playwright system dependencies can fail to install.
     runs-on: ubuntu-24.04
     timeout-minutes: 20
@@ -73,7 +77,7 @@ jobs:
           if-no-files-found: error
           retention-days: 90
   resume:
-    if: github.ref == 'refs/heads/main' && github.run_attempt == 1 && inputs.resume_run != ''
+    if: github.ref == 'refs/heads/main' && github.run_attempt == 1 && inputs.resume_run != '' && inputs.evaluate_run == ''
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     permissions:
@@ -214,7 +218,7 @@ jobs:
           retention-days: 90
   evaluate:
     needs: [frame, crawl, resume, resume_crawl]
-    if: always() && github.run_attempt == 1 && (needs.frame.result == 'success' || needs.resume.result == 'success')
+    if: always() && github.ref == 'refs/heads/main' && github.run_attempt == 1 && (needs.frame.result == 'success' || needs.resume.result == 'success' || (inputs.evaluate_run != '' && inputs.resume_run == ''))
     permissions:
       contents: read
       actions: read
@@ -223,6 +227,8 @@ jobs:
     timeout-minutes: 120
     env:
       REFRESH_MONTH: ${{ needs.resume.outputs.month || needs.frame.outputs.month }}
+    outputs:
+      dry_run: ${{ steps.recover.outputs.dry_run }}
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
@@ -245,13 +251,35 @@ jobs:
       - run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
       - run: python refresh/fetch_training.py
       - uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
+        if: inputs.evaluate_run == ''
         with:
           name: frame
           path: refresh/.work/run
       - uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
+        if: inputs.evaluate_run == ''
         with:
           pattern: shard-*
           path: refresh/.work/run/shards
+      - uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
+        if: inputs.evaluate_run != ''
+        with:
+          name: frame
+          path: refresh/.work/source/frame
+          run-id: ${{ inputs.evaluate_run }}
+          github-token: ${{ github.token }}
+      - uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
+        if: inputs.evaluate_run != ''
+        with:
+          pattern: shard-*
+          path: refresh/.work/source
+          run-id: ${{ inputs.evaluate_run }}
+          github-token: ${{ github.token }}
+      - name: Verify and stage saved artifacts for evaluation only
+        id: recover
+        if: inputs.evaluate_run != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python refresh/ci.py recover
       - run: node --test refresh/tests/core.test.mjs refresh/tests/network.test.mjs refresh/tests/shards.test.mjs
       - run: node --test refresh/tests/browser.test.mjs
       - run: python -m unittest discover -s refresh/tests -v
@@ -277,7 +305,7 @@ jobs:
           retention-days: 90
   publish:
     needs: [frame, resume, evaluate]
-    if: always() && needs.evaluate.result == 'success' && github.run_attempt == 1 && (needs.frame.outputs.dry_run == 'false' || needs.resume.outputs.dry_run == 'false')
+    if: always() && needs.evaluate.result == 'success' && github.run_attempt == 1 && (needs.frame.outputs.dry_run == 'false' || needs.resume.outputs.dry_run == 'false' || needs.evaluate.outputs.dry_run == 'false')
     # Pinned: ubuntu-latest is moving to 26.04, where Playwright system dependencies can fail to install.
     runs-on: ubuntu-24.04
     timeout-minutes: 15

@@ -4,6 +4,7 @@ import io
 import json
 import os
 import re
+import shutil
 import subprocess
 import yaml
 from pathlib import Path
@@ -272,6 +273,91 @@ class ResumeAuthorizationTests(unittest.TestCase):
         self.assertFalse(self.gh_calls)
         self.quiet.assert_not_called()
 
+class EvaluationRecoveryTests(unittest.TestCase):
+    def setUp(self):
+        temp = tempfile.TemporaryDirectory(prefix='evaluation-recovery-', dir=ROOT / 'refresh/.work')
+        self.addCleanup(temp.cleanup)
+        self.root = Path(temp.name)
+        original = make_run(self.root)
+        self.source, self.dest = self.root / 'source', self.root / 'evaluated'
+        shutil.copytree(original, self.source / 'frame')
+        for folder in list((self.source / 'frame/shards').iterdir()):
+            if folder.name not in {'shard-1', 'shard-3'}:
+                shutil.move(folder, self.source / folder.name)
+        self.frame = self.source / 'frame/frame.json'
+        self.reservation = self.frame.read_bytes()
+        self.remote = {'status': 'completed', 'head_branch': 'main',
+                       'path': '.github/workflows/monthly-refresh.yml', 'head_sha': 'a' * 40}
+        self.event = self.root / 'event.json'
+        write_json(self.event, {'inputs': {'evaluate_run': '43639821973'}})
+        self.stack = contextlib.ExitStack(); self.addCleanup(self.stack.close)
+        for target, value in [('ci.ROOT', self.root), ('ci.RUN', self.dest), ('ci.SOURCE', self.source)]:
+            self.stack.enter_context(patch(target, value))
+        self.stack.enter_context(patch('ci.action_only', return_value='fixture/repo'))
+        self.git = self.stack.enter_context(patch('ci.git', return_value='b' * 40))
+        self.gh = self.stack.enter_context(patch('ci.gh', side_effect=self.read_remote))
+        self.stack.enter_context(patch('ci.create_branch', side_effect=AssertionError('unexpected-remote-write')))
+        self.stack.enter_context(patch('ci.quiet', side_effect=AssertionError('unexpected-subprocess')))
+        self.stack.enter_context(patch.dict(os.environ, {'GITHUB_EVENT_PATH': str(self.event),
+            'GITHUB_OUTPUT': str(self.root / 'output.txt'), 'GITHUB_ENV': str(self.root / 'env.txt')}))
+
+    def read_remote(self, *args, **kwargs):
+        self.assertEqual(args[0], 'api')
+        if args[1] == 'repos/fixture/repo/actions/runs/43639821973':
+            return json.dumps(self.remote)
+        self.assertEqual(args[1], 'repos/fixture/repo/contents/refresh/reservation.json?ref=refresh/reservations/2026-11')
+        self.assertTrue(kwargs.get('raw'))
+        return self.reservation
+
+    def test_recovery_preserves_carried_shards_and_excludes_failed_rows_without_remote_writes(self):
+        before = {p.relative_to(self.source): sha(p) for p in self.source.rglob('*') if p.is_file()}
+        ci.recover()
+        self.git.assert_called_once_with('rev-parse', 'HEAD')
+        self.assertTrue(load(self.dest / 'workflow.json')['firstRealRun'])
+        self.assertEqual(load(self.dest / 'workflow.json')['sourceCommit'], 'b' * 40)
+        self.assertEqual(load(self.dest / 'recovery.json')['sourceCommit'], 'a' * 40)
+        self.assertEqual((self.root / 'env.txt').read_text(), 'REFRESH_MONTH=2026-11\n')
+        self.assertIn('dry_run=false', (self.root / 'output.txt').read_text())
+        manifest = do_merge(self.root, self.dest)
+        self.assertEqual((manifest['rows'], manifest['attempted']), (14, 140))
+        self.assertTrue({1, 3, 16} <= set(manifest['includedShards']))
+        self.assertEqual(manifest['excludedShards'], [
+            {'shard': 2, 'sites': 10, 'reasonCode': 'privacy-rejected'},
+            {'shard': 14, 'sites': 10, 'reasonCode': 'missing-shard'}])
+        self.assertTrue(receipt_audit(self.dest, manifest))
+        self.assertFalse((self.dest / 'shards/shard-2').exists())
+        self.assertEqual(before, {p.relative_to(self.source): sha(p) for p in self.source.rglob('*') if p.is_file()})
+        with self.assertRaisesRegex(ValueError, 'evaluation-output-already-exists'):
+            ci.recover()
+
+    def test_recovery_rejects_running_unrelated_or_changed_source(self):
+        for key, value in [('status', 'in_progress'), ('head_branch', 'other'),
+                           ('path', '.github/workflows/other.yml'), ('head_sha', 'c' * 40)]:
+            with self.subTest(field=key), patch.dict(self.remote, {key: value}):
+                with self.assertRaisesRegex(ValueError, 'evaluation-source-mismatch'):
+                    ci.recover()
+                self.assertFalse(self.dest.exists())
+        self.reservation += b'\n'
+        with self.assertRaisesRegex(ValueError, 'evaluation-source-mismatch'):
+            ci.recover()
+        self.assertFalse(self.dest.exists())
+
+    def test_recovery_rejects_conflicting_inputs_without_remote_calls(self):
+        for extra in [{'resume_run': '123'}, {'visited_prefix': '2=625'}, {'evaluate_run': '1;command'}]:
+            write_json(self.event, {'inputs': {'evaluate_run': '43639821973', **extra}})
+            with self.assertRaises(ValueError):
+                ci.recover()
+        self.gh.assert_not_called()
+        self.git.assert_not_called()
+        self.assertFalse(self.dest.exists())
+
+    def test_recovery_does_not_bypass_included_shard_digest_validation(self):
+        (self.source / 'shard-10/cookies.jsonl').write_text('[]\n')
+        ci.recover()
+        with self.assertRaisesRegex(ValueError, 'shard-digest-mismatch'):
+            do_merge(self.root, self.dest)
+        self.assertFalse((self.root / 'data/releases/2026-11').exists())
+
 class WorkflowTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -329,10 +415,32 @@ class WorkflowTests(unittest.TestCase):
             self.assertEqual(source['github-token'], '${{ github.token }}')
         for step in self.workflow['jobs']['evaluate']['steps']:
             if step.get('uses', '').startswith('actions/download-artifact@'):
-                self.assertNotIn('run-id', step['with'])
+                if step['if'] == "inputs.evaluate_run == ''":
+                    self.assertNotIn('run-id', step['with'])
+                else:
+                    self.assertEqual(step['if'], "inputs.evaluate_run != ''")
+                    self.assertEqual(step['with']['run-id'], '${{ inputs.evaluate_run }}')
+                    self.assertEqual(step['with']['github-token'], '${{ github.token }}')
         for job in ['crawl', 'resume_crawl']:
             seal = next(s for s in self.workflow['jobs'][job]['steps'] if 'refresh/seal.mjs' in s.get('run', ''))
             self.assertEqual(seal['if'], 'always()')
+
+    def test_evaluation_recovery_skips_all_collection_and_waits_for_verified_outputs(self):
+        context = {'github.ref': 'refs/heads/main', 'github.run_attempt': 1,
+                   'inputs.evaluate_run': '43639821973', 'inputs.resume_run': ''}
+        statuses = {'frame': 'skipped', 'crawl': 'skipped', 'resume': 'skipped',
+                    'resume_crawl': 'skipped', 'evaluate': 'success'}
+        for job in ['frame', 'crawl', 'resume', 'resume_crawl', 'publish']:
+            self.assertFalse(self.job_runs(job, context, statuses))
+        self.assertTrue(self.job_runs('evaluate', context, statuses))
+        context['needs.evaluate.outputs.dry_run'] = 'false'
+        self.assertTrue(self.job_runs('publish', context, statuses))
+        statuses['evaluate'] = 'failure'
+        self.assertFalse(self.job_runs('publish', context, statuses))
+        for extra in [{'github.run_attempt': 2}, {'github.ref': 'refs/heads/other'},
+                      {'inputs.resume_run': '123'}]:
+            self.assertFalse(self.job_runs('evaluate', {**context, **extra}, statuses))
+        self.assertEqual(self.workflow['jobs']['evaluate']['outputs']['dry_run'], '${{ steps.recover.outputs.dry_run }}')
 
     def test_actual_npm_retry_scripts_stop_on_success_and_after_three_failures(self):
         scripts = [step['run'] for job in ['crawl', 'resume_crawl', 'evaluate'] for step in self.workflow['jobs'][job]['steps']

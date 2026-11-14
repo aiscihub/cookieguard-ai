@@ -232,6 +232,16 @@ staging retains that snapshot and the ledger, and discards possibly torn export 
 shard exports its fixed failure receipt and ledger without rows. Both `npm ci` installs get up
 to three attempts in crawl, resume-crawl, and evaluate jobs.
 
+If collection has finished but evaluation failed, dispatch with `evaluate_run` set to the
+failed run ID. This path skips sampling, reservations, and every crawl job. It requires a
+completed main-branch monthly workflow and an exact match to the real monthly reservation.
+It preserves completed shards carried in the source frame, the separately saved shards,
+and all resume-prefix evidence. Merge still excludes failed shards and verifies included
+receipts, hashes, and privacy checks. Evaluation starts on a fresh working copy; the source
+artifacts stay unchanged. First-run dataset/model PRs remain drafts for owner review.
+Do not combine `evaluate_run` with `resume_run` or `visited_prefix`. Recovery retains the
+source run's real-run publication policy; `dry_run` is the new-frame option only.
+
 For resume, dispatch with `resume_run` set to the source run ID after owner review. Frame
 selection and ordinary crawl jobs are skipped. The workflow downloads that run's frame and
 shard artifacts with `actions: read`, checks the frame byte-for-byte against the real monthly

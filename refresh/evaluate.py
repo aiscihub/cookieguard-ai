@@ -107,8 +107,8 @@ def describe(y, prediction, unseen, hits, clusters, seed):
         "natural": summary(y, prediction, clusters, seed),
         "unseenNames": summary(y[unseen], prediction[unseen], clusters[unseen], seed),
         "lookup": {"hits": len(matched), "hitRate": len(matched) / len(y) if len(y) else None,
-                   "hitAccuracy": sum(h[1]["label"] == y[i] for i, h in matched) / len(matched) if matched else None,
-                   "labelDisagreements": sum(h[1]["label"] != y[i] for i, h in matched)},
+                   "hitAccuracy": sum(int(h[1]["label"] == y[i]) for i, h in matched) / len(matched) if matched else None,
+                   "labelDisagreements": sum(int(h[1]["label"] != y[i]) for i, h in matched)},
     }
 
 def main():
