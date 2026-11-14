@@ -1,19 +1,30 @@
 {
-  "schemaVersion": 1,
   "releases": [
     {
-      "id": "2026-11-study",
+      "createdAt": "2026-11-14T21:54:01.426596+00:00",
+      "dryRun": false,
+      "id": "2026-11",
+      "kind": "monthly",
       "month": "2026-11",
-      "kind": "study",
-      "title": "November 2026 study",
+      "path": "data/releases/2026-11/",
+      "rows": 7542,
+      "sites": 309,
+      "title": "Monthly observations \u2014 2026-11"
+    },
+    {
       "createdAt": "2026-11-13T00:00:00Z",
+      "csv": "data/cookies-2026.csv",
+      "dryRun": false,
+      "id": "2026-11-study",
+      "jsonl": "data/cookies-2026.jsonl",
+      "kind": "study",
+      "month": "2026-11",
+      "path": "data/",
+      "readme": "data/README.md",
       "rows": 16571,
       "sites": 788,
-      "dryRun": false,
-      "path": "data/",
-      "csv": "data/cookies-2026.csv",
-      "jsonl": "data/cookies-2026.jsonl",
-      "readme": "data/README.md"
+      "title": "November 2026 study"
     }
-  ]
+  ],
+  "schemaVersion": 1
 }

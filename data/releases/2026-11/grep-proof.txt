@@ -1,0 +1,16 @@
+Output privacy grep (actual local commands; matches are never printed)
+
+Forbidden contents/credential fields
+rg --text --ignore-case --files-with-matches -- '"(value|cookieValue|rawValue|authorization|password|api[_-]?key|access[_-]?token|refresh[_-]?token)"\\s*:' <inventoried output files>
+exit=1; matching files=0
+
+gzip -cd training-pool-2021.jsonl.gz | rg --text --ignore-case --files-with-matches -- '"(value|cookieValue|rawValue|authorization|password|api[_-]?key|access[_-]?token|refresh[_-]?token)"\\s*:'
+exit=1; matching streams=0
+
+Credential and JWT signatures
+rg --text --ignore-case --files-with-matches -- '(ph[ctx]_[A-Za-z0-9_-]{20,}|(?:gh[pousr]_|github_pat_)[A-Za-z0-9_]{20,}|sk-(?:proj-)?[A-Za-z0-9_-]{20,}|AKIA[0-9A-Z]{16}|-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----)|eyJ[A-Za-z0-9_-]{8,}\\.[A-Za-z0-9_-]{8,}\\.[A-Za-z0-9_-]{8,}' <inventoried output files>
+exit=1; matching files=0
+
+gzip -cd training-pool-2021.jsonl.gz | rg --text --ignore-case --files-with-matches -- '(ph[ctx]_[A-Za-z0-9_-]{20,}|(?:gh[pousr]_|github_pat_)[A-Za-z0-9_]{20,}|sk-(?:proj-)?[A-Za-z0-9_-]{20,}|AKIA[0-9A-Z]{16}|-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----)|eyJ[A-Za-z0-9_-]{8,}\\.[A-Za-z0-9_-]{8,}\\.[A-Za-z0-9_-]{8,}'
+exit=1; matching streams=0
+Overall passed=True
