@@ -1,0 +1,11 @@
+numpy==1.26.4
+scikit-learn==1.5.2
+onnx==1.16.2
+onnxruntime==1.19.2
+skl2onnx==1.17.0
+PyYAML==6.0.2
+scipy==1.13.1
+protobuf==6.33.6
+onnxconverter-common==1.16.0
+joblib==1.5.3
+threadpoolctl==3.7.0

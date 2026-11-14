@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "releases": [
+    {
+      "id": "2026-11-study",
+      "month": "2026-11",
+      "kind": "study",
+      "title": "November 2026 study",
+      "createdAt": "2026-11-13T00:00:00Z",
+      "rows": 16571,
+      "sites": 788,
+      "dryRun": false,
+      "path": "data/",
+      "csv": "data/cookies-2026.csv",
+      "jsonl": "data/cookies-2026.jsonl",
+      "readme": "data/README.md"
+    }
+  ]
+}

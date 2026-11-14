@@ -1,0 +1,11 @@
+{
+  "studyOnnxSha256": "a4f3905c7f4ccbd061846e5e3e1c20a51a172daa37f31a8af16e7233e6be2a93",
+  "productionMembershipBasis": "conservative full supplied training-source name union, including validation; exact exported-model fit membership was not recorded",
+  "productionOnnxSha256": "6820daa4cb8df4e56d96c6fbf92252b4591d73f6edc1645077ff74f1a54191c2",
+  "productionTrainingSourceSha256": "faae8b9564562f79a5389e3ef5fe3cf7b2123e4f0cc1179133e143aefc90f6e9",
+  "rulesMembershipBasis": "handwritten classifier; no fitted training pool",
+  "sourceScripts": [
+    "waicy_2026/name_knowledge/crawl.mjs",
+    "waicy_2026/name_knowledge/build_selection.py"
+  ]
+}

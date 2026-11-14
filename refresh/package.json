@@ -1,0 +1,8 @@
+{
+  "name": "cookieguard-monthly-refresh",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "tldts": "7.0.17"
+  }
+}
