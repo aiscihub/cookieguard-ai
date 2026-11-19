@@ -403,7 +403,7 @@ class WorkflowTests(unittest.TestCase):
             self.assertTrue(self.job_runs(job, context, statuses))
         self.assertFalse(self.job_runs('resume', context, statuses))
         self.assertFalse(self.job_runs('resume_crawl', context, statuses))
-        self.assertEqual(self.workflow['on']['schedule'][0]['cron'], '0 2 1 * *')
+        self.assertEqual(self.workflow['on']['schedule'][0]['cron'], '17 2 * * 1')
 
     def test_cross_run_downloads_are_authenticated_and_evaluation_uses_current_artifacts(self):
         config = self.workflow['jobs']['resume']

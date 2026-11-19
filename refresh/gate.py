@@ -52,7 +52,7 @@ def main():
               "modelSha256": meta["onnxSha256"], "evaluationSha256": sha(run / "evaluation.json")}
     write_json(run / "gate.json", result)
     lines = [
-        "# Monthly refresh report: " + manifest["month"], "",
+        "# Dataset refresh report: " + manifest["month"], "",
         "**LOCAL DRY RUN — no publication or promotion.**" if manifest["dryRun"] else "**Candidate artifacts only. Every model release requires human approval.**", "",
         "Tranco list: " + manifest["trancoListId"] + ". Attempted sites: " + str(manifest["attempted"]) +
         "; visited sites: " + str(manifest.get("visitedSites", "unavailable")) + "; usable sites: " + str(manifest["usableSites"]) + "; labeled cookies: " + str(manifest["rows"]) + ".", "",
@@ -101,9 +101,9 @@ def main():
               "that arbitrary unknown secrets are impossible.", "",
               "## 4. Training and provenance", "",
               "Training rows: " + str(meta["trainingRows"]) + "; normalized names: " + str(meta["trainingNames"]) +
-              "; threshold: " + format(meta["threshold"], ".2f") + ". No current-month refresh rows enter training or lookup construction.", "",
+              "; threshold: " + format(meta["threshold"], ".2f") + ". No current-period refresh rows enter training or lookup construction.", "",
               "C2: 150 trees, depth 12, minimum split 5, minimum leaf 2, balanced weights, random state 42. "
-              "Threshold selection holds out normalized names using the month seed, then refits on historical rows only.", "",
+              "Threshold selection holds out normalized names using the release-period seed, then refits on historical rows only.", "",
               "The v1 unseen-name membership conservatively includes all names in the supplied production training source "
               "(including validation); its exact historical fit membership was not recorded. Website declarations are "
               "proxy labels, and Cookiebot/OneTrust coverage is not representative of all websites.", "",
@@ -126,7 +126,7 @@ def main():
     (run / "REPORT.md").write_text(report)
     (release / "REPORT.md").write_text(report)
     (run / "candidate/MODEL_CARD.md").write_text(
-        "# CookieGuard monthly candidate: " + manifest["month"] + "\n\n"
+        "# CookieGuard candidate: " + manifest["month"] + "\n\n"
         "Status: " + ("gate-passing candidate awaiting human review" if result["eligibleForModelPR"] else "not eligible for release") + ".\n\n"
         "Use: optional cookie tracking classification research artifact. Authentication policy gates remain rule-driven. "
         "Binary labels represent site declarations; output scores are uncalibrated. No package default is changed.\n\n"

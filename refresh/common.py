@@ -7,6 +7,7 @@ import math
 import os
 from pathlib import Path
 import re
+from datetime import date, datetime, timedelta, timezone
 
 ROOT = Path(__file__).resolve().parent.parent
 os.environ.update(COOKIEGUARD_USAGE_METRICS="0", DO_NOT_TRACK="1", ORT_DISABLE_TELEMETRY="1")
@@ -63,9 +64,55 @@ def normalize_name(text):
         output.append("#" if mixed or hexy else piece)
     return re.sub(r"\d+", "0", "".join(output))
 
+def period_start(period):
+    """Read historical YYYY-MM releases and Monday-dated weekly releases."""
+    if not isinstance(period, str) or not re.fullmatch(r"\d{4}-(0[1-9]|1[0-2])(?:-\d{2})?", period):
+        raise ValueError("invalid-release-period")
+    try:
+        start = date.fromisoformat(period + "-01" if len(period) == 7 else period)
+    except ValueError:
+        raise ValueError("invalid-release-period") from None
+    if len(period) == 10 and start.weekday() != 0:
+        raise ValueError("weekly-release-must-start-monday")
+    return start
+
+
+def weekly_period(now=None):
+    now = now or datetime.now(timezone.utc)
+    if now.tzinfo is None:
+        raise ValueError("timezone-required")
+    day = now.astimezone(timezone.utc).date()
+    return (day - timedelta(days=day.weekday())).isoformat()
+
+
+def prior_period(candidate, current):
+    """Exclude overlapping monthly data as well as current/future weekly data."""
+    start = period_start(candidate)
+    if len(candidate) == 7:
+        end = date(start.year + 1, 1, 1) if start.month == 12 else date(start.year, start.month + 1, 1)
+    else:
+        end = start + timedelta(days=7)
+    return end <= period_start(current)
+
+
+def historical_releases(root, current):
+    period_start(current)
+    paths = []
+    for path in Path(root).iterdir() if Path(root).exists() else []:
+        if not path.is_dir():
+            continue
+        try:
+            prior = prior_period(path.name, current)
+        except ValueError:
+            continue
+        if prior:
+            paths.append(path)
+    return sorted(paths, key=lambda p: (period_start(p.name), p.name))
+
+
 def month_seed(month):
-    if not re.fullmatch(r"\d{4}-(0[1-9]|1[0-2])", month):
-        raise ValueError("invalid-month")
+    # Keep the CLI/JSON name for compatibility with saved monthly artifacts.
+    period_start(month)
     return int(month.replace("-", ""))
 
 def label(row):

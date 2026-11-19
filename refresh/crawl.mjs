@@ -102,7 +102,7 @@ export async function oneSite(browser, item, frame, guard) {
         expirationDate: cookie.expires > 0 ? cookie.expires : undefined };
       const features = engine.extractFeatures(mapped, { currentDomain: registrable(item.domain) });
       rows.push({
-        crawl: 'monthly', rank: item.rank, cmp: found.family,
+        crawl: frame.month.length === 10 ? 'weekly' : 'monthly', rank: item.rank, cmp: found.family,
         declaredCategory: matched.category, declaredGroup: matched.group,
         name: cookie.name, normalizedName: normalizeName(cookie.name), domain: cleanDomain(cookie.domain),
         path: cookie.path, label: matched.label, secure: cookie.secure, httpOnly: cookie.httpOnly,

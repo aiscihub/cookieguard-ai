@@ -1,7 +1,8 @@
-name: Monthly cookie dataset and candidate refresh
+name: Weekly cookie dataset and candidate refresh
 on:
   schedule:
-    - cron: '0 2 1 * *'
+    # Mondays at 02:17 UTC; avoid the busy top of the hour.
+    - cron: '17 2 * * 1'
   workflow_dispatch:
     inputs:
       evaluate_run:
@@ -31,6 +32,7 @@ on:
 permissions:
   contents: read
 concurrency:
+  # Keep the concurrency key shared with the historical monthly workflow.
   group: monthly-refresh
   cancel-in-progress: false
 env:
@@ -280,7 +282,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: python refresh/ci.py recover
-      - run: node --test refresh/tests/core.test.mjs refresh/tests/network.test.mjs refresh/tests/shards.test.mjs
+      - run: node --test refresh/tests/core.test.mjs refresh/tests/periods.test.mjs refresh/tests/network.test.mjs refresh/tests/shards.test.mjs
       - run: node --test refresh/tests/browser.test.mjs
       - run: python -m unittest discover -s refresh/tests -v
       - run: python refresh/merge.py

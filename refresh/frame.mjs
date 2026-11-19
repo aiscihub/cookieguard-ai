@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { args, die, monthSeed, ROOT, sha, writeAtomic, writeJSON } from './common.mjs';
+import { args, die, monthSeed, weeklyPeriod, ROOT, sha, writeAtomic, writeJSON } from './common.mjs';
 
 export function parseRanking(csv) {
   const items = [], ranks = new Set(), seen = new Set();
@@ -51,7 +51,7 @@ export async function main() {
     state: { type: 'string', default: 'refresh/state/crawled_domains.txt' },
     csv: { type: 'string' }, 'list-id': { type: 'string' }, 'dry-run': { type: 'boolean', default: false }
   });
-  const month = a.month || new Date().toISOString().slice(0, 7), seed = monthSeed(month);
+  const month = a.month || weeklyPeriod(), seed = monthSeed(month);
   const sites = Number(a.sites), shards = Number(a.shards), out = resolve(a.out);
   if (!Number.isInteger(sites) || sites < 1 || sites > 10000 ||
       !Number.isInteger(shards) || shards < 1 || shards > 16 || shards > sites) throw new Error('invalid-size');

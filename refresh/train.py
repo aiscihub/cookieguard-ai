@@ -1,4 +1,4 @@
-"""Fit fixed C2 settings using historical months only. No monthly test-driven selection."""
+"""Fit fixed C2 settings using historical periods only. No current-period test-driven selection."""
 from __future__ import annotations
 import argparse
 import importlib.metadata
@@ -11,17 +11,19 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import GroupShuffleSplit
 from skl2onnx import convert_sklearn
 from skl2onnx.common.data_types import FloatTensorType
-from common import ROOT, die, label, load, month_seed, normalize_name, rows, sha, write_json
+from common import ROOT, historical_releases, die, label, load, month_seed, normalize_name, rows, sha, write_json
 from lookup import build_lookup
 
 def training_files(month, pool, release_root):
     files = [pool, ROOT / "data/cookies-2026.jsonl"]
-    for path in sorted(release_root.glob("????-??/cookies.jsonl")):
-        if path.parent.name < month:
-            manifest = load(path.parent / "manifest.json")
-            if manifest.get("dryRun") or not manifest.get("privacyPassed"):
-                continue
-            files.append(path)
+    for folder in historical_releases(release_root, month):
+        path = folder / "cookies.jsonl"
+        if not path.exists():
+            continue
+        manifest = load(folder / "manifest.json")
+        if manifest.get("dryRun") or not manifest.get("privacyPassed"):
+            continue
+        files.append(path)
     return files
 
 def main():
@@ -89,7 +91,7 @@ def main():
         "validation": {"seed": seed, "group": "normalizedName", "fraction": .2,
                        "fitRows": len(fit), "validationRows": len(validation), "balancedAccuracy": max(scores)[0],
                        "thresholdGrid": {"start": .05, "end": .95, "step": .01},
-                       "refit": "all historical rows after selecting threshold; current month never included"},
+                       "refit": "all historical rows after selecting threshold; current release period never included"},
         "inputs": [{"file": ("training-pool-2021.jsonl.gz" if path == a.pool else str(path.relative_to(ROOT))),
                     "sha256": sha(path)} for path in files],
         "baselineSha256": sha(a.run / "baseline.json"), "currentMonthExcluded": True,

@@ -8,7 +8,7 @@ import subprocess
 import sys
 import numpy as np
 import onnxruntime as ort
-from common import ROOT, die, label, load, month_seed, rows, sha, write_json
+from common import ROOT, historical_releases, die, label, load, month_seed, rows, sha, write_json
 from lookup import Lookup
 
 METRICS = ("balancedAccuracy", "precision", "recall")
@@ -151,7 +151,7 @@ def main():
         hit_map["production-v1"] = [None] * len(y)
         sources["production-v1"] = {"onnxSha256": sha(v1), "membershipBasis": provenance["productionMembershipBasis"]}
         sources["production-rules"] = {"engineSha256": sha(ROOT / "packages/core/vendor/engine.cjs")}
-        previous = sorted(path for path in (ROOT / "models/releases").glob("????-??") if path.name < a.month and (path / "meta.json").exists())
+        previous = [path for path in historical_releases(ROOT / "models/releases", a.month) if (path / "meta.json").exists()]
         if previous:
             pred, mask, hits, meta = load_candidate(previous[-1], records, x)
             predictions["previous-candidate"], unseen["previous-candidate"], hit_map["previous-candidate"] = pred, mask, hits

@@ -1,4 +1,4 @@
-"""Verify shard provenance and privacy receipts before exporting a monthly dataset."""
+"""Verify shard provenance and privacy receipts before exporting a dated dataset."""
 from __future__ import annotations
 import argparse
 from collections import Counter
@@ -138,7 +138,7 @@ def main():
         if kept.exists():
             shutil.rmtree(kept)
     (dest / "README.md").write_text(
-        "# CookieGuard monthly observations: " + frame["month"] + "\n\n"
+        "# CookieGuard " + ("weekly" if len(frame["month"]) == 10 else "monthly") + " observations: " + frame["month"] + "\n\n"
         + ("LOCAL DRY RUN. Not a published dataset or approved model.\n\n" if frame["dryRun"] else "")
         + str(stats["rows"]) + " labeled cookies from " + str(stats["sites"]) + " usable sites.\n\n"
         "Labels are website declarations, not independently verified tracking behavior. Only Cookiebot "
@@ -152,8 +152,8 @@ def main():
     )
     index_path = a.releases / "index.json"
     index = load(index_path) if index_path.exists() else {"schemaVersion": 1, "releases": []}
-    entry = {"id": frame["month"], "month": frame["month"], "kind": "monthly",
-             "title": "Monthly observations — " + frame["month"], "dryRun": frame["dryRun"],
+    entry = {"id": frame["month"], "month": frame["month"], "kind": "weekly" if len(frame["month"]) == 10 else "monthly",
+             "title": ("Weekly" if len(frame["month"]) == 10 else "Monthly") + " observations — " + frame["month"], "dryRun": frame["dryRun"],
              "rows": stats["rows"], "sites": stats["sites"], "createdAt": manifest["createdAt"],
              "path": "data/releases/" + frame["month"] + "/"}
     index["releases"] = [entry] + [e for e in index["releases"] if e["id"] != entry["id"]]
