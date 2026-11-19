@@ -18,9 +18,20 @@ export function writeAtomic(path, text) {
 }
 export const writeJSON = (path, data) => writeAtomic(path, JSON.stringify(data, null, 2) + '\n');
 export function args(options) { return parseArgs({ options }).values; }
+export function weeklyPeriod(now = new Date()) {
+  const day = new Date(now);
+  if (!Number.isFinite(day.getTime())) throw new Error('invalid-date');
+  day.setUTCHours(0, 0, 0, 0);
+  day.setUTCDate(day.getUTCDate() - (day.getUTCDay() + 6) % 7);
+  return day.toISOString().slice(0, 10);
+}
 export function monthSeed(month) {
-  if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(month)) throw new Error('invalid-month');
-  return Number(month.replace('-', ''));
+  // Legacy field name: accepts saved monthly IDs or a Monday-dated weekly ID.
+  if (typeof month !== 'string' || month.startsWith('0000-') || !/^\d{4}-(0[1-9]|1[0-2])(?:-\d{2})?$/.test(month)) throw new Error('invalid-release-period');
+  const date = new Date(month.length === 7 ? month + '-01T00:00:00Z' : month + 'T00:00:00Z');
+  if (!Number.isFinite(date.getTime()) || date.toISOString().slice(0, month.length) !== month
+      || (month.length === 10 && date.getUTCDay() !== 1)) throw new Error('invalid-release-period');
+  return Number(month.replaceAll('-', ''));
 }
 export function normalizeName(input) {
   return String(input).trim().toLowerCase().split(/([_.-])/).map(piece => {

@@ -99,11 +99,10 @@ class FixTests(unittest.TestCase):
                 return ''
             with patch('ci.ROOT', root), patch('ci.RUN', run), patch('ci.action_only', return_value='fixture/repo'), \
                  patch('ci.prior_reservations', return_value={'pilot.example'}), patch('ci.quiet', side_effect=quiet), \
-                 patch('ci.create_branch') as branch, patch('ci.git', return_value='a' * 40), patch('ci.datetime') as clock, \
+                 patch('ci.create_branch') as branch, patch('ci.git', return_value='a' * 40), patch('ci.weekly_period', return_value='2026-11-16') as clock, \
                  patch.dict(os.environ, {'GITHUB_EVENT_PATH': str(event), 'GITHUB_EVENT_NAME': 'workflow_dispatch', 'GITHUB_OUTPUT': str(output)}):
-                clock.now.return_value.strftime.return_value = '2026-11'
                 ci.prepare()
-            branch.assert_called_once_with('refresh/reservations/2026-11', ['refresh/reservation.json'])
+            branch.assert_called_once_with('refresh/reservations/2026-11-16', ['refresh/reservation.json'])
             self.assertNotIn('--dry-run', commands[-1])
 
     def test_dataset_publication_matrix_health_and_first_run_with_only_mocked_remote_calls(self):

@@ -10,7 +10,7 @@ import subprocess
 import sys
 import tempfile
 from datetime import datetime, timezone
-from common import ROOT, die, load, month_seed, sha, write_json
+from common import ROOT, die, load, month_seed, weekly_period, sha, write_json
 from health import assess_coverage, included_privacy_passed
 from resume import build_plan, prefixes, stage_plan, source_paths, run_id, plan_report
 
@@ -42,8 +42,10 @@ def gh(*args, **kwargs):
 def create_branch(branch, files):
     """Create a branch from origin/main using a private index; never switch this checkout."""
     action_only()
-    if not re.fullmatch(r'refresh/(?:reservations/\d{4}-\d{2}(?:-pilot)?|(?:data|model)/\d{4}-\d{2}|resumes/[1-9]\d{0,19})', branch):
+    if not re.fullmatch(r'refresh/(?:reservations/\d{4}-\d{2}(?:-\d{2})?(?:-pilot)?|(?:data|model)/\d{4}-\d{2}(?:-\d{2})?|resumes/[1-9]\d{0,19})', branch):
         raise ValueError('invalid-branch')
+    if not branch.startswith('refresh/resumes/'):
+        month_seed(branch.rsplit('/', 1)[1].removesuffix('-pilot'))
     with tempfile.TemporaryDirectory() as temp:
         # GitHub's official Actions bot; the numeric ID avoids attributing automation to another user.
         env = dict(os.environ, GIT_INDEX_FILE=str(Path(temp) / 'index'),
@@ -53,7 +55,7 @@ def create_branch(branch, files):
         git('read-tree', base, env=env)
         git('add', '--', *files, env=env)
         tree = git('write-tree', env=env)
-        commit = git('commit-tree', tree, '-p', base, env=env, data=('Monthly refresh: ' + branch + '\n').encode())
+        commit = git('commit-tree', tree, '-p', base, env=env, data=('Dataset refresh: ' + branch + '\n').encode())
         # GH_TOKEN is supplied by Actions only. Never embed it in arguments or remote URLs.
         # Empty expected ref forbids overwriting any existing branch, including reruns.
         git('-c', 'credential.helper=', '-c', 'credential.helper=!gh auth git-credential',
@@ -88,8 +90,9 @@ def prior_reservations(repo):
               '--jq', '.[].ref').splitlines()
     domains = set()
     for ref in refs:
-        if not re.fullmatch(r'refs/heads/refresh/reservations/\d{4}-\d{2}(?:-pilot)?', ref):
+        if not re.fullmatch(r'refs/heads/refresh/reservations/\d{4}-\d{2}(?:-\d{2})?(?:-pilot)?', ref):
             raise ValueError('invalid-reservation-ref')
+        month_seed(ref.rsplit('/', 1)[1].removesuffix('-pilot'))
         record = json.loads(reservation_bytes(repo, ref))
         domains.update(site['domain'] for site in record['frame'])
     return domains
@@ -105,7 +108,7 @@ def prepare():
     dry = False if scheduled else str(inputs.get('dry_run', 'true')).lower() == 'true'
     if not 1 <= shards <= 16 or not shards <= sites <= 10000:
         raise ValueError('invalid-size')
-    month = datetime.now(timezone.utc).strftime('%Y-%m')
+    month = weekly_period(datetime.now(timezone.utc))
     month_seed(month)
     # Check the owner's explicit asset approval before ranking downloads or site visits.
     quiet([sys.executable, 'refresh/fetch_training.py'])
@@ -124,7 +127,7 @@ def prepare():
     branch = reservation_branch(month, dry)
     shutil.copyfile(RUN / 'frame.json', ROOT / 'refresh/reservation.json')
     create_branch(branch, ['refresh/reservation.json'])
-    first = not any(e.get('kind') == 'monthly' and not e.get('dryRun')
+    first = not any(e.get('kind') in {'monthly', 'weekly'} and not e.get('dryRun')
                     for e in load(ROOT / 'data/releases/index.json')['releases'])
     write_json(RUN / 'workflow.json', {'month': month, 'dryRun': dry, 'firstRealRun': first,
                                      'reservationBranch': branch,
@@ -163,7 +166,7 @@ def resume(visited_prefix=None):
     write_json(ROOT / 'refresh/resume.json', record)
     # Empty expected ref is the atomic guard, including two resumes racing the read above.
     create_branch(branch, ['refresh/resume.json'])
-    first = workflow['firstRealRun'] or not any(e.get('kind') == 'monthly' and not e.get('dryRun')
+    first = workflow['firstRealRun'] or not any(e.get('kind') in {'monthly', 'weekly'} and not e.get('dryRun')
                                                for e in load(ROOT / 'data/releases/index.json')['releases'])
     write_json(RUN / 'resume.json', record)
     write_json(RUN / 'workflow.json', {**workflow, 'firstRealRun': first, 'sourceCommit': current, 'resumeRun': source})
@@ -217,7 +220,7 @@ def recover():
     # Merge and the full privacy audit still validate every included receipt,
     # digest and kept-prefix proof before any deliverable is uploaded or published.
     current = git('rev-parse', 'HEAD')
-    first = workflow['firstRealRun'] or not any(e.get('kind') == 'monthly' and not e.get('dryRun')
+    first = workflow['firstRealRun'] or not any(e.get('kind') in {'monthly', 'weekly'} and not e.get('dryRun')
                                                for e in load(ROOT / 'data/releases/index.json')['releases'])
     write_json(RUN / 'recovery.json', {'schemaVersion': 1, 'sourceRun': source,
                'sourceCommit': workflow['sourceCommit'], 'evaluationCommit': current,
@@ -276,7 +279,7 @@ def publish():
         body = RUN / (kind + '-pr.md')
         body.write_text(pr_body(kind, first, gate, (RUN / 'REPORT.md').read_text()))
         command = ['pr', 'create', '--repo', repo, '--base', 'main', '--head', branch,
-                   '--title', 'Monthly ' + kind + ' refresh: ' + month, '--body-file', str(body)]
+                   '--title', ('Weekly ' if len(month) == 10 else 'Monthly ') + kind + ' refresh: ' + month, '--body-file', str(body)]
         if first:
             command.append('--draft')
         if kind == 'data' and dataset_policy(gate, first)['label']:

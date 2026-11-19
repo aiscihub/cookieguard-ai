@@ -1,8 +1,38 @@
-# Monthly dataset and model refresh
+# Weekly dataset and candidate refresh
 
 Part A builds timestamped cookie datasets and optional model artifacts. It does not change
 the classifier shipped by any package. The implementation lives in this directory; the
 Actions workflow and small release-history section in `database.html` are the integration points.
+
+## Current weekly schedule
+
+The active workflow runs **every Monday at 02:17 UTC** (`17 2 * * 1`). Its
+filename remains `.github/workflows/monthly-refresh.yml` so existing run and
+artifact recovery links continue to work; the displayed workflow name is weekly.
+Manual dispatch, dry runs and saved-run recovery remain available.
+
+New frames, reservations and data/model release paths use the UTC Monday date
+of their week, such as `2026-11-16` and `2026-11-23`. A second real run in the
+same week cannot overwrite the first reservation. Historical `YYYY-MM` artifacts
+remain supported. The legacy JSON field and CLI option named `month` now hold
+this release-period identifier, which also determines the reproducible seed.
+Release-index entries distinguish `weekly` and historical `monthly` collections.
+
+The existing defaults remain 10,000 sites and 16 shards, with at most eight shard
+jobs at once. Robots checks, privacy/health gates, cumulative exclusions and
+human model review remain active. Reserved sites are excluded from later frames,
+including failures and unmerged releases. Weekly collection therefore extends
+coverage with new eligible sites; it is not a fixed panel of repeatedly visited
+sites. Insufficient eligible domains stops the frame rather than recycling them.
+
+Training and previous-candidate selection use only completed prior periods.
+A historical monthly period overlapping the current week is excluded until that
+month has ended; current and future weekly releases are also excluded. This
+keeps the existing separation of evaluation from training across both ID formats.
+The current change configures weekly execution; it does not by itself establish
+that a scheduled collection or its publication gates have succeeded.
+
+The checkpoint sections below preserve their original monthly dates and outcomes.
 
 ## 1. Checkpoint 1
 
@@ -50,7 +80,7 @@ upload on November 14, 2026: the gzip and its attribution sidecar are the releas
 | `gate.py` | Fixed gates, report, candidate model card; missing evidence fails promotion |
 | `privacy_audit.py` | Structural checks, actual grep, binary and decompressed scans, output hash inventory |
 | `ci.py` | Guarded Actions-only reservations and PR creation; no remote mutation in local execution |
-| `../.github/workflows/monthly-refresh.yml` | Monthly schedule and dispatch, 16 shards with at most eight running together |
+| `../.github/workflows/monthly-refresh.yml` | Weekly schedule and dispatch, 16 shards with at most eight running together |
 
 ## 3. Local setup and reproducibility
 
@@ -180,7 +210,7 @@ only in that test copy; the shipping bridge and package defaults are untouched. 
 preloads the candidate into the existing npm test command, avoiding inheritance into child
 CLI processes that verify telemetry opt-in behavior. Raw child logs are discarded.
 
-Training always excludes the current and future monthly releases, dry runs, and quarantined
+Training always excludes the current and future release periods, dry runs, and quarantined
 datasets. It includes the frozen 2021 pool and existing November study as historical inputs.
 The fixed forest has 150 trees, depth 12, minimum split 5, minimum leaf 2, balanced weights,
 and random state 42. A seeded 20% split holds out normalized names to select the threshold,
@@ -199,14 +229,14 @@ The workflow first refuses to proceed while the training asset's `uploadApproved
 false, and every job downloads the asset and rejects it unless its SHA-256 matches. Replace the
 asset only together with a new pinned digest. No personal API key is required.
 
-The schedule is `0 2 1 * *` (02:00 UTC on the first). Dispatch defaults to 10,000 sites,
+The schedule is `17 2 * * 1` (Mondays at 02:17 UTC). Dispatch defaults to 10,000 sites,
 16 shards, and dry run. Crawl jobs use concurrency four each, `max-parallel: 8`, and a
 300-minute job timeout. First attempts on `main` only are accepted.
 
 Before visiting sites, the workflow creates a durable reservation containing only the frame:
-`refresh/reservations/YYYY-MM-pilot` for a hosted dry run, or
-`refresh/reservations/YYYY-MM` for the real run. One pilot and one real run are allowed per
-month. Both kinds of prior reservation join the exclusion set before sampling, even if a run
+`refresh/reservations/YYYY-MM-DD-pilot` for a hosted dry run, or
+`refresh/reservations/YYYY-MM-DD` for the real run, using the UTC Monday date.
+One pilot and one real run are allowed per week. Historical monthly reservations remain valid. Both kinds of prior reservation join the exclusion set before sampling, even if a run
 failed or its dataset PR remains unmerged. The real run therefore excludes the pilot's domains
 without the pilot blocking the real reservation. Actions reruns remain prohibited. Do not
 delete reservations or rerun a crawl to recover a failed run. The local checkpoints did not
@@ -234,7 +264,7 @@ to three attempts in crawl, resume-crawl, and evaluate jobs.
 
 If collection has finished but evaluation failed, dispatch with `evaluate_run` set to the
 failed run ID. This path skips sampling, reservations, and every crawl job. It requires a
-completed main-branch monthly workflow and an exact match to the real monthly reservation.
+completed main-branch refresh workflow and an exact match to the real release-period reservation.
 It preserves completed shards carried in the source frame, the separately saved shards,
 and all resume-prefix evidence. Merge still excludes failed shards and verifies included
 receipts, hashes, and privacy checks. Evaluation starts on a fresh working copy; the source
