@@ -16,3 +16,6 @@ playwright-report/
 benchmarks/discovery/runs/
 benchmarks/auth-testing/runs/
 benchmarks/security-gate/.work/
+
+# The paper lives in the release repo
+/paper/

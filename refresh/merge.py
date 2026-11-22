@@ -147,7 +147,7 @@ def main():
         "The 38 numeric features include measurements of contents computed in memory.\n\n"
         + COMPARABILITY_NOTICE + "\n\n"
         + "\n".join(exclusion_report(manifest)) + "\n"
-        + "License: CC BY 4.0. Attribution: Avelyn Jing, CookieGuard AI cookie database, "
+        + "License: CC BY 4.0. Attribution: CookieGuard AI contributors, CookieGuard AI cookie database, "
         + frame["month"] + ". Ranking: Tranco " + frame["trancoListId"] + ".\n"
     )
     index_path = a.releases / "index.json"

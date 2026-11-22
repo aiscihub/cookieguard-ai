@@ -17,4 +17,4 @@ Publication requires at most 25% excluded sites. Health uses included shards onl
 |---|---:|---|
 | 2 | 625 | privacy-rejected |
 
-License: CC BY 4.0. Attribution: Avelyn Jing, CookieGuard AI cookie database, 2026-11. Ranking: Tranco Y897G.
+License: CC BY 4.0. Attribution: CookieGuard AI contributors, CookieGuard AI cookie database, 2026-11. Ranking: Tranco Y897G.

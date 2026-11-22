@@ -60,7 +60,7 @@ desktop Chrome user agent.
 ## License and attribution
 
 - The CookieGuard tables and the 2026 crawl rows: **CC BY 4.0**. Please cite:
-  *Avelyn Jing, CookieGuard AI cookie database, November 2026, https://aiscihub.github.io/cookieguard-ai/database.html*
+  *CookieGuard AI contributors, CookieGuard AI cookie database, November 2026, https://aiscihub.github.io/cookieguard-ai/database.html*
 - 2021 votes derive from the CookieBlock dataset: Bollinger, Kubicek, Cotrini, Basin,
   "Automating Cookie Consent and GDPR Violation Detection," USENIX Security 2022; Zenodo
   record 5838646; CC BY 4.0.
