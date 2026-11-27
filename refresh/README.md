@@ -259,8 +259,10 @@ protocol failure. Before each batch, `visited.json` records the frame's site IDs
 survives fail-closed and is included in the saved artifact. `checkpoint.json` is one atomic
 snapshot of the last checked attempts, rows, and privacy evidence. After cancellation, artifact
 staging retains that snapshot and the ledger, and discards possibly torn export files. A failed
-shard exports its fixed failure receipt and ledger without rows. Both `npm ci` installs get up
-to three attempts in crawl, resume-crawl, and evaluate jobs.
+shard exports its fixed failure receipt and ledger without rows. Both `npm ci` installs and the Chromium
+install get up to three attempts in crawl, resume-crawl, and evaluate jobs. Each Chromium attempt
+is stopped after 10 minutes, so a stalled package mirror leads to a retry instead of holding the
+job until its 5-hour limit.
 
 If collection has finished but evaluation failed, dispatch with `evaluate_run` set to the
 failed run ID. This path skips sampling, reservations, and every crawl job. It requires a
