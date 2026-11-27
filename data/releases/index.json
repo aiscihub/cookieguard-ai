@@ -1,6 +1,17 @@
 {
   "releases": [
     {
+      "createdAt": "2026-11-27T00:32:23.403215+00:00",
+      "dryRun": false,
+      "id": "2026-11-23",
+      "kind": "weekly",
+      "month": "2026-11-23",
+      "path": "data/releases/2026-11-23/",
+      "rows": 5875,
+      "sites": 248,
+      "title": "Weekly observations \u2014 2026-11-23"
+    },
+    {
       "createdAt": "2026-11-14T21:54:01.426596+00:00",
       "dryRun": false,
       "id": "2026-11",
