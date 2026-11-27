@@ -1,0 +1,549 @@
+{
+  "files": [
+    {
+      "passed": true,
+      "path": "data/releases/2026-11-23/README.md",
+      "sha256": "f2bfc1c1e8ed94b6f5ff068172ce955f40ec7259f60dacccfbb282d79ed8402e"
+    },
+    {
+      "passed": true,
+      "path": "data/releases/2026-11-23/REPORT.md",
+      "sha256": "80bb99bd7c1e632787575e75151c4d631b435f39994f9f957c14c1fb16b484ce"
+    },
+    {
+      "passed": true,
+      "path": "data/releases/2026-11-23/cookies.csv",
+      "sha256": "d85060bfa52831364de5c75cc806814e1b6f24d4cc00d5970175558583219f3c"
+    },
+    {
+      "passed": true,
+      "path": "data/releases/2026-11-23/cookies.jsonl",
+      "sha256": "3c958ee2f699986c7a4e2b214cc3bca3a8a9b6a12bd21a48ed44cbfbe23cb6f8"
+    },
+    {
+      "passed": true,
+      "path": "data/releases/2026-11-23/manifest.json",
+      "sha256": "a45a07d3e50bc43f72825cee8250c4361a1d00067758b2e4bd39e747f7616b79"
+    },
+    {
+      "passed": true,
+      "path": "data/releases/2026-11-23/stats.json",
+      "sha256": "0bd966f1bbfe4f859c769fe5acb3652a30f82bfc4175b56db77d46493a411475"
+    },
+    {
+      "passed": true,
+      "path": "data/releases/index.json",
+      "sha256": "62926179eaddcb2fd886f59fcbf0c1c3093bf1424f57d376d167423846062f91"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/inputs/training-pool-2021.attribution.json",
+      "sha256": "2e0a8d13e1db7fa56cb4916ee08ba2ea0b1f4a7b7ec607cb4b6b558345e9827a"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/inputs/training-pool-2021.jsonl.gz",
+      "sha256": "f90843ce3bd02287a6c89cba1d9cd2b840b1a16c15479294436055c7f09e3b6a"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/REPORT.md",
+      "sha256": "80bb99bd7c1e632787575e75151c4d631b435f39994f9f957c14c1fb16b484ce"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/baseline.json",
+      "sha256": "81ef1d27e52f8a861834503de8482c1b4412d6dcb802c6f335b50a923b42db86"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/browser-canary.json",
+      "sha256": "6fc4de9c0f4db14b12be7732cce5f9615deb5308d86d244529e196cc9c851e83"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/canaries.json",
+      "sha256": "7296eaf307ab9462b5ebb728b0edbb9375240ed53b431f0df90fa63da94c1745"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/candidate/MODEL_CARD.md",
+      "sha256": "8923ab699d213387ca1b6221fbb832b5c50025008c4818d43cf88d3cffdcb4ec"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/candidate/lookup.json",
+      "sha256": "54af011b28a6b291f36d8236c3156e50ebf151bb9fa79847d547ed3b58224149"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/candidate/membership.json",
+      "sha256": "94e72fdd0b8ebb3136cdb49cf860205ec82a7bdb12d7dd8abaac96262ddce21d"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/candidate/meta.json",
+      "sha256": "67efbeeebd56dbf37f9978c72a78aeb02b61151f14996bb5ac1485b873e10159"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/candidate/model.onnx",
+      "sha256": "3c73ff1db5938899c5b6d0de3884460d725a28279441fb4f3ad1a9823401cef0"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/candidate/parity.json",
+      "sha256": "515610adb3636df96f23bd53832cb5a44ba89a269970ab11173175954a9d5d50"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/evaluation.json",
+      "sha256": "8527292fe7886241596d380c072030cf488e9cd20a02b7e9c8862b427318565f"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/exclusions.txt",
+      "sha256": "e80da4d3f11bd798c3b68f18f99eb60f6b52a34cf6d03745c663eea364b51b8b"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/frame.json",
+      "sha256": "798cac7fa9d0ef5762af68469a2fbe6592ee1b8cb52fc9045675ada63412ba1c"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/gate.json",
+      "sha256": "234f40e996309317ad65c877c760d258efcc72a6d9f3335b89b0b4dad678df2b"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/history-exclusions.txt",
+      "sha256": "e80da4d3f11bd798c3b68f18f99eb60f6b52a34cf6d03745c663eea364b51b8b"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/merge.json",
+      "sha256": "a54a02b450d26f2d04c9b0307cfa7b159b74a51a58b9546f28a4c1159c4c0a06"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/ranking.csv",
+      "sha256": "8401c3d5dbad2a8c2f39065769ee6e0140726ff4a3a4cf48463efec7d84c794b"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/recovery.json",
+      "sha256": "8e8594ebfded2140bbc99b220713d8b1915b8cc643f878bdff53610e6c92d77d"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/rules.json",
+      "sha256": "331d01119265dbb6854cb0844fb07c56a468a5d58376f69d618db9d49ad44e33"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-1/attempts.json",
+      "sha256": "535aecabd599cd4ac5459f52d294e25f3dd77eabd6b940985cf92312022d34d4"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-1/cookies.jsonl",
+      "sha256": "d7b99baf59ed6505fedf5c4861fa1de2d1dd6c704c35a6b042dc556dbab9caad"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-1/receipt.json",
+      "sha256": "f85f45c3c52feed7277bd96e82de26b5f7f69d5a439dd166a3f202ae61253ca9"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-1/started.json",
+      "sha256": "d50ca432005a2d0d67efb7e3a8a66f87aa1769bf3c7fcfc78758e44274e533e8"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-1/visited.json",
+      "sha256": "ab3b879f4e863415b0a9aa0eb5ab5076fc6e263b7e31bee0e5a3ddd85cbd28ba"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-10/attempts.json",
+      "sha256": "24e0f8da9306119b9bed2ddade00d872a2345133b614cc73f8e93bc4145ae582"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-10/cookies.jsonl",
+      "sha256": "42aa00c4986b3cbda65b06647dae3365f774ba0559e52feb950d97126c08c6fb"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-10/receipt.json",
+      "sha256": "f1388034de5e77dd95a9ac7b81311fde55bc75f24109942fd70bea18289343cc"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-10/started.json",
+      "sha256": "3202d64ed3ad4e234a9ca5397cd66ab8c36021f72a02e34d55c5750ade0e1cee"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-10/visited.json",
+      "sha256": "5a31cd6e13c838bb3791c9bb4fab434bae85fbedff40794f6db3101d9a8dad26"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-11/attempts.json",
+      "sha256": "abe3ced1205e11d6e8bb9e39f9c1b2ba72d6af5c269935d2a8512ee3d29db7ca"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-11/cookies.jsonl",
+      "sha256": "a2d1f8768b7359e387ed4875d5a5e3bf93b51be9f2d49bd8abf24f400546987d"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-11/receipt.json",
+      "sha256": "02f4ca981bfda290a3fb42f3b3cae8b4a69b37bb8eeac1461707165a8d63759f"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-11/started.json",
+      "sha256": "6a12fe83fd941dc45ed25f78ab192dcde7d70df83f9e93a0c78d5b3df42026d4"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-11/visited.json",
+      "sha256": "ab15a0086ce2d74d0ace0571d4101aeb14af03e126d1cf8afa5500134483bd00"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-12/attempts.json",
+      "sha256": "0a8c04ccf974d5feba79fcfa663a6e2a8538d0e1df3efd86390e9b671fe6f2cf"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-12/cookies.jsonl",
+      "sha256": "c3edb1a566c18109c9e4eaac6464d483522c6fa83fb3194c616cef611d905fc3"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-12/receipt.json",
+      "sha256": "dc3f3b088d521b5fe96fdd91af99aef5a3eab95b498eb664934b6004e938adee"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-12/started.json",
+      "sha256": "9dd4f0cdd32a02e3b79dd927a7e3606b95f337271ad4d422e9ec11ee2c1664b3"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-12/visited.json",
+      "sha256": "b1b16321bb26900434906c82e29051e081132a0a3d62e2bd13f39a65263e24ff"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-13/attempts.json",
+      "sha256": "2976744628d6af20c46eb10ba00644ada17ca5790943cd41136455e57e19df00"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-13/cookies.jsonl",
+      "sha256": "48f3581e50a29b236fdb7f53065693cbe07415e3f5a5a10d391a7bc6c9935ee6"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-13/receipt.json",
+      "sha256": "dffae0e6f3c763b01cb13263a18f2ca44e1e43616decf749fbc909a73c51dad3"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-13/started.json",
+      "sha256": "afdbb3f2df93a0e025190fc6762789b915ef8a0a8a3cff3c1c7f51041331d0dc"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-13/visited.json",
+      "sha256": "eb6c8511e3410271c44d11537ce979830f88972299a1167da8f672d3df4c1bf0"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-14/attempts.json",
+      "sha256": "26638da7933d62eb49665b727ba4842fed71849b8a2b83ca8fc9d2557b4e9587"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-14/cookies.jsonl",
+      "sha256": "582201698b2cab955186f0581b1c2ecb44988e4a7cd81ab23b4b5b1c26622823"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-14/receipt.json",
+      "sha256": "40f4ea64c1ef6fba6ba6429d1c1ef118e8edafd4098f5fdfc0af8ce276061fb5"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-14/started.json",
+      "sha256": "b7dc4f69d49ac82e4eec52ea0b258a97cf2376984b7ebafa9c8056e8b14c7cdd"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-14/visited.json",
+      "sha256": "bcac9562762325a6cf0c5c7ee9f2a14f43f937969fcdae1679f33ee383c7a5db"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-15/attempts.json",
+      "sha256": "524e35094120c92e6e462056b1044760e10f30e0694bb8f443b02a800b4ca6cd"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-15/cookies.jsonl",
+      "sha256": "7095f9f42f2a0214a6156c85eca06b4eb5bf8a5155e79b370b8fcf4872475272"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-15/receipt.json",
+      "sha256": "c23ca243ae79d430b2145797fc2e05f0cd3cc9ebf5de862ed23f3851ee1ca53d"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-15/started.json",
+      "sha256": "f11cb7178c53dfc9aa8499a6531f31e6cdb85c480eea653bad756fa07e3efe4a"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-15/visited.json",
+      "sha256": "af9779b1059f050741154b52ff2be3ea4dc1b2f1958a6524e5d921b3e5e0c9db"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-16/attempts.json",
+      "sha256": "6b00254d24208111cf8e4ec26419083649cf162f97eb189525632507974d066e"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-16/cookies.jsonl",
+      "sha256": "a90b8cb670906d098a4bba59d7b7c6211bd73cd32dc28ac2738ef2f46262393a"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-16/receipt.json",
+      "sha256": "9da5756037c5eb1fbd70a09a2a9908db41a3e4e9e1dedb67ae96b2318d9f7ecd"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-16/started.json",
+      "sha256": "7e2bd256c491904b1cd2ac0380e41a6083c3a19e03727c5a512583b8f8582ee5"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-16/visited.json",
+      "sha256": "e44eee801ebea6d68f1cd4f1695b257af20626fd39ed483b1f7e0f73d74b00f8"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-2/attempts.json",
+      "sha256": "af7332885ce5c3adfe976319eb188a0e2b44bd241561140cb1c88d188a1165e7"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-2/cookies.jsonl",
+      "sha256": "abe412fe94f39ad66b0d7f87d2198ff8f7f5737bf6594805a0b1732294aa7c44"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-2/receipt.json",
+      "sha256": "c83bfb01c71e8fd233c127ee118cdb207089184614f616b245234f44a714ace6"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-2/started.json",
+      "sha256": "41fe2a99528aa23c51891f5a57526ca3516c045e804dd0a398138681895801b3"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-2/visited.json",
+      "sha256": "0d3759dd7de4031ed15eae35f7ad7926264fa2a326c414e44fa6c897daf2a0d4"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-4/attempts.json",
+      "sha256": "faf99577a3198240096ea13c89776b7e0d38a44c260e1cc638cfd8546dc6c24f"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-4/cookies.jsonl",
+      "sha256": "95b591389251c6c1774591c82b13cb979347dfe5deeecef2b99d1dc45af3fbc0"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-4/receipt.json",
+      "sha256": "116d53588370897e408fd54843e2c3f5ffc73eda7c11cf2fb8e578defedb4ef8"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-4/started.json",
+      "sha256": "7a6d8957d798ed46c5804fb8d7987a43de6122ac98d60354f64d350208679f92"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-4/visited.json",
+      "sha256": "333adcb4732045926f6747da2f0768789ecea81b3c7b1fe3f3974d21a1d865d3"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-8/attempts.json",
+      "sha256": "113e22b05db5002bc37788cba6b0f8752dda198a26610b7297b1f5538193d702"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-8/cookies.jsonl",
+      "sha256": "4591c4d911db526488857598f518fef2be6b7e25a40a313953629bca4ca6a367"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-8/receipt.json",
+      "sha256": "aa9d6b710cd265b9b11fa6016c216ca94939ed60a635505975965ad749be0fad"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-8/started.json",
+      "sha256": "4aee630b2ef0cbee7a81909a0ed1679b940d85e7c4efedbfbca7fa5c7e1eed08"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-8/visited.json",
+      "sha256": "f8fe5562961f97c858e590e8b8f3da65c74df28e3fb14c804aa36f9e1a45f4e3"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-9/attempts.json",
+      "sha256": "e0b24295421391aed78005330c1770bc39b4f69721e89d5c7223c8238f5b11f3"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-9/cookies.jsonl",
+      "sha256": "f772d38201e0a579bb9f9ecf2b2061226cc42940eebe27aa7e8beb3df23a4154"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-9/receipt.json",
+      "sha256": "c758b0f793645027c516f2e5908f51467b7b169c393b720ee0b2a7f52688de41"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-9/started.json",
+      "sha256": "e49be36ddccaf4141adc6dc23af1e5f105dac0c78befa69bde6bf48b2a0bdcc0"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/shards/shard-9/visited.json",
+      "sha256": "35c391706af3947e2afa566e6f3b1b3451f10e1d812dd9b43bdb21c25b9eed37"
+    },
+    {
+      "passed": true,
+      "path": "refresh/.work/run/workflow.json",
+      "sha256": "90fed2fd099ed2287d8017372cda694adf229c5ad439a519a0ff488fa7c7d7cd"
+    },
+    {
+      "passed": true,
+      "path": "refresh/reference/OCD-LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "passed": true,
+      "path": "refresh/reference/feature_names.json",
+      "sha256": "9ad5daaa04eebd738d3ad75e1eb2ca72c4aafa9466ca45e9468a0b451d6b142d"
+    },
+    {
+      "passed": true,
+      "path": "refresh/reference/ocd-source.json",
+      "sha256": "80b17ecff2713381f70f701e31f87dee0be8b528c869362e5bced2346a943de0"
+    },
+    {
+      "passed": true,
+      "path": "refresh/reference/ocd.csv",
+      "sha256": "ed4836ea285719d77c7340582be68d355f7358edded50e6b96bb3139fc0eb8c0"
+    },
+    {
+      "passed": true,
+      "path": "refresh/reference/provenance.json",
+      "sha256": "257842e0504b6ba924d8bf4826796a8415927956b566fb1d43249375d89a049f"
+    },
+    {
+      "passed": true,
+      "path": "refresh/reference/seed.json",
+      "sha256": "1aa5171514df2296ce30f235d7f1fae6525d6e90bad9921375532a7bbfe5a626"
+    },
+    {
+      "passed": true,
+      "path": "refresh/reference/study-c2.meta.json",
+      "sha256": "d4b6249ef5cde11ba55db852233cb5e5c5e07ab4ac02e5d507ea3e8246b03d8a"
+    },
+    {
+      "passed": true,
+      "path": "refresh/reference/study-c2.onnx",
+      "sha256": "a4f3905c7f4ccbd061846e5e3e1c20a51a172daa37f31a8af16e7233e6be2a93"
+    },
+    {
+      "passed": true,
+      "path": "refresh/reference/study-lookup.json",
+      "sha256": "fee080df3aa7b03cda7c5fb4dd967fba2f597a96e64f3848a37c2ea0d62fb9ab"
+    },
+    {
+      "passed": true,
+      "path": "refresh/reference/study-membership.json",
+      "sha256": "c94786337ab0db407056f8a4f217742b0a166198eee120b827fed51dc84fe49f"
+    },
+    {
+      "passed": true,
+      "path": "refresh/reference/training-pool-2021.attribution.json",
+      "sha256": "2e0a8d13e1db7fa56cb4916ee08ba2ea0b1f4a7b7ec607cb4b6b558345e9827a"
+    },
+    {
+      "passed": true,
+      "path": "refresh/reference/v1-membership.json",
+      "sha256": "25a255a53fbe74c1e8cf3ff73bea12b3409b97adbd04e00d3bc3dc48d1a5afd8"
+    },
+    {
+      "passed": true,
+      "path": "refresh/state/crawled_domains.txt",
+      "sha256": "229cfd082ba8d9af24d009de6a9560c9cb2f4f4d729752b7c47ecc10ecefa0ba"
+    },
+    {
+      "passed": true,
+      "path": "refresh/training-source.json",
+      "sha256": "402723538359d84b43f83335047907e365023348977c87b53d1b0b2a683c1869"
+    }
+  ],
+  "grep": [
+    {
+      "check": "Forbidden contents/credential fields",
+      "exitCode": 1,
+      "matchingFiles": 0,
+      "passed": true
+    },
+    {
+      "check": "Forbidden contents/credential fields in decompressed training asset",
+      "exitCode": 1,
+      "matchingFiles": 0,
+      "passed": true
+    },
+    {
+      "check": "Credential and JWT signatures",
+      "exitCode": 1,
+      "matchingFiles": 0,
+      "passed": true
+    },
+    {
+      "check": "Credential and JWT signatures in decompressed training asset",
+      "exitCode": 1,
+      "matchingFiles": 0,
+      "passed": true
+    }
+  ],
+  "limitations": "Signature grep cannot prove absence of arbitrary unknown strings. Live shard cross-scans and fixed output schemas provide the cookie-content checks.",
+  "passed": true,
+  "scope": "all run/release deliverables, reference assets, exclusion state, release indexes, decompressed training asset and attribution",
+  "shardReceiptsPassed": true
+}
