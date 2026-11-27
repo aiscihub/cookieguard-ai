@@ -34,7 +34,7 @@ test('isolated browser fixture exercises consent, reload, matching, 38 features 
   try {
     const guard = new PrivacyGuard();
     const result = await oneSite(fixtureBrowser, { rank: 1, domain: 'fixture.example', siteId: 'fixture', shard: 1 },
-                                 { trancoListId: 'FIXTURE' }, guard);
+                                 { month: '2026-11-23', trancoListId: 'FIXTURE' }, guard);
     assert.equal(result.status, 'usable');
     assert.equal(result.visited, true);
     assert.equal(result.robotsStatus, 'allowed');
@@ -42,6 +42,7 @@ test('isolated browser fixture exercises consent, reload, matching, 38 features 
     assert.equal(result.rows.length, 1);
     assert.equal(result.rows[0].features.length, 38);
     assert.equal(result.rows[0].label, 'tracker');
+    assert.equal(result.rows[0].crawl, 'weekly');
     assert.equal(result.rows[0].valueLength, contents.length);
     assert.equal(JSON.stringify(result).includes(contents), false);
     assert.doesNotThrow(() => guard.check(result));
