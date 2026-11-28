@@ -1,0 +1,111 @@
+.home-page main > section > .container { max-width: 736px; }
+.home-page .hero { padding: 52px 0 38px; }
+.home-page .hero h1 { margin-bottom: 22px; font-size: clamp(2rem, 4.2vw, 2.5rem); font-weight: 500; }
+.home-page .hero h1 em { display: block; margin-top: 6px; color: var(--secondary); font-size: .65em; font-style: normal; font-weight: 400; line-height: 1.4; }
+.home-page .hero .lede { margin-bottom: 24px; color: var(--ink); font-size: 1.125rem; line-height: 1.65; }
+.home-page .hero .alt { margin-top: 12px; color: var(--secondary); font-size: .875rem; }
+.home-page .hero .alt a { display: inline-flex; min-height: 36px; align-items: center; font-weight: 500; }
+.term {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  max-width: 540px;
+  padding: 8px 10px 8px 16px;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  background: var(--white);
+}
+.term .cmd { display: flex; align-items: baseline; gap: 9px; min-width: 0; font: .875rem/1.6 var(--mono); }
+.term .dollar { color: var(--muted); user-select: none; }
+.term .cmd code { overflow-x: auto; white-space: nowrap; user-select: all; }
+.term button {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 6px 10px;
+  background: var(--parchment);
+  color: var(--ink);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  font: 500 .75rem var(--sans);
+}
+.term button:hover { border-color: var(--navy); color: var(--navy); }
+.term button.done { background: var(--success-soft); color: var(--success); }
+
+.uses { padding: 0 0 44px; }
+.uses .section-kicker { margin-bottom: 22px; }
+.use-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+.use {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 24px;
+  color: var(--ink);
+  text-decoration: none;
+}
+.use:hover { color: var(--ink); text-decoration: none; }
+.use .top { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+.use h3 { margin-top: 2px; font-size: 1.625rem; font-weight: 500; }
+.use .who { color: var(--muted); font: .75rem/1.5 var(--mono); letter-spacing: .06em; text-transform: uppercase; }
+.use .media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  background: #f4f3ef;
+}
+.use .media img { width: 100%; height: 100%; object-fit: contain; }
+.use pre { margin-bottom: 18px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.use p { color: var(--secondary); font-size: .9375rem; line-height: 1.75; }
+.use .go {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-start;
+  margin-top: 16px;
+  min-height: 32px;
+  color: var(--navy);
+  font-size: .875rem;
+  font-weight: 500;
+}
+.use .go svg { width: 15px; height: 15px; transition: transform 180ms; }
+.use:hover .go { text-decoration: underline; text-underline-offset: .22em; }
+.use:hover .go svg { transform: translateX(3px); }
+
+.one-engine { padding-block: 44px; }
+.home-page main > .one-engine > .container { max-width: var(--content-width); }
+.engine-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; }
+.engine-grid > div:first-child { max-width: 672px; width: 100%; margin: 0 auto; border-top: 1px solid var(--rule); padding-top: 32px; }
+.engine-grid h2 { margin-top: 10px; }
+.engine-grid p { margin-top: 12px; color: var(--secondary); }
+.nums { margin-top: 24px; }
+.num { padding: 14px; }
+.num .n { font-size: clamp(1.6rem, 3vw, 2rem); }
+.num .t { font-size: .8125rem; }
+.engine-grid > figure { min-width: 0; margin: 0; }
+.engine-grid > figure .diagram-hint a { color: var(--navy); }
+
+.more { padding-block: 24px 40px; }
+.more .section-kicker { margin-bottom: 20px; }
+.more-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.more .card { display: flex; gap: 12px; padding: 22px; }
+.more .card > div { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; }
+.more .card h3 { margin: 8px 0; font-size: 1.35rem; }
+.more .card p { color: var(--secondary); font-size: .875rem; margin-bottom: 16px; }
+.more .btn { margin-top: auto; font-size: .8125rem; }
+@media (max-width: 700px) {
+  .home-page .hero { padding: 34px 0 30px; }
+  .home-page .hero .lede { font-size: 1.0625rem; }
+  .uses { padding-bottom: 20px; }
+  .use { padding: 18px; }
+  .use h3 { font-size: 1.45rem; }
+  .one-engine { padding-block: 30px; }
+  .more-grid { grid-template-columns: minmax(0, 1fr); }
+}

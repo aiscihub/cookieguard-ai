@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>CookieGuard AI</title>
 <meta name="description" content="Deterministic cookie security, on your device. A Chrome extension for people, dev tools for CI and MCP, and a gate for AI browser agents. One engine, three ways to use it.">
 <meta property="og:title" content="CookieGuard AI">
@@ -10,88 +10,66 @@
 <meta property="og:image" content="https://aiscihub.github.io/cookieguard-ai/resource/social-preview.png">
 <link rel="icon" type="image/png" sizes="48x48" href="extension-standalone/icons/icon48.png">
 <link rel="icon" type="image/png" sizes="128x128" href="extension-standalone/icons/icon128.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=Public+Sans:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="resource/site/alexandria.css">
-<style>
-.hero { padding: 64px 0 40px; }
-.hero h1 { margin: 18px 0 14px; max-width: 820px; }
-.hero .lede { margin-bottom: 28px; }
-.hero .alt { margin-top: 12px; font-size: 13.5px; color: var(--on-surface-variant); }
-
-.uses { padding: 24px 0 56px; }
-.use-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-.use { display: flex; flex-direction: column; padding: 22px 22px 20px; transition: background .2s; min-width: 0; }
-.use:hover { background: var(--surface-low); text-decoration: none; }
-.use .top { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
-.use h2 { font-size: 22px; color: var(--on-surface); }
-.use .who { font-family: var(--label); font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--on-surface-variant); }
-.use p { color: var(--on-surface-variant); font-size: 14px; margin-bottom: 16px; }
-.use .media { border-radius: var(--r-xl); overflow: hidden; background: var(--surface-container); margin-bottom: 16px; aspect-ratio: 16 / 10; display: flex; align-items: center; justify-content: center; }
-.use .media img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
-.use .media.cream { background: #F6F2EA; }
-.use .media.cream img { object-fit: contain; object-position: center; }
-.use pre.code { margin-bottom: 16px; min-height: 190px; font-size: 11.5px; white-space: pre-wrap; word-break: break-word; }
-.use .go { margin-top: auto; display: inline-flex; align-items: center; gap: 6px; font-family: var(--label); font-weight: 600; font-size: 14px; color: var(--primary); }
-.use .go svg { width: 16px; height: 16px; transition: transform .2s; }
-.use:hover .go svg { transform: translateX(3px); }
-@media (max-width: 900px) { .use-grid { grid-template-columns: 1fr; } .use .media { aspect-ratio: auto; } .use pre.code { min-height: 0; padding: 16px; } }
-
-.one-engine { padding: 48px 0; background: var(--surface-low); }
-.engine-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 36px; align-items: center; }
-.engine-grid p { color: var(--on-surface-variant); margin-top: 10px; }
-.engine-grid .diagram { background: #F9F9F8; border-radius: var(--r-xl); padding: 8px; overflow-x: auto; }
-@media (max-width: 600px) { .engine-grid .diagram img { min-width: 900px; } }
-.nums { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 28px; }
-.num { padding: 16px 18px; background: var(--surface-lowest); border-radius: var(--r-xl); }
-.num .n { font-family: var(--headline); font-size: 28px; line-height: 1.1; font-variant-numeric: tabular-nums; }
-.num .n.gold { color: var(--tertiary); }
-.num .t { margin-top: 4px; font-size: 12.5px; color: var(--on-surface-variant); }
-@media (max-width: 900px) { .engine-grid { grid-template-columns: 1fr; } .nums { grid-template-columns: repeat(2, 1fr); } }
-
-.more { padding: 56px 0; }
-.more-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-.more .card { padding: 24px 26px; display: flex; gap: 18px; align-items: flex-start; }
-.more .card h3 { margin-bottom: 6px; }
-.more .card p { color: var(--on-surface-variant); font-size: 14px; margin-bottom: 12px; }
-@media (max-width: 760px) { .more-grid { grid-template-columns: 1fr; } }
-</style>
+<meta name="theme-color" content="#f9f9f8">
+<script src="resource/site/site.js"></script>
+<link rel="stylesheet" href="resource/site/fonts.css">
+<link rel="stylesheet" href="resource/site/editorial.css">
+<link rel="stylesheet" href="resource/site/home.css">
 </head>
-<body>
-<header class="site-header"><div class="container bar">
-  <a href="./" class="brand"><img src="extension-standalone/icons/icon128.png" alt=""> CookieGuard AI</a>
-  <nav class="site-nav">
-    <a href="extension.html">Extension</a>
-    <a href="agents.html#get-started">Dev tools</a>
-    <a href="agents.html">Browser agents</a>
-    <a href="database.html">Database</a>
-    <a href="report.html">Research</a>
-    <a href="https://github.com/aiscihub/cookieguard-ai" target="_blank" rel="noopener" class="keep">GitHub</a>
-  </nav>
-</div></header>
+<body class="home-page">
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="./" class="brand" aria-label="CookieGuard AI — Home">
+      <img src="extension-standalone/icons/icon128.png" width="32" height="32" alt="">
+      <span class="brand-text"><span>CookieGuard AI</span><span class="brand-role">Browser privacy &amp; security</span></span>
+    </a>
+    <nav class="site-nav" aria-label="Main navigation">
+      <a href="./" data-navigation="home" aria-current="page">Home</a>
+      <a href="extension.html" data-navigation="extension">Extension</a>
+      <a href="agents.html#get-started" data-navigation="dev">Dev tools</a>
+      <a href="agents.html" data-navigation="agents">Browser agents</a>
+      <a href="database.html" data-navigation="database">Database</a>
+      <a href="report.html" data-navigation="research">Research</a>
+    </nav>
+    <a class="source-link" href="https://github.com/aiscihub/cookieguard-ai" target="_blank" rel="noopener">GitHub <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M13 5h6v6M19 5l-9 9M19 14v5H5V5h5"/></svg></a>
+  </div>
+</header>
+<nav class="mobile-nav" aria-label="Mobile navigation">
+  <div class="mobile-nav-inner">
+    <a href="./" data-navigation="home" aria-current="page" aria-label="Home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m3 10 9-7 9 7v10H3z"/><path d="M9 20v-7h6v7"/></svg><span>Home</span></a>
+    <a href="extension.html" data-navigation="extension" aria-label="Extension"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01"/><path d="M8 14h8M8 17h6"/></svg><span>Extension</span></a>
+    <a href="agents.html#get-started" data-navigation="dev" aria-label="Dev tools"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m7 9 3 3-3 3m6 0h4"/></svg><span>Dev tools</span></a>
+    <a href="agents.html" data-navigation="agents" aria-label="Browser agents"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4" y="7" width="16" height="13" rx="3"/><path d="M12 3v4M8 11h.01M16 11h.01M9 16h6M2 13v3M22 13v3"/></svg><span>Agents</span></a>
+    <a href="database.html" data-navigation="database" aria-label="Database"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg><span>Data</span></a>
+    <a href="report.html" data-navigation="research" aria-label="Research"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 3h10l4 4v14H5zM15 3v5h4M8 12h8M8 16h6"/></svg><span>Research</span></a>
+  </div>
+</nav>
+
+<main id="main-content" tabindex="-1">
 
 <section class="hero"><div class="container">
-  <span class="badge"><span class="dot"></span> v0.3.0 · Open source · MIT</span>
+  <span class="badge"><span class="dot" aria-hidden="true"></span> v0.3.0 · Open source · MIT</span>
   <h1>A safer sign-in. <em>For people and their agents.</em></h1>
   <p class="lede">Deterministic cookie security, on your device. CookieGuard finds the cookie that keeps you signed in, proves it, and checks that it is protected. The AI guesses; fixed rules decide.</p>
   <div class="term">
     <div class="cmd"><span class="dollar">$</span><code id="cmd">pip install cookieguard</code></div>
-    <button id="copy" type="button" aria-label="Copy install command"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span>Copy</span></button>
+    <button id="copy" type="button" aria-label="Copy install command"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span aria-live="polite">Copy</span></button>
   </div>
   <p class="alt">Not a developer? <a href="extension.html#download">Get the Chrome extension →</a></p>
 </div></section>
 
 <section class="uses" id="uses"><div class="container">
+  <h2 class="section-kicker">Ways to use CookieGuard</h2>
   <div class="use-grid">
-    <a class="card use reveal" href="extension.html">
-      <div class="top"><span class="tile blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 9 9H12z"/><circle cx="12" cy="12" r="3"/></svg></span><div><div class="who">For people</div><h2>Browser extension</h2></div></div>
+    <a class="card use" href="extension.html">
+      <div class="top"><span class="tile blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 9 9H12z"/><circle cx="12" cy="12" r="3"/></svg></span><div><div class="who">For people</div><h3>Browser extension</h3></div></div>
       <div class="media"><img src="resource/screenshot_3.0.png" alt="The CookieGuard AI Chrome extension popup showing a site's login cookie and its checks" loading="lazy"></div>
       <p>See which cookie keeps you signed in on any site, and whether it is protected. Nothing leaves your browser.</p>
       <span class="go">Get the extension <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
     </a>
-    <a class="card use reveal" href="agents.html#get-started">
-      <div class="top"><span class="tile gray"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m8 9-4 3 4 3M16 9l4 3-4 3M14 5l-4 14"/></svg></span><div><div class="who">For developers</div><h2>Dev tools</h2></div></div>
+    <a class="card use" href="agents.html#get-started">
+      <div class="top"><span class="tile gray"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m8 9-4 3 4 3M16 9l4 3-4 3M14 5l-4 14"/></svg></span><div><div class="who">For developers</div><h3>Dev tools</h3></div></div>
 <pre class="code"><span class="c"># in CI, against your own app</span>
 $ npx cookieguard-ci@0.2.0 scan \
     http://localhost:3000 \
@@ -105,9 +83,9 @@ $ npx cookieguard-ci@0.2.0 scan \
       <p>Scan a login in CI. Twelve checks, a fix for each, exit codes you can gate on. The same checks as an MCP server for Claude Code and Cursor, and a Playwright helper.</p>
       <span class="go">Set up CI or MCP <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
     </a>
-    <a class="card use reveal" href="agents.html">
-      <div class="top"><span class="tile gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="7" width="16" height="12" rx="3"/><path d="M12 3v4M9 13h.01M15 13h.01M9 16h6"/></svg></span><div><div class="who">For AI agents</div><h2>Browser agents</h2></div></div>
-      <div class="media cream"><img src="integrations/python/docs/cookieguard-browser-use-demo.gif" alt="A Browser Use agent signs in to a demo app; CookieGuard observes the session cookie and fails the insecure login with CG001 Missing HttpOnly, exit 1" loading="lazy"></div>
+    <a class="card use" href="agents.html">
+      <div class="top"><span class="tile gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="7" width="16" height="12" rx="3"/><path d="M12 3v4M9 13h.01M15 13h.01M9 16h6"/></svg></span><div><div class="who">For AI agents</div><h3>Browser agents</h3></div></div>
+      <div class="media"><img src="integrations/python/docs/cookieguard-browser-use-demo.gif" alt="A Browser Use agent signs in to a demo app; CookieGuard observes the session cookie and fails the insecure login with CG001 Missing HttpOnly, exit 1" loading="lazy"></div>
       <p>The agent signs in; CookieGuard checks the session cookie before the first private action. PASS, the agent continues; FAIL, it stops with the fix. Browser Use, local or cloud.</p>
       <span class="go">See the agent gate <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
     </a>
@@ -121,47 +99,81 @@ $ npx cookieguard-ci@0.2.0 scan \
       <h2>The AI guesses. The rules decide.</h2>
       <p>An AI layer looks up known cookie names and lets a local model guess the rest. A decision layer, with no AI in it, double-checks the guess, proves it by removing the cookie and reloading, and runs twelve fixed checks. Every surface above uses the same engine. <a href="agents.html#how-it-works">How it works →</a></p>
       <div class="nums">
-        <div class="num reveal"><div class="n gold">81%</div><div class="t">right on 11,160 cookies from 359 real sites</div></div>
-        <div class="num reveal"><div class="n">0.04 ms</div><div class="t">per cookie, on your computer</div></div>
-        <div class="num reveal"><div class="n">12</div><div class="t">checks, CG001–CG012, each with a fix</div></div>
-        <div class="num reveal"><div class="n">0</div><div class="t">cookie values sent anywhere</div></div>
+        <div class="num"><div class="n gold">81%</div><div class="t">right on 11,160 cookies from 359 real sites</div></div>
+        <div class="num"><div class="n">0.04 ms</div><div class="t">per cookie, on your computer</div></div>
+        <div class="num"><div class="n">12</div><div class="t">checks, CG001–CG012, each with a fix</div></div>
+        <div class="num"><div class="n">0</div><div class="t">cookie values sent anywhere</div></div>
       </div>
     </div>
-    <div class="diagram"><img src="resource/site/architecture.svg" width="1200" height="440" alt="How CookieGuard works: the situation, the AI layer, the decision layer, the verdict" loading="lazy"></div>
+    <figure><div class="diagram" tabindex="0" role="region" aria-label="Architecture diagram"><img src="resource/site/architecture.svg" width="1200" height="440" alt="How CookieGuard works: the situation, the AI layer, the decision layer, the verdict" loading="lazy"></div><figcaption class="diagram-hint"><span class="diagram-scroll-hint">Scroll horizontally to see the full diagram. </span><a href="resource/site/architecture.svg" target="_blank" rel="noopener">View full-size architecture</a></figcaption></figure>
   </div>
 </div></section>
 
 <section class="more"><div class="container">
+  <h2 class="section-kicker">Data and research</h2>
   <div class="more-grid">
-    <div class="card reveal">
+    <div class="card">
       <span class="tile gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v12c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/></svg></span>
       <div><span class="label">Open data</span><h3>The cookie database</h3><p>12,481 labeled cookie names and 16,571 cookies observed on 788 real websites in November 2026. Search it, download it, cite it. CC BY 4.0, no cookie values.</p><a class="btn btn-secondary" href="database.html">Browse the database</a></div>
     </div>
-    <div class="card reveal">
+    <div class="card">
       <span class="tile gray"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 19V5a2 2 0 0 1 2-2h12v16M4 19a2 2 0 0 0 2 2h12v-4H6a2 2 0 0 0-2 2z"/></svg></span>
       <div><span class="label">Research</span><h3>How well does it work?</h3><p>Preregistered studies: the model, the rules, a cloud AI on the same cookies, and a security report on login cookies in the wild. Every number on this site traces to a frozen results file.</p><a class="btn btn-secondary" href="report.html">Read the research</a></div>
     </div>
   </div>
 </div></section>
 
+</main>
+
 <footer><div class="container">
   <div class="trust"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg> 100% Local · Zero telemetry · Open source</div>
   <div class="fine">CookieGuard AI is released under the MIT license.</div>
   <div class="links"><a href="extension.html">Extension</a><a href="agents.html">Browser agents</a><a href="database.html">Database</a><a href="report.html">Research</a><a href="https://github.com/aiscihub/cookieguard-ai" target="_blank" rel="noopener">GitHub</a><a href="https://github.com/aiscihub/cookieguard-ai/blob/main/PRIVACY.md" target="_blank" rel="noopener">Privacy</a></div>
-</div></footer>
+  <div class="theme-row">
+    <div class="theme-toggle" role="group" aria-label="Color theme">
+      <button type="button" data-theme="light" aria-pressed="true">Light</button>
+      <button type="button" data-theme="dark" aria-pressed="false">Dark</button>
+    </div>
+  </div>
+</div>
+</footer>
 
 <script>
 (function () {
-  var b = document.getElementById('copy'), t = document.getElementById('cmd').textContent;
-  b.addEventListener('click', function () {
-    var done = function () { b.classList.add('done'); b.lastElementChild.textContent = 'Copied'; setTimeout(function () { b.classList.remove('done'); b.lastElementChild.textContent = 'Copy'; }, 2000); };
-    if (navigator.clipboard) navigator.clipboard.writeText(t).then(done, done); else done();
+  var button = document.getElementById('copy');
+  var command = document.getElementById('cmd').textContent;
+  var status = button.lastElementChild;
+  var timer;
+
+  function legacyCopy() {
+    var field = document.createElement('textarea');
+    field.value = command;
+    field.setAttribute('readonly', '');
+    field.style.position = 'fixed';
+    field.style.opacity = '0';
+    document.body.appendChild(field);
+    field.select();
+    var copied = false;
+    try { copied = document.execCommand('copy'); } catch (_) {}
+    field.remove();
+    button.focus();
+    return copied;
+  }
+
+  button.addEventListener('click', async function () {
+    var copied = false;
+    if (navigator.clipboard) {
+      try { await navigator.clipboard.writeText(command); copied = true; } catch (_) {}
+    }
+    if (!copied) copied = legacyCopy();
+    button.classList.toggle('done', copied);
+    status.textContent = copied ? 'Copied' : 'Copy unavailable';
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      button.classList.remove('done');
+      status.textContent = 'Copy';
+    }, 2000);
   });
-  var els = document.querySelectorAll('.reveal');
-  if ('IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { threshold: .1 });
-    els.forEach(function (el) { io.observe(el); });
-  } else els.forEach(function (el) { el.classList.add('in'); });
 })();
 </script>
 </body>

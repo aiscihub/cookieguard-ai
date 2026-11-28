@@ -6,15 +6,14 @@
 <title>How the data was collected</title>
 <meta name="description" content="CookieGuard: how real-website cookies were collected, labeled, turned into a known-names table, and tested.">
 <link rel="icon" href="../../extension-standalone/icons/icon128.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fonts.css">
 <style>
 :root{
   --paper:#F9F9F8;--ink:#18181B;--mute:#71717A;--mute2:#52525B;--navy:#1E3A8A;--parch:#F4F3EF;--rule:#E4E4E7;--bar:#EDECE8;
   --green:#15803D;--green-soft:#F0FDF4;--red:#B91C1C;--red-soft:#FEF2F2;
   --sans:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
-  --serif:"Playfair Display",Georgia,"Times New Roman",serif;
-  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --serif:"Newsreader",Georgia,"Times New Roman",serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 }
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans)}
@@ -209,6 +208,7 @@ h2{font-family:var(--serif);font-weight:500;font-size:34px;line-height:1.15;marg
 .prog b{display:block;height:100%;width:0;background:var(--navy)}
 .prog.run b{transition:width linear}
 .hidectl .controls,.hidectl .prog{display:none}
+@media (max-width:600px){.controls{flex-wrap:wrap;gap:8px}.controls button{padding:6px 10px}.dots{margin-left:0}}
 @media (prefers-reduced-motion:reduce){.active *{animation-duration:.01s!important;animation-delay:0s!important}}
 </style>
 </head>
